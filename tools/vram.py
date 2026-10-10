@@ -124,3 +124,54 @@ def de_la_fase(fase):
     copias(vram, v, v.w(0x6030 + 2 * fase), True)
     lista_caracteres(vram, v, 0x4358)        # p00:4337 (sin vecino), con 7-8-9 puestos
     return vram
+
+
+# ------------------------------------------------------------------ sprites
+#
+# Los dibujos de sprite (16 x 16: 32 bytes, la columna izquierda y luego la
+# derecha) van en 0x1800. L_43A5 pone los de la fase:
+#   p00:4368  rachas de 0x936F a 0x1800 y de 0x942B a 0x1960 (sin vecino)
+#   p00:4497  rachas de 0x93C0 a 0x18C0
+#   p00:44BE  rachas de 0x94B8 a 0x1A20
+#   p00:43C4  las copias de 0x44EA y la lista de la fase 0x92B3[fase]
+#             ([n][rachas] a 0x1800 + 8 x n, p00:44D1) y las copias de
+#             0x9348[fase]
+# Las copias (p00:43DA): fichas [tipo][cuantos][origen][destino] (numeros de
+# dibujo de 8 bytes); el tipo 1 cabeza abajo (p00:43EE invierte el orden de
+# las 16 filas de cada columna) y los demas en espejo (p00:4ABD invierte los
+# bits y cambia una columna por la otra).
+SPRITES = 0x1800
+
+
+def copias_de_sprites(vram, v, ix):
+    """p00:43DA."""
+    while v(ix) != 0:
+        tipo, n, o, d = v(ix), v(ix + 1), v(ix + 2), v(ix + 3)
+        if n:
+            for k in range(n):
+                src = vram[SPRITES + o * 8 + 32 * k:SPRITES + o * 8 + 32 * k + 32]
+                if tipo == 1:
+                    dst = src[0:16][::-1] + src[16:32][::-1]
+                else:
+                    r = bytes(int("{:08b}".format(x)[::-1], 2) for x in src)
+                    dst = r[16:32] + r[0:16]
+                a = SPRITES + d * 8 + 32 * k
+                vram[a:a + 32] = dst
+        ix += 4
+
+
+def sprites_de_la_fase(fase, vram=None):
+    """La VRAM con los dibujos de sprite que deja L_43A5 en la fase."""
+    if vram is None:
+        vram = de_la_fase(fase)
+    v = B.Ventana((7, 8, 9))
+    for origen, destino in ((0x936F, 0x1800), (0x942B, 0x1960), (0x93C0, 0x18C0),
+                            (0x94B8, 0x1A20)):
+        rachas(vram, v, origen, destino)
+    copias_de_sprites(vram, B.ventana_de(0), 0x44EA)
+    a = v.w(0x92B3 + 2 * fase)
+    while v(a):
+        rachas(vram, v, v.w(a + 1), SPRITES + 8 * v(a))
+        a += 3
+    copias_de_sprites(vram, v, v.w(0x9348 + 2 * fase))
+    return vram

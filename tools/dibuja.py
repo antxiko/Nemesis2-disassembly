@@ -122,3 +122,24 @@ def main(argv):
 
 if __name__ == "__main__":
     sys.exit(main(sys.argv))
+
+
+def hoja_de_sprites(vram, escala=2, por_fila=16):
+    """Los 64 dibujos de 16 x 16 de 0x1800, en blanco sobre gris, numerados
+    por su numero de dibujo (de 4 en 4)."""
+    from PIL import Image
+    n = 64
+    img = Image.new("RGB", (por_fila * 18, (n // por_fila) * 18), (40, 40, 40))
+    px = img.load()
+    for k in range(n):
+        x0, y0 = (k % por_fila) * 18 + 1, (k // por_fila) * 18 + 1
+        base = V.SPRITES + 32 * k
+        for col in range(2):
+            for y in range(16):
+                b = vram[base + 16 * col + y]
+                for x in range(8):
+                    if b & (0x80 >> x):
+                        px[x0 + 8 * col + x, y0 + y] = (255, 255, 255)
+                    else:
+                        px[x0 + 8 * col + x, y0 + y] = (0, 0, 0)
+    return img.resize((img.width * escala, img.height * escala), Image.NEAREST)
