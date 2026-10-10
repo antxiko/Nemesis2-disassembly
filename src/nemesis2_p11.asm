@@ -20,7 +20,7 @@ L_A000:
 	or a			;a006
 	jr z,L_A071		;a007
 	jp m,L_A079		;a009
-	ld hl,(0e446h)		;a00c
+	ld hl,(0e446h)		;a00c   ; lee la marca de nave intocable y el byte siguiente (16 bits)
 	dec l			;a00f
 	jr nz,L_A01E		;a010
 	ld a,h			;a012
@@ -97,7 +97,7 @@ L_A082:
 	ret			;a087
 L_A088:
 	ld de,0e290h		;a088
-	ld hl,0e470h		;a08b   ; apunta a las 9 fichas de 16 bytes de 0xE470
+	ld hl,0e470h		;a08b   ; apunta a los 9 disparos de la nave (16 bytes: tipo, Y, X, largo...)
 	exx			;a08e
 	ld bc,00906h		;a08f
 L_A092:
@@ -155,7 +155,7 @@ L_A0D0:
 	jr z,L_A0C1		;a0d3
 	ret			;a0d5
 L_A0D6:
-	ld ix,0e470h		;a0d6   ; apunta a las 9 fichas de 16 bytes de 0xE470
+	ld ix,0e470h		;a0d6   ; apunta a los 9 disparos de la nave (16 bytes: tipo, Y, X, largo...)
 	ld de,0ec00h		;a0da
 	ld b,006h		;a0dd
 L_A0DF:
@@ -237,7 +237,7 @@ L_A15A:
 	ld (ix+00fh),h		;a166
 	ret			;a169
 L_A16A:
-	ld ix,0e470h		;a16a   ; apunta a las 9 fichas de 16 bytes de 0xE470
+	ld ix,0e470h		;a16a   ; apunta a los 9 disparos de la nave (16 bytes: tipo, Y, X, largo...)
 	ld de,0ec00h		;a16e
 	ld b,006h		;a171
 L_A173:
@@ -327,7 +327,7 @@ L_A1DD:
 	ex de,hl			;a204
 	ret			;a205
 L_A206:
-	ld ix,0e470h		;a206   ; apunta a las 9 fichas de 16 bytes de 0xE470
+	ld ix,0e470h		;a206   ; apunta a los 9 disparos de la nave (16 bytes: tipo, Y, X, largo...)
 	ld b,009h		;a20a
 L_A20C:
 	push bc			;a20c
@@ -1292,7 +1292,7 @@ L_A956:
 L_A95B:
 	ld a,(0e201h)		;a95b   ; lee la fase (0-11)
 	cp 007h		;a95e
-	call nz,092a4h		;a960
+	call nz,092a4h		;a960   ; nave_entra_al_jefe: si la nave esta junto a la entrada del jefe (0xEA0E, 0xEA10), 0xE22B = 1: al interior
 	ld a,(0e22bh)		;a963   ; lee la marca de jefe vencido: al interior
 	and a			;a966
 	jr nz,L_A979		;a967
@@ -1322,7 +1322,7 @@ L_A98E:
 L_A993:
 	xor a			;a993
 	ld (0e340h),a		;a994   ; guarda el tipo de jefe (1-5; 0 sin jefe)
-	ld (0e34fh),a		;a997   ; guarda la marca de 0xE34F
+	ld (0e34fh),a		;a997   ; guarda la marca de jefe o suceso acabado
 	inc a			;a99a
 	ld (0e342h),a		;a99b   ; guarda la marca de jefe vencido
 	ret			;a99e
@@ -1365,7 +1365,7 @@ L_A9C8:
 	push bc			;a9df
 	ld a,(ix+010h)		;a9e0
 	ld d,a			;a9e3
-	call 08ba1h		;a9e4
+	call 08ba1h		;a9e4   ; crea_explosion: una explosion de 4x4 caracteres en D (X), E (Y), si esta en pantalla y hay hueco en 0xEA40
 	pop af			;a9e7
 	cp 005h		;a9e8
 	ld a,009h		;a9ea
@@ -2866,7 +2866,7 @@ L_B432:
 	ld hl,0e580h		;b447   ; apunta a las 16 piezas de 8 bytes de las fases 3 y 9-11
 	cp (hl)			;b44a
 	jr z,L_B452		;b44b
-	ld hl,0e590h		;b44d
+	ld hl,0e590h		;b44d   ; apunta a la segunda pieza de la fase 5
 	cp (hl)			;b450
 	ret nz			;b451
 L_B452:
@@ -2942,7 +2942,7 @@ L_B4AA:
 	ret nz			;b4af
 	ld ix,0e580h		;b4b0   ; apunta a las 16 piezas de 8 bytes de las fases 3 y 9-11
 	call L_B4BB		;b4b4
-	ld ix,0e590h		;b4b7
+	ld ix,0e590h		;b4b7   ; apunta a la segunda pieza de la fase 5
 L_B4BB:
 	ld a,(ix+000h)		;b4bb
 	or a			;b4be
@@ -3013,7 +3013,7 @@ L_B53A:
 	ret nz			;b53f
 	ld ix,0e580h		;b540   ; apunta a las 16 piezas de 8 bytes de las fases 3 y 9-11
 	call L_B54B		;b544
-	ld ix,0e590h		;b547
+	ld ix,0e590h		;b547   ; apunta a la segunda pieza de la fase 5
 L_B54B:
 	ld a,(ix+000h)		;b54b
 	or a			;b54e
@@ -3555,7 +3555,7 @@ L_BA9B:
 	ld a,(ix+006h)		;baad
 	add a,008h		;bab0
 	ld d,a			;bab2
-	call 0937dh		;bab3
+	call 0937dh		;bab3   ; dispara_bala_con: una bala desde D/E + 8 con la velocidad BC (Y) y HL (X), si no esta 0xF00E
 	pop hl			;bab6
 	pop bc			;bab7
 	djnz L_BA9B		;bab8
@@ -4159,7 +4159,7 @@ L_BF10:
 	call 06770h		;bf13   ; dispara_al_acabar: IX+15 - 1 y, al llegar a 0, p01:6774
 	ld a,(ix+001h)		;bf16
 	dec a			;bf19
-	jp z,09b62h		;bf1a
+	jp z,09b62h		;bf1a   ; hacia_la_y_de_la_nave: la velocidad Y + o - 0x16 hacia la Y de la nave
 	ld a,(ix+004h)		;bf1d
 	cp 008h		;bf20
 	jr c,L_BF31		;bf22

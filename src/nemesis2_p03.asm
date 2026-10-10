@@ -166,7 +166,7 @@ L_A0E7:
 	ld hl,0a0fch		;a0e8
 	call 04b67h		;a0eb   ; palabra_a: DE = la palabra A de la tabla HL (HL apunta a su byte alto)
 	ld a,007h		;a0ee
-	call 087dch		;a0f0
+	call 087dch		;a0f0   ; crea_objeto: un objeto de caracteres de la clase A en la primera ficha libre de 0xE500 (8 de 16 bytes), en D (X), E (Y)
 	pop hl			;a0f3
 	ret nc			;a0f4
 	ld (hl),001h		;a0f5
@@ -1139,7 +1139,7 @@ L_A7C1:
 L_A7E4:
 	ld (0e40ah),a		;a7e4
 L_A7E7:
-	ld a,(0e446h)		;a7e7
+	ld a,(0e446h)		;a7e7   ; lee la marca de nave intocable
 	or a			;a7ea
 	ret z			;a7eb
 L_A7EC:
@@ -1155,7 +1155,7 @@ L_A7F8:
 	ldi		;a7fd
 	ldi		;a7ff
 	ldi		;a801
-	ld a,(0e446h)		;a803
+	ld a,(0e446h)		;a803   ; lee la marca de nave intocable
 	or a			;a806
 	jr nz,L_A7EC		;a807
 	ld a,(0e400h)		;a809   ; lee la forma de la nave (1 normal, 2 con escudo, 3 R.DRILL)
@@ -1191,7 +1191,7 @@ L_A82E:
 	ld hl,0a895h		;a842
 	ret			;a845
 L_A846:
-	ld hl,0e440h		;a846
+	ld hl,0e440h		;a846   ; apunta a la marca del R.DRILL
 	dec (hl)			;a849
 	jr nz,L_A85E		;a84a
 	ld (hl),003h		;a84c
@@ -1701,7 +1701,7 @@ DATA_tabla_AB72:
 
 
 L_AB92:
-	ld iy,0e470h		;ab92   ; apunta a las 9 fichas de 16 bytes de 0xE470
+	ld iy,0e470h		;ab92   ; apunta a los 9 disparos de la nave (16 bytes: tipo, Y, X, largo...)
 	ld b,009h		;ab96
 L_AB98:
 	push bc			;ab98
@@ -1832,7 +1832,7 @@ L_AC6E:
 L_AC7D:
 	dec a			;ac7d
 	jr z,L_AC9A		;ac7e
-	ld hl,0e470h		;ac80   ; apunta a las 9 fichas de 16 bytes de 0xE470
+	ld hl,0e470h		;ac80   ; apunta a los 9 disparos de la nave (16 bytes: tipo, Y, X, largo...)
 	call L_B20E		;ac83
 	jr z,L_ACB5		;ac86
 	ld hl,0e480h		;ac88
@@ -1840,7 +1840,7 @@ L_AC7D:
 	jr z,L_ACB5		;ac8e
 	ret			;ac90
 L_AC91:
-	ld hl,0e470h		;ac91   ; apunta a las 9 fichas de 16 bytes de 0xE470
+	ld hl,0e470h		;ac91   ; apunta a los 9 disparos de la nave (16 bytes: tipo, Y, X, largo...)
 	call L_B20E		;ac94
 	ret nz			;ac97
 	jr L_ACB5		;ac98
@@ -1848,7 +1848,7 @@ L_AC9A:
 	ld a,(0e431h)		;ac9a   ; lee arma 0xE431
 	or a			;ac9d
 	jr z,L_AC91		;ac9e
-	ld hl,0e470h		;aca0   ; apunta a las 9 fichas de 16 bytes de 0xE470
+	ld hl,0e470h		;aca0   ; apunta a los 9 disparos de la nave (16 bytes: tipo, Y, X, largo...)
 	call L_B20E		;aca3
 	jr nz,L_ACEC		;aca6
 	push hl			;aca8
@@ -1931,7 +1931,7 @@ L_AD1F:
 	ld (iy+005h),a		;ad32
 	ret			;ad35
 L_AD36:
-	ld hl,0e470h		;ad36   ; apunta a las 9 fichas de 16 bytes de 0xE470
+	ld hl,0e470h		;ad36   ; apunta a los 9 disparos de la nave (16 bytes: tipo, Y, X, largo...)
 	call L_B20E		;ad39
 	ret nz			;ad3c
 	ld a,(0e432h)		;ad3d   ; lee el arma elegida en el medidor
@@ -2205,7 +2205,7 @@ L_AEFE:
 	call L_AECB		;aefe
 	jp L_AEDE		;af01
 L_AF04:
-	ld hl,0e470h		;af04   ; apunta a las 9 fichas de 16 bytes de 0xE470
+	ld hl,0e470h		;af04   ; apunta a los 9 disparos de la nave (16 bytes: tipo, Y, X, largo...)
 	call L_B20E		;af07
 	ret nz			;af0a
 	ld (hl),009h		;af0b
@@ -2269,7 +2269,7 @@ L_AF58:
 	ld (iy+00ah),a		;af73
 	ret			;af76
 L_AF77:
-	ld hl,0e470h		;af77   ; apunta a las 9 fichas de 16 bytes de 0xE470
+	ld hl,0e470h		;af77   ; apunta a los 9 disparos de la nave (16 bytes: tipo, Y, X, largo...)
 	call L_B20E		;af7a
 	ret nz			;af7d
 	push hl			;af7e
@@ -2348,7 +2348,7 @@ L_AFF1:
 	jp c,L_AE02		;affb
 	jr L_AFBD		;affe
 L_B000:
-	ld hl,0e470h		;b000   ; apunta a las 9 fichas de 16 bytes de 0xE470
+	ld hl,0e470h		;b000   ; apunta a los 9 disparos de la nave (16 bytes: tipo, Y, X, largo...)
 	call L_B20E		;b003
 	ret nz			;b006
 	push hl			;b007
@@ -2586,7 +2586,7 @@ L_B1A6:
 	exx			;b1a9
 	ld c,a			;b1aa
 	exx			;b1ab
-	jp 08388h		;b1ac
+	jp 08388h		;b1ac   ; toca_mapa_hl: C si en H (X), L (Y) o en el caracter de la derecha hay mapa
 L_B1AF:
 	ld a,(0e320h)		;b1af   ; lee la marca de scroll hecho en este cuadro
 	or a			;b1b2
@@ -3114,7 +3114,7 @@ L_B584:
 	call L_B54F		;b5a1
 	bit 0,(ix+00fh)		;b5a4
 	ret nz			;b5a8
-	call 093b1h		;b5a9
+	call 093b1h		;b5a9   ; pon_bala: la primera ficha libre de 0xE900: tipo 1, en D/E, velocidad 0xF012/0xF014, dibujo 0x54 color 9; 0xE307 = 1
 	push ix		;b5ac
 	push hl			;b5ae
 	pop ix		;b5af
@@ -3247,13 +3247,13 @@ L_B6AB:
 	ld a,060h		;b6af
 	ld e,(ix+004h)		;b6b1
 	ld d,(ix+006h)		;b6b4
-	ld (0f00fh),a		;b6b7
+	ld (0f00fh),a		;b6b7   ; guarda la rapidez del disparo
 	ld a,h			;b6ba
 	ld (0f000h),a		;b6bb   ; guarda variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo) o un puntero
 	ld a,l			;b6be
 	ld (0f001h),a		;b6bf   ; guarda variable de paso: cuantos bytes
-	call 09467h		;b6c2
-	jp 093fbh		;b6c5
+	call 09467h		;b6c2   ; angulo_a_f000: el angulo desde D/E hasta 0xF000 (Y), 0xF001 (X)
+	jp 093fbh		;b6c5   ; rumbo_del_angulo: la velocidad del angulo ya calculado (0xF017), con error del nivel 7 en adelante
 L_B6C8:
 	ld a,(0e404h)		;b6c8
 	sub l			;b6cb
@@ -3291,8 +3291,8 @@ L_B6E1:
 L_B6E8:
 	ld (ix+002h),00ch		;b6e8
 	ld (ix+02fh),001h		;b6ec
-	ld de,(0f014h)		;b6f0   ; lee variable de paso: la VRAM de destino y el byte siguiente (16 bits)
-	ld hl,(0f012h)		;b6f4   ; lee variable de paso: la VRAM de origen y el byte siguiente (16 bits)
+	ld de,(0f014h)		;b6f0   ; lee la velocidad X calculada (16 bits) y el byte siguiente (16 bits)
+	ld hl,(0f012h)		;b6f4   ; lee la velocidad Y calculada (16 bits) y el byte siguiente (16 bits)
 	jp 04f26h		;b6f7   ; pon_vx_y_vy: IX+09/IX+0A = DE y IX+07/IX+08 = HL
 L_B6FA:
 	ld a,(ix+001h)		;b6fa
@@ -3428,10 +3428,10 @@ L_B80D:
 	add a,e			;b81d
 	ld e,(ix+004h)		;b81e
 	ld d,(ix+006h)		;b821
-	call 093f5h		;b824
+	call 093f5h		;b824   ; rumbo_a: la velocidad hacia la nave con rapidez A
 	inc (ix+001h)		;b827
-	ld hl,(0f012h)		;b82a   ; lee variable de paso: la VRAM de origen y el byte siguiente (16 bits)
-	ld de,(0f014h)		;b82d   ; lee variable de paso: la VRAM de destino y el byte siguiente (16 bits)
+	ld hl,(0f012h)		;b82a   ; lee la velocidad Y calculada (16 bits) y el byte siguiente (16 bits)
+	ld de,(0f014h)		;b82d   ; lee la velocidad X calculada (16 bits) y el byte siguiente (16 bits)
 	jp 04f26h		;b831   ; pon_vx_y_vy: IX+09/IX+0A = DE y IX+07/IX+08 = HL
 L_B834:
 	ld a,(0e1c3h)		;b834   ; lee la cuenta de cuadros
@@ -3701,9 +3701,9 @@ L_BA13:
 	ret			;ba46
 L_BA47:
 	ld hl,00000h		;ba47
-	ld (0f012h),hl		;ba4a   ; guarda variable de paso: la VRAM de origen y el byte siguiente (16 bits)
+	ld (0f012h),hl		;ba4a   ; guarda la velocidad Y calculada (16 bits) y el byte siguiente (16 bits)
 	ld hl,0fc00h		;ba4d
-	ld (0f014h),hl		;ba50   ; guarda variable de paso: la VRAM de destino y el byte siguiente (16 bits)
+	ld (0f014h),hl		;ba50   ; guarda la velocidad X calculada (16 bits) y el byte siguiente (16 bits)
 	jp L_B6E8		;ba53
 L_BA56:
 	ld (ix+010h),01bh		;ba56
@@ -3750,7 +3750,7 @@ L_BAA8:
 L_BAB3:
 	ld l,a			;bab3
 	ld h,(ix+006h)		;bab4
-	call 083e8h		;bab7
+	call 083e8h		;bab7   ; toca_mapa_e305: C si en H (X), L (Y) o a su derecha hay mapa (hasta 0xE305); el sitio en 0xE3BC
 	ret nc			;baba
 	ld a,(ix+029h)		;babb
 	neg		;babe
@@ -3787,7 +3787,7 @@ L_BAEC:
 	ld (ix+001h),000h		;baff
 	ld a,(ix+026h)		;bb03
 	ld de,00070h		;bb06
-	call 09c27h		;bb09
+	call 09c27h		;bb09   ; oscila_en_y: la velocidad Y + o - DE hacia la Y A
 	ld a,(ix+006h)		;bb0c
 	cp 020h		;bb0f
 	ret nc			;bb11
@@ -3818,7 +3818,7 @@ L_BB44:
 	ld a,(ix+006h)		;bb47
 	add a,008h		;bb4a
 	ld d,a			;bb4c
-	jp 0938fh		;bb4d
+	jp 0938fh		;bb4d   ; dispara_bala: una bala desde D (X), E (Y) + 8 hacia la nave, con rapidez 0x50 + 2 x nivel (como mucho 0x60); no en la espera de salida
 L_BB50:
 	ld hl,0bb78h		;bb50
 	ld a,(0e201h)		;bb53   ; lee la fase (0-11)
@@ -3831,7 +3831,7 @@ L_BB50:
 L_BB63:
 	ld hl,0bb7ch		;bb63
 L_BB66:
-	call 09b31h		;bb66
+	call 09b31h		;bb66   ; animacion_4: el dibujo de la tabla HL: un paso cada 4 cuadros (IX+24), 4 pasos
 	ld a,(0e1c3h)		;bb69   ; lee la cuenta de cuadros
 	and 003h		;bb6c
 	ret nz			;bb6e
@@ -3902,9 +3902,9 @@ L_BBD6:
 	ld (ix+002h),012h		;bbe3
 	ld a,(0e228h)		;bbe7   ; lee el nivel de dificultad
 	cp 006h		;bbea
-	jp c,0938fh		;bbec
+	jp c,0938fh		;bbec   ; dispara_bala: una bala desde D (X), E (Y) + 8 hacia la nave, con rapidez 0x50 + 2 x nivel (como mucho 0x60); no en la espera de salida
 	ld (ix+002h),00ch		;bbef
-	jp 0938fh		;bbf3
+	jp 0938fh		;bbf3   ; dispara_bala: una bala desde D (X), E (Y) + 8 hacia la nave, con rapidez 0x50 + 2 x nivel (como mucho 0x60); no en la espera de salida
 L_BBF6:
 	ld de,0fa00h		;bbf6
 	ld a,(0e228h)		;bbf9   ; lee el nivel de dificultad
@@ -3956,7 +3956,7 @@ L_BC42:
 	ld a,(ix+006h)		;bc4f
 	add a,008h		;bc52
 	ld d,a			;bc54
-	call 0937dh		;bc55
+	call 0937dh		;bc55   ; dispara_bala_con: una bala desde D/E + 8 con la velocidad BC (Y) y HL (X), si no esta 0xF00E
 	pop hl			;bc58
 	pop bc			;bc59
 	djnz L_BC42		;bc5a
@@ -3990,7 +3990,7 @@ L_BC7A:
 L_BC7D:
 	ld d,000h		;bc7d
 	ld e,(ix+027h)		;bc7f
-	jp 09d50h		;bc82
+	jp 09d50h		;bc82   ; suma_a_vx: la velocidad X + DE
 L_BC85:
 	dec (ix+025h)		;bc85
 	ret nz			;bc88
@@ -4227,8 +4227,8 @@ L_BDD8:
 	ld de,0e430h		;bded   ; apunta a el disparo normal
 	ld bc,00007h		;bdf0
 	ldir		;bdf3
-	call 08060h		;bdf5
-	call 081b5h		;bdf8
+	call 08060h		;bdf5   ; casillas_por_capturas: 0xE331 = las casillas del medidor con estas armas capturadas (p02:806D)
+	call 081b5h		;bdf8   ; escudo_y_opciones: escudo de C golpes, velocidad 2 y dos opciones; y el medidor
 	call 0448eh		;bdfb   ; sprites_opcion: con los bancos 7-8-9, p08:93C0 a 0x18C0
 	ld a,(0e20fh)		;bdfe   ; lee las armas capturadas (0-7)
 	cp 004h		;be01
@@ -4261,10 +4261,10 @@ L_BE87:
 	jp 07c11h		;be8d   ; a_la_siguiente: con la nave viva, 0xE1DA = 1 (estado 8)
 L_BE90:
 	ld hl,01e01h		;be90
-	ld (0e446h),hl		;be93
+	ld (0e446h),hl		;be93   ; guarda la marca de nave intocable y el byte siguiente (16 bits)
 	ret			;be96
 L_BE97:
-	ld hl,0e446h		;be97
+	ld hl,0e446h		;be97   ; apunta a la marca de nave intocable
 	ld a,(hl)			;be9a
 	or a			;be9b
 	ret z			;be9c
@@ -4457,7 +4457,7 @@ L_BFDE:
 	ld (0e3d1h),a		;bfe7
 	inc a			;bfea
 	ld (0e3d0h),a		;bfeb   ; guarda la velocidad del scroll (1 parado, 2 cada cuadro, si no uno de cada dos)
-	call 08fa2h		;bfee
+	call 08fa2h		;bfee   ; caen_todos: caen todos los enemigos (no los 0x1D, 0x20, 0x26 ni 0x29-0x2E) y suena 0x0B
 	ld a,043h		;bff1
 	jp 04ae4h		;bff3   ; sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
 

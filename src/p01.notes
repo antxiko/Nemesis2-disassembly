@@ -1246,6 +1246,7 @@ C 0x64BA guarda la marca de los tipos 0x2C-0x2F
 C 0x64C5 lee la cuenta de cuadros
 C 0x6530 apunta a los sprites ocupados por enemigos (maximo 12)
 C 0x653E apunta a cuantos enemigos 0x2A hay
+C 0x6555 busca_grupo: HL = el grupo A en 0xEA80 (4 de 3 bytes); C si no esta
 C 0x6560 aparicion_de_tipo_1: con los bancos 14-15, la siguiente ficha de p14:9554 de la fase: si es su columna, crea un tipo 1 en la fila del dato (bits 0-4), con C de los bits 6-7
 C 0x656C lee la marca de scroll hecho en este cuadro
 C 0x6573 guarda variable de paso
@@ -1261,9 +1262,11 @@ C 0x6618 lee la fase (0-11)
 C 0x661B hl_mas_a: HL = HL + A
 C 0x6629 tipo_1_fase_6: el tipo 1 de la fase 6: se abre (IX+01) y dispara a los 4 cuadros si la nave esta en su lado
 C 0x6638 lee el angulo calculado
+C 0x6664 dispara_bala: una bala desde D (X), E (Y) + 8 hacia la nave, con rapidez 0x50 + 2 x nivel (como mucho 0x60); no en la espera de salida
 C 0x666E lee el nivel de dificultad
 C 0x6679 hl_mas_a: HL = HL + A
 C 0x6725 nave_de_su_lado: C si la nave (0xE404) esta del lado al que mira (IX+26)
+C 0x672F dispara_bala: una bala desde D (X), E (Y) + 8 hacia la nave, con rapidez 0x50 + 2 x nivel (como mucho 0x60); no en la espera de salida
 C 0x6740 hl_mas_a: HL = HL + A
 C 0x679F guarda los cuadros de pelea con el jefe (16 bits) y el byte siguiente (16 bits)
 C 0x67A2 banco_11: pone el banco 11 en 0xA000 (y 0xF0F3)
@@ -1367,6 +1370,7 @@ C 0x6D03 pinta_pieza: el dibujo de la clase (p15:A581) de IX+04 filas x IX+05 en
 C 0x6D0E bancos_2_3: pone los bancos 2 y 3 en 0x8000 y 0xA000 (y 0xF0F2-0xF0F3)
 C 0x6D14 palabra_a_de: DE = la palabra A de la tabla DE (HL apunta a su byte alto)
 C 0x6D23 copia_bloque: copia DE en la pantalla de RAM en H (X), L (Y): C filas de B (de A de ancho en origen), cortado por el borde
+C 0x6D30 crea_explosion: una explosion de 4x4 caracteres en D (X), E (Y), si esta en pantalla y hay hueco en 0xEA40
 C 0x6D35 sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
 C 0x6D44 borra_bloque: borra C filas de B caracteres en la pantalla de RAM en H (X), L (Y), cortado por el borde
 C 0x6D5C guarda 0x40 al empezar la fase
@@ -1471,13 +1475,13 @@ C 0x7328 anima_pieza: la pieza de 8 bytes HL: cuando acaba su espera cambia de d
 C 0x732E anima_pieza: la pieza de 8 bytes HL: cuando acaba su espera cambia de dibujo (p01:7417, 2x2 caracteres) en su sitio
 C 0x734B hl_mas_a: HL = HL + A
 C 0x7353 menos_de: DE = - DE
-C 0x7356 guarda variable de paso: la VRAM de origen y el byte siguiente (16 bits)
-C 0x735D guarda variable de paso: la VRAM de destino y el byte siguiente (16 bits)
+C 0x7356 guarda la velocidad Y calculada (16 bits) y el byte siguiente (16 bits)
+C 0x735D guarda la velocidad X calculada (16 bits) y el byte siguiente (16 bits)
 C 0x7372 crea_enemigo: busca ficha libre en 0xE600 y pone el enemigo de tipo A en D (X), E (Y), con B y C; A = 0 si no hay sitio o sprites (0xE355, maximo 12)
 C 0x737C hl_mas_a: HL = HL + A
 C 0x7384 menos_de: DE = - DE
-C 0x7394 guarda variable de paso: la VRAM de destino y el byte siguiente (16 bits)
-C 0x73A4 guarda variable de paso: la VRAM de origen y el byte siguiente (16 bits)
+C 0x7394 guarda la velocidad X calculada (16 bits) y el byte siguiente (16 bits)
+C 0x73A4 guarda la velocidad Y calculada (16 bits) y el byte siguiente (16 bits)
 C 0x73AD suma_puntos: jugando, suma DE (BCD) a los puntos del jugador en turno; vida extra al pasar 0xE207 y record (0xE1F1) si no esta la ranura de 0xF0F5 bit 1
 C 0x73B2 guarda la espera del suceso
 C 0x73B5 suceso_siguiente: el paso siguiente del suceso (0xE34B + 1)
@@ -1489,7 +1493,7 @@ C 0x7438 banco_11: pone el banco 11 en 0xA000 (y 0xF0F3)
 C 0x743E bancos_2_3: pone los bancos 2 y 3 en 0x8000 y 0xA000 (y 0xF0F2-0xF0F3)
 C 0x7447 guarda la marca de 0xE3AA: sin enemigos ni su dibujo
 C 0x744B guarda la marca de fin del suceso
-C 0x745B lee variable de paso: la VRAM de origen y el byte siguiente (16 bits)
+C 0x745B lee la velocidad Y calculada (16 bits) y el byte siguiente (16 bits)
 C 0x745E pon_vx_y_vy: IX+09/IX+0A = DE y IX+07/IX+08 = HL
 C 0x748A quita_enemigo: quita el enemigo IX: uno menos (0xE352), devuelve sus sprites (0xE355), 0xE36D si es 0x2A, y descuenta su grupo (IX+16, IX+17, p02:89A8)
 C 0x749E quita_enemigo: quita el enemigo IX: uno menos (0xE352), devuelve sus sprites (0xE355), 0xE36D si es 0x2A, y descuenta su grupo (IX+16, IX+17, p02:89A8)
@@ -1545,6 +1549,7 @@ C 0x76A6 pon_rotulo_en: el rotulo A en la VRAM HL
 C 0x76AC apunta a la RAM del juego (0xE000-0xEFFF, que INIT pone a cero)
 C 0x76BA lee variable de paso
 C 0x76BD lee variable de paso: el puntero del mapa y el byte siguiente (16 bits)
+C 0x76C7 captura_armas: captura A armas (0xE20F + A, como mucho 7), rehace el medidor y lo pinta
 C 0x76CC sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
 C 0x76D2 lee las armas capturadas (0-7)
 C 0x76D5 byte_a: A = el byte A de la tabla HL
@@ -1676,7 +1681,7 @@ C 0x7C8A guarda la marca de jefe vencido
 C 0x7C8D vuelve_a_la_fase: los graficos, el marcador y la pantalla desde la columna 0; con 0xE1DB, la nave en Y 0x4A X 0x50 y p03:AA2F, p03:AAEC
 C 0x7C9F lee la marca de 0xE3AA: sin enemigos ni su dibujo
 C 0x7CA4 lee el paso del final del interior (0 nada)
-C 0x7CA9 lee la marca de 0xE34F
+C 0x7CA9 lee la marca de jefe o suceso acabado
 C 0x7CAE lee el estado del sonido (bit 0)
 C 0x7CBA palabra_a: DE = la palabra A de la tabla HL (HL apunta a su byte alto)
 C 0x7CBF lee la columna del scroll (16 bits) y el byte siguiente (16 bits)
@@ -1706,6 +1711,7 @@ C 0x7E56 guarda el disparo doble
 C 0x7E59 guarda el laser
 C 0x7E5D guarda arma 0xE436
 C 0x7E60 guarda el disparo normal
+C 0x7E65 guarda la casilla 3 del medidor
 C 0x7E68 e33a_a_e337_a_cero: 0xE33A, 0xE339, 0xE338 y 0xE337 a cero
 C 0x7E71 apunta a la tabla de rotulos de las casillas (desde 0xE334)
 C 0x7E8A quita_tipo_03: libera las fichas de 0xE470 con 3
@@ -1725,6 +1731,7 @@ C 0x7EBF sprites_opcion: con los bancos 7-8-9, p08:93C0 a 0x18C0
 C 0x7EE4 guarda arma 0xE431
 C 0x7EE7 guarda el laser
 C 0x7EEA guarda arma 0xE436
+C 0x7EF0 tope_de_casilla: C = el tope de la casilla 0xE33D con estas armas capturadas (p02:8074, 9 por cuenta)
 C 0x7EF6 apunta a la tabla de rotulos de las casillas (desde 0xE334)
 C 0x7EFD guarda el disparo doble
 C 0x7F08 sube_el_nivel: el nivel (0xE227-0xE228) + DE, como mucho 0x0FFF
@@ -1747,4 +1754,15 @@ C 0x7F83 guarda la marca de p01:7F98 al acabar la capsula
 C 0x7F8A apunta a la tabla de rotulos de las casillas (desde 0xE334)
 C 0x7F9B guarda la forma de la nave (1 normal, 2 con escudo, 3 R.DRILL) y el byte siguiente (16 bits)
 C 0x7FAF guarda el nivel (16 bits: 0xE228 entero, 0xE227 fraccion) y el byte siguiente (16 bits)
+C 0x7FBE guarda la casilla 6 del medidor
+C 0x7FC3 guarda la casilla 5 del medidor
+C 0x7FC8 guarda la casilla 7 del medidor
+C 0x7FCC guarda la casilla 6 del medidor
+C 0x7FD0 guarda la casilla 5 del medidor
+C 0x7FD4 guarda la casilla 4 del medidor
+C 0x7FE7 guarda la casilla 7 del medidor
+C 0x7FEA guarda la casilla 6 del medidor
+C 0x7FED guarda la casilla 5 del medidor
+C 0x7FF0 guarda la casilla 3 del medidor
+C 0x7FFB guarda la casilla 7 del medidor
 # --- fin de las anotaciones de anota.py ---

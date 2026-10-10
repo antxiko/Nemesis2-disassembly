@@ -258,8 +258,8 @@ L_417F:
 	call fin_de_cuenta_atras		;417f   ; p00:54DC
 	xor a			;4182
 	ld (0e307h),a		;4183   ; guarda la marca de disparo en este cuadro (uno solo)
-	ld (0e308h),a		;4186
-	ld (0e309h),a		;4189
+	ld (0e308h),a		;4186   ; guarda la marca del ruido de rotura en este cuadro
+	ld (0e309h),a		;4189   ; guarda la marca del ruido de choque en este cuadro
 	call 077b6h		;418c   ; p01:77B6
 	call 07a2eh		;418f   ; p01:7A2E
 	ld a,(0e1dah)		;4192   ; lee la marca del estado 8
@@ -282,21 +282,21 @@ L_417F:
 	call 0ab15h		;41bd
 	call 0abe5h		;41c0
 	call 0ab92h		;41c3
-	call 08592h		;41c6
-	call 08570h		;41c9
-	call 085a9h		;41cc
-	call 08653h		;41cf
+	call 08592h		;41c6   ; nucleo_con_el_scroll: el nucleo del interior se corre 8 pixeles con el scroll; al salir, desaparece
+	call 08570h		;41c9   ; aparece_el_nucleo: en el interior, en la columna 0x7F: el nucleo (0xEA90) en Y 0x40, X 0xE0, con 24 golpes
+	call 085a9h		;41cc   ; disparos_al_nucleo: cada disparo de la nave contra el nucleo del interior (p02:85C6)
+	call 08653h		;41cf   ; nave_pasa_el_nucleo: al pasar la nave la X del nucleo, empieza el final del interior (0xE3C0 = 1), sin enemigos y suena 0xF1
 	ld a,(0e3aah)		;41d2   ; lee la marca de 0xE3AA: sin enemigos ni su dibujo
 	or a			;41d5   ; con 0xE3AA puesto se salta este grupo
 	jr nz,L_41E4		;41d6
 	call 06385h		;41d8   ; mueve_enemigos: las 12 fichas de 0xE600: lo de su tipo (p01:63AE), el scroll (p01:6486) y su velocidad (p01:64BE)
-	call 092c1h		;41db
+	call 092c1h		;41db   ; mueve_balas: las 10 balas de 0xE900 (con E.SLOW, cuadro si cuadro no): suman su velocidad; fuera de la pantalla, libres
 	call 06d47h		;41de   ; apariciones_de_enemigos: cada cuadro: torretas, la lista de la fase (p14:9A67), las oleadas y los de relleno de la zona (p14:99C7); nada en el final de la fase 8 ni con 0xE3D0
 	call 07274h		;41e1   ; apariciones_de_bloques_scroll: si el scroll avanzo (0xE320), lo de la columna nueva (X = 0xF8)
 L_41E4:
-	call 08526h		;41e4
+	call 08526h		;41e4   ; capsula_con_el_scroll: la capsula especial del mapa se corre 8 pixeles con el scroll; al salir, desaparece
 	call apariciones_del_scroll		;41e7   ; apariciones_del_scroll: si el scroll avanzo (0xE320), lo que trae la columna nueva (X = 0xF8)
-	call 09034h		;41ea
+	call 09034h		;41ea   ; recoge_capsula_especial: la nave coge la capsula especial del mapa (clase 3 o mas): suena 0x1F, 0x0030 puntos y 15 segundos de D.VARRIOR (3), R.DRILL (4), E.SLOW (5) o VECTOR (7)
 	ld a,(0e201h)		;41ed   ; lee la fase (0-11)
 	dec a			;41f0   ; la fase 1 tiene algo mas: p11:B193
 	jr nz,L_41FC		;41f1
@@ -313,11 +313,11 @@ L_41FC:
 	call 0a04dh		;420e
 	call 072d6h		;4211   ; suceso_e34b: el paso del suceso 0xE34B (4, p01:72DF): las dos piezas de 0xEA70, sus rocas, los puntos, 0xE3AA y p11:A2A2
 	call 0781ch		;4214   ; final_de_fase_0: el paso 0xEA98 del final de la fase 0 (p01:7827)
-	call 0927ah		;4217
+	call 0927ah		;4217   ; disparos_al_nucleo_de_fase_0: con el final de la fase 0 en marcha, su nucleo (0xEA99) contra los disparos
 	call 07930h		;421a   ; cuenta_objetos: 0xE3B2 = hasta donde hay fichas ocupadas en 0xE500 (8 de 16 bytes)
 	call 07946h		;421d   ; mueve_objetos: sin jefe con partes, cada objeto de caracteres de 0xE500: lo de su clase, si se ve, y el scroll
-	call 087a4h		;4220
-	call 08678h		;4223
+	call 087a4h		;4220   ; apariciones_de_objetos_scroll: si el scroll avanzo (0xE320), lo de la columna nueva (X = 0xF8)
+	call 08678h		;4223   ; mueve_explosiones: las 4 explosiones de 4x4 caracteres de 0xEA40 (8 bytes): cada 4 cuadros un paso, y el scroll
 	call 06790h		;4226   ; cuadro_del_jefe: con un jefe (0xE340), un cuadro mas de pelea (0xE346, sin pasar de 0xFFFF) y lo de su tipo (p11, 5 tipos)
 	call banco_11		;4229   ; banco_11: pone el banco 11 en 0xA000 (y 0xF0F3)
 	ld a,(0e201h)		;422c   ; lee la fase (0-11)
@@ -325,24 +325,24 @@ L_41FC:
 	call z,0b2ceh		;4230
 	call bancos_2_3		;4233   ; bancos_2_3: pone los bancos 2 y 3 en 0x8000 y 0xA000 (y 0xF0F2-0xF0F3)
 	call 067b9h		;4236   ; partes_del_jefe: si p01:6878 no da Z, con el banco 9, p01:67CE con C = 1
-	call 08be3h		;4239
-	call 08c86h		;423c
+	call 08be3h		;4239   ; disparos_a_piezas: sin jefe, en las fases 3 y 9-11, las piezas de 0xE580 contra los disparos
+	call 08c86h		;423c   ; disparos_a_piezas_fase_5: sin jefe, en la fase 5, las dos piezas de 0xE580 y 0xE590 contra los disparos
 	ld a,(0e3aah)		;423f   ; lee la marca de 0xE3AA: sin enemigos ni su dibujo
 	or a			;4242
 	jr nz,L_425D		;4243
-	call 090c6h		;4245
-	call 09167h		;4248
-	call 088a2h		;424b
-	call 08a43h		;424e
-	call 08df9h		;4251
-	call 08db4h		;4254
-	call 08e43h		;4257
-	call 08d5eh		;425a
+	call 090c6h		;4245   ; disparos_al_suceso: con el suceso de 0xE34B, sus dos piezas contra los disparos
+	call 09167h		;4248   ; disparos_al_jefe: las partes que se pueden golpear del jefe (0xEA00, y 0xEA20 con el 5) contra los disparos
+	call 088a2h		;424b   ; disparos_a_enemigos: cada enemigo que se puede tocar (IX+10 bit 1) contra los 9 disparos de la nave
+	call 08a43h		;424e   ; disparos_a_objetos: sin jefe, cada objeto de caracteres de 0xE500 contra los 9 disparos de la nave
+	call 08df9h		;4251   ; escudo_contra_enemigos: con escudo, el enemigo que lo toca cae y le quita un golpe; los que no caen (0x20, bloques, 0x22-0x24, 0x38-0x3C) se lo llevan entero
+	call 08db4h		;4254   ; escudo_contra_balas: con escudo, las balas que llegan por delante se quedan en el y le quitan un golpe
+	call 08e43h		;4257   ; nave_contra_enemigos: el enemigo que toca a la nave: los 0x29-0x2E se recogen (p02:8F67), los demas caen y la nave tambien
+	call 08d5eh		;425a   ; nave_contra_balas: si una de las 10 balas de 0xE900 toca a la nave (12 x 8 pixeles), la bala se va y la nave cae
 L_425D:
 	call objetos_5fdf		;425d   ; objetos_5fdf: si p01:6878 da Z, con el banco 15, p00:5FDF
-	call 08413h		;4260
-	call 092f6h		;4263
-	call 081dah		;4266
+	call 08413h		;4260   ; nave_contra_el_mapa: si la nave toca el mapa cae (p02:8E7C); el R.DRILL rompe lo que se puede romper (p02:8481) y solo cae con lo demas
+	call 092f6h		;4263   ; balas_contra_el_mapa: las balas (sin el bit 7 en el tipo) que tocan el mapa desaparecen
+	call 081dah		;4266   ; mueve_disparos: los 9 disparos de la nave (0xE470, 16 bytes; IY): lo de su tipo (p02:81FB)
 	ld a,(0e3aah)		;4269   ; lee la marca de 0xE3AA: sin enemigos ni su dibujo
 	or a			;426c
 	call z,07a00h		;426d   ; enemigos_contra_el_mapa: los tipos 0x1D, 0x20 y 0x22 (sin IX+2F) se quitan al tocar el mapa (p02:9317)
@@ -351,14 +351,14 @@ L_425D:
 	call banco_11		;4276   ; banco_11: pone el banco 11 en 0xA000 (y 0xF0F3)
 	call 0b53ah		;4279
 	call bancos_2_3		;427c   ; bancos_2_3: pone los bancos 2 y 3 en 0x8000 y 0xA000 (y 0xF0F2-0xF0F3)
-	call 0853eh		;427f
-	call 086b1h		;4282
+	call 0853eh		;427f   ; pinta_capsula: la capsula especial: 2x2 caracteres desde el 0xE9 en la pantalla de RAM (sitio en 0xEA63)
+	call 086b1h		;4282   ; guarda_fondo_explosiones: el fondo de 4x4 caracteres bajo cada explosion a 0xECC0 (16 bytes cada una) y su sitio
 	call banco_11		;4285   ; banco_11: pone el banco 11 en 0xA000 (y 0xF0F3)
 	call 0bd47h		;4288
 	call 0a0d6h		;428b
 	call bancos_2_3		;428e   ; bancos_2_3: pone los bancos 2 y 3 en 0x8000 y 0xA000 (y 0xF0F2-0xF0F3)
 	call bancos_2_3		;4291   ; bancos_2_3: pone los bancos 2 y 3 en 0x8000 y 0xA000 (y 0xF0F2-0xF0F3)
-	call 0872ah		;4294
+	call 0872ah		;4294   ; pinta_explosiones: cada explosion: los 4x4 caracteres de su paso (p02:8762) en la pantalla de RAM
 	call sprites_de_enemigos		;4297   ; sprites_de_enemigos: si no esta 0xE3AA, los enemigos de 0xE600 a sprites (0xE2A8) o a caracteres, con los bancos 7-8-9
 	call sprites_de_balas		;429a   ; sprites_de_balas: los atributos de sprite de las 10 fichas de 0xE900 (Y, X, dibujo, color) a 0xE2D8; las libres con Y = 0xE0
 	call banco_11		;429d   ; banco_11: pone el banco 11 en 0xA000 (y 0xF0F3)
@@ -375,9 +375,9 @@ L_425D:
 	call 0a16ah		;42be
 	call 0bdcdh		;42c1
 	call bancos_2_3		;42c4   ; bancos_2_3: pone los bancos 2 y 3 en 0x8000 y 0xA000 (y 0xF0F2-0xF0F3)
-	call 086f1h		;42c7
+	call 086f1h		;42c7   ; repone_fondo_explosiones: devuelve el fondo de 0xECC0 bajo cada explosion
 	call 06826h		;42ca   ; quita_partes_del_jefe: si hay jefe con partes, con el banco 9 las borra (C = 0) y vuelve a poner las estrellas
-	call 08555h		;42cd
+	call 08555h		;42cd   ; borra_capsula: borra los 2x2 caracteres de la capsula especial
 	call objetos_5f84		;42d0   ; objetos_5f84: si p01:6878 da Z, con el banco 15, p00:5F84
 	ld a,(0e1c3h)		;42d3   ; 1 de cada 8 cuadros: p00:5BBB
 	and 007h		;42d6
@@ -529,14 +529,14 @@ sprites_cabeza_abajo:		; copia IX+01 dibujos de sprite de IX+02 a IX+03 cabeza a
 	add hl,hl			;43fd
 	ld bc,01800h		;43fe
 	add hl,bc			;4401
-	ld (0f012h),hl		;4402   ; guarda variable de paso: la VRAM de origen y el byte siguiente (16 bits)
+	ld (0f012h),hl		;4402   ; guarda la velocidad Y calculada (16 bits) y el byte siguiente (16 bits)
 	ld l,(ix+003h)		;4405   ; IX+03: el de destino
 	ld h,000h		;4408
 	add hl,hl			;440a
 	add hl,hl			;440b
 	add hl,hl			;440c
 	add hl,bc			;440d
-	ld (0f014h),hl		;440e   ; guarda variable de paso: la VRAM de destino y el byte siguiente (16 bits)
+	ld (0f014h),hl		;440e   ; guarda la velocidad X calculada (16 bits) y el byte siguiente (16 bits)
 L_4411:
 	ld hl,(0f012h)		;4411   ; lee los 32 bytes del sprite
 	ld de,0e600h		;4414   ; apunta a las fichas de 64 bytes (0xE600-0xE8FF), y tambien el bufer de graficos al cargar
@@ -548,12 +548,12 @@ L_4411:
 	ld bc,00020h		;4426
 	call copia_a_vram		;4429   ; copia_a_vram: copia BC bytes de DE a la VRAM HL (LDIRVM)
 	ld bc,00020h		;442c   ; los dos al sprite siguiente
-	ld hl,(0f012h)		;442f   ; lee variable de paso: la VRAM de origen y el byte siguiente (16 bits)
+	ld hl,(0f012h)		;442f   ; lee la velocidad Y calculada (16 bits) y el byte siguiente (16 bits)
 	add hl,bc			;4432
-	ld (0f012h),hl		;4433   ; guarda variable de paso: la VRAM de origen y el byte siguiente (16 bits)
-	ld hl,(0f014h)		;4436   ; lee variable de paso: la VRAM de destino y el byte siguiente (16 bits)
+	ld (0f012h),hl		;4433   ; guarda la velocidad Y calculada (16 bits) y el byte siguiente (16 bits)
+	ld hl,(0f014h)		;4436   ; lee la velocidad X calculada (16 bits) y el byte siguiente (16 bits)
 	add hl,bc			;4439
-	ld (0f014h),hl		;443a   ; guarda variable de paso: la VRAM de destino y el byte siguiente (16 bits)
+	ld (0f014h),hl		;443a   ; guarda la velocidad X calculada (16 bits) y el byte siguiente (16 bits)
 	ld hl,0f010h		;443d   ; apunta a variable de paso: la lista
 	dec (hl)			;4440   ; cuantos quedan
 	jr nz,L_4411		;4441
@@ -1069,7 +1069,7 @@ L_47F7:
 	call bancos_1_2_3		;47fe   ; bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xF0F1-0xF0F3)
 	call 07261h		;4801   ; y un cuadro de lo que aparece con el scroll
 	call 06560h		;4804   ; apariciones_de_torretas: lo que trae cada columna (p01:657C) hasta ponerse al dia (0xE358)
-	call 08798h		;4807
+	call 08798h		;4807   ; apariciones_de_objetos: lo que trae cada columna (p02:87B4) hasta ponerse al dia (0xE359)
 	call 06f42h		;480a   ; enemigos_de_la_lista: en las fases 0-8, lo que trae cada columna de la lista (p01:6F64) hasta ponerse al dia (0xE37C)
 	call 06abch		;480d   ; apariciones_de_piezas: en las fases 3 y 9-11, lo que trae cada columna (p01:6AE0) hasta ponerse al dia (0xE369)
 	call banco_11		;4810   ; banco_11: pone el banco 11 en 0xA000 (y 0xF0F3)
@@ -2057,7 +2057,7 @@ rumbo_a_la_nave:		; IX+07-IX+0A = la velocidad hacia la nave desde IX+04/IX+06 (
 	ld e,(ix+004h)		;4eb4   ; E = Y, D = X
 	ld d,(ix+006h)		;4eb7
 rumbo_desde_de:		; IX+07-IX+0A = la velocidad hacia la nave desde D/E (p02:93F5)
-	call 093f5h		;4eba
+	call 093f5h		;4eba   ; rumbo_a: la velocidad hacia la nave con rapidez A
 L_4EBD:
 	ld de,(0f012h)		;4ebd   ; la componente Y de la velocidad
 	call pon_vy		;4ec1   ; pon_vy: IX+07/IX+08 = DE
@@ -2066,7 +2066,7 @@ L_4EBD:
 rumbo_ix_93e9:		; IX+07-IX+0A con p02:93E9 desde IX+04/IX+06
 	ld e,(ix+004h)		;4eca
 	ld d,(ix+006h)		;4ecd
-	call 093e9h		;4ed0
+	call 093e9h		;4ed0   ; rumbo_sin_error: la velocidad hacia la nave desde D/E con rapidez A, sin el error de los niveles altos
 	jr L_4EBD		;4ed3
 rumbo_de_80:		; rumbo_de_a con A = 0x80
 	ld a,080h		;4ed5
@@ -2078,12 +2078,12 @@ rumbo_de_a:		; IX+07-IX+0A desde IX+04/IX+06 con p02:9467 y p02:93FD (A en 0xF00
 	ld (0f000h),a		;4ee1   ; guarda variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo) o un puntero
 	ld a,l			;4ee4
 	ld (0f001h),a		;4ee5   ; guarda variable de paso: cuantos bytes
-	call 09467h		;4ee8
+	call 09467h		;4ee8   ; angulo_a_f000: el angulo desde D/E hasta 0xF000 (Y), 0xF001 (X)
 	ld d,001h		;4eeb
-	call 093fdh		;4eed
-	ld de,(0f014h)		;4ef0   ; lee variable de paso: la VRAM de destino y el byte siguiente (16 bits)
+	call 093fdh		;4eed   ; rumbo_del_angulo_d: lo mismo con D = 1 para no poner error
+	ld de,(0f014h)		;4ef0   ; lee la velocidad X calculada (16 bits) y el byte siguiente (16 bits)
 	call pon_vx		;4ef4   ; pon_vx: IX+09/IX+0A = DE
-	ld de,(0f012h)		;4ef7   ; lee variable de paso: la VRAM de origen y el byte siguiente (16 bits)
+	ld de,(0f012h)		;4ef7   ; lee la velocidad Y calculada (16 bits) y el byte siguiente (16 bits)
 pon_vy:		; IX+07/IX+08 = DE
 	ld (ix+007h),e		;4efb   ; IX+07/IX+08: la velocidad Y
 	ld (ix+008h),d		;4efe
@@ -2621,10 +2621,10 @@ empieza_el_medidor:		; 0xE330-0xE33C a cero, p02:8060 y, con 0xE20B o 0xE20D, la
 	ld (hl),000h		;536f
 	ldir		;5371
 	call 08060h		;5373   ; p02:8060: las armas capturadas
-	ld a,(0e20bh)		;5376   ; lee una casilla del medidor puesta
+	ld a,(0e20bh)		;5376   ; lee la marca de equipo guardado (Galious)
 	or a			;5379
 	jr nz,L_5382		;537a
-	ld a,(0e20dh)		;537c   ; lee una casilla del medidor puesta
+	ld a,(0e20dh)		;537c   ; lee la casilla encendida al caer
 	or a			;537f
 	jr z,pinta_el_medidor		;5380
 L_5382:
@@ -3253,7 +3253,7 @@ L_586B:
 	inc l			;5873
 	ld (hl),a			;5874
 	ld (0e20bh),a		;5875   ; las casillas, a cero
-	ld (0e20dh),a		;5878   ; guarda una casilla del medidor puesta
+	ld (0e20dh),a		;5878   ; guarda la casilla encendida al caer
 	ld a,003h		;587b   ; y 3 vidas
 	ld (0e200h),a		;587d   ; guarda las vidas (BCD)
 L_5880:

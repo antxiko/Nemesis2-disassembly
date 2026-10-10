@@ -698,7 +698,7 @@ L_6542:
 	bit 0,(ix+016h)		;654d   ; IX+16 bit 0: de un grupo
 	ret z			;6551
 	ld a,(ix+017h)		;6552   ; el grupo IX+17 (p02:89A8)
-	call 089a8h		;6555
+	call 089a8h		;6555   ; busca_grupo: HL = el grupo A en 0xEA80 (4 de 3 bytes); C si no esta
 	ret c			;6558
 	inc l			;6559   ; uno menos en el grupo
 	dec (hl)			;655a
@@ -848,7 +848,7 @@ L_664D:
 L_665E:
 	ld e,(ix+004h)		;665e   ; dispara desde su posicion (p02:938F)
 	ld d,(ix+006h)		;6661
-	call 0938fh		;6664
+	call 0938fh		;6664   ; dispara_bala: una bala desde D (X), E (Y) + 8 hacia la nave, con rapidez 0x50 + 2 x nivel (como mucho 0x60); no en la espera de salida
 espera_de_disparo:		; IX+15 = la espera entre disparos: p01:66C0[nivel], menos con escudo y en fases mas altas, minimo 12 (4 en las fases 0 y 7)
 	ld hl,066c0h		;6667   ; la espera segun el nivel
 	ld a,(0e206h)		;666a   ; si la fase mas alta es la 1, no pasa del nivel 2
@@ -950,7 +950,7 @@ L_671A:
 	ret c			;6728
 	ld e,(ix+004h)		;6729
 	ld d,(ix+006h)		;672c
-	jp 0938fh		;672f
+	jp 0938fh		;672f   ; dispara_bala: una bala desde D (X), E (Y) + 8 hacia la nave, con rapidez 0x50 + 2 x nivel (como mucho 0x60); no en la espera de salida
 L_6732:
 	call espera_de_disparo		;6732   ; y se cierra
 	ld (ix+001h),000h		;6735
@@ -1874,7 +1874,7 @@ pieza_rota:		; la pieza IX deja de estar: explosion (p02:8BA1), suena 0x13 y se 
 	ld (ix+000h),000h		;6d26   ; libre
 	ld e,(ix+002h)		;6d2a   ; la explosion en su sitio
 	ld d,(ix+003h)		;6d2d
-	call 08ba1h		;6d30
+	call 08ba1h		;6d30   ; crea_explosion: una explosion de 4x4 caracteres en D (X), E (Y), si esta en pantalla y hay hueco en 0xEA40
 	ld a,013h		;6d33   ; suena 0x13
 	call 04ae4h		;6d35   ; sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
 	ld h,(ix+003h)		;6d38   ; y desaparece de la pantalla
@@ -2855,9 +2855,9 @@ suceso_piezas:		; mientras queden piezas (0xE34C), las anima y cada dos cuadros 
 	ld d,(hl)			;7350
 	bit 1,c		;7351   ; al otro lado, uno de cada dos
 	call nz,05cadh		;7353   ; menos_de: DE = - DE
-	ld (0f012h),de		;7356   ; guarda variable de paso: la VRAM de origen y el byte siguiente (16 bits)
+	ld (0f012h),de		;7356   ; guarda la velocidad Y calculada (16 bits) y el byte siguiente (16 bits)
 	ld hl,0f900h		;735a   ; velocidad Y 0xF900 (hacia arriba)
-	ld (0f014h),hl		;735d   ; guarda variable de paso: la VRAM de destino y el byte siguiente (16 bits)
+	ld (0f014h),hl		;735d   ; guarda la velocidad X calculada (16 bits) y el byte siguiente (16 bits)
 	ld hl,073d8h		;7360   ; desde una de las 4 piezas de p01:73D8
 	ld a,r		;7363
 	and 006h		;7365
@@ -2888,14 +2888,14 @@ L_7375:
 	ld l,05bh		;7391
 L_7393:
 	ex de,hl			;7393
-	ld (0f014h),hl		;7394   ; guarda variable de paso: la VRAM de destino y el byte siguiente (16 bits)
+	ld (0f014h),hl		;7394   ; guarda la velocidad X calculada (16 bits) y el byte siguiente (16 bits)
 	ld a,(0e404h)		;7397   ; hacia abajo (0x0500) o hacia arriba (0xFB00)
 	cp 04dh		;739a
 	ld hl,00500h		;739c
 	jr nc,L_73A4		;739f
 	ld hl,0fb00h		;73a1
 L_73A4:
-	ld (0f012h),hl		;73a4   ; guarda variable de paso: la VRAM de origen y el byte siguiente (16 bits)
+	ld (0f012h),hl		;73a4   ; guarda la velocidad Y calculada (16 bits) y el byte siguiente (16 bits)
 	jp L_736E		;73a7
 L_73AA:
 	ld de,00100h		;73aa   ; las piezas destruidas: 0x0100 puntos (BCD)
@@ -3004,7 +3004,7 @@ tipo_32_empieza:		; el tipo 0x32: IX+2F = 0, IX+02 = 4 y la velocidad de 0xF012 
 	ld (ix+02fh),000h		;744f   ; IX+2F = 0
 	ld (ix+002h),004h		;7453   ; IX+02 = 4
 	ld de,(0f014h)		;7457   ; la velocidad que dejo el suceso
-	ld hl,(0f012h)		;745b   ; lee variable de paso: la VRAM de origen y el byte siguiente (16 bits)
+	ld hl,(0f012h)		;745b   ; lee la velocidad Y calculada (16 bits) y el byte siguiente (16 bits)
 	jp 04f26h		;745e   ; pon_vx_y_vy: IX+09/IX+0A = DE y IX+07/IX+08 = HL
 tipo_32:		; el tipo 0x32: parpadea (color 3/9 cada 4 cuadros) y se quita al tocar mapa (por debajo de 0xE305) en su sitio o en la fila hacia la que va
 	dec (ix+002h)		;7461   ; cada 4 cuadros
@@ -3345,7 +3345,7 @@ L_76C0:
 	inc hl			;76c2
 	djnz L_76C0		;76c3
 	ld a,001h		;76c5   ; se queda con el arma (p02:80BD)
-	call 080bdh		;76c7
+	call 080bdh		;76c7   ; captura_armas: captura A armas (0xE20F + A, como mucho 7), rehace el medidor y lo pinta
 	ld a,022h		;76ca   ; suena 0x22
 	jp 04ae4h		;76cc   ; sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
 casilla_del_arma:		; 0xE3C5 = la casilla del medidor del arma 0xE20F (p01:77AE) en la fila 22
@@ -4198,7 +4198,7 @@ musica_de_la_zona:		; jugando sin jefe ni sucesos, la musica que toca por la col
 	ld a,(0e3c0h)		;7ca4   ; lee el paso del final del interior (0 nada)
 	or a			;7ca7
 	ret nz			;7ca8
-	ld a,(0e34fh)		;7ca9   ; lee la marca de 0xE34F
+	ld a,(0e34fh)		;7ca9   ; lee la marca de jefe o suceso acabado
 	or a			;7cac
 	ret nz			;7cad
 	ld a,(0e190h)		;7cae   ; lee el estado del sonido (bit 0)
@@ -4479,7 +4479,7 @@ vuelve_al_disparo:		; 0xE430 = 1 y 0xE436 = 1, las demas armas a cero
 	ld (0e436h),a		;7e5d   ; guarda arma 0xE436
 	ld (0e430h),a		;7e60   ; guarda el disparo normal
 	ld a,0ffh		;7e63   ; la casilla 3 gastada
-	ld (0e336h),a		;7e65
+	ld (0e336h),a		;7e65   ; guarda la casilla 3 del medidor
 	jp e33a_a_e337_a_cero		;7e68   ; e33a_a_e337_a_cero: 0xE33A, 0xE339, 0xE338 y 0xE337 a cero
 casilla_varia:		; la casilla 0xE33D + 1: con 1 vuelve al disparo, con 2 el escudo (0xE432 = 5), si no 0xE432 = 6
 	call 0804ah		;7e6b   ; el tope
@@ -4553,7 +4553,7 @@ L_7EE3:
 	ld (0e435h),a		;7ee7   ; guarda el laser
 	ld (0e436h),a		;7eea   ; guarda arma 0xE436
 	call 0800bh		;7eed   ; p02:800B
-	call 0804ah		;7ef0
+	call 0804ah		;7ef0   ; tope_de_casilla: C = el tope de la casilla 0xE33D con estas armas capturadas (p02:8074, 9 por cuenta)
 	ld a,(0e33dh)		;7ef3   ; la casilla + 1
 	ld hl,0e333h		;7ef6   ; apunta a la tabla de rotulos de las casillas (desde 0xE334)
 	add a,l			;7ef9
@@ -4665,24 +4665,24 @@ suelta_por_capturas:		; con 2-5 armas capturadas 0xE338 = 0, con 6 o mas 0xE339 
 	jr c,L_7FC2		;7fbb
 e339_a_cero:		; 0xE339 = 0
 	xor a			;7fbd
-	ld (0e339h),a		;7fbe
+	ld (0e339h),a		;7fbe   ; guarda la casilla 6 del medidor
 	ret			;7fc1
 L_7FC2:
 	xor a			;7fc2
-	ld (0e338h),a		;7fc3
+	ld (0e338h),a		;7fc3   ; guarda la casilla 5 del medidor
 	ret			;7fc6
 e33a_a_e337_a_cero:		; 0xE33A, 0xE339, 0xE338 y 0xE337 a cero
 	xor a			;7fc7
-	ld (0e33ah),a		;7fc8
+	ld (0e33ah),a		;7fc8   ; guarda la casilla 7 del medidor
 L_7FCB:
 	xor a			;7fcb
-	ld (0e339h),a		;7fcc
+	ld (0e339h),a		;7fcc   ; guarda la casilla 6 del medidor
 L_7FCF:
 	xor a			;7fcf
-	ld (0e338h),a		;7fd0
+	ld (0e338h),a		;7fd0   ; guarda la casilla 5 del medidor
 L_7FD3:
 	xor a			;7fd3
-	ld (0e337h),a		;7fd4
+	ld (0e337h),a		;7fd4   ; guarda la casilla 4 del medidor
 	ret			;7fd7
 suelta_segun_capturas:		; segun las armas capturadas, pone a cero 0xE337, 0xE338, 0xE339... (0 a 5) o 0xE336-0xE33A (6 o mas)
 	ld a,(0e20fh)		;7fd8   ; sin armas capturadas: 0xE337
@@ -4693,10 +4693,10 @@ suelta_segun_capturas:		; segun las armas capturadas, pone a cero 0xE337, 0xE338
 	cp 006h		;7fe2   ; de 2 a 5: tambien 0xE339
 	jr c,L_7FCB		;7fe4
 	xor a			;7fe6   ; 6 o 7: 0xE336-0xE33A
-	ld (0e33ah),a		;7fe7
-	ld (0e339h),a		;7fea
-	ld (0e338h),a		;7fed
-	ld (0e336h),a		;7ff0
+	ld (0e33ah),a		;7fe7   ; guarda la casilla 7 del medidor
+	ld (0e339h),a		;7fea   ; guarda la casilla 6 del medidor
+	ld (0e338h),a		;7fed   ; guarda la casilla 5 del medidor
+	ld (0e336h),a		;7ff0   ; guarda la casilla 3 del medidor
 	ret			;7ff3
 e33a_a_cero_con_7:		; con 7 armas capturadas, 0xE33A = 0
 	ld a,(0e20fh)		;7ff4   ; solo con 7
@@ -4704,7 +4704,7 @@ e33a_a_cero_con_7:		; con 7 armas capturadas, 0xE33A = 0
 	ret c			;7ff9
 L_7FFA:
 	xor a			;7ffa
-	ld (0e33ah),a		;7ffb
+	ld (0e33ah),a		;7ffb   ; guarda la casilla 7 del medidor
 	ret			;7ffe
 
 ; ----------------------------------------------------------------------

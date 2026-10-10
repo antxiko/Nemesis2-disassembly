@@ -122,20 +122,21 @@ F 0xBFFF 1
 # --- ANOTACIONES AUTOMATICAS (seccion que reescribe tools/anota.py; no editar a mano) ---
 C 0xA000 apunta a los atributos de los 32 sprites (Y, X, dibujo, color)
 C 0xA003 lee la forma de la nave (1 normal, 2 con escudo, 3 R.DRILL)
+C 0xA00C lee la marca de nave intocable y el byte siguiente (16 bits)
 C 0xA017 lee la cuenta de cuadros
 C 0xA02D lee la forma de la nave (1 normal, 2 con escudo, 3 R.DRILL)
 C 0xA039 lee lo que hay en la otra ranura (bit 3 Galious, 2 Penguin Adventure, 1 los 6 bytes de 0x7FFA, 0 Q*bert)
-C 0xA08B apunta a las 9 fichas de 16 bytes de 0xE470
-C 0xA0D6 apunta a las 9 fichas de 16 bytes de 0xE470
+C 0xA08B apunta a los 9 disparos de la nave (16 bytes: tipo, Y, X, largo...)
+C 0xA0D6 apunta a los 9 disparos de la nave (16 bytes: tipo, Y, X, largo...)
 C 0xA0F1 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 C 0xA13B guarda variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo) o un puntero y el byte siguiente (16 bits)
 C 0xA14D lee variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo) o un puntero y el byte siguiente (16 bits)
 C 0xA160 sitio_en_pantalla: HL = 0xED00 + el caracter de la pantalla de RAM bajo L (Y) y H (X)
-C 0xA16A apunta a las 9 fichas de 16 bytes de 0xE470
+C 0xA16A apunta a los 9 disparos de la nave (16 bytes: tipo, Y, X, largo...)
 C 0xA185 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 C 0xA1EB guarda variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo) o un puntero y el byte siguiente (16 bits)
 C 0xA1F7 lee variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo) o un puntero y el byte siguiente (16 bits)
-C 0xA206 apunta a las 9 fichas de 16 bytes de 0xE470
+C 0xA206 apunta a los 9 disparos de la nave (16 bytes: tipo, Y, X, largo...)
 C 0xA21E despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 C 0xA2B1 guarda la marca de fin de p11:A2A2
 C 0xA2E4 sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
@@ -191,6 +192,7 @@ C 0xA93F lee la marca de nucleo destruido
 C 0xA94C lee la fase (0-11)
 C 0xA956 guarda dato del jefe (8 al salir) y el byte siguiente (16 bits)
 C 0xA95B lee la fase (0-11)
+C 0xA960 nave_entra_al_jefe: si la nave esta junto a la entrada del jefe (0xEA0E, 0xEA10), 0xE22B = 1: al interior
 C 0xA963 lee la marca de jefe vencido: al interior
 C 0xA969 lee dato del jefe (8 al salir) y el byte siguiente (16 bits)
 C 0xA96D guarda dato del jefe (8 al salir) y el byte siguiente (16 bits)
@@ -200,11 +202,12 @@ C 0xA985 guarda la forma de la nave (1 normal, 2 con escudo, 3 R.DRILL)
 C 0xA988 apunta a el estado del jefe
 C 0xA98E apunta a dato del jefe (8 al salir)
 C 0xA994 guarda el tipo de jefe (1-5; 0 sin jefe)
-C 0xA997 guarda la marca de 0xE34F
+C 0xA997 guarda la marca de jefe o suceso acabado
 C 0xA99B guarda la marca de jefe vencido
 C 0xA9A2 lee la marca de fin de p11:A2A2
 C 0xA9A8 guarda la marca de 0xE3AA: sin enemigos ni su dibujo
 C 0xA9D2 guarda dato del jefe (8 al salir)
+C 0xA9E4 crea_explosion: una explosion de 4x4 caracteres en D (X), E (Y), si esta en pantalla y hay hueco en 0xEA40
 C 0xA9F0 sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
 C 0xAA3B lee la vuelta (bit 0: las fases bajan)
 C 0xAA5D lee el nivel de dificultad
@@ -301,14 +304,17 @@ C 0xB42F guarda variable de paso
 C 0xB438 palabra_a: DE = la palabra A de la tabla HL (HL apunta a su byte alto)
 C 0xB43B lee la columna del scroll (16 bits) y el byte siguiente (16 bits)
 C 0xB447 apunta a las 16 piezas de 8 bytes de las fases 3 y 9-11
+C 0xB44D apunta a la segunda pieza de la fase 5
 C 0xB452 azar: 0xE306 = 0xE306 + 3 x R: el azar del juego
 C 0xB463 lee variable de paso
 C 0xB47E lee variable de paso
 C 0xB4AA lee la fase (0-11)
 C 0xB4B0 apunta a las 16 piezas de 8 bytes de las fases 3 y 9-11
+C 0xB4B7 apunta a la segunda pieza de la fase 5
 C 0xB4F6 lee la marca de scroll hecho en este cuadro
 C 0xB53A lee la fase (0-11)
 C 0xB540 apunta a las 16 piezas de 8 bytes de las fases 3 y 9-11
+C 0xB547 apunta a la segunda pieza de la fase 5
 C 0xB55E sitio_en_pantalla: HL = 0xED00 + el caracter de la pantalla de RAM bajo L (Y) y H (X)
 C 0xB568 palabra_a: DE = la palabra A de la tabla HL (HL apunta a su byte alto)
 C 0xB56F guarda variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo) o un puntero
@@ -343,6 +349,7 @@ C 0xBA8A vy_cero: IX+07/IX+08 = 0
 C 0xBA93 pon_vy: IX+07/IX+08 = DE
 C 0xBA9F byte_a: A = el byte A de la tabla HL
 C 0xBAA4 velocidad_en_direccion: para la direccion A (0-15) y la rapidez B: HL = B x p00:4CF6[A] y DE = B x p00:4CD6[A]
+C 0xBAB3 dispara_bala_con: una bala desde D/E + 8 con la velocidad BC (Y) y HL (X), si no esta 0xF00E
 C 0xBACB lee la fase (0-11)
 C 0xBB09 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 C 0xBB3F lee la columna del scroll (16 bits)
@@ -374,6 +381,7 @@ C 0xBEED hl_mas_a: HL = HL + A
 C 0xBEF4 azar_por_nivel: A = p00:4EA4[0xE228] + un azar de 0 a 7 (R)
 C 0xBF08 pon_vx_y_vy: IX+09/IX+0A = DE y IX+07/IX+08 = HL
 C 0xBF13 dispara_al_acabar: IX+15 - 1 y, al llegar a 0, p01:6774
+C 0xBF1A hacia_la_y_de_la_nave: la velocidad Y + o - 0x16 hacia la Y de la nave
 C 0xBF24 lee la marca de fin del scroll
 C 0xBF3A menos_de: DE = - DE
 C 0xBF40 pon_vx_y_vy: IX+09/IX+0A = DE y IX+07/IX+08 = HL

@@ -106,6 +106,7 @@ C 0xA07C apunta a las fichas de 16 bytes de los objetos de caracteres
 C 0xA0A9 lee la vuelta (bit 0: las fases bajan)
 C 0xA0BE azar: 0xE306 = 0xE306 + 3 x R: el azar del juego
 C 0xA0EB palabra_a: DE = la palabra A de la tabla HL (HL apunta a su byte alto)
+C 0xA0F0 crea_objeto: un objeto de caracteres de la clase A en la primera ficha libre de 0xE500 (8 de 16 bytes), en D (X), E (Y)
 C 0xA153 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 C 0xA1EB lee la vuelta (bit 0: las fases bajan)
 C 0xA23E byte_a: A = el byte A de la tabla HL
@@ -186,11 +187,14 @@ C 0xA7B3 lee la cuenta de cuadros
 C 0xA7CC lee la forma de la nave (1 normal, 2 con escudo, 3 R.DRILL)
 C 0xA7D3 lee los golpes que le quedan al escudo
 C 0xA7D9 lee la cuenta de cuadros
+C 0xA7E7 lee la marca de nave intocable
+C 0xA803 lee la marca de nave intocable
 C 0xA809 lee la forma de la nave (1 normal, 2 con escudo, 3 R.DRILL)
 C 0xA815 lee los golpes que le quedan al escudo
 C 0xA81D lee la cuenta de cuadros
 C 0xA82E lee la forma de la nave (1 normal, 2 con escudo, 3 R.DRILL)
 C 0xA836 lee lo que hay en la otra ranura (bit 3 Galious, 2 Penguin Adventure, 1 los 6 bytes de 0x7FFA, 0 Q*bert)
+C 0xA846 apunta a la marca del R.DRILL
 C 0xA862 lee el modo: bit 6 se juega, bit 5 dos jugadores, bit 7 juega el 2
 C 0xA86E lee la cuenta de cuadros
 C 0xA8DC lee la fase (0-11)
@@ -227,7 +231,7 @@ C 0xAB20 lee las opciones
 C 0xAB2C lee la cuenta de cuadros
 C 0xAB39 lee la cuenta de cuadros
 C 0xAB4B de_mas_a: DE = DE + A
-C 0xAB92 apunta a las 9 fichas de 16 bytes de 0xE470
+C 0xAB92 apunta a los 9 disparos de la nave (16 bytes: tipo, Y, X, largo...)
 C 0xABBF despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 C 0xABE5 lee la forma de la nave (1 normal, 2 con escudo, 3 R.DRILL)
 C 0xABEA lee la velocidad del scroll (1 parado, 2 cada cuadro, si no uno de cada dos)
@@ -244,13 +248,13 @@ C 0xAC51 lee arma 0xE436
 C 0xAC58 lee el misil
 C 0xAC5F lee el disparo doble
 C 0xAC66 lee el laser
-C 0xAC80 apunta a las 9 fichas de 16 bytes de 0xE470
-C 0xAC91 apunta a las 9 fichas de 16 bytes de 0xE470
+C 0xAC80 apunta a los 9 disparos de la nave (16 bytes: tipo, Y, X, largo...)
+C 0xAC91 apunta a los 9 disparos de la nave (16 bytes: tipo, Y, X, largo...)
 C 0xAC9A lee arma 0xE431
-C 0xACA0 apunta a las 9 fichas de 16 bytes de 0xE470
+C 0xACA0 apunta a los 9 disparos de la nave (16 bytes: tipo, Y, X, largo...)
 C 0xACD1 sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
 C 0xAD1C sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
-C 0xAD36 apunta a las 9 fichas de 16 bytes de 0xE470
+C 0xAD36 apunta a los 9 disparos de la nave (16 bytes: tipo, Y, X, largo...)
 C 0xAD3D lee el arma elegida en el medidor
 C 0xAD6F lee el arma elegida en el medidor
 C 0xAD82 sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
@@ -258,12 +262,12 @@ C 0xADB7 sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los 
 C 0xADC1 lee el disparo doble
 C 0xADEC sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
 C 0xADF6 lee el laser
-C 0xAF04 apunta a las 9 fichas de 16 bytes de 0xE470
+C 0xAF04 apunta a los 9 disparos de la nave (16 bytes: tipo, Y, X, largo...)
 C 0xAF34 sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
-C 0xAF77 apunta a las 9 fichas de 16 bytes de 0xE470
+C 0xAF77 apunta a los 9 disparos de la nave (16 bytes: tipo, Y, X, largo...)
 C 0xAFA4 sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
 C 0xAFE2 lee la cuenta de cuadros
-C 0xB000 apunta a las 9 fichas de 16 bytes de 0xE470
+C 0xB000 apunta a los 9 disparos de la nave (16 bytes: tipo, Y, X, largo...)
 C 0xB026 sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
 C 0xB069 lee el arma elegida en el medidor
 C 0xB070 lee el paso del final del interior (0 nada)
@@ -272,6 +276,7 @@ C 0xB07F sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los 
 C 0xB0CD lee el misil
 C 0xB0FE lee la fase (0-11)
 C 0xB1A6 lee dato de la fase de p01:697A
+C 0xB1AC toca_mapa_hl: C si en H (X), L (Y) o en el caracter de la derecha hay mapa
 C 0xB1AF lee la marca de scroll hecho en este cuadro
 C 0xB1DC byte_a: A = el byte A de la tabla HL
 C 0xB1ED crea_enemigo: busca ficha libre en 0xE600 y pone el enemigo de tipo A en D (X), E (Y), con B y C; A = 0 si no hay sitio o sprites (0xE355, maximo 12)
@@ -293,15 +298,19 @@ C 0xB55D lee la vuelta (bit 0: las fases bajan)
 C 0xB565 lee la forma de la nave (1 normal, 2 con escudo, 3 R.DRILL)
 C 0xB56C lee el nivel de dificultad
 C 0xB57A lee las opciones
+C 0xB5A9 pon_bala: la primera ficha libre de 0xE900: tipo 1, en D/E, velocidad 0xF012/0xF014, dibujo 0x54 color 9; 0xE307 = 1
 C 0xB5FC pon_capsula: la capsula especial C del mapa en D (X), E (Y) (0xEA60-0xEA62), si no hay otra, ni cuenta atras, ni R.DRILL
 C 0xB5FF lee la marca de scroll hecho en este cuadro
 C 0xB642 lee el nivel de dificultad
 C 0xB67B hl_mas_a: HL = HL + A
 C 0xB692 hl_mas_a: HL = HL + A
+C 0xB6B7 guarda la rapidez del disparo
 C 0xB6BB guarda variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo) o un puntero
 C 0xB6BF guarda variable de paso: cuantos bytes
-C 0xB6F0 lee variable de paso: la VRAM de destino y el byte siguiente (16 bits)
-C 0xB6F4 lee variable de paso: la VRAM de origen y el byte siguiente (16 bits)
+C 0xB6C2 angulo_a_f000: el angulo desde D/E hasta 0xF000 (Y), 0xF001 (X)
+C 0xB6C5 rumbo_del_angulo: la velocidad del angulo ya calculado (0xF017), con error del nivel 7 en adelante
+C 0xB6F0 lee la velocidad X calculada (16 bits) y el byte siguiente (16 bits)
+C 0xB6F4 lee la velocidad Y calculada (16 bits) y el byte siguiente (16 bits)
 C 0xB6F7 pon_vx_y_vy: IX+09/IX+0A = DE y IX+07/IX+08 = HL
 C 0xB72E lee la vuelta (bit 0: las fases bajan)
 C 0xB74F lee la fase (0-11)
@@ -310,8 +319,9 @@ C 0xB7C6 azar_por_nivel: A = p00:4EA4[0xE228] + un azar de 0 a 7 (R)
 C 0xB7DB pon_vx_y_vy: IX+09/IX+0A = DE y IX+07/IX+08 = HL
 C 0xB7E4 pon_vx_y_vy: IX+09/IX+0A = DE y IX+07/IX+08 = HL
 C 0xB819 lee el nivel de dificultad
-C 0xB82A lee variable de paso: la VRAM de origen y el byte siguiente (16 bits)
-C 0xB82D lee variable de paso: la VRAM de destino y el byte siguiente (16 bits)
+C 0xB824 rumbo_a: la velocidad hacia la nave con rapidez A
+C 0xB82A lee la velocidad Y calculada (16 bits) y el byte siguiente (16 bits)
+C 0xB82D lee la velocidad X calculada (16 bits) y el byte siguiente (16 bits)
 C 0xB831 pon_vx_y_vy: IX+09/IX+0A = DE y IX+07/IX+08 = HL
 C 0xB834 lee la cuenta de cuadros
 C 0xB848 azar_por_nivel: A = p00:4EA4[0xE228] + un azar de 0 a 7 (R)
@@ -329,24 +339,32 @@ C 0xB96D pon_vy: IX+07/IX+08 = DE
 C 0xB970 lee la cuenta de cuadros
 C 0xB985 byte_a: A = el byte A de la tabla HL
 C 0xBA03 crea_enemigo_ix: crea_enemigo conservando IX
-C 0xBA4A guarda variable de paso: la VRAM de origen y el byte siguiente (16 bits)
-C 0xBA50 guarda variable de paso: la VRAM de destino y el byte siguiente (16 bits)
+C 0xBA4A guarda la velocidad Y calculada (16 bits) y el byte siguiente (16 bits)
+C 0xBA50 guarda la velocidad X calculada (16 bits) y el byte siguiente (16 bits)
+C 0xBAB7 toca_mapa_e305: C si en H (X), L (Y) o a su derecha hay mapa (hasta 0xE305); el sitio en 0xE3BC
 C 0xBAE9 pon_vx_y_vy: IX+09/IX+0A = DE y IX+07/IX+08 = HL
 C 0xBAF7 lee el nivel de dificultad
+C 0xBB09 oscila_en_y: la velocidad Y + o - DE hacia la Y A
 C 0xBB19 lee el nivel de dificultad
 C 0xBB2A byte_a: A = el byte A de la tabla HL
 C 0xBB2D velocidad_en_direccion: para la direccion A (0-15) y la rapidez B: HL = B x p00:4CF6[A] y DE = B x p00:4CD6[A]
 C 0xBB30 pon_vx_y_vy: IX+09/IX+0A = DE y IX+07/IX+08 = HL
+C 0xBB4D dispara_bala: una bala desde D (X), E (Y) + 8 hacia la nave, con rapidez 0x50 + 2 x nivel (como mucho 0x60); no en la espera de salida
 C 0xBB53 lee la fase (0-11)
+C 0xBB66 animacion_4: el dibujo de la tabla HL: un paso cada 4 cuadros (IX+24), 4 pasos
 C 0xBB69 lee la cuenta de cuadros
 C 0xBBA8 lee el nivel de dificultad
 C 0xBBE7 lee el nivel de dificultad
+C 0xBBEC dispara_bala: una bala desde D (X), E (Y) + 8 hacia la nave, con rapidez 0x50 + 2 x nivel (como mucho 0x60); no en la espera de salida
+C 0xBBF3 dispara_bala: una bala desde D (X), E (Y) + 8 hacia la nave, con rapidez 0x50 + 2 x nivel (como mucho 0x60); no en la espera de salida
 C 0xBBF9 lee el nivel de dificultad
 C 0xBC09 pon_vx: IX+09/IX+0A = DE
 C 0xBC0C vy_cero: IX+07/IX+08 = 0
 C 0xBC3A vx_cero: IX+09/IX+0A = 0
+C 0xBC55 dispara_bala_con: una bala desde D/E + 8 con la velocidad BC (Y) y HL (X), si no esta 0xF00E
 C 0xBC6E lee el nivel de dificultad
 C 0xBC7A pon_vx: IX+09/IX+0A = DE
+C 0xBC82 suma_a_vx: la velocidad X + DE
 C 0xBC89 lee el nivel de dificultad
 C 0xBC9C lee la cuenta de cuadros
 C 0xBCB2 guarda lo que hay en la otra ranura (bit 3 Galious, 2 Penguin Adventure, 1 los 6 bytes de 0x7FFA, 0 Q*bert)
@@ -365,12 +383,16 @@ C 0xBDD8 lee las armas capturadas (0-7)
 C 0xBDE2 hl_mas_a: HL = HL + A
 C 0xBDE5 apunta a las 9 casillas del medidor
 C 0xBDED apunta a el disparo normal
+C 0xBDF5 casillas_por_capturas: 0xE331 = las casillas del medidor con estas armas capturadas (p02:806D)
+C 0xBDF8 escudo_y_opciones: escudo de C golpes, velocidad 2 y dos opciones; y el medidor
 C 0xBDFB sprites_opcion: con los bancos 7-8-9, p08:93C0 a 0x18C0
 C 0xBDFE lee las armas capturadas (0-7)
 C 0xBE04 sprites_escudo: con los bancos 7-8-9, p08:93EE a 0x18C0
 C 0xBE87 borra_nombres_2c0: borra 704 bytes de la tabla de nombres (0x3800, 22 filas) tras p00:5AFA
 C 0xBE8A esconde_sprites: los 32 sprites de 0xE280 con Y = 0xE0 (fuera de la pantalla)
 C 0xBE8D a_la_siguiente: con la nave viva, 0xE1DA = 1 (estado 8)
+C 0xBE93 guarda la marca de nave intocable y el byte siguiente (16 bits)
+C 0xBE97 apunta a la marca de nave intocable
 C 0xBE9D lee la cuenta de cuadros
 C 0xBEE6 hl_mas_a: HL = HL + A
 C 0xBF3A lee la forma de la nave (1 normal, 2 con escudo, 3 R.DRILL)
@@ -384,5 +406,6 @@ C 0xBFA0 lee la marca de scroll hecho en este cuadro
 C 0xBFC6 lee la fase (0-11)
 C 0xBFDE guarda la columna en la que acaba el scroll (16 bits) y el byte siguiente (16 bits)
 C 0xBFEB guarda la velocidad del scroll (1 parado, 2 cada cuadro, si no uno de cada dos)
+C 0xBFEE caen_todos: caen todos los enemigos (no los 0x1D, 0x20, 0x26 ni 0x29-0x2E) y suena 0x0B
 C 0xBFF3 sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
 # --- fin de las anotaciones de anota.py ---

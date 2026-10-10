@@ -1046,16 +1046,25 @@ C 0x416D lee la marca de interior por pintar (fase 8)
 C 0x4176 aparece_el_interior: la fase 8 se pinta en tres cuadros (0xE1DD): caracteres a cero, luego cada vez mas bits de sus dibujos (mascara 0xE1DF) y por ultimo enteros
 C 0x4179 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xF0F1-0xF0F3)
 C 0x4183 guarda la marca de disparo en este cuadro (uno solo)
+C 0x4186 guarda la marca del ruido de rotura en este cuadro
+C 0x4189 guarda la marca del ruido de choque en este cuadro
 C 0x4192 lee la marca del estado 8
 C 0x419D bancos_13_14_15: pone los bancos 13, 14 y 15 (y sus copias en 0xF0F1-0xF0F3)
 C 0x41A3 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xF0F1-0xF0F3)
 C 0x41A9 lee la marca de la nave ida
 C 0x41B4 usa_el_medidor: con el otro boton recien pulsado y una casilla encendida que no este gastada, la usa (p01:7D8D por armas capturadas) y suena 6
+C 0x41C6 nucleo_con_el_scroll: el nucleo del interior se corre 8 pixeles con el scroll; al salir, desaparece
+C 0x41C9 aparece_el_nucleo: en el interior, en la columna 0x7F: el nucleo (0xEA90) en Y 0x40, X 0xE0, con 24 golpes
+C 0x41CC disparos_al_nucleo: cada disparo de la nave contra el nucleo del interior (p02:85C6)
+C 0x41CF nave_pasa_el_nucleo: al pasar la nave la X del nucleo, empieza el final del interior (0xE3C0 = 1), sin enemigos y suena 0xF1
 C 0x41D2 lee la marca de 0xE3AA: sin enemigos ni su dibujo
 C 0x41D8 mueve_enemigos: las 12 fichas de 0xE600: lo de su tipo (p01:63AE), el scroll (p01:6486) y su velocidad (p01:64BE)
+C 0x41DB mueve_balas: las 10 balas de 0xE900 (con E.SLOW, cuadro si cuadro no): suman su velocidad; fuera de la pantalla, libres
 C 0x41DE apariciones_de_enemigos: cada cuadro: torretas, la lista de la fase (p14:9A67), las oleadas y los de relleno de la zona (p14:99C7); nada en el final de la fase 8 ni con 0xE3D0
 C 0x41E1 apariciones_de_bloques_scroll: si el scroll avanzo (0xE320), lo de la columna nueva (X = 0xF8)
+C 0x41E4 capsula_con_el_scroll: la capsula especial del mapa se corre 8 pixeles con el scroll; al salir, desaparece
 C 0x41E7 apariciones_del_scroll: si el scroll avanzo (0xE320), lo que trae la columna nueva (X = 0xF8)
+C 0x41EA recoge_capsula_especial: la nave coge la capsula especial del mapa (clase 3 o mas): suena 0x1F, 0x0030 puntos y 15 segundos de D.VARRIOR (3), R.DRILL (4), E.SLOW (5) o VECTOR (7)
 C 0x41ED lee la fase (0-11)
 C 0x41F3 banco_11: pone el banco 11 en 0xA000 (y 0xF0F3)
 C 0x41F9 bancos_2_3: pone los bancos 2 y 3 en 0x8000 y 0xA000 (y 0xF0F2-0xF0F3)
@@ -1065,24 +1074,43 @@ C 0x4202 banco_11: pone el banco 11 en 0xA000 (y 0xF0F3)
 C 0x420B bancos_2_3: pone los bancos 2 y 3 en 0x8000 y 0xA000 (y 0xF0F2-0xF0F3)
 C 0x4211 suceso_e34b: el paso del suceso 0xE34B (4, p01:72DF): las dos piezas de 0xEA70, sus rocas, los puntos, 0xE3AA y p11:A2A2
 C 0x4214 final_de_fase_0: el paso 0xEA98 del final de la fase 0 (p01:7827)
+C 0x4217 disparos_al_nucleo_de_fase_0: con el final de la fase 0 en marcha, su nucleo (0xEA99) contra los disparos
 C 0x421A cuenta_objetos: 0xE3B2 = hasta donde hay fichas ocupadas en 0xE500 (8 de 16 bytes)
 C 0x421D mueve_objetos: sin jefe con partes, cada objeto de caracteres de 0xE500: lo de su clase, si se ve, y el scroll
+C 0x4220 apariciones_de_objetos_scroll: si el scroll avanzo (0xE320), lo de la columna nueva (X = 0xF8)
+C 0x4223 mueve_explosiones: las 4 explosiones de 4x4 caracteres de 0xEA40 (8 bytes): cada 4 cuadros un paso, y el scroll
 C 0x4226 cuadro_del_jefe: con un jefe (0xE340), un cuadro mas de pelea (0xE346, sin pasar de 0xFFFF) y lo de su tipo (p11, 5 tipos)
 C 0x4229 banco_11: pone el banco 11 en 0xA000 (y 0xF0F3)
 C 0x422C lee la fase (0-11)
 C 0x4233 bancos_2_3: pone los bancos 2 y 3 en 0x8000 y 0xA000 (y 0xF0F2-0xF0F3)
 C 0x4236 partes_del_jefe: si p01:6878 no da Z, con el banco 9, p01:67CE con C = 1
+C 0x4239 disparos_a_piezas: sin jefe, en las fases 3 y 9-11, las piezas de 0xE580 contra los disparos
+C 0x423C disparos_a_piezas_fase_5: sin jefe, en la fase 5, las dos piezas de 0xE580 y 0xE590 contra los disparos
 C 0x423F lee la marca de 0xE3AA: sin enemigos ni su dibujo
+C 0x4245 disparos_al_suceso: con el suceso de 0xE34B, sus dos piezas contra los disparos
+C 0x4248 disparos_al_jefe: las partes que se pueden golpear del jefe (0xEA00, y 0xEA20 con el 5) contra los disparos
+C 0x424B disparos_a_enemigos: cada enemigo que se puede tocar (IX+10 bit 1) contra los 9 disparos de la nave
+C 0x424E disparos_a_objetos: sin jefe, cada objeto de caracteres de 0xE500 contra los 9 disparos de la nave
+C 0x4251 escudo_contra_enemigos: con escudo, el enemigo que lo toca cae y le quita un golpe; los que no caen (0x20, bloques, 0x22-0x24, 0x38-0x3C) se lo llevan entero
+C 0x4254 escudo_contra_balas: con escudo, las balas que llegan por delante se quedan en el y le quitan un golpe
+C 0x4257 nave_contra_enemigos: el enemigo que toca a la nave: los 0x29-0x2E se recogen (p02:8F67), los demas caen y la nave tambien
+C 0x425A nave_contra_balas: si una de las 10 balas de 0xE900 toca a la nave (12 x 8 pixeles), la bala se va y la nave cae
 C 0x425D objetos_5fdf: si p01:6878 da Z, con el banco 15, p00:5FDF
+C 0x4260 nave_contra_el_mapa: si la nave toca el mapa cae (p02:8E7C); el R.DRILL rompe lo que se puede romper (p02:8481) y solo cae con lo demas
+C 0x4263 balas_contra_el_mapa: las balas (sin el bit 7 en el tipo) que tocan el mapa desaparecen
+C 0x4266 mueve_disparos: los 9 disparos de la nave (0xE470, 16 bytes; IY): lo de su tipo (p02:81FB)
 C 0x4269 lee la marca de 0xE3AA: sin enemigos ni su dibujo
 C 0x426D enemigos_contra_el_mapa: los tipos 0x1D, 0x20 y 0x22 (sin IX+2F) se quitan al tocar el mapa (p02:9317)
 C 0x4270 pinta_piezas: sin jefe con partes, en las fases 3 y 9-11, con los bancos 14-15, cada pieza en la pantalla de RAM (p01:6D11)
 C 0x4273 caen_las_piezas: sin jefe con partes, en las fases 3 y 9-11, las 16 piezas de 0xE580 (p01:6C67)
 C 0x4276 banco_11: pone el banco 11 en 0xA000 (y 0xF0F3)
 C 0x427C bancos_2_3: pone los bancos 2 y 3 en 0x8000 y 0xA000 (y 0xF0F2-0xF0F3)
+C 0x427F pinta_capsula: la capsula especial: 2x2 caracteres desde el 0xE9 en la pantalla de RAM (sitio en 0xEA63)
+C 0x4282 guarda_fondo_explosiones: el fondo de 4x4 caracteres bajo cada explosion a 0xECC0 (16 bytes cada una) y su sitio
 C 0x4285 banco_11: pone el banco 11 en 0xA000 (y 0xF0F3)
 C 0x428E bancos_2_3: pone los bancos 2 y 3 en 0x8000 y 0xA000 (y 0xF0F2-0xF0F3)
 C 0x4291 bancos_2_3: pone los bancos 2 y 3 en 0x8000 y 0xA000 (y 0xF0F2-0xF0F3)
+C 0x4294 pinta_explosiones: cada explosion: los 4x4 caracteres de su paso (p02:8762) en la pantalla de RAM
 C 0x4297 sprites_de_enemigos: si no esta 0xE3AA, los enemigos de 0xE600 a sprites (0xE2A8) o a caracteres, con los bancos 7-8-9
 C 0x429A sprites_de_balas: los atributos de sprite de las 10 fichas de 0xE900 (Y, X, dibujo, color) a 0xE2D8; las libres con Y = 0xE0
 C 0x429D banco_11: pone el banco 11 en 0xA000 (y 0xF0F3)
@@ -1092,7 +1120,9 @@ C 0x42B2 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xF0F1-0xF0F3)
 C 0x42B5 estrellas_titilan: los dibujos de las estrellas (caracteres 0xFE y 0xFF de los tres tercios) segun 0xE202 y la mascara de p00:49E0
 C 0x42BB banco_11: pone el banco 11 en 0xA000 (y 0xF0F3)
 C 0x42C4 bancos_2_3: pone los bancos 2 y 3 en 0x8000 y 0xA000 (y 0xF0F2-0xF0F3)
+C 0x42C7 repone_fondo_explosiones: devuelve el fondo de 0xECC0 bajo cada explosion
 C 0x42CA quita_partes_del_jefe: si hay jefe con partes, con el banco 9 las borra (C = 0) y vuelve a poner las estrellas
+C 0x42CD borra_capsula: borra los 2x2 caracteres de la capsula especial
 C 0x42D0 objetos_5f84: si p01:6878 da Z, con el banco 15, p00:5F84
 C 0x42D9 pinta_los_puntos: el record (0xE1F4 en 0x3AF6) y los del jugador en turno (0x3AE9)
 C 0x42DD bancos_7_8_9: pone los bancos 7, 8 y 9 (y sus copias en 0xF0F1-0xF0F3)
@@ -1143,15 +1173,15 @@ C 0x43D4 palabra_a: DE = la palabra A de la tabla HL (HL apunta a su byte alto)
 C 0x43E0 sprites_cabeza_abajo: copia IX+01 dibujos de sprite de IX+02 a IX+03 cabeza abajo
 C 0x43E4 sprites_espejo: copia IX+01 dibujos de sprite de IX+02 a IX+03 de izquierda a derecha
 C 0x43F3 guarda variable de paso: la lista
-C 0x4402 guarda variable de paso: la VRAM de origen y el byte siguiente (16 bits)
-C 0x440E guarda variable de paso: la VRAM de destino y el byte siguiente (16 bits)
+C 0x4402 guarda la velocidad Y calculada (16 bits) y el byte siguiente (16 bits)
+C 0x440E guarda la velocidad X calculada (16 bits) y el byte siguiente (16 bits)
 C 0x4414 apunta a las fichas de 64 bytes (0xE600-0xE8FF), y tambien el bufer de graficos al cargar
 C 0x4423 apunta a el bufer de graficos, segunda mitad
 C 0x4429 copia_a_vram: copia BC bytes de DE a la VRAM HL (LDIRVM)
-C 0x442F lee variable de paso: la VRAM de origen y el byte siguiente (16 bits)
-C 0x4433 guarda variable de paso: la VRAM de origen y el byte siguiente (16 bits)
-C 0x4436 lee variable de paso: la VRAM de destino y el byte siguiente (16 bits)
-C 0x443A guarda variable de paso: la VRAM de destino y el byte siguiente (16 bits)
+C 0x442F lee la velocidad Y calculada (16 bits) y el byte siguiente (16 bits)
+C 0x4433 guarda la velocidad Y calculada (16 bits) y el byte siguiente (16 bits)
+C 0x4436 lee la velocidad X calculada (16 bits) y el byte siguiente (16 bits)
+C 0x443A guarda la velocidad X calculada (16 bits) y el byte siguiente (16 bits)
 C 0x443D apunta a variable de paso: la lista
 C 0x444C copia_al_reves: copia B bytes de HL hacia delante a DE hacia atras
 C 0x447F espejo_de_sprites: copia C dibujos de sprite de 16x16 de la VRAM HL a la DE dados la vuelta de izquierda a derecha
@@ -1243,6 +1273,7 @@ C 0x47F2 guarda variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza ab
 C 0x47F8 bancos_13_14_15: pone los bancos 13, 14 y 15 (y sus copias en 0xF0F1-0xF0F3)
 C 0x47FE bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xF0F1-0xF0F3)
 C 0x4804 apariciones_de_torretas: lo que trae cada columna (p01:657C) hasta ponerse al dia (0xE358)
+C 0x4807 apariciones_de_objetos: lo que trae cada columna (p02:87B4) hasta ponerse al dia (0xE359)
 C 0x480A enemigos_de_la_lista: en las fases 0-8, lo que trae cada columna de la lista (p01:6F64) hasta ponerse al dia (0xE37C)
 C 0x480D apariciones_de_piezas: en las fases 3 y 9-11, lo que trae cada columna (p01:6AE0) hasta ponerse al dia (0xE369)
 C 0x4810 banco_11: pone el banco 11 en 0xA000 (y 0xF0F3)
@@ -1337,12 +1368,16 @@ C 0x4E83 banco_11: pone el banco 11 en 0xA000 (y 0xF0F3)
 C 0x4E8B el mapper: pone en 0xA000 el banco de A
 C 0x4E8E guarda la copia del banco de 0xA000
 C 0x4E9A hl_mas_a: HL = HL + A
+C 0x4EBA rumbo_a: la velocidad hacia la nave con rapidez A
 C 0x4EC1 pon_vy: IX+07/IX+08 = DE
+C 0x4ED0 rumbo_sin_error: la velocidad hacia la nave desde D/E con rapidez A, sin el error de los niveles altos
 C 0x4EE1 guarda variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo) o un puntero
 C 0x4EE5 guarda variable de paso: cuantos bytes
-C 0x4EF0 lee variable de paso: la VRAM de destino y el byte siguiente (16 bits)
+C 0x4EE8 angulo_a_f000: el angulo desde D/E hasta 0xF000 (Y), 0xF001 (X)
+C 0x4EED rumbo_del_angulo_d: lo mismo con D = 1 para no poner error
+C 0x4EF0 lee la velocidad X calculada (16 bits) y el byte siguiente (16 bits)
 C 0x4EF4 pon_vx: IX+09/IX+0A = DE
-C 0x4EF7 lee variable de paso: la VRAM de origen y el byte siguiente (16 bits)
+C 0x4EF7 lee la velocidad Y calculada (16 bits) y el byte siguiente (16 bits)
 C 0x4F17 vx_cero: IX+09/IX+0A = 0
 C 0x4F26 pon_vx: IX+09/IX+0A = DE
 C 0x5113 aparicion_de_capsula: con el banco 12, la siguiente ficha de p12:BB72 de la fase: si es su columna, pone la capsula C (p00:5157)
@@ -1370,8 +1405,8 @@ C 0x530C sitio_y_ancho: HL = el sitio de H (X), L (Y) en la pantalla de RAM y B 
 C 0x5328 sitio_y_ancho: HL = el sitio de H (X), L (Y) en la pantalla de RAM y B recortado al borde derecho
 C 0x5357 sitio_en_pantalla: HL = 0xED00 + el caracter de la pantalla de RAM bajo L (Y) y H (X)
 C 0x5369 apunta a cuantas casillas tiene el medidor
-C 0x5376 lee una casilla del medidor puesta
-C 0x537C lee una casilla del medidor puesta
+C 0x5376 lee la marca de equipo guardado (Galious)
+C 0x537C lee la casilla encendida al caer
 C 0x5384 guarda la casilla iluminada del medidor
 C 0x5395 prepara_escritura_vram: SETWRT en HL y C' = el puerto de datos del VDP (0x0007 de la BIOS); conserva AF
 C 0x53A6 prepara_escritura_vram: SETWRT en HL y C' = el puerto de datos del VDP (0x0007 de la BIOS); conserva AF
@@ -1484,7 +1519,7 @@ C 0x5844 tecla_f1: C si se acaba de pulsar F1 (fila 6, bit 5) jugando (0xE1C2 bi
 C 0x584B sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
 C 0x584E siguiente_paso: el paso siguiente del estado (0xE1C1 + 1)
 C 0x5862 lee el modo: bit 6 se juega, bit 5 dos jugadores, bit 7 juega el 2
-C 0x5878 guarda una casilla del medidor puesta
+C 0x5878 guarda la casilla encendida al caer
 C 0x587D guarda las vidas (BCD)
 C 0x5893 al_estado_0: suena 0x43 y vuelve al estado 0
 C 0x5898 tecla_f1: C si se acaba de pulsar F1 (fila 6, bit 5) jugando (0xE1C2 bit 6); 0xE30A es la de antes
