@@ -20,8 +20,8 @@ DATA_caracteres_por_fase:
 
 ; ----------------------------------------------------------------------
 ; DATOS copias_por_fase_6018: 12 punteros, uno por fase (0xE201): listas de
-;   copias de caracteres VRAM -> VRAM sin voltear (0xF000 = 0), p00:4545 con
-;   L_4B67; lo leen p00:4548 (24 bytes)
+;   copias de caracteres VRAM -> VRAM en espejo (0xF000 = 0: p00:4617 invierte
+;   los bits), p00:4545 con L_4B67; lo leen p00:4548 (24 bytes)
 ;   0x6018..0x6030  (24 bytes)
 DATA_copias_por_fase_6018:
 	defw 06295h,0620eh,06224h,06230h,0625dh,062adh	; 6018
@@ -29,8 +29,8 @@ DATA_copias_por_fase_6018:
 
 ; ----------------------------------------------------------------------
 ; DATOS copias_por_fase_6030: 12 punteros, uno por fase (0xE201): listas de
-;   copias de caracteres VRAM -> VRAM volteados (0xF000 = 1), p00:4545 con
-;   L_4B67; lo leen p00:4548 (24 bytes)
+;   copias de caracteres VRAM -> VRAM cabeza abajo (0xF000 = 1: p00:45EA
+;   invierte las filas), p00:4545 con L_4B67; lo leen p00:4548 (24 bytes)
 ;   0x6030..0x6048  (24 bytes)
 DATA_copias_por_fase_6030:
 	defw 064b8h,062b2h,062d6h,062f2h,0630fh,06423h	; 6030
@@ -38,7 +38,7 @@ DATA_copias_por_fase_6030:
 
 ; ----------------------------------------------------------------------
 ; DATOS caracteres_6048: lista de caracteres (p00:4595): fichas de 6 bytes
-;   [tercios][colores][caracter][dibujos], 0 acaba; lo leen p00:4502,
+;   [tercios][dibujos][caracter][colores], 0 acaba; lo leen p00:4502,
 ;   p00:4522, p00:57D5 (25 bytes)
 ;   0x6048..0x6061  (25 bytes)
 DATA_caracteres_6048:
@@ -50,7 +50,7 @@ DATA_caracteres_6048:
 
 ; ----------------------------------------------------------------------
 ; DATOS caracteres_fase_6061: lista de caracteres (p00:4595) de la fase 0:
-;   fichas de 6 bytes [tercios][colores][caracter][dibujos], 0 acaba; lo leen
+;   fichas de 6 bytes [tercios][dibujos][caracter][colores], 0 acaba; lo leen
 ;   p00:4531 (55 bytes)
 ;   0x6061..0x6098  (55 bytes)
 DATA_caracteres_fase_6061:
@@ -67,7 +67,7 @@ DATA_caracteres_fase_6061:
 
 ; ----------------------------------------------------------------------
 ; DATOS caracteres_fase_6098: lista de caracteres (p00:4595) de la fase 1:
-;   fichas de 6 bytes [tercios][colores][caracter][dibujos], 0 acaba; lo leen
+;   fichas de 6 bytes [tercios][dibujos][caracter][colores], 0 acaba; lo leen
 ;   p00:4531 (67 bytes)
 ;   0x6098..0x60db  (67 bytes)
 DATA_caracteres_fase_6098:
@@ -86,7 +86,7 @@ DATA_caracteres_fase_6098:
 
 ; ----------------------------------------------------------------------
 ; DATOS caracteres_fase_60DB: lista de caracteres (p00:4595) de la fase 2:
-;   fichas de 6 bytes [tercios][colores][caracter][dibujos], 0 acaba; lo leen
+;   fichas de 6 bytes [tercios][dibujos][caracter][colores], 0 acaba; lo leen
 ;   p00:4531 (43 bytes)
 ;   0x60db..0x6106  (43 bytes)
 DATA_caracteres_fase_60DB:
@@ -101,7 +101,7 @@ DATA_caracteres_fase_60DB:
 
 ; ----------------------------------------------------------------------
 ; DATOS caracteres_fase_6106: lista de caracteres (p00:4595) de las fases 3,
-;   9, 10, 11: fichas de 6 bytes [tercios][colores][caracter][dibujos], 0
+;   9, 10, 11: fichas de 6 bytes [tercios][dibujos][caracter][colores], 0
 ;   acaba; lo leen p00:4531 (61 bytes)
 ;   0x6106..0x6143  (61 bytes)
 DATA_caracteres_fase_6106:
@@ -119,7 +119,7 @@ DATA_caracteres_fase_6106:
 
 ; ----------------------------------------------------------------------
 ; DATOS caracteres_fase_6143: lista de caracteres (p00:4595) de la fase 5:
-;   fichas de 6 bytes [tercios][colores][caracter][dibujos], 0 acaba; lo leen
+;   fichas de 6 bytes [tercios][dibujos][caracter][colores], 0 acaba; lo leen
 ;   p00:4531 (7 bytes)
 ;   0x6143..0x614a  (7 bytes)
 DATA_caracteres_fase_6143:
@@ -128,7 +128,7 @@ DATA_caracteres_fase_6143:
 
 ; ----------------------------------------------------------------------
 ; DATOS caracteres_fase_614A: lista de caracteres (p00:4595) de la fase 4:
-;   fichas de 6 bytes [tercios][colores][caracter][dibujos], 0 acaba; lo leen
+;   fichas de 6 bytes [tercios][dibujos][caracter][colores], 0 acaba; lo leen
 ;   p00:4531 (37 bytes)
 ;   0x614a..0x616f  (37 bytes)
 DATA_caracteres_fase_614A:
@@ -142,7 +142,7 @@ DATA_caracteres_fase_614A:
 
 ; ----------------------------------------------------------------------
 ; DATOS caracteres_fase_616F: lista de caracteres (p00:4595) de la fase 6:
-;   fichas de 6 bytes [tercios][colores][caracter][dibujos], 0 acaba; lo leen
+;   fichas de 6 bytes [tercios][dibujos][caracter][colores], 0 acaba; lo leen
 ;   p00:4531 (43 bytes)
 ;   0x616f..0x619a  (43 bytes)
 DATA_caracteres_fase_616F:
@@ -157,7 +157,7 @@ DATA_caracteres_fase_616F:
 
 ; ----------------------------------------------------------------------
 ; DATOS caracteres_fase_619A: lista de caracteres (p00:4595) de la fase 7:
-;   fichas de 6 bytes [tercios][colores][caracter][dibujos], 0 acaba; lo leen
+;   fichas de 6 bytes [tercios][dibujos][caracter][colores], 0 acaba; lo leen
 ;   p00:4531 (67 bytes)
 ;   0x619a..0x61dd  (67 bytes)
 DATA_caracteres_fase_619A:
@@ -176,7 +176,7 @@ DATA_caracteres_fase_619A:
 
 ; ----------------------------------------------------------------------
 ; DATOS caracteres_fase_61DD: lista de caracteres (p00:4595) de la fase 8:
-;   fichas de 6 bytes [tercios][colores][caracter][dibujos], 0 acaba; lo leen
+;   fichas de 6 bytes [tercios][dibujos][caracter][colores], 0 acaba; lo leen
 ;   p00:4531 (49 bytes)
 ;   0x61dd..0x620e  (49 bytes)
 DATA_caracteres_fase_61DD:
@@ -503,21 +503,21 @@ DATA_copias_por_fase_6030_64B8:
 	defb 0bbh,0c1h,0f9h,000h	; 64d8
 
 ; ----------------------------------------------------------------------
-; DATOS colores_64DC: rachas (p00:4A8C) con los colores de los caracteres
+; DATOS dibujos_64DC: rachas (p00:4A8C) con los dibujos de los caracteres
 ;   desde el 161, ficha 8 de la lista 0x6106 (p00:4595); lo leen p00:4531 (34
 ;   bytes)
 ;   0x64dc..0x64fe  (34 bytes)
-DATA_colores_64DC:
+DATA_dibujos_64DC:
 	defb 0a0h,000h,080h,060h,077h,038h,010h,023h,0a7h,000h,001h,006h,0eeh,01ch,008h,0c4h	; 64dc  ...`w8.#........
 	defb 0e5h,0a7h,023h,010h,038h,077h,060h,080h,000h,0e5h,0c4h,008h,01ch,0eeh,006h,001h	; 64ec  ..#.8w`.........
 	defb 000h,000h	; 64fc
 
 ; ----------------------------------------------------------------------
-; DATOS colores_64FE: rachas (p00:4A8C) con los colores de los caracteres
+; DATOS dibujos_64FE: rachas (p00:4A8C) con los dibujos de los caracteres
 ;   desde el 177, ficha 3 de la lista 0x6098 (p00:4595); lo leen p00:4531 (98
 ;   bytes)
 ;   0x64fe..0x6560  (98 bytes)
-DATA_colores_64FE:
+DATA_dibujos_64FE:
 	defb 0e0h,034h,06eh,05ah,000h,086h,0cch,0ebh,0f7h,034h,06eh,05ah,061h,086h,0cch,000h	; 64fe  .4nZ.....4nZa...
 	defb 000h,024h,012h,040h,0b8h,0fch,0f9h,0fbh,0f9h,031h,083h,0f9h,0f6h,0c6h,082h,038h	; 650e  .$.@.....1.....8
 	defb 07dh,007h,064h,076h,023h,013h,0bdh,0cfh,03fh,0c3h,00fh,007h,038h,07eh,05fh,0f7h	; 651e  }.dv#...?...8~_.
@@ -527,11 +527,11 @@ DATA_colores_64FE:
 	defb 0f2h,000h	; 655e
 
 ; ----------------------------------------------------------------------
-; DATOS colores_6560: rachas (p00:4A8C) con los colores de los caracteres
+; DATOS dibujos_6560: rachas (p00:4A8C) con los dibujos de los caracteres
 ;   desde el 21, ficha 4 de la lista 0x6098 (p00:4595); lo leen p00:4531 (90
 ;   bytes)
 ;   0x6560..0x65ba  (90 bytes)
-DATA_colores_6560:
+DATA_dibujos_6560:
 	defb 0c8h,060h,068h,000h,020h,0fbh,036h,0cdh,010h,082h,0e6h,000h,025h,007h,0c8h,036h	; 6560  .`h. .6.....%..6
 	defb 040h,0e0h,0f0h,014h,065h,071h,014h,005h,091h,000h,03ch,03eh,09eh,0cch,021h,015h	; 6570  @...eq....<>..!.
 	defb 044h,01ch,002h,004h,06ch,006h,016h,012h,088h,098h,008h,02ah,03ah,01ah,08ah,0a2h	; 6580  D...l......*:...
@@ -540,21 +540,21 @@ DATA_colores_6560:
 	defb 014h,001h,000h,000h,031h,06fh,040h,01ch,0c2h,000h	; 65b0  ....1o@...
 
 ; ----------------------------------------------------------------------
-; DATOS colores_65BA: rachas (p00:4A8C) con los colores de los caracteres
+; DATOS dibujos_65BA: rachas (p00:4A8C) con los dibujos de los caracteres
 ;   desde el 193, ficha 9 de la lista 0x6098 (p00:4595); lo leen p00:4531 (39
 ;   bytes)
 ;   0x65ba..0x65e1  (39 bytes)
-DATA_colores_65BA:
+DATA_dibujos_65BA:
 	defb 082h,0b9h,062h,006h,000h,085h,063h,073h,071h,03ah,01bh,003h,001h,083h,079h,07ch	; 65ba  ..b...csq:....y|
 	defb 038h,005h,000h,083h,0fah,074h,020h,005h,000h,082h,09ch,00eh,006h,000h,085h,0c6h	; 65ca  8....t .........
 	defb 0ceh,08eh,05ch,0d8h,003h,080h,000h	; 65da
 
 ; ----------------------------------------------------------------------
-; DATOS colores_65E1: rachas (p00:4A8C) con los colores de los caracteres
+; DATOS dibujos_65E1: rachas (p00:4A8C) con los dibujos de los caracteres
 ;   desde el 31, ficha 0 de la lista 0x614A (p00:4595); lo leen p00:4531 (606
 ;   bytes)
 ;   0x65e1..0x683f  (606 bytes)
-DATA_colores_65E1:
+DATA_dibujos_65E1:
 	defb 0b8h,0fdh,0ddh,0deh,0ceh,0eeh,0e7h,0e7h,0f7h,0fdh,0ddh,0deh,0ceh,0eeh,0e7h,0e7h	; 65e1  ................
 	defb 0f7h,080h,0e0h,0e0h,0f0h,070h,078h,038h,0bch,0f3h,0b3h,0b9h,0bdh,0bdh,0deh,0dfh	; 65f1  .....px8........
 	defb 0cfh,09eh,09fh,0dfh,0dfh,0efh,0ffh,0f7h,0f3h,0cfh,0e7h,0e3h,0e3h,0f0h,0f0h,0f8h	; 6601  ................
@@ -595,11 +595,11 @@ DATA_colores_65E1:
 	defb 011h,000h,020h,0e0h,048h,04ch,005h,002h,042h,080h,080h,008h,0c0h,000h	; 6831  .. .HL..B.....
 
 ; ----------------------------------------------------------------------
-; DATOS colores_683F: rachas (p00:4A8C) con los colores de los caracteres
+; DATOS dibujos_683F: rachas (p00:4A8C) con los dibujos de los caracteres
 ;   desde el 139, ficha 1 de la lista 0x614A (p00:4595); lo leen p00:4531 (121
 ;   bytes)
 ;   0x683f..0x68b8  (121 bytes)
-DATA_colores_683F:
+DATA_dibujos_683F:
 	defb 003h,001h,086h,013h,0f3h,0f0h,0ffh,0ffh,001h,003h,003h,081h,007h,007h,000h,081h	; 683f  ................
 	defb 058h,003h,0d8h,003h,000h,081h,01fh,007h,0ffh,09ah,01eh,0feh,0feh,0ffh,0ffh,000h	; 684f  X...............
 	defb 02dh,02dh,000h,004h,009h,012h,025h,000h,0bbh,0bbh,000h,0b7h,077h,0efh,0efh,001h	; 685f  --....%.....w...
@@ -610,11 +610,11 @@ DATA_colores_683F:
 	defb 000h,080h,042h,021h,029h,010h,000h,000h,000h	; 68af  ..B!)....
 
 ; ----------------------------------------------------------------------
-; DATOS colores_68B8: rachas (p00:4A8C) con los colores de los caracteres
+; DATOS dibujos_68B8: rachas (p00:4A8C) con los dibujos de los caracteres
 ;   desde el 173, ficha 2 de la lista 0x614A (p00:4595); lo leen p00:4531 (92
 ;   bytes)
 ;   0x68b8..0x6914  (92 bytes)
-DATA_colores_68B8:
+DATA_dibujos_68B8:
 	defb 002h,000h,003h,080h,003h,040h,003h,000h,08dh,080h,0c0h,0c0h,0e0h,0f0h,000h,080h	; 68b8  .....@..........
 	defb 080h,040h,0a0h,098h,044h,020h,006h,000h,087h,058h,00fh,018h,004h,004h,003h,003h	; 68c8  .@..D ...X......
 	defb 003h,001h,084h,056h,022h,022h,002h,004h,000h,081h,014h,003h,008h,007h,000h,002h	; 68d8  ...V""..........
@@ -623,20 +623,20 @@ DATA_colores_68B8:
 	defb 000h,018h,004h,007h,000h,083h,048h,022h,002h,003h,000h,000h	; 6908  ......H"....
 
 ; ----------------------------------------------------------------------
-; DATOS colores_6914: rachas (p00:4A8C) con los colores de los caracteres
+; DATOS dibujos_6914: rachas (p00:4A8C) con los dibujos de los caracteres
 ;   desde el 196, ficha 3 de la lista 0x614A (p00:4595); lo leen p00:4531 (25
 ;   bytes)
 ;   0x6914..0x692d  (25 bytes)
-DATA_colores_6914:
+DATA_dibujos_6914:
 	defb 003h,000h,002h,008h,002h,01ch,091h,03ah,018h,01ch,02ah,038h,072h,041h,008h,0ffh	; 6914  .......:..*8rA..
 	defb 01ch,034h,03ah,059h,072h,041h,008h,0ffh,000h	; 6924  .4:YrA...
 
 ; ----------------------------------------------------------------------
-; DATOS colores_692D: rachas (p00:4A8C) con los colores de los caracteres
+; DATOS dibujos_692D: rachas (p00:4A8C) con los dibujos de los caracteres
 ;   desde el 32, ficha 1 de la lista 0x6098 (p00:4595); lo leen p00:4531 (122
 ;   bytes)
 ;   0x692d..0x69a7  (122 bytes)
-DATA_colores_692D:
+DATA_dibujos_692D:
 	defb 09dh,00eh,03bh,077h,06ch,0a0h,06fh,067h,09fh,07eh,03fh,087h,0feh,00dh,07dh,0e0h	; 692d  ...wl.og.~?...}.
 	defb 0fch,089h,064h,0f9h,0b1h,044h,083h,000h,000h,020h,075h,0f9h,04eh,044h,003h,009h	; 693d  ..d..D... u.ND..
 	defb 0a5h,072h,073h,030h,058h,06eh,011h,000h,000h,01ch,07eh,0e1h,0c0h,0c1h,080h,001h	; 694d  .rs0Xn....~.....
@@ -647,31 +647,31 @@ DATA_colores_692D:
 	defb 04ah,015h,091h,00ah,08ah,088h,057h,024h,0c3h,000h	; 699d  J.....W$..
 
 ; ----------------------------------------------------------------------
-; DATOS colores_69A7: rachas (p00:4A8C) con los colores de los caracteres
+; DATOS dibujos_69A7: rachas (p00:4A8C) con los dibujos de los caracteres
 ;   desde el 21, ficha 0 de la lista 0x6061 (p00:4595); lo leen p00:4531 (40
 ;   bytes)
 ;   0x69a7..0x69cf  (40 bytes)
-DATA_colores_69A7:
+DATA_dibujos_69A7:
 	defb 08fh,07ah,02bh,00ah,001h,0c3h,022h,01eh,003h,0c0h,01fh,04fh,0a1h,048h,0ach,0b8h	; 69a7  .z+..."....O.H..
 	defb 004h,000h,08ah,02ah,0eah,0eah,02ah,000h,018h,0c0h,07fh,03fh,001h,003h,0afh,085h	; 69b7  ...*..*....?....
 	defb 018h,003h,0feh,0fch,080h,003h,0f5h,000h	; 69c7  ........
 
 ; ----------------------------------------------------------------------
-; DATOS colores_69CF: rachas (p00:4A8C) con los colores de los caracteres
+; DATOS dibujos_69CF: rachas (p00:4A8C) con los dibujos de los caracteres
 ;   desde el 109, ficha 5 de la lista 0x6061 (p00:4595); lo leen p00:4531 (46
 ;   bytes)
 ;   0x69cf..0x69fd  (46 bytes)
-DATA_colores_69CF:
+DATA_dibujos_69CF:
 	defb 09ch,0f9h,079h,07eh,01fh,0c3h,01fh,033h,040h,0c7h,0efh,07ch,083h,0bbh,07eh,0ffh	; 69cf  ..y~...3@..|..~.
 	defb 07eh,03fh,03fh,0ffh,0f8h,0e0h,0f8h,0cch,002h,000h,07fh,000h,00fh,004h,000h,004h	; 69df  ~??.............
 	defb 07bh,089h,0ffh,0f8h,006h,007h,0e7h,03fh,07fh,03fh,001h,003h,0afh,000h	; 69ef  {......?.?....
 
 ; ----------------------------------------------------------------------
-; DATOS colores_69FD: rachas (p00:4A8C) con los colores de los caracteres
+; DATOS dibujos_69FD: rachas (p00:4A8C) con los dibujos de los caracteres
 ;   desde el 139, ficha 6 de la lista 0x6061 (p00:4595); lo leen p00:4531 (93
 ;   bytes)
 ;   0x69fd..0x6a5a  (93 bytes)
-DATA_colores_69FD:
+DATA_dibujos_69FD:
 	defb 088h,0f3h,0c0h,01fh,0f8h,0f6h,0cch,03ch,0f8h,004h,000h,0a8h,001h,00fh,01fh,0c0h	; 69fd  .......<........
 	defb 000h,000h,001h,01eh,0f9h,0e7h,0dch,031h,006h,03ah,0bah,052h,0c6h,018h,070h,0c0h	; 6a0d  .......1.:.R..p.
 	defb 003h,00fh,01ch,03bh,030h,047h,0fch,000h,0ddh,03bh,0f4h,081h,03fh,0e0h,000h,000h	; 6a1d  ....0G......?...
@@ -680,39 +680,39 @@ DATA_colores_69FD:
 	defb 07fh,00fh,07fh,017h,007h,01fh,03fh,07fh,07fh,00fh,07fh,017h,000h	; 6a4d  ......?......
 
 ; ----------------------------------------------------------------------
-; DATOS colores_6A5A: rachas (p00:4A8C) con los colores de los caracteres
+; DATOS dibujos_6A5A: rachas (p00:4A8C) con los dibujos de los caracteres
 ;   desde el 187, ficha 7 de la lista 0x6061 (p00:4595); lo leen p00:4531 (17
 ;   bytes)
 ;   0x6a5a..0x6a6b  (17 bytes)
-DATA_colores_6A5A:
+DATA_dibujos_6A5A:
 	defb 002h,000h,086h,018h,03ch,081h,0e7h,042h,07eh,004h,07bh,084h,000h,0f8h,006h,007h	; 6a5a  ....<..B~.{.....
 	defb 000h	; 6a6a
 
 ; ----------------------------------------------------------------------
-; DATOS colores_6A6B: rachas (p00:4A8C) con los colores de los caracteres
+; DATOS dibujos_6A6B: rachas (p00:4A8C) con los dibujos de los caracteres
 ;   desde el 195, ficha 8 de la lista 0x6061 (p00:4595); lo leen p00:4531 (43
 ;   bytes)
 ;   0x6a6b..0x6a96  (43 bytes)
-DATA_colores_6A6B:
+DATA_dibujos_6A6B:
 	defb 095h,000h,0bdh,0bdh,000h,0bdh,0bdh,081h,03ch,03ch,081h,0bdh,0bdh,000h,0bdh,0bdh	; 6a6b  ........<<......
 	defb 000h,000h,0bdh,0bdh,081h,03ch,006h,000h,087h,03ch,081h,0bdh,0bdh,0ffh,000h,068h	; 6a7b  .....<...<.....h
 	defb 005h,000h,081h,068h,004h,000h,081h,024h,003h,000h,000h	; 6a8b  ...h...$...
 
 ; ----------------------------------------------------------------------
-; DATOS colores_6A96: rachas (p00:4A8C) con los colores de los caracteres
+; DATOS dibujos_6A96: rachas (p00:4A8C) con los dibujos de los caracteres
 ;   desde el 19, ficha 0 de la lista 0x61DD (p00:4595); lo leen p00:4531 (26
 ;   bytes)
 ;   0x6a96..0x6ab0  (26 bytes)
-DATA_colores_6A96:
+DATA_dibujos_6A96:
 	defb 098h,000h,0b5h,0fdh,001h,07dh,00dh,0e0h,0ffh,06dh,06dh,014h,07fh,080h,03fh,02ah	; 6a96  .....}...mm...?*
 	defb 02ah,011h,008h,004h,003h,001h,003h,007h,00fh,000h	; 6aa6  *.........
 
 ; ----------------------------------------------------------------------
-; DATOS colores_6AB0: rachas (p00:4A8C) con los colores de los caracteres
+; DATOS dibujos_6AB0: rachas (p00:4A8C) con los dibujos de los caracteres
 ;   desde el 31, ficha 1 de la lista 0x6061 (p00:4595); lo leen p00:4531 (167
 ;   bytes)
 ;   0x6ab0..0x6b57  (167 bytes)
-DATA_colores_6AB0:
+DATA_dibujos_6AB0:
 	defb 0aah,000h,06ah,062h,026h,015h,091h,049h,02ah,000h,055h,033h,099h,09fh,040h,02bh	; 6ab0  ..jb&..I*.U3..@+
 	defb 054h,000h,0aah,0cch,099h,0f9h,002h,018h,0a2h,055h,054h,0aah,0a9h,064h,0c4h,095h	; 6ac0  T........UT..d..
 	defb 093h,024h,0a4h,054h,054h,095h,0a5h,02ah,032h,000h,067h,003h,054h,08fh,080h,0feh	; 6ad0  .$.TT..*2.g.T...
@@ -726,27 +726,27 @@ DATA_colores_6AB0:
 	defb 0fdh,0f1h,0f5h,0f5h,0f1h,0f5h,000h	; 6b50
 
 ; ----------------------------------------------------------------------
-; DATOS colores_6B57: rachas (p00:4A8C) con los colores de los caracteres
+; DATOS dibujos_6B57: rachas (p00:4A8C) con los dibujos de los caracteres
 ;   desde el 1, ficha 4 de la lista 0x6061 (p00:4595); lo leen p00:4531 (16
 ;   bytes)
 ;   0x6b57..0x6b67  (16 bytes)
-DATA_colores_6B57:
+DATA_dibujos_6B57:
 	defb 082h,000h,071h,004h,000h,084h,071h,000h,000h,000h,004h,020h,082h,000h,000h,000h	; 6b57  ..q...q.... ....
 
 ; ----------------------------------------------------------------------
-; DATOS colores_6B67: rachas (p00:4A8C) con los colores de los caracteres
+; DATOS dibujos_6B67: rachas (p00:4A8C) con los dibujos de los caracteres
 ;   desde el 160, ficha 7 de la lista 0x6106 (p00:4595); lo leen p00:4531 (10
 ;   bytes)
 ;   0x6b67..0x6b71  (10 bytes)
-DATA_colores_6B67:
+DATA_dibujos_6B67:
 	defb 088h,000h,03eh,07fh,07fh,07dh,07dh,07bh,03eh,000h	; 6b67  ..>..}}{>.
 
 ; ----------------------------------------------------------------------
-; DATOS colores_6B71: rachas (p00:4A8C) con los colores de los caracteres
+; DATOS dibujos_6B71: rachas (p00:4A8C) con los dibujos de los caracteres
 ;   desde el 157, ficha 5 de la lista 0x61DD (p00:4595); lo leen p00:4531 (82
 ;   bytes)
 ;   0x6b71..0x6bc3  (82 bytes)
-DATA_colores_6B71:
+DATA_dibujos_6B71:
 	defb 0d0h,01fh,0e0h,001h,017h,04bh,03dh,044h,012h,0f8h,007h,060h,0d4h,004h,059h,054h	; 6b71  .....K=D...`..YT
 	defb 0feh,043h,043h,067h,097h,08bh,09bh,0b5h,097h,004h,020h,084h,053h,00dh,05ah,03dh	; 6b81  .CCg...... .S.Z=
 	defb 01eh,0a0h,080h,04ah,030h,0d4h,0fbh,0dah,0dch,002h,042h,082h,0e1h,0c1h,0a1h,0c1h	; 6b91  ...J0.....B.....
@@ -755,11 +755,11 @@ DATA_colores_6B71:
 	defb 082h,000h	; 6bc1
 
 ; ----------------------------------------------------------------------
-; DATOS colores_6BC3: rachas (p00:4A8C) con los colores de los caracteres
+; DATOS dibujos_6BC3: rachas (p00:4A8C) con los dibujos de los caracteres
 ;   desde el 177, ficha 7 de la lista 0x61DD (p00:4595); lo leen p00:4531 (65
 ;   bytes)
 ;   0x6bc3..0x6c04  (65 bytes)
-DATA_colores_6BC3:
+DATA_dibujos_6BC3:
 	defb 005h,000h,086h,01ch,001h,02ah,01ch,046h,021h,009h,000h,088h,011h,004h,0f0h,041h	; 6bc3  .....*.F!......A
 	defb 016h,08ah,030h,045h,007h,000h,08ah,01ch,001h,02ah,008h,071h,0adh,00fh,01ch,046h	; 6bd3  ..0E.....*.q...F
 	defb 021h,005h,000h,091h,011h,004h,0f0h,041h,034h,004h,06ch,001h,016h,08ah,030h,045h	; 6be3  !......A4.l...0E
@@ -767,29 +767,29 @@ DATA_colores_6BC3:
 	defb 000h	; 6c03
 
 ; ----------------------------------------------------------------------
-; DATOS colores_6C04: rachas (p00:4A8C) con los colores de los caracteres
+; DATOS dibujos_6C04: rachas (p00:4A8C) con los dibujos de los caracteres
 ;   desde el 11, ficha 0 de la lista 0x6048 (p00:4595); lo leen p00:4502,
 ;   p00:4522, p00:57D5 (42 bytes)
 ;   0x6c04..0x6c2e  (42 bytes)
-DATA_colores_6C04:
+DATA_dibujos_6C04:
 	defb 081h,0ffh,006h,07fh,002h,000h,006h,0fch,082h,000h,0ffh,006h,07fh,002h,000h,006h	; 6c04  ................
 	defb 0fch,002h,0ffh,081h,07fh,004h,040h,084h,07fh,000h,000h,0fch,004h,004h,08ah,0fch	; 6c14  ......@.........
 	defb 0ffh,0ffh,008h,008h,01ch,008h,02ah,07fh,06bh,000h	; 6c24  ......*.k.
 
 ; ----------------------------------------------------------------------
-; DATOS colores_6C2E: rachas (p00:4A8C) con los colores de los caracteres
+; DATOS dibujos_6C2E: rachas (p00:4A8C) con los dibujos de los caracteres
 ;   desde el 29, ficha 3 de la lista 0x6048 (p00:4595); lo leen p00:4502,
 ;   p00:4522, p00:57D5 (16 bytes)
 ;   0x6c2e..0x6c3e  (16 bytes)
-DATA_colores_6C2E:
+DATA_dibujos_6C2E:
 	defb 082h,0ffh,07fh,004h,040h,084h,07fh,000h,000h,0fch,004h,004h,082h,0fch,0ffh,000h	; 6c2e  ....@...........
 
 ; ----------------------------------------------------------------------
-; DATOS colores_6C3E: rachas (p00:4A8C) con los colores de los caracteres
+; DATOS dibujos_6C3E: rachas (p00:4A8C) con los dibujos de los caracteres
 ;   desde el 237, ficha 2 de la lista 0x6048 (p00:4595); lo leen p00:4502,
 ;   p00:4522, p00:57D5 (104 bytes)
 ;   0x6c3e..0x6ca6  (104 bytes)
-DATA_colores_6C3E:
+DATA_dibujos_6C3E:
 	defb 0a0h,0ffh,080h,060h,077h,038h,010h,023h,0a7h,000h,001h,006h,0eeh,01ch,008h,0c4h	; 6c3e  ...`w8.#........
 	defb 0e5h,0a7h,023h,010h,038h,077h,060h,080h,0ffh,0e5h,0c4h,008h,01ch,0eeh,006h,001h	; 6c4e  ..#.8w`.........
 	defb 000h,008h,055h,090h,034h,018h,02ch,018h,034h,018h,02ch,018h,06ah,058h,0cah,0a6h	; 6c5e  ..U.4.,.4.,.jX..
@@ -799,20 +799,20 @@ DATA_colores_6C3E:
 	defb 020h,008h,000h,081h,002h,004h,000h,000h	; 6c9e   .......
 
 ; ----------------------------------------------------------------------
-; DATOS colores_6CA6: rachas (p00:4A8C) con los colores de los caracteres
+; DATOS dibujos_6CA6: rachas (p00:4A8C) con los dibujos de los caracteres
 ;   desde el 136, ficha 0 de la lista 0x6098 (p00:4595); lo leen p00:4531 (18
 ;   bytes)
 ;   0x6ca6..0x6cb8  (18 bytes)
-DATA_colores_6CA6:
+DATA_dibujos_6CA6:
 	defb 090h,003h,00fh,01fh,03fh,07fh,0ffh,000h,000h,0c0h,0f0h,0f8h,0fch,0feh,080h,000h	; 6ca6  ....?...........
 	defb 000h,000h	; 6cb6
 
 ; ----------------------------------------------------------------------
-; DATOS colores_6CB8: rachas (p00:4A8C) con los colores de los caracteres
+; DATOS dibujos_6CB8: rachas (p00:4A8C) con los dibujos de los caracteres
 ;   desde el 56, ficha 2 de la lista 0x6098 (p00:4595); lo leen p00:4531 (323
 ;   bytes)
 ;   0x6cb8..0x6dfb  (323 bytes)
-DATA_colores_6CB8:
+DATA_dibujos_6CB8:
 	defb 0ffh,007h,00fh,028h,0a7h,08fh,028h,0a1h,08eh,06fh,06fh,0ffh,0a7h,0afh,0ffh,0bfh	; 6cb8  ...(..(..oo.....
 	defb 01ch,0f6h,0f6h,0ffh,0e5h,0f7h,003h,049h,0b4h,0e0h,0f0h,014h,0e5h,0f1h,0f4h,0e5h	; 6cc8  .......I........
 	defb 041h,03fh,07ch,063h,04fh,01fh,03eh,07ch,078h,06bh,087h,0afh,0b7h,077h,03ah,0c9h	; 6cd8  A?|cO.>|xk...w:.
@@ -836,11 +836,11 @@ DATA_colores_6CB8:
 	defb 04ch,04eh,000h	; 6df8
 
 ; ----------------------------------------------------------------------
-; DATOS colores_6DFB: rachas (p00:4A8C) con los colores de los caracteres
+; DATOS dibujos_6DFB: rachas (p00:4A8C) con los dibujos de los caracteres
 ;   desde el 147, ficha 6 de la lista 0x6098 (p00:4595); lo leen p00:4531 (98
 ;   bytes)
 ;   0x6dfb..0x6e5d  (98 bytes)
-DATA_colores_6DFB:
+DATA_dibujos_6DFB:
 	defb 0e0h,004h,00eh,019h,032h,005h,00ah,015h,014h,003h,084h,0fbh,01ch,06dh,01ah,0d9h	; 6dfb  ....2........m..
 	defb 034h,02bh,028h,057h,040h,05eh,081h,0ffh,000h,0b3h,06ch,063h,0d8h,0c7h,0a0h,09bh	; 6e0b  4+(W@^....lc....
 	defb 000h,077h,03bh,0ffh,00bh,00bh,003h,076h,000h,0bdh,0deh,000h,077h,077h,000h,00fh	; 6e1b  .w.....v....ww..
@@ -850,20 +850,20 @@ DATA_colores_6DFB:
 	defb 0ffh,000h	; 6e5b
 
 ; ----------------------------------------------------------------------
-; DATOS colores_6E5D: rachas (p00:4A8C) con los colores de los caracteres
+; DATOS dibujos_6E5D: rachas (p00:4A8C) con los dibujos de los caracteres
 ;   desde el 189, ficha 8 de la lista 0x6098 (p00:4595); lo leen p00:4531 (18
 ;   bytes)
 ;   0x6e5d..0x6e6f  (18 bytes)
-DATA_colores_6E5D:
+DATA_dibujos_6E5D:
 	defb 002h,000h,08eh,001h,003h,000h,000h,001h,001h,002h,002h,005h,004h,005h,008h,00fh	; 6e5d  ................
 	defb 000h,000h	; 6e6d
 
 ; ----------------------------------------------------------------------
-; DATOS colores_6E6F: rachas (p00:4A8C) con los colores de los caracteres
+; DATOS dibujos_6E6F: rachas (p00:4A8C) con los dibujos de los caracteres
 ;   desde el 31, ficha 1 de la lista 0x60DB (p00:4595); lo leen p00:4531 (361
 ;   bytes)
 ;   0x6e6f..0x6fd8  (361 bytes)
-DATA_colores_6E6F:
+DATA_dibujos_6E6F:
 	defb 098h,014h,00ah,00ah,00eh,014h,01dh,03ah,03ah,060h,0f0h,0f8h,078h,030h,080h,09ch	; 6e6f  .......::`..x0..
 	defb 03eh,00ch,01eh,01eh,01ch,00bh,003h,009h,01ch,003h,000h,0aeh,003h,007h,00eh,01dh	; 6e7f  >...............
 	defb 01ah,000h,01fh,0f0h,0cfh,030h,0c0h,006h,01fh,000h,0f0h,00ch,0e2h,01dh,002h,0e1h	; 6e8f  .....0..........
@@ -889,22 +889,22 @@ DATA_colores_6E6F:
 	defb 053h,0b1h,071h,0e0h,0d0h,030h,0e0h,0c1h,000h	; 6fcf  S.q..0...
 
 ; ----------------------------------------------------------------------
-; DATOS colores_6FD8: rachas (p00:4A8C) con los colores de los caracteres
+; DATOS dibujos_6FD8: rachas (p00:4A8C) con los dibujos de los caracteres
 ;   desde el 185, ficha 2 de la lista 0x60DB (p00:4595); lo leen p00:4531 (49
 ;   bytes)
 ;   0x6fd8..0x7009  (49 bytes)
-DATA_colores_6FD8:
+DATA_dibujos_6FD8:
 	defb 005h,000h,083h,080h,040h,0a0h,004h,000h,08ch,008h,018h,030h,0e0h,040h,080h,080h	; 6fd8  ....@......0.@..
 	defb 040h,040h,0a0h,060h,0a0h,005h,000h,083h,018h,024h,0dah,003h,000h,085h,004h,06eh	; 6fe8  @@.`.....$.....n
 	defb 0f5h,063h,009h,004h,000h,084h,070h,0bah,0d3h,08ch,005h,000h,083h,010h,026h,028h	; 6ff8  .c....p.......&(
 	defb 000h	; 7008
 
 ; ----------------------------------------------------------------------
-; DATOS colores_7009: rachas (p00:4A8C) con los colores de los caracteres
+; DATOS dibujos_7009: rachas (p00:4A8C) con los dibujos de los caracteres
 ;   desde el 203, ficha 1 de la lista 0x6048 (p00:4595); lo leen p00:4502,
 ;   p00:4522, p00:57D5 (235 bytes)
 ;   0x7009..0x70f4  (235 bytes)
-DATA_colores_7009:
+DATA_dibujos_7009:
 	defb 09ah,080h,040h,000h,000h,013h,00bh,0c3h,0c1h,040h,030h,030h,000h,00ch,08eh,0cfh	; 7009  ..@......@00....
 	defb 0e3h,060h,0f0h,0f0h,060h,000h,000h,0e3h,0f7h,003h,003h,003h,070h,002h,000h,003h	; 7019  .`..`.......p...
 	defb 007h,002h,00fh,098h,007h,003h,007h,00fh,08bh,0d3h,0d3h,056h,063h,0c1h,03ch,09dh	; 7029  ...........Vc.<.
@@ -922,50 +922,50 @@ DATA_colores_7009:
 	defb 00ch,03ch,0f8h,0f0h,0f6h,0efh,0cfh,006h,080h,080h,000h	; 70e9  .<.........
 
 ; ----------------------------------------------------------------------
-; DATOS colores_70F4: rachas (p00:4A8C) con los colores de los caracteres
+; DATOS dibujos_70F4: rachas (p00:4A8C) con los dibujos de los caracteres
 ;   desde el 115, ficha 3 de la lista 0x6106 (p00:4595); lo leen p00:4531 (46
 ;   bytes)
 ;   0x70f4..0x7122  (46 bytes)
-DATA_colores_70F4:
+DATA_dibujos_70F4:
 	defb 005h,000h,083h,07dh,079h,007h,004h,000h,0a4h,0e0h,0e8h,09ch,06ch,000h,000h,020h	; 70f4  ...}y.......l..
 	defb 070h,038h,01dh,009h,007h,000h,018h,018h,01ch,00ch,00dh,009h,007h,01eh,01fh,01fh	; 7104  p8..............
 	defb 002h,02dh,02dh,012h,07fh,0e8h,000h,0f8h,040h,0b4h,0b4h,048h,0feh,000h	; 7114  .--.....@..H..
 
 ; ----------------------------------------------------------------------
-; DATOS colores_7122: rachas (p00:4A8C) con los colores de los caracteres
+; DATOS dibujos_7122: rachas (p00:4A8C) con los dibujos de los caracteres
 ;   desde el 115, ficha 4 de la lista 0x614A (p00:4595); lo leen p00:4531 (50
 ;   bytes)
 ;   0x7122..0x7154  (50 bytes)
-DATA_colores_7122:
+DATA_dibujos_7122:
 	defb 002h,000h,099h,003h,00eh,001h,0fdh,0fah,000h,000h,070h,0ech,00eh,0e4h,01bh,04ah	; 7122  ..........p....J
 	defb 0ech,000h,020h,073h,039h,01dh,00dh,002h,004h,018h,018h,01dh,003h,00dh,092h,002h	; 7132  .. s9...........
 	defb 004h,005h,000h,016h,016h,008h,005h,00ch,039h,0c8h,000h,0dah,0dah,004h,0e8h,0cch	; 7142  ........9.......
 	defb 027h,000h	; 7152
 
 ; ----------------------------------------------------------------------
-; DATOS colores_7154: rachas (p00:4A8C) con los colores de los caracteres
+; DATOS dibujos_7154: rachas (p00:4A8C) con los dibujos de los caracteres
 ;   desde el 115, ficha 2 de la lista 0x6061 (p00:4595); lo leen p00:4531 (32
 ;   bytes)
 ;   0x7154..0x7174  (32 bytes)
-DATA_colores_7154:
+DATA_dibujos_7154:
 	defb 004h,000h,09ch,0e0h,0e8h,09ch,06ch,000h,018h,018h,01ch,00ch,00dh,009h,007h,01eh	; 7154  ......l.........
 	defb 000h,01fh,002h,02dh,02dh,012h,07fh,0e8h,000h,0f8h,040h,0b4h,0b4h,048h,0feh,000h	; 7164  ...--.....@..H..
 
 ; ----------------------------------------------------------------------
-; DATOS colores_7174: rachas (p00:4A8C) con los colores de los caracteres
+; DATOS dibujos_7174: rachas (p00:4A8C) con los dibujos de los caracteres
 ;   desde el 139, ficha 5 de la lista 0x6098 (p00:4595); lo leen p00:4531 (26
 ;   bytes)
 ;   0x7174..0x718e  (26 bytes)
-DATA_colores_7174:
+DATA_dibujos_7174:
 	defb 098h,03eh,01ch,000h,03ah,03ah,07dh,004h,075h,000h,01ch,01ch,000h,03eh,07fh,041h	; 7174  .>..::}.u....>.A
 	defb 05dh,0feh,004h,05ch,05ch,09eh,0beh,010h,0d7h,000h	; 7184  ]..\\.....
 
 ; ----------------------------------------------------------------------
-; DATOS colores_718E: rachas (p00:4A8C) con los colores de los caracteres
+; DATOS dibujos_718E: rachas (p00:4A8C) con los dibujos de los caracteres
 ;   desde el 31, ficha 2 de la lista 0x619A (p00:4595); lo leen p00:4531 (82
 ;   bytes)
 ;   0x718e..0x71e0  (82 bytes)
-DATA_colores_718E:
+DATA_dibujos_718E:
 	defb 0d0h,0ffh,012h,036h,0ffh,02fh,0ffh,026h,00dh,0ffh,05ah,0dbh,0ffh,03ch,0ffh,05ah	; 718e  ...6./.&..Z..<.Z
 	defb 0dbh,0ffh,048h,06ch,0ffh,0f4h,0ffh,064h,080h,012h,03bh,094h,03bh,012h,03bh,095h	; 719e  ..Hl...d........
 	defb 03bh,07eh,05eh,041h,049h,049h,041h,0ddh,07eh,048h,0dch,029h,0dch,048h,0dch,0a9h	; 71ae  .~^AIIA.~H.).H..
@@ -974,11 +974,11 @@ DATA_colores_718E:
 	defb 044h,000h	; 71de
 
 ; ----------------------------------------------------------------------
-; DATOS colores_71E0: rachas (p00:4A8C) con los colores de los caracteres
+; DATOS dibujos_71E0: rachas (p00:4A8C) con los dibujos de los caracteres
 ;   desde el 161, ficha 3 de la lista 0x619A (p00:4595); lo leen p00:4531 (265
 ;   bytes)
 ;   0x71e0..0x72e9  (265 bytes)
-DATA_colores_71E0:
+DATA_dibujos_71E0:
 	defb 089h,029h,0d6h,016h,0f6h,006h,0aeh,0aeh,000h,063h,006h,06bh,082h,063h,0c6h,006h	; 71e0  .).......c.k.c..
 	defb 0d6h,088h,0c6h,06bh,06bh,068h,06fh,060h,07fh,07fh,004h,0ffh,081h,008h,005h,0ffh	; 71f0  ...kkho`........
 	defb 083h,07fh,0ffh,081h,004h,0ffh,002h,0d6h,09fh,016h,0f6h,006h,0feh,0feh,000h,0d6h	; 7200  ................
@@ -998,11 +998,11 @@ DATA_colores_71E0:
 	defb 028h,07bh,004h,0b5h,004h,0dfh,081h,0ffh,000h	; 72e0  ({.......
 
 ; ----------------------------------------------------------------------
-; DATOS colores_72E9: rachas (p00:4A8C) con los colores de los caracteres
+; DATOS dibujos_72E9: rachas (p00:4A8C) con los dibujos de los caracteres
 ;   desde el 31, ficha 0 de la lista 0x6106 (p00:4595); lo leen p00:4531 (380
 ;   bytes)
 ;   0x72e9..0x7465  (380 bytes)
-DATA_colores_72E9:
+DATA_dibujos_72E9:
 	defb 0afh,03fh,07fh,07bh,027h,01fh,0feh,0feh,000h,0c2h,037h,07ah,07fh,07eh,0feh,0feh	; 72e9  .?.{'.....7z.~..
 	defb 000h,001h,0c6h,09fh,07eh,0fch,0d0h,03eh,0ffh,0e6h,0f3h,02dh,09eh,0dfh,05fh,0eeh	; 72f9  ....~..>...-.._.
 	defb 070h,000h,000h,005h,01eh,03eh,08eh,057h,000h,0b0h,03eh,0e3h,01eh,063h,06dh,069h	; 7309  p....>.W..>..cmi
@@ -1029,21 +1029,21 @@ DATA_colores_72E9:
 	defb 0dfh,010h,0e7h,0ffh,099h,066h,066h,020h,0dfh,06fh,0f6h,000h	; 7459  .....ff .o..
 
 ; ----------------------------------------------------------------------
-; DATOS colores_7465: rachas (p00:4A8C) con los colores de los caracteres
+; DATOS dibujos_7465: rachas (p00:4A8C) con los dibujos de los caracteres
 ;   desde el 194, ficha 2 de la lista 0x6106 (p00:4595); lo leen p00:4531 (33
 ;   bytes)
 ;   0x7465..0x7486  (33 bytes)
-DATA_colores_7465:
+DATA_dibujos_7465:
 	defb 006h,000h,087h,006h,02dh,000h,000h,001h,000h,001h,003h,003h,002h,000h,083h,080h	; 7465  ....-...........
 	defb 000h,080h,003h,0c0h,002h,003h,002h,001h,004h,000h,002h,0c0h,002h,080h,004h,000h	; 7475  ................
 	defb 000h	; 7485
 
 ; ----------------------------------------------------------------------
-; DATOS colores_7486: rachas (p00:4A8C) con los colores de los caracteres
+; DATOS dibujos_7486: rachas (p00:4A8C) con los dibujos de los caracteres
 ;   desde el 31, ficha 0 de la lista 0x6143 (p00:4595); lo leen p00:4531 (855
 ;   bytes)
 ;   0x7486..0x77dd  (855 bytes)
-DATA_colores_7486:
+DATA_dibujos_7486:
 	defb 084h,0feh,0ffh,0edh,0efh,004h,000h,084h,086h,071h,0e3h,00eh,004h,000h,0ffh,024h	; 7486  .........q.....$
 	defb 01ch,00eh,00fh,017h,00fh,04dh,087h,008h,01bh,017h,026h,0a8h,079h,09ah,04eh,000h	; 7496  .....M....&.y.N.
 	defb 000h,008h,000h,020h,010h,010h,030h,023h,096h,0a7h,067h,03bh,01fh,00fh,05bh,088h	; 74a6  ... ..0#..g...[.
@@ -1107,11 +1107,11 @@ DATA_ceros_77DD:
 	defb 000h,000h,000h	; 77dd
 
 ; ----------------------------------------------------------------------
-; DATOS colores_77E0: rachas (p00:4A8C) con los colores de los caracteres
+; DATOS dibujos_77E0: rachas (p00:4A8C) con los dibujos de los caracteres
 ;   desde el 121, ficha 3 de la lista 0x60DB (p00:4595); lo leen p00:4531 (147
 ;   bytes)
 ;   0x77e0..0x7873  (147 bytes)
-DATA_colores_77E0:
+DATA_dibujos_77E0:
 	defb 0ffh,000h,003h,01ch,023h,04fh,0bfh,000h,000h,0e5h,0fah,01dh,0e6h,0f9h,0feh,000h	; 77e0  ....#O..........
 	defb 000h,0f1h,0fch,01eh,0e7h,01bh,0e5h,000h,000h,0fch,03fh,044h,0b1h,0deh,0efh,000h	; 77f0  ..........?D....
 	defb 000h,01ch,0c3h,03ch,0e3h,04fh,0bfh,000h,000h,0e0h,0f8h,01ch,0e6h,0f9h,0feh,0ffh	; 7800  ...<.O..........
@@ -1124,11 +1124,11 @@ DATA_colores_77E0:
 	defb 04fh,007h,000h	; 7870
 
 ; ----------------------------------------------------------------------
-; DATOS colores_7873: rachas (p00:4A8C) con los colores de los caracteres
+; DATOS dibujos_7873: rachas (p00:4A8C) con los dibujos de los caracteres
 ;   desde el 147, ficha 4 de la lista 0x60DB (p00:4595); lo leen p00:4531 (66
 ;   bytes)
 ;   0x7873..0x78b5  (66 bytes)
-DATA_colores_7873:
+DATA_dibujos_7873:
 	defb 0c0h,000h,010h,080h,013h,027h,036h,038h,01ch,004h,038h,060h,0c3h,0ceh,05eh,03dh	; 7873  .....'68..8`..^=
 	defb 031h,0e0h,063h,01fh,03fh,03eh,0b8h,0d3h,0c7h,000h,0c0h,0f1h,0dch,006h,082h,0d4h	; 7883  1.c.?>..........
 	defb 0c0h,041h,0c6h,0ceh,06fh,087h,0c3h,038h,0f1h,0e7h,077h,093h,060h,0beh,0dfh,060h	; 7893  .A..o..8..w.`..`
@@ -1136,21 +1136,21 @@ DATA_colores_7873:
 	defb 0f3h,000h	; 78b3
 
 ; ----------------------------------------------------------------------
-; DATOS colores_78B5: rachas (p00:4A8C) con los colores de los caracteres
+; DATOS dibujos_78B5: rachas (p00:4A8C) con los dibujos de los caracteres
 ;   desde el 175, ficha 5 de la lista 0x60DB (p00:4595); lo leen p00:4531 (34
 ;   bytes)
 ;   0x78b5..0x78d7  (34 bytes)
-DATA_colores_78B5:
+DATA_dibujos_78B5:
 	defb 0a0h,060h,0b0h,0f6h,06bh,00fh,066h,069h,006h,008h,034h,05ah,07ah,0b2h,044h,03bh	; 78b5  .`..k.fi..4Zz.D.
 	defb 003h,03ch,042h,099h,0adh,0bdh,099h,042h,03ch,006h,06dh,06fh,006h,058h,0b4h,0bch	; 78c5  .<B....B<.mo.X..
 	defb 058h,000h	; 78d5
 
 ; ----------------------------------------------------------------------
-; DATOS colores_78D7: rachas (p00:4A8C) con los colores de los caracteres
+; DATOS dibujos_78D7: rachas (p00:4A8C) con los dibujos de los caracteres
 ;   desde el 179, ficha 6 de la lista 0x60DB (p00:4595); lo leen p00:4531 (26
 ;   bytes)
 ;   0x78d7..0x78f1  (26 bytes)
-DATA_colores_78D7:
+DATA_dibujos_78D7:
 	defb 098h,000h,046h,00dh,084h,038h,07ch,046h,001h,000h,000h,020h,0ffh,002h,010h,020h	; 78d7  ..F..8|F... ...
 	defb 0a0h,008h,018h,03ch,03ch,01dh,01dh,009h,002h,000h	; 78e7  ...<<.....
 
@@ -1162,11 +1162,11 @@ DATA_ceros_78F1:
 	defb 000h,000h,000h,000h,000h	; 78f1
 
 ; ----------------------------------------------------------------------
-; DATOS colores_78F6: rachas (p00:4A8C) con los colores de los caracteres
+; DATOS dibujos_78F6: rachas (p00:4A8C) con los dibujos de los caracteres
 ;   desde el 31, ficha 3 de la lista 0x616F (p00:4595); lo leen p00:4531 (306
 ;   bytes)
 ;   0x78f6..0x7a28  (306 bytes)
-DATA_colores_78F6:
+DATA_dibujos_78F6:
 	defb 0c3h,020h,073h,057h,0d5h,0b4h,0ech,0d9h,05fh,09fh,00fh,09fh,099h,0b9h,0b1h,0bbh	; 78f6  . sW...._.......
 	defb 0bfh,09eh,01ch,0beh,0b2h,0a2h,0b6h,0beh,09ch,07eh,03ch,07eh,0eeh,0c6h,0eeh,0feh	; 7906  .........~<~....
 	defb 07ch,00fh,0e0h,030h,067h,00fh,01eh,03ch,07eh,00fh,070h,07ch,07eh,03eh,07ch,039h	; 7916  |..0g..<~.p|~>|9
@@ -1189,11 +1189,11 @@ DATA_colores_78F6:
 	defb 038h,000h	; 7a26
 
 ; ----------------------------------------------------------------------
-; DATOS colores_7A28: rachas (p00:4A8C) con los colores de los caracteres
+; DATOS dibujos_7A28: rachas (p00:4A8C) con los dibujos de los caracteres
 ;   desde el 83, ficha 4 de la lista 0x616F (p00:4595); lo leen p00:4531 (194
 ;   bytes)
 ;   0x7a28..0x7aea  (194 bytes)
-DATA_colores_7A28:
+DATA_dibujos_7A28:
 	defb 08ah,0f0h,082h,02ch,012h,051h,088h,008h,014h,00dh,01dh,003h,03eh,0f5h,09ch,03fh	; 7a28  ...,.Q......>..?
 	defb 01ch,0ech,0d6h,0b6h,07ah,0fah,0f8h,070h,07ch,080h,061h,03ah,00eh,007h,06fh,021h	; 7a38  ....z..p|.a:..o!
 	defb 041h,09ch,008h,008h,09ch,0feh,0c2h,0e1h,0ech,090h,0a0h,0a0h,0e0h,071h,052h,052h	; 7a48  A............qRR
@@ -1209,11 +1209,11 @@ DATA_colores_7A28:
 	defb 02ch,000h	; 7ae8
 
 ; ----------------------------------------------------------------------
-; DATOS colores_7AEA: rachas (p00:4A8C) con los colores de los caracteres
+; DATOS dibujos_7AEA: rachas (p00:4A8C) con los dibujos de los caracteres
 ;   desde el 169, ficha 5 de la lista 0x616F (p00:4595); lo leen p00:4531 (232
 ;   bytes)
 ;   0x7aea..0x7bd2  (232 bytes)
-DATA_colores_7AEA:
+DATA_dibujos_7AEA:
 	defb 0bdh,0a8h,0c2h,0e7h,0e2h,0e8h,0e0h,0e8h,0e1h,023h,019h,082h,031h,021h,000h,080h	; 7aea  .........#..1!..
 	defb 008h,0e1h,0d8h,0ddh,088h,0a0h,031h,040h,008h,0ddh,0cch,062h,06eh,006h,010h,039h	; 7afa  ......1@...bn..9
 	defb 010h,010h,000h,001h,030h,072h,020h,001h,000h,008h,040h,000h,000h,042h,000h,080h	; 7b0a  ....0r ...@..B..
@@ -1231,11 +1231,11 @@ DATA_colores_7AEA:
 	defb 008h,004h,003h,043h,0cfh,01fh,07fh,000h	; 7bca  ...C....
 
 ; ----------------------------------------------------------------------
-; DATOS colores_7BD2: rachas (p00:4A8C) con los colores de los caracteres
+; DATOS dibujos_7BD2: rachas (p00:4A8C) con los dibujos de los caracteres
 ;   desde el 9, ficha 2 de la lista 0x616F (p00:4595); lo leen p00:4531 (18
 ;   bytes)
 ;   0x7bd2..0x7be4  (18 bytes)
-DATA_colores_7BD2:
+DATA_dibujos_7BD2:
 	defb 090h,000h,087h,05eh,03dh,07bh,0fah,089h,04ch,000h,080h,07dh,080h,060h,0f0h,0cdh	; 7bd2  ...^={..L..}.`..
 	defb 0fah,000h	; 7be2
 
@@ -1247,11 +1247,11 @@ DATA_ceros_7BE4:
 	defb 000h	; 7be4
 
 ; ----------------------------------------------------------------------
-; DATOS colores_7BE5: rachas (p00:4A8C) con los colores de los caracteres
+; DATOS dibujos_7BE5: rachas (p00:4A8C) con los dibujos de los caracteres
 ;   desde el 17, ficha 8 de la lista 0x619A (p00:4595); lo leen p00:4531 (79
 ;   bytes)
 ;   0x7be5..0x7c34  (79 bytes)
-DATA_colores_7BE5:
+DATA_dibujos_7BE5:
 	defb 08ah,008h,007h,000h,007h,01fh,07fh,000h,03ah,000h,000h,004h,06bh,002h,077h,08bh	; 7be5  ........:...k.w.
 	defb 05ah,081h,05ah,0c3h,03ch,042h,081h,03ch,080h,036h,06ch,005h,026h,0b0h,01fh,07fh	; 7bf5  Z.Z.<B.<.6l.&...
 	defb 000h,03ah,000h,087h,05eh,03dh,06bh,06bh,077h,077h,05ah,081h,05ah,0c3h,080h,07dh	; 7c05  .:..^=kkwwZ.Z..}
@@ -1259,69 +1259,69 @@ DATA_colores_7BE5:
 	defb 089h,04ch,04ch,089h,0fah,07bh,03ch,042h,081h,03ch,03ch,081h,042h,03ch,000h	; 7c25  .LL..{<B.<<.B<.
 
 ; ----------------------------------------------------------------------
-; DATOS colores_7C34: rachas (p00:4A8C) con los colores de los caracteres
+; DATOS dibujos_7C34: rachas (p00:4A8C) con los dibujos de los caracteres
 ;   desde el 147, ficha 9 de la lista 0x619A (p00:4595); lo leen p00:4531 (3
 ;   bytes)
 ;   0x7c34..0x7c37  (3 bytes)
-DATA_colores_7C34:
+DATA_dibujos_7C34:
 	defb 008h,026h,000h	; 7c34
 
 ; ----------------------------------------------------------------------
-; DATOS colores_7C37: rachas (p00:4A8C) con los colores de los caracteres
+; DATOS dibujos_7C37: rachas (p00:4A8C) con los dibujos de los caracteres
 ;   desde el 5, ficha 6 de la lista 0x619A (p00:4595); lo leen p00:4531 (23
 ;   bytes)
 ;   0x7c37..0x7c4e  (23 bytes)
-DATA_colores_7C37:
+DATA_dibujos_7C37:
 	defb 004h,000h,084h,008h,007h,000h,007h,006h,000h,006h,06bh,084h,0fah,0cdh,0f0h,060h	; 7c37  ..........k....`
 	defb 005h,000h,083h,001h,0beh,001h,000h	; 7c47
 
 ; ----------------------------------------------------------------------
-; DATOS colores_7C4E: rachas (p00:4A8C) con los colores de los caracteres
+; DATOS dibujos_7C4E: rachas (p00:4A8C) con los dibujos de los caracteres
 ;   desde el 147, ficha 6 de la lista 0x6106 (p00:4595); lo leen p00:4531 (42
 ;   bytes)
 ;   0x7c4e..0x7c78  (42 bytes)
-DATA_colores_7C4E:
+DATA_dibujos_7C4E:
 	defb 002h,001h,002h,003h,002h,007h,0a2h,00fh,007h,00eh,01eh,096h,09bh,0cfh,0e7h,050h	; 7c4e  ...............P
 	defb 06fh,037h,0eeh,022h,011h,0cch,020h,0d2h,0e5h,01dh,018h,031h,04bh,0b6h,0b4h,04ch	; 7c5e  o7.".. ....1K..L
 	defb 00ch,044h,008h,0f8h,0f9h,086h,028h,0abh,086h,000h	; 7c6e  .D....(...
 
 ; ----------------------------------------------------------------------
-; DATOS colores_7C78: rachas (p00:4A8C) con los colores de los caracteres
+; DATOS dibujos_7C78: rachas (p00:4A8C) con los dibujos de los caracteres
 ;   desde el 27, ficha 10 de la lista 0x619A (p00:4595); lo leen p00:4531 (33
 ;   bytes)
 ;   0x7c78..0x7c99  (33 bytes)
-DATA_colores_7C78:
+DATA_dibujos_7C78:
 	defb 086h,018h,001h,002h,004h,008h,008h,004h,011h,002h,008h,094h,004h,002h,001h,018h	; 7c78  ................
 	defb 005h,00dh,03dh,07dh,0fdh,032h,072h,062h,062h,032h,01ah,0fdh,07dh,03dh,00dh,005h	; 7c88  ..=}.2rbb2..}=..
 	defb 000h	; 7c98
 
 ; ----------------------------------------------------------------------
-; DATOS colores_7C99: rachas (p00:4A8C) con los colores de los caracteres
+; DATOS dibujos_7C99: rachas (p00:4A8C) con los dibujos de los caracteres
 ;   desde el 52, ficha 10 de la lista 0x6098 (p00:4595); lo leen p00:4531 (34
 ;   bytes)
 ;   0x7c99..0x7cbb  (34 bytes)
-DATA_colores_7C99:
+DATA_dibujos_7C99:
 	defb 0a0h,008h,02ah,02bh,029h,02ch,026h,04ah,092h,010h,054h,0d4h,094h,034h,064h,052h	; 7c99  ..*+),&J..T..4dR
 	defb 049h,0a7h,088h,0a3h,0abh,0abh,08bh,030h,05dh,0e4h,011h,0c5h,0d5h,095h,065h,0b2h	; 7ca9  I......0].....e.
 	defb 08dh,000h	; 7cb9
 
 ; ----------------------------------------------------------------------
-; DATOS colores_7CBB: rachas (p00:4A8C) con los colores de los caracteres
+; DATOS dibujos_7CBB: rachas (p00:4A8C) con los dibujos de los caracteres
 ;   desde el 96, ficha 1 de la lista 0x6106 (p00:4595); lo leen p00:4531 (55
 ;   bytes)
 ;   0x7cbb..0x7cf2  (55 bytes)
-DATA_colores_7CBB:
+DATA_dibujos_7CBB:
 	defb 092h,0c0h,035h,078h,075h,076h,0ech,0d8h,000h,001h,0c6h,09fh,07eh,0fch,0d0h,03eh	; 7cbb  ..5xuv......~..>
 	defb 000h,0f8h,049h,006h,066h,0a0h,0e0h,0b4h,066h,062h,060h,061h,064h,06ch,0f8h,049h	; 7ccb  ..I.f...fb`adl.I
 	defb 066h,066h,046h,046h,026h,026h,0f8h,0b6h,062h,066h,046h,022h,064h,066h,031h,073h	; 7cdb  ffFF&&..bfF"df1s
 	defb 0f8h,0fah,078h,098h,0c1h,000h,000h	; 7ceb
 
 ; ----------------------------------------------------------------------
-; DATOS colores_7CF2: rachas (p00:4A8C) con los colores de los caracteres
+; DATOS dibujos_7CF2: rachas (p00:4A8C) con los dibujos de los caracteres
 ;   desde el 115, ficha 0 de la lista 0x616F (p00:4595); lo leen p00:4531 (50
 ;   bytes)
 ;   0x7cf2..0x7d24  (50 bytes)
-DATA_colores_7CF2:
+DATA_dibujos_7CF2:
 	defb 0a0h,000h,003h,008h,010h,020h,020h,033h,03fh,000h,040h,020h,020h,070h,0f0h,0f8h	; 7cf2  .....  3?.@  p..
 	defb 0fch,000h,000h,003h,00ch,01bh,01fh,00fh,00fh,000h,000h,080h,0c0h,060h,0e0h,0f0h	; 7d02  .............`..
 	defb 0f8h,003h,01fh,002h,03fh,08bh,09fh,0b5h,05bh,0fch,0feh,0feh,000h,0beh,06fh,0feh	; 7d12  ....?...[.....o.
@@ -1339,60 +1339,60 @@ DATA_rachas_7D24:
 	defb 000h	; 7d64
 
 ; ----------------------------------------------------------------------
-; DATOS dibujos_7D65: rachas (p00:4A8C) con los dibujos de los caracteres
+; DATOS colores_7D65: rachas (p00:4A8C) con los colores de los caracteres
 ;   desde el 161, ficha 8 de la lista 0x6106 (p00:4595); lo leen p00:4531 (34
 ;   bytes)
 ;   0x7d65..0x7d87  (34 bytes)
-DATA_dibujos_7D65:
+DATA_colores_7D65:
 	defb 0a0h,000h,0f0h,0e0h,0f0h,0e0h,0a0h,0a0h,0b0h,000h,0f0h,0e0h,0f0h,0e0h,0a0h,0a0h	; 7d65  ................
 	defb 0b0h,0b0h,0a0h,0a0h,0e0h,0f0h,0e0h,0f0h,000h,0b0h,0a0h,0a0h,0e0h,0f0h,0e0h,0f0h	; 7d75  ................
 	defb 000h,000h	; 7d85
 
 ; ----------------------------------------------------------------------
-; DATOS dibujos_7D87: rachas (p00:4A8C) con los dibujos de los caracteres
+; DATOS colores_7D87: rachas (p00:4A8C) con los colores de los caracteres
 ;   desde el 165, ficha 9 de la lista 0x6106 (p00:4595); lo leen p00:4531 (34
 ;   bytes)
 ;   0x7d87..0x7da9  (34 bytes)
-DATA_dibujos_7D87:
+DATA_colores_7D87:
 	defb 0a0h,000h,0f0h,0e0h,0f0h,0e0h,0c0h,020h,030h,000h,0f0h,0e0h,0f0h,0e0h,0c0h,020h	; 7d87  ....... 0......
 	defb 030h,030h,020h,0c0h,0e0h,0f0h,0e0h,0f0h,000h,030h,020h,0c0h,0e0h,0f0h,0e0h,0f0h	; 7d97  00 ......0 .....
 	defb 000h,000h	; 7da7
 
 ; ----------------------------------------------------------------------
-; DATOS dibujos_7DA9: rachas (p00:4A8C) con los dibujos de los caracteres
+; DATOS colores_7DA9: rachas (p00:4A8C) con los colores de los caracteres
 ;   desde el 160, ficha 7 de la lista 0x6106 (p00:4595); lo leen p00:4531 (10
 ;   bytes)
 ;   0x7da9..0x7db3  (10 bytes)
-DATA_dibujos_7DA9:
+DATA_colores_7DA9:
 	defb 088h,060h,060h,080h,090h,090h,080h,060h,060h,000h	; 7da9  .``....``.
 
 ; ----------------------------------------------------------------------
-; DATOS dibujos_7DB3: rachas (p00:4A8C) con los dibujos de los caracteres
+; DATOS colores_7DB3: rachas (p00:4A8C) con los colores de los caracteres
 ;   desde el 21, ficha 4 de la lista 0x6098 (p00:4595); lo leen p00:4531 (56
 ;   bytes)
 ;   0x7db3..0x7deb  (56 bytes)
-DATA_dibujos_7DB3:
+DATA_colores_7DB3:
 	defb 089h,030h,020h,030h,020h,030h,030h,020h,020h,030h,003h,020h,002h,030h,081h,020h	; 7db3  .0 0 00  0. .0.
 	defb 00ch,0c0h,005h,020h,081h,0c0h,003h,020h,004h,030h,002h,0c0h,007h,020h,003h,030h	; 7dc3  ... ... .0... .0
 	defb 003h,0a0h,006h,030h,002h,0a0h,008h,030h,081h,0f0h,005h,030h,084h,0c0h,020h,030h	; 7dd3  ...0...0...0.. 0
 	defb 0f0h,004h,030h,083h,0c0h,020h,030h,000h	; 7de3  ..0.. 0.
 
 ; ----------------------------------------------------------------------
-; DATOS dibujos_7DEB: rachas (p00:4A8C) con los dibujos de los caracteres
+; DATOS colores_7DEB: rachas (p00:4A8C) con los colores de los caracteres
 ;   desde el 193, ficha 9 de la lista 0x6098 (p00:4595); lo leen p00:4531 (34
 ;   bytes)
 ;   0x7deb..0x7e0d  (34 bytes)
-DATA_dibujos_7DEB:
+DATA_colores_7DEB:
 	defb 081h,074h,007h,070h,081h,040h,003h,050h,086h,070h,030h,050h,070h,054h,075h,007h	; 7deb  .t.p.@.P.p0PpTu.
 	defb 070h,007h,050h,082h,074h,070h,006h,050h,081h,040h,003h,050h,084h,070h,030h,050h	; 7dfb  p.P.tp.P.@.P.p0P
 	defb 070h,000h	; 7e0b
 
 ; ----------------------------------------------------------------------
-; DATOS dibujos_7E0D: rachas (p00:4A8C) con los dibujos de los caracteres
+; DATOS colores_7E0D: rachas (p00:4A8C) con los colores de los caracteres
 ;   desde el 177, ficha 3 de la lista 0x6098 (p00:4595); lo leen p00:4531 (78
 ;   bytes)
 ;   0x7e0d..0x7e5b  (78 bytes)
-DATA_dibujos_7E0D:
+DATA_colores_7E0D:
 	defb 004h,040h,081h,070h,006h,040h,083h,030h,070h,040h,004h,030h,002h,070h,08ch,050h	; 7e0d  .@.p.@.0p@.0.p.P
 	defb 070h,050h,040h,040h,070h,050h,040h,040h,030h,070h,050h,004h,040h,002h,050h,005h	; 7e1d  pP@@pP@@0pP.@.P.
 	defb 040h,083h,070h,050h,050h,005h,040h,083h,074h,075h,054h,003h,040h,083h,030h,070h	; 7e2d  @.pPP.@.tuT.@.0p
@@ -1400,11 +1400,11 @@ DATA_dibujos_7E0D:
 	defb 074h,075h,054h,003h,040h,083h,030h,070h,070h,003h,050h,081h,040h,000h	; 7e4d  tuT.@.0pp.P.@.
 
 ; ----------------------------------------------------------------------
-; DATOS dibujos_7E5B: rachas (p00:4A8C) con los dibujos de los caracteres
+; DATOS colores_7E5B: rachas (p00:4A8C) con los colores de los caracteres
 ;   desde el 31, ficha 0 de la lista 0x614A (p00:4595); lo leen p00:4531 (217
 ;   bytes)
 ;   0x7e5b..0x7f34  (217 bytes)
-DATA_dibujos_7E5B:
+DATA_colores_7E5B:
 	defb 043h,040h,081h,044h,044h,040h,017h,0f0h,081h,0f7h,006h,0f0h,020h,0f7h,006h,074h	; 7e5b  C@.DD@...... ..t
 	defb 004h,040h,004h,0f0h,081h,040h,013h,0f4h,081h,0f7h,02eh,0f4h,005h,074h,007h,040h	; 7e6b  .@...@.......t.@
 	defb 082h,070h,040h,007h,0f4h,008h,0f7h,004h,0f4h,003h,0f0h,003h,040h,084h,0f4h,040h	; 7e7b  .p@.........@..@
@@ -1421,11 +1421,11 @@ DATA_dibujos_7E5B:
 	defb 004h,050h,004h,040h,005h,050h,008h,0a0h,000h	; 7f2b  .P.@.P...
 
 ; ----------------------------------------------------------------------
-; DATOS dibujos_7F34: rachas (p00:4A8C) con los dibujos de los caracteres
+; DATOS colores_7F34: rachas (p00:4A8C) con los colores de los caracteres
 ;   desde el 139, ficha 1 de la lista 0x614A (p00:4595); lo leen p00:4531 (86
 ;   bytes)
 ;   0x7f34..0x7f8a  (86 bytes)
-DATA_dibujos_7F34:
+DATA_colores_7F34:
 	defb 003h,0f0h,08dh,0e0h,070h,070h,055h,044h,0f0h,070h,070h,050h,040h,040h,055h,044h	; 7f34  ....ppUD.ppP@@UD
 	defb 005h,0f0h,083h,0f7h,0e5h,0e4h,004h,0e0h,002h,070h,082h,050h,040h,003h,000h,095h	; 7f44  .........p.P@...
 	defb 0e0h,070h,070h,055h,044h,0d0h,0d0h,080h,080h,050h,070h,040h,040h,0d0h,0d0h,080h	; 7f54  .ppUD....Pp@@...
@@ -1434,38 +1434,38 @@ DATA_dibujos_7F34:
 	defb 050h,005h,040h,003h,050h,000h	; 7f84
 
 ; ----------------------------------------------------------------------
-; DATOS dibujos_7F8A: rachas (p00:4A8C) con los dibujos de los caracteres
+; DATOS colores_7F8A: rachas (p00:4A8C) con los colores de los caracteres
 ;   desde el 173, ficha 2 de la lista 0x614A (p00:4595); lo leen p00:4531 (45
 ;   bytes)
 ;   0x7f8a..0x7fb7  (45 bytes)
-DATA_dibujos_7F8A:
+DATA_colores_7F8A:
 	defb 024h,040h,004h,050h,002h,040h,00eh,050h,008h,0f0h,008h,070h,007h,000h,083h,040h	; 7f8a  $@.P.@.P...p...@
 	defb 000h,000h,003h,0a0h,004h,000h,005h,0a0h,007h,000h,003h,00fh,006h,000h,006h,0f0h	; 7f9a  ................
 	defb 002h,0e0h,002h,0f0h,002h,040h,006h,050h,003h,040h,005h,050h,000h	; 7faa  .....@.P.@.P.
 
 ; ----------------------------------------------------------------------
-; DATOS dibujos_7FB7: rachas (p00:4A8C) con los dibujos de los caracteres
+; DATOS colores_7FB7: rachas (p00:4A8C) con los colores de los caracteres
 ;   desde el 196, ficha 3 de la lista 0x614A (p00:4595); lo leen p00:4531 (15
 ;   bytes)
 ;   0x7fb7..0x7fc6  (15 bytes)
-DATA_dibujos_7FB7:
+DATA_colores_7FB7:
 	defb 00ch,0f0h,002h,0e0h,082h,060h,040h,003h,0f0h,003h,0e0h,082h,060h,040h,000h	; 7fb7  .....`@.....`@.
 
 ; ----------------------------------------------------------------------
-; DATOS dibujos_7FC6: rachas (p00:4A8C) con los dibujos de los caracteres
+; DATOS colores_7FC6: rachas (p00:4A8C) con los colores de los caracteres
 ;   desde el 21, ficha 0 de la lista 0x6061 (p00:4595); lo leen p00:4531 (40
 ;   bytes)
 ;   0x7fc6..0x7fee  (40 bytes)
-DATA_dibujos_7FC6:
+DATA_colores_7FC6:
 	defb 08fh,0d6h,080h,080h,050h,0e0h,0f0h,0f0h,0e0h,0f0h,070h,020h,0c6h,083h,020h,0c0h	; 7fc6  ....P.....p .. .
 	defb 005h,080h,094h,096h,0a6h,080h,080h,064h,054h,050h,070h,0c0h,0c0h,020h,030h,064h	; 7fd6  .......dTPp.. 0d
 	defb 054h,050h,070h,0c0h,0c0h,020h,030h,000h	; 7fe6  TPp.. 0.
 
 ; ----------------------------------------------------------------------
-; DATOS dibujos_7FEE: rachas (p00:4A8C) con los dibujos de los caracteres
+; DATOS colores_7FEE: rachas (p00:4A8C) con los colores de los caracteres
 ;   desde el 109, ficha 5 de la lista 0x6061 (p00:4595) (sigue en el banco 8,
 ;   en 0x8000); lo leen p00:4531 (18 bytes)
 ;   0x7fee..0x8000  (18 bytes)
-DATA_dibujos_7FEE:
+DATA_colores_7FEE:
 	defb 092h,0cah,0c3h,0c3h,0c2h,0c2h,020h,020h,0a0h,0c8h,0c8h,0c3h,0c3h,0c0h,0c2h,022h	; 7fee  ......  ......."
 	defb 020h,0cah	; 7ffe

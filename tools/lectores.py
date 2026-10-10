@@ -14,9 +14,11 @@ listado:
             (2 bytes); 0xFF acaba. p00:4A82 lo mismo escribiendo ceros
             (C = 0: borra lo que la lista dibujaria). p00:4A73 sin el
             destino delante (lo pone quien llama en HL).
-  p00:4595  lista de caracteres (IX): fichas de 6 bytes [tercios][colores
-            lo hi][caracter][dibujos lo hi], cada puntero a unas rachas de
-            p00:4A8C; 0 en el primer byte acaba.
+  p00:4595  lista de caracteres (IX): fichas de 6 bytes [tercios][dibujos
+            lo hi][caracter][colores lo hi], cada puntero a unas rachas de
+            p00:4A8C (los dibujos van a 0x2000 + 8 x caracter y los colores a
+            0x0000 + 8 x caracter, en cada tercio marcado); 0 en el primer
+            byte acaba.
   p00:454E  lista de copias VRAM -> VRAM (IX): fichas de 4 bytes, o de 3 si
             los dos bits altos del tercer byte no son cero; 0 acaba.
   p10:A67B  rachas a la VRAM con salto de fila (HL = origen, DE = destino,
@@ -83,8 +85,8 @@ def lista_caracteres(v, a, sitio):
     ini = a
     k = 0
     while v(a) != 0:
-        col, dib = v.w(a + 1), v.w(a + 4)
-        for q, que in ((col, "colores"), (dib, "dibujos")):
+        dib, col = v.w(a + 1), v.w(a + 4)
+        for q, que in ((dib, "dibujos"), (col, "colores")):
             B.declara(v, q, rachas(v, q), "%s_%04X" % (que, q),
                       "rachas (p00:4A8C) con los %s de los caracteres desde el %d, "
                       "ficha %d de la lista 0x%04X (p00:4595)" % (que, v(a + 3), k, ini),
@@ -442,7 +444,8 @@ def por_fase(v, tabla, n, nom, que, lector, recorre=None, texto_bloque=None, F_b
 def banco7():
     """Los caracteres de cada fase (p00:44F7, con los bancos 7-8-9)."""
     v = B.Ventana((7, 8, 9))
-    for tabla, que in ((0x6018, "sin voltear (0xF000 = 0)"), (0x6030, "volteados (0xF000 = 1)")):
+    for tabla, que in ((0x6018, "en espejo (0xF000 = 0: p00:4617 invierte los bits)"),
+                       (0x6030, "cabeza abajo (0xF000 = 1: p00:45EA invierte las filas)")):
         por_fase(v, tabla, 12, "copias_por_fase_%04X" % tabla,
                  "listas de copias de caracteres VRAM -> VRAM %s, p00:4545 con L_4B67" % que,
                  "p00:4548", lista_copias,
@@ -457,7 +460,7 @@ def banco7():
         sitio = "p00:4531"
         B.declara(v, a, lista_caracteres(v, a, sitio), "caracteres_fase_%04X" % a,
                   "lista de caracteres (p00:4595) de la%s fase%s %s: fichas de 6 bytes "
-                  "[tercios][colores][caracter][dibujos], 0 acaba" % (
+                  "[tercios][dibujos][caracter][colores], 0 acaba" % (
                       "s" if len(ks) > 1 else "", "s" if len(ks) > 1 else "",
                       ", ".join(map(str, ks))), sitio, F=6)
 
@@ -1146,8 +1149,8 @@ def automaticos():
                  "lista a la VRAM sin destino delante (p00:4A73; 0xFE otro destino; 0xFF acaba)")
     for a, v, sitio in B.punteros(0x4595, "IX"):
         B.declara(v, a, lista_caracteres(v, a, sitio), "caracteres_%04X" % a,
-                  "lista de caracteres (p00:4595): fichas de 6 bytes [tercios][colores]"
-                  "[caracter][dibujos], 0 acaba", sitio, F=6)
+                  "lista de caracteres (p00:4595): fichas de 6 bytes [tercios][dibujos]"
+                  "[caracter][colores], 0 acaba", sitio, F=6)
     B.por_lector(0x454E, "IX", lista_copias, "copias",
                  "lista de copias de caracteres VRAM -> VRAM (p00:454E: 4 bytes, 3 si "
                  "el tercero lleva los bits altos; 0 acaba)")

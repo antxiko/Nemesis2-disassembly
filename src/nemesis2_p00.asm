@@ -445,7 +445,7 @@ L_4350:
 
 ; ----------------------------------------------------------------------
 ; DATOS caracteres_4358: lista de caracteres (p00:4595): fichas de 6 bytes
-;   [tercios][colores][caracter][dibujos], 0 acaba; lo leen p00:4350 (7 bytes)
+;   [tercios][dibujos][caracter][colores], 0 acaba; lo leen p00:4350 (7 bytes)
 ;   0x4358..0x435f  (7 bytes)
 DATA_caracteres_4358:
 	defb 007h,03ah,092h,0c7h,05ch,092h	; 4358
@@ -2876,7 +2876,7 @@ DATA_metabloques_por_fase:
 
 ; ----------------------------------------------------------------------
 ; DATOS caracteres_556F: lista de caracteres (p00:4595): fichas de 6 bytes
-;   [tercios][colores][caracter][dibujos], 0 acaba; lo leen p00:4B29 (43
+;   [tercios][dibujos][caracter][colores], 0 acaba; lo leen p00:4B29 (43
 ;   bytes)
 ;   0x556f..0x559a  (43 bytes)
 DATA_caracteres_556F:
@@ -2899,7 +2899,7 @@ DATA_copias_559A:
 
 ; ----------------------------------------------------------------------
 ; DATOS caracteres_55A7: lista de caracteres (p00:4595): fichas de 6 bytes
-;   [tercios][colores][caracter][dibujos], 0 acaba; lo leen p01:6165 (55
+;   [tercios][dibujos][caracter][colores], 0 acaba; lo leen p01:6165 (55
 ;   bytes)
 ;   0x55a7..0x55de  (55 bytes)
 DATA_caracteres_55A7:

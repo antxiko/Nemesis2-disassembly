@@ -7,7 +7,7 @@ D 0x4000 0x4010 cabecera  cabecera del cartucho: "AB", INIT = 0x4090 y STATEMENT
 F 0x4000 16
 D 0x4010 0x4023 cabecera_game_master  la segunda cabecera de Konami: "CD", 0x07 0x51 (RC-751) y 15 bytes que lee el Game Master desde la otra ranura; el propio cartucho la busca en el vecino (p03:BD06: Galious, Penguin Adventure y Q*bert la llevan); lo leen p03:BD06 (19 bytes)
 F 0x4010 16
-D 0x4358 0x435F caracteres_4358  lista de caracteres (p00:4595): fichas de 6 bytes [tercios][colores][caracter][dibujos], 0 acaba; lo leen p00:4350 (7 bytes)
+D 0x4358 0x435F caracteres_4358  lista de caracteres (p00:4595): fichas de 6 bytes [tercios][dibujos][caracter][colores], 0 acaba; lo leen p00:4350 (7 bytes)
 F 0x4358 6
 D 0x44EA 0x44F7 copias_44EA  lista de p00:43DA (fichas [tipo][cuantos][origen][destino], tipo 0 acaba) que p00:43C4 pasa en IX; lo leen p00:43C8 (13 bytes)
 F 0x44EA 4
@@ -37,10 +37,10 @@ D 0x554F 0x5557 tabla_554F  8 bytes, uno por vuelta (0xE20F): la casilla 0xE3xx 
 F 0x554F 8
 D 0x5557 0x556F metabloques_por_fase  12 punteros (uno por fase, 0xE201) a los metabloques del banco 13; p00:48C3 los lee con L_4B67; lo leen p00:48C6 (24 bytes)
 F 0x5557 w6
-D 0x556F 0x559A caracteres_556F  lista de caracteres (p00:4595): fichas de 6 bytes [tercios][colores][caracter][dibujos], 0 acaba; lo leen p00:4B29 (43 bytes)
+D 0x556F 0x559A caracteres_556F  lista de caracteres (p00:4595): fichas de 6 bytes [tercios][dibujos][caracter][colores], 0 acaba; lo leen p00:4B29 (43 bytes)
 F 0x556F 6
 D 0x559A 0x55A7 copias_559A  lista de copias de caracteres VRAM -> VRAM (p00:454E: 4 bytes, 3 si el tercero lleva los bits altos; 0 acaba); lo leen p00:4B35 (13 bytes)
-D 0x55A7 0x55DE caracteres_55A7  lista de caracteres (p00:4595): fichas de 6 bytes [tercios][colores][caracter][dibujos], 0 acaba; lo leen p01:6165 (55 bytes)
+D 0x55A7 0x55DE caracteres_55A7  lista de caracteres (p00:4595): fichas de 6 bytes [tercios][dibujos][caracter][colores], 0 acaba; lo leen p01:6165 (55 bytes)
 F 0x55A7 6
 D 0x55DE 0x5601 copias_55DE  lista de copias de caracteres VRAM -> VRAM (p00:454E: 4 bytes, 3 si el tercero lleva los bits altos; 0 acaba); lo leen p01:6170 (35 bytes)
 D 0x5615 0x562B tabla_5615  11 destinos del despachador p00:4084 (call en p00:5612, el indice en A): 562B, 567D, 5699, 5727, 578A, 57DB, 5817, 5842, 58CF, 58FD, 5955; lo leen p00:5612 (22 bytes)

@@ -105,16 +105,16 @@ D 0xBE68 0xBE72 tabla_BE68  5 destinos del despachador p00:4084 (call en p11:BE6
 F 0xBE68 w5
 D 0xBF0B 0xBF10 tabla_BF0B  5 bytes que p11:BEE6 lee con IX+19 - 1; lo leen p11:BEED (5 bytes)
 F 0xBF0B 5
-D 0xBF63 0xBF70 caracteres_BF63  lista de caracteres (p00:4595): fichas de 6 bytes [tercios][colores][caracter][dibujos], 0 acaba; lo leen p00:43C1 (13 bytes)
+D 0xBF63 0xBF70 caracteres_BF63  lista de caracteres (p00:4595): fichas de 6 bytes [tercios][dibujos][caracter][colores], 0 acaba; lo leen p00:43C1 (13 bytes)
 F 0xBF63 6
-D 0xBF70 0xBF91 colores_BF70  rachas (p00:4A8C) con los colores de los caracteres desde el 237, ficha 0 de la lista 0xBF63 (p00:4595); lo leen p00:43C1 (33 bytes)
-D 0xBF91 0xBFA8 colores_BF91  rachas (p00:4A8C) con los colores de los caracteres desde el 246, ficha 1 de la lista 0xBF63 (p00:4595); lo leen p00:43C1 (23 bytes)
-D 0xBFA8 0xBFBC dibujos_BFA8  rachas (p00:4A8C) con los dibujos de los caracteres desde el 237, ficha 0 de la lista 0xBF63 (p00:4595); lo leen p00:43C1 (20 bytes)
-D 0xBFBC 0xBFBF dibujos_BFBC  rachas (p00:4A8C) con los dibujos de los caracteres desde el 246, ficha 1 de la lista 0xBF63 (p00:4595); lo leen p00:43C1 (3 bytes)
+D 0xBF70 0xBF91 dibujos_BF70  rachas (p00:4A8C) con los dibujos de los caracteres desde el 237, ficha 0 de la lista 0xBF63 (p00:4595); lo leen p00:43C1 (33 bytes)
+D 0xBF91 0xBFA8 dibujos_BF91  rachas (p00:4A8C) con los dibujos de los caracteres desde el 246, ficha 1 de la lista 0xBF63 (p00:4595); lo leen p00:43C1 (23 bytes)
+D 0xBFA8 0xBFBC colores_BFA8  rachas (p00:4A8C) con los colores de los caracteres desde el 237, ficha 0 de la lista 0xBF63 (p00:4595); lo leen p00:43C1 (20 bytes)
+D 0xBFBC 0xBFBF colores_BFBC  rachas (p00:4A8C) con los colores de los caracteres desde el 246, ficha 1 de la lista 0xBF63 (p00:4595); lo leen p00:43C1 (3 bytes)
 D 0xBFBF 0xBFC6 caracteres_BFBF  lista de caracteres (p00:4595) que p00:4343 pasa con el banco 11 puesto (si el bit 2 de 0xF0F5); lo leen p00:4350 (7 bytes)
 F 0xBFBF 6
-D 0xBFC6 0xBFE8 colores_BFC6  rachas (p00:4A8C) con los colores de los caracteres desde el 199, ficha 0 de la lista 0xBFBF (p00:4595); lo leen p00:4350 (34 bytes)
-D 0xBFE8 0xBFFF dibujos_BFE8  rachas (p00:4A8C) con los dibujos de los caracteres desde el 199, ficha 0 de la lista 0xBFBF (p00:4595); lo leen p00:4350 (23 bytes)
+D 0xBFC6 0xBFE8 dibujos_BFC6  rachas (p00:4A8C) con los dibujos de los caracteres desde el 199, ficha 0 de la lista 0xBFBF (p00:4595); lo leen p00:4350 (34 bytes)
+D 0xBFE8 0xBFFF colores_BFE8  rachas (p00:4A8C) con los colores de los caracteres desde el 199, ficha 0 de la lista 0xBFBF (p00:4595); lo leen p00:4350 (23 bytes)
 D 0xBFFF 0xC000 relleno_ff  un 0xFF al final del banco: relleno; lo leen nadie (1 bytes)
 F 0xBFFF 1
 # --- fin de los bloques de bloques.py ---
