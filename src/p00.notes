@@ -1032,6 +1032,7 @@ C 0x40AA apunta a la copia del banco 0 (nadie la lee) y la cima de la pila
 C 0x40B3 el mapper: pone en 0x6000 el banco de A
 C 0x40B9 el mapper: pone en 0x8000 el banco de A
 C 0x40C0 el mapper: pone en 0xA000 el banco de A
+C 0x40C6 apunta a la prioridad del canal 1 del PSG (los canales son de 40 bytes desde 0xE000)
 C 0x40D2 guarda la marca de cuadro en marcha (si no es 0, la interrupcion no lanza otro)
 C 0x40D6 guarda la fase de la siguiente demostracion (2-6)
 C 0x40E0 guarda la marca de cuadro en marcha (si no es 0, la interrupcion no lanza otro)
@@ -1639,6 +1640,7 @@ C 0x5C63 hl_mas_a: HL = HL + A
 C 0x5C6E de_mas_a: DE = DE + A
 C 0x5C82 pinta_bcd: B bytes BCD de DE hacia atras en la VRAM HL, dos cifras por byte (caracter = cifra + 1)
 C 0x5C85 bancos_2_3: pone los bancos 2 y 3 en 0x8000 y 0xA000 (y 0xF0F2-0xF0F3)
+C 0x5CBF apunta a los registros del SCC que han cambiado (16 bits)
 C 0x5CD2 el mapper: pone en 0x6000 el banco de A
 C 0x5CD6 el mapper: pone en 0x8000 el banco de A
 C 0x5CDA el mapper: pone en 0xA000 el banco de A
@@ -1647,6 +1649,7 @@ C 0x5CE6 lee la copia del banco de 0x8000
 C 0x5CE9 el mapper: pone en 0x8000 el banco de A
 C 0x5CEC lee la copia del banco de 0xA000
 C 0x5CEF el mapper: pone en 0xA000 el banco de A
+C 0x5CF4 guarda el registro 7 del PSG (mezclador)
 C 0x5CFF sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
 C 0x5D2A mandos: A = joystick 1 OR teclado: bit 0 arriba, 1 abajo, 2 izquierda, 3 derecha, 4 disparo (espacio), 5 el otro boton (M o N)
 C 0x5D2D apunta a los mandos: bit 0 arriba, 1 abajo, 2 izquierda, 3 derecha, 4 disparo, 5 el otro boton

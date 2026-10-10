@@ -136,7 +136,7 @@ init:		; el arranque: H.KEYI a p00:4023, el cartucho en 0x8000, bancos 0-1-2-3, 
 	ld (hl),a			;40bf
 	ld (0b000h),a		;40c0   ; el mapper: pone en 0xA000 el banco de A
 	ld hl,0e000h		;40c3   ; la RAM del juego, 0xE000-0xEFFF, a cero
-	ld de,0e001h		;40c6
+	ld de,0e001h		;40c6   ; apunta a la prioridad del canal 1 del PSG (los canales son de 40 bytes desde 0xE000)
 	ld bc,00fffh		;40c9   ; 4 KB
 	ld (hl),000h		;40cc
 	ldir		;40ce
@@ -3900,7 +3900,7 @@ menos_hl:		; HL = - HL
 	ret			;5cbc
 empieza_todo:		; 0xE1AE-0xE1B9, el sonido (p04:71AE), el mezclador del PSG (0xBF), silencio, la VRAM a cero y los registros del VDP
 	ld a,0ffh		;5cbd   ; 0xE1AE y 0xE1AF = 0xFF
-	ld hl,0e1aeh		;5cbf
+	ld hl,0e1aeh		;5cbf   ; apunta a los registros del SCC que han cambiado (16 bits)
 	ld (hl),a			;5cc2
 	inc hl			;5cc3
 	ld (hl),a			;5cc4
@@ -3923,7 +3923,7 @@ empieza_todo:		; 0xE1AE-0xE1B9, el sonido (p04:71AE), el mezclador del PSG (0xBF
 	ld a,(0f0f3h)		;5cec   ; lee la copia del banco de 0xA000
 	ld (0b000h),a		;5cef   ; el mapper: pone en 0xA000 el banco de A
 	ld a,0bfh		;5cf2   ; el mezclador del PSG: tonos de A, B y C, sin ruido
-	ld (0e1a6h),a		;5cf4
+	ld (0e1a6h),a		;5cf4   ; guarda el registro 7 del PSG (mezclador)
 	ld e,a			;5cf7
 	ld a,007h		;5cf8
 	call 00093h		;5cfa   ; BIOS WRTPSG - Writes data to PSG-register
