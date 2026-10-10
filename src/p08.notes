@@ -1,0 +1,147 @@
+# notas del banco 08
+
+# --- A MANO: comentarios, nombres y bloques ---
+
+# --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
+D 0x8000 0x801A dibujos_7FEE_cola  rachas (p00:4A8C) con los dibujos de los caracteres desde el 109, ficha 5 de la lista 0x6061 (p00:4595) (sigue del banco 7); lo leen p00:4531 (26 bytes)
+D 0x801A 0x8064 dibujos_801A  rachas (p00:4A8C) con los dibujos de los caracteres desde el 139, ficha 6 de la lista 0x6061 (p00:4595); lo leen p00:4531 (74 bytes)
+D 0x8064 0x8076 dibujos_8064  rachas (p00:4A8C) con los dibujos de los caracteres desde el 187, ficha 7 de la lista 0x6061 (p00:4595); lo leen p00:4531 (18 bytes)
+D 0x8076 0x8098 dibujos_8076  rachas (p00:4A8C) con los dibujos de los caracteres desde el 195, ficha 8 de la lista 0x6061 (p00:4595); lo leen p00:4531 (34 bytes)
+D 0x8098 0x812A dibujos_8098  rachas (p00:4A8C) con los dibujos de los caracteres desde el 31, ficha 1 de la lista 0x6061 (p00:4595); lo leen p00:4531 (146 bytes)
+D 0x812A 0x8142 dibujos_812A  rachas (p00:4A8C) con los dibujos de los caracteres desde el 19, ficha 0 de la lista 0x61DD (p00:4595); lo leen p00:4531 (24 bytes)
+D 0x8142 0x81D4 dibujos_8142  rachas (p00:4A8C) con los dibujos de los caracteres desde el 31, ficha 1 de la lista 0x61DD (p00:4595); lo leen p00:4531 (146 bytes)
+D 0x81D4 0x81E6 dibujos_81D4  rachas (p00:4A8C) con los dibujos de los caracteres desde el 1, ficha 4 de la lista 0x6061 (p00:4595); lo leen p00:4531 (18 bytes)
+D 0x81E6 0x8229 dibujos_81E6  rachas (p00:4A8C) con los dibujos de los caracteres desde el 157, ficha 5 de la lista 0x61DD (p00:4595); lo leen p00:4531 (67 bytes)
+D 0x8229 0x826C dibujos_8229  rachas (p00:4A8C) con los dibujos de los caracteres desde el 167, ficha 6 de la lista 0x61DD (p00:4595); lo leen p00:4531 (67 bytes)
+D 0x826C 0x829D dibujos_826C  rachas (p00:4A8C) con los dibujos de los caracteres desde el 177, ficha 7 de la lista 0x61DD (p00:4595); lo leen p00:4531 (49 bytes)
+D 0x829D 0x82C8 dibujos_829D  rachas (p00:4A8C) con los dibujos de los caracteres desde el 11, ficha 0 de la lista 0x6048 (p00:4595); lo leen p00:4502, p00:4522, p00:57D5 (43 bytes)
+D 0x82C8 0x82D5 dibujos_82C8  rachas (p00:4A8C) con los dibujos de los caracteres desde el 29, ficha 3 de la lista 0x6048 (p00:4595); lo leen p00:4502, p00:4522, p00:57D5 (13 bytes)
+D 0x82D5 0x8347 dibujos_82D5  rachas (p00:4A8C) con los dibujos de los caracteres desde el 237, ficha 2 de la lista 0x6048 (p00:4595); lo leen p00:4502, p00:4522, p00:57D5 (114 bytes)
+D 0x8347 0x8359 dibujos_8347  rachas (p00:4A8C) con los dibujos de los caracteres desde el 136, ficha 0 de la lista 0x6098 (p00:4595); lo leen p00:4531 (18 bytes)
+D 0x8359 0x83CB dibujos_8359  rachas (p00:4A8C) con los dibujos de los caracteres desde el 32, ficha 1 de la lista 0x6098 (p00:4595); lo leen p00:4531 (114 bytes)
+D 0x83CB 0x84C3 dibujos_83CB  rachas (p00:4A8C) con los dibujos de los caracteres desde el 56, ficha 2 de la lista 0x6098 (p00:4595); lo leen p00:4531 (248 bytes)
+D 0x84C3 0x850F dibujos_84C3  rachas (p00:4A8C) con los dibujos de los caracteres desde el 147, ficha 6 de la lista 0x6098 (p00:4595); lo leen p00:4531 (76 bytes)
+D 0x850F 0x8516 dibujos_850F  rachas (p00:4A8C) con los dibujos de los caracteres desde el 189, ficha 8 de la lista 0x6098 (p00:4595); lo leen p00:4531 (7 bytes)
+D 0x8516 0x85DC dibujos_8516  rachas (p00:4A8C) con los dibujos de los caracteres desde el 31, ficha 1 de la lista 0x60DB (p00:4595); lo leen p00:4531 (198 bytes)
+D 0x85DC 0x85F7 dibujos_85DC  rachas (p00:4A8C) con los dibujos de los caracteres desde el 185, ficha 2 de la lista 0x60DB (p00:4595); lo leen p00:4531 (27 bytes)
+D 0x85F7 0x86B7 dibujos_85F7  rachas (p00:4A8C) con los dibujos de los caracteres desde el 203, ficha 1 de la lista 0x6048 (p00:4595); lo leen p00:4502, p00:4522, p00:57D5 (192 bytes)
+D 0x86B7 0x86E1 dibujos_86B7  rachas (p00:4A8C) con los dibujos de los caracteres desde el 115, ficha 3 de la lista 0x6106 (p00:4595); lo leen p00:4531 (42 bytes)
+D 0x86E1 0x870E dibujos_86E1  rachas (p00:4A8C) con los dibujos de los caracteres desde el 115, ficha 4 de la lista 0x614A (p00:4595); lo leen p00:4531 (45 bytes)
+D 0x870E 0x872C dibujos_870E  rachas (p00:4A8C) con los dibujos de los caracteres desde el 115, ficha 2 de la lista 0x6061 (p00:4595); lo leen p00:4531 (30 bytes)
+D 0x872C 0x8756 dibujos_872C  rachas (p00:4A8C) con los dibujos de los caracteres desde el 103, ficha 4 de la lista 0x6106 (p00:4595); lo leen p00:4531 (42 bytes)
+D 0x8756 0x8780 dibujos_8756  rachas (p00:4A8C) con los dibujos de los caracteres desde el 127, ficha 5 de la lista 0x614A (p00:4595); lo leen p00:4531 (42 bytes)
+D 0x8780 0x879E dibujos_8780  rachas (p00:4A8C) con los dibujos de los caracteres desde el 127, ficha 3 de la lista 0x6061 (p00:4595); lo leen p00:4531 (30 bytes)
+D 0x879E 0x87B8 dibujos_879E  rachas (p00:4A8C) con los dibujos de los caracteres desde el 139, ficha 5 de la lista 0x6098 (p00:4595); lo leen p00:4531 (26 bytes)
+D 0x87B8 0x880A dibujos_87B8  rachas (p00:4A8C) con los dibujos de los caracteres desde el 31, ficha 2 de la lista 0x619A (p00:4595); lo leen p00:4531 (82 bytes)
+D 0x880A 0x8904 dibujos_880A  rachas (p00:4A8C) con los dibujos de los caracteres desde el 161, ficha 3 de la lista 0x619A (p00:4595); lo leen p00:4531 (250 bytes)
+D 0x8904 0x8A4B dibujos_8904  rachas (p00:4A8C) con los dibujos de los caracteres desde el 31, ficha 0 de la lista 0x6106 (p00:4595); lo leen p00:4531 (327 bytes)
+D 0x8A4B 0x8A58 dibujos_8A4B  rachas (p00:4A8C) con los dibujos de los caracteres desde el 194, ficha 2 de la lista 0x6106 (p00:4595); lo leen p00:4531 (13 bytes)
+D 0x8A58 0x8BC8 dibujos_8A58  rachas (p00:4A8C) con los dibujos de los caracteres desde el 31, ficha 0 de la lista 0x6143 (p00:4595); lo leen p00:4531 (368 bytes)
+D 0x8BC8 0x8BCB ceros_8BC8  3 ceros entre bloques: rachas vacias (un 0 acaba), sin lector a la vista; lo leen nadie (3 bytes)
+F 0x8BC8 16
+D 0x8BCB 0x8C33 dibujos_8BCB  rachas (p00:4A8C) con los dibujos de los caracteres desde el 121, ficha 3 de la lista 0x60DB (p00:4595); lo leen p00:4531 (104 bytes)
+D 0x8C33 0x8C65 dibujos_8C33  rachas (p00:4A8C) con los dibujos de los caracteres desde el 147, ficha 4 de la lista 0x60DB (p00:4595); lo leen p00:4531 (50 bytes)
+D 0x8C65 0x8C85 dibujos_8C65  rachas (p00:4A8C) con los dibujos de los caracteres desde el 175, ficha 5 de la lista 0x60DB (p00:4595); lo leen p00:4531 (32 bytes)
+D 0x8C85 0x8C9C dibujos_8C85  rachas (p00:4A8C) con los dibujos de los caracteres desde el 179, ficha 6 de la lista 0x60DB (p00:4595); lo leen p00:4531 (23 bytes)
+D 0x8C9C 0x8CA1 ceros_8C9C  5 ceros entre bloques: rachas vacias (un 0 acaba), sin lector a la vista; lo leen nadie (5 bytes)
+F 0x8C9C 16
+D 0x8CA1 0x8DAE dibujos_8CA1  rachas (p00:4A8C) con los dibujos de los caracteres desde el 31, ficha 3 de la lista 0x616F (p00:4595); lo leen p00:4531 (269 bytes)
+D 0x8DAE 0x8E6C dibujos_8DAE  rachas (p00:4A8C) con los dibujos de los caracteres desde el 83, ficha 4 de la lista 0x616F (p00:4595); lo leen p00:4531 (190 bytes)
+D 0x8E6C 0x8F0F dibujos_8E6C  rachas (p00:4A8C) con los dibujos de los caracteres desde el 169, ficha 5 de la lista 0x616F (p00:4595); lo leen p00:4531 (163 bytes)
+D 0x8F0F 0x8F21 dibujos_8F0F  rachas (p00:4A8C) con los dibujos de los caracteres desde el 9, ficha 2 de la lista 0x616F (p00:4595); lo leen p00:4531 (18 bytes)
+D 0x8F21 0x8F22 ceros_8F21  1 cero entre bloques: rachas vacias (un 0 acaba), sin lector a la vista; lo leen nadie (1 bytes)
+F 0x8F21 16
+D 0x8F22 0x8F71 dibujos_8F22  rachas (p00:4A8C) con los dibujos de los caracteres desde el 17, ficha 8 de la lista 0x619A (p00:4595); lo leen p00:4531 (79 bytes)
+D 0x8F71 0x8F7B dibujos_8F71  rachas (p00:4A8C) con los dibujos de los caracteres desde el 147, ficha 9 de la lista 0x619A (p00:4595); lo leen p00:4531 (10 bytes)
+D 0x8F7B 0x8F91 dibujos_8F7B  rachas (p00:4A8C) con los dibujos de los caracteres desde el 5, ficha 6 de la lista 0x619A (p00:4595); lo leen p00:4531 (22 bytes)
+D 0x8F91 0x8FAD dibujos_8F91  rachas (p00:4A8C) con los dibujos de los caracteres desde el 147, ficha 6 de la lista 0x6106 (p00:4595); lo leen p00:4531 (28 bytes)
+D 0x8FAD 0x8FCE dibujos_8FAD  rachas (p00:4A8C) con los dibujos de los caracteres desde el 27, ficha 10 de la lista 0x619A (p00:4595); lo leen p00:4531 (33 bytes)
+D 0x8FCE 0x8FE9 dibujos_8FCE  rachas (p00:4A8C) con los dibujos de los caracteres desde el 92, ficha 5 de la lista 0x6106 (p00:4595); lo leen p00:4531 (27 bytes)
+D 0x8FE9 0x9004 dibujos_8FE9  rachas (p00:4A8C) con los dibujos de los caracteres desde el 52, ficha 10 de la lista 0x6098 (p00:4595); lo leen p00:4531 (27 bytes)
+D 0x9004 0x9039 dibujos_9004  rachas (p00:4A8C) con los dibujos de los caracteres desde el 96, ficha 1 de la lista 0x6106 (p00:4595); lo leen p00:4531 (53 bytes)
+D 0x9039 0x9056 dibujos_9039  rachas (p00:4A8C) con los dibujos de los caracteres desde el 115, ficha 0 de la lista 0x616F (p00:4595); lo leen p00:4531 (29 bytes)
+D 0x9056 0x9057 ceros_9056  1 cero entre bloques: rachas vacias (un 0 acaba), sin lector a la vista; lo leen nadie (1 bytes)
+F 0x9056 16
+D 0x9057 0x9074 dibujos_9057  rachas (p00:4A8C) con los dibujos de los caracteres desde el 127, ficha 1 de la lista 0x616F (p00:4595); lo leen p00:4531 (29 bytes)
+D 0x9074 0x9098 rachas_9074  1 tira de rachas (el formato de p00:4A8C) que acaba justo antes de lo siguiente: sin lector a la vista; lo leen nadie (36 bytes)
+F 0x9074 16
+D 0x9098 0x90B4 armas_9098  7 pares de punteros (C de 1 a 7 en p00:4319: la tabla empieza en 0x9094 + 4, y lo de 0x9094 es el final de las rachas de 0x9074): dibujos (VRAM 0x2748) y colores (0x0748) en los tres tercios; lo leen p00:431F (28 bytes)
+F 0x9098 w2
+D 0x90B4 0x90D6 dibujos_1  rachas (p00:4A5B, los tres tercios) con los dibujos del 1 (C de p00:4319) a la VRAM 0x2748; lo leen p00:4329 (34 bytes)
+D 0x90D6 0x90E5 colores_1  rachas (p00:4A5B, los tres tercios) con los colores del 1 (C de p00:4319) a la VRAM 0x0748; lo leen p00:4334 (15 bytes)
+D 0x90E5 0x9107 dibujos_2  rachas (p00:4A5B, los tres tercios) con los dibujos del 2 (C de p00:4319) a la VRAM 0x2748; lo leen p00:4329 (34 bytes)
+D 0x9107 0x911E colores_2  rachas (p00:4A5B, los tres tercios) con los colores del 2 (C de p00:4319) a la VRAM 0x0748; lo leen p00:4334 (23 bytes)
+D 0x911E 0x913E dibujos_3  rachas (p00:4A5B, los tres tercios) con los dibujos del 3 (C de p00:4319) a la VRAM 0x2748; lo leen p00:4329 (32 bytes)
+D 0x913E 0x9152 colores_3  rachas (p00:4A5B, los tres tercios) con los colores del 3 (C de p00:4319) a la VRAM 0x0748; lo leen p00:4334 (20 bytes)
+D 0x9152 0x9174 dibujos_4  rachas (p00:4A5B, los tres tercios) con los dibujos del 4 (C de p00:4319) a la VRAM 0x2748; lo leen p00:4329 (34 bytes)
+D 0x9174 0x9192 colores_4  rachas (p00:4A5B, los tres tercios) con los colores del 4 (C de p00:4319) a la VRAM 0x0748; lo leen p00:4334 (30 bytes)
+D 0x9192 0x91B2 dibujos_5  rachas (p00:4A5B, los tres tercios) con los dibujos del 5 (C de p00:4319) a la VRAM 0x2748; lo leen p00:4329 (32 bytes)
+D 0x91B2 0x91C9 colores_5  rachas (p00:4A5B, los tres tercios) con los colores del 5 (C de p00:4319) a la VRAM 0x0748; lo leen p00:4334 (23 bytes)
+D 0x91C9 0x91EB dibujos_6  rachas (p00:4A5B, los tres tercios) con los dibujos del 6 (C de p00:4319) a la VRAM 0x2748; lo leen p00:4329 (34 bytes)
+D 0x91EB 0x91F6 colores_6  rachas (p00:4A5B, los tres tercios) con los colores del 6 (C de p00:4319) a la VRAM 0x0748; lo leen p00:4334 (11 bytes)
+D 0x91F6 0x9218 dibujos_7  rachas (p00:4A5B, los tres tercios) con los dibujos del 7 (C de p00:4319) a la VRAM 0x2748; lo leen p00:4329 (34 bytes)
+D 0x9218 0x923A colores_7  rachas (p00:4A5B, los tres tercios) con los colores del 7 (C de p00:4319) a la VRAM 0x0748; lo leen p00:4334 (34 bytes)
+D 0x923A 0x925C colores_923A  rachas (p00:4A8C) con los colores de los caracteres desde el 199, ficha 0 de la lista 0x4358 (p00:4595); lo leen p00:4350 (34 bytes)
+D 0x925C 0x9273 dibujos_925C  rachas (p00:4A8C) con los dibujos de los caracteres desde el 199, ficha 0 de la lista 0x4358 (p00:4595); lo leen p00:4350 (23 bytes)
+D 0x9273 0x92B3 dibujos_9273  8 caracteres de dibujo (8 bytes cada uno) que no lee nadie a la vista: no son rachas ni los apunta ninguna palabra del cartucho; lo leen nadie (64 bytes)
+F 0x9273 8
+D 0x92B3 0x92CB rachas_por_fase_92B3  12 punteros, uno por fase (0xE201): listas [n][rachas] de p00:44D1, que p00:44C7 lee con L_4B67; lo leen p00:44CD (24 bytes)
+F 0x92B3 w6
+D 0x92CB 0x92DE lista_44D1_92CB  lista de p00:44D1 de la fase 1: [n][rachas lo hi] y 0 acaba; lo leen p00:44D1 (19 bytes)
+F 0x92CB 3
+D 0x92DE 0x92E5 lista_44D1_92DE  lista de p00:44D1 de la fase 2: [n][rachas lo hi] y 0 acaba; lo leen p00:44D1 (7 bytes)
+F 0x92DE 3
+D 0x92E5 0x92F8 lista_44D1_92E5  lista de p00:44D1 de las fases 9, 10, 11: [n][rachas lo hi] y 0 acaba; se solapan 2 bloques: (lista_44D1_92E8 92E8-92F8); lo leen p00:44D1 (19 bytes)
+F 0x92E5 3
+D 0x92F8 0x930E lista_44D1_92F8  lista de p00:44D1 de la fase 5: [n][rachas lo hi] y 0 acaba; lo leen p00:44D1 (22 bytes)
+F 0x92F8 3
+D 0x930E 0x9327 lista_44D1_930E  lista de p00:44D1 de la fase 4: [n][rachas lo hi] y 0 acaba; lo leen p00:44D1 (25 bytes)
+F 0x930E 3
+D 0x9327 0x9337 lista_44D1_9327  lista de p00:44D1 de la fase 6: [n][rachas lo hi] y 0 acaba; lo leen p00:44D1 (16 bytes)
+F 0x9327 3
+D 0x9337 0x933E lista_44D1_9337  lista de p00:44D1 de la fase 7: [n][rachas lo hi] y 0 acaba; se solapan 2 bloques: (lista_44D1_933A 933A-933E); lo leen p00:44D1 (7 bytes)
+F 0x9337 3
+D 0x933E 0x9348 lista_44D1_933E  lista de p00:44D1 de la fase 0: [n][rachas lo hi] y 0 acaba; lo leen p00:44D1 (10 bytes)
+F 0x933E 3
+D 0x9348 0x9360 copias_por_fase_9348  12 punteros, uno por fase (0xE201): listas de p00:43DA (fichas de 4 bytes), que p00:43CE lee con L_4B67; lo leen p00:43D4 (24 bytes)
+F 0x9348 w6
+D 0x9360 0x9365 copias_por_fase_9348_9360  lista de p00:43DA (fichas [tipo][cuantos][origen][destino], tipo 0 acaba) de la fase 1; lo leen p00:43D4 (5 bytes)
+F 0x9360 4
+D 0x9365 0x936A copias_por_fase_9348_9365  lista de p00:43DA (fichas [tipo][cuantos][origen][destino], tipo 0 acaba) de la fase 3; lo leen p00:43D4 (5 bytes)
+F 0x9365 4
+D 0x936A 0x936F copias_por_fase_9348_936A  lista de p00:43DA (fichas [tipo][cuantos][origen][destino], tipo 0 acaba) de la fase 6; se solapan 2 bloques: (copias_por_fase_9348_936E 936E-936F); lo leen p00:43D4 (5 bytes)
+F 0x936A 4
+D 0x936F 0x93C0 rachas_936F  rachas a la VRAM (p00:4A8C: <0x80 repite, 0x80 destino, >0x80 copia, 0 acaba); lo leen p00:4375 (81 bytes)
+D 0x93C0 0x93EE rachas_93C0  rachas a la VRAM 0x18C0: p00:4497 pone DE = 0x93C0 y cae en L_449A, que salta a p00:4A8C; lo leen p00:4497 (46 bytes)
+D 0x93EE 0x940B rachas_93EE  rachas a la VRAM 0x18C0 (p00:449A -> p00:4A8C); lo leen p00:4488, p00:44BB (29 bytes)
+D 0x940B 0x942B dibujos_940B  4 caracteres de dibujo (8 bytes cada uno) que no lee nadie a la vista: no son rachas ni los apunta ninguna palabra del cartucho; lo leen nadie (32 bytes)
+F 0x940B 8
+D 0x942B 0x94B8 rachas_942B  rachas a la VRAM (p00:4A8C: <0x80 repite, 0x80 destino, >0x80 copia, 0 acaba); lo leen p00:437E (141 bytes)
+D 0x94B8 0x9662 rachas_94B8  rachas a la VRAM (p00:4A8C: <0x80 repite, 0x80 destino, >0x80 copia, 0 acaba); lo leen p00:44C4 (426 bytes)
+D 0x9662 0x9787 rachas_9662  rachas (p00:4A8C) a la VRAM 0x1DA0 (el 180) de la lista 0x9327 (p00:44D1, fase 6); lo leen p00:44D1 (293 bytes)
+D 0x9787 0x9806 rachas_9787  rachas (p00:4A8C) a la VRAM 0x1EE0 (el 220) de la lista 0x92CB (p00:44D1, fase 1); lo leen p00:44D1 (127 bytes)
+D 0x9806 0x9848 rachas_9806  rachas (p00:4A8C) a la VRAM 0x1F80 (el 240) de la lista 0x92CB (p00:44D1, fase 1); lo leen p00:44D1 (66 bytes)
+D 0x9848 0x98A0 rachas_9848  rachas (p00:4A8C) a la VRAM 0x1DA0 (el 180) de la lista 0x92DE (p00:44D1, fase 2); lo leen p00:44D1 (88 bytes)
+D 0x98A0 0x9902 rachas_98A0  rachas (p00:4A8C) a la VRAM 0x1E20 (el 196) de la lista 0x92CB (p00:44D1, fase 1); lo leen p00:44D1 (98 bytes)
+D 0x9902 0x9953 rachas_9902  rachas (p00:4A8C) a la VRAM 0x1F60 (el 236) de la lista 0x92E5 (p00:44D1, fase 9, 10, 11); lo leen p00:44D1 (81 bytes)
+D 0x9953 0x99C2 rachas_9953  rachas (p00:4A8C) a la VRAM 0x1BE0 (el 124) de la lista 0x92E5 (p00:44D1, fase 9, 10, 11); lo leen p00:44D1 (111 bytes)
+D 0x99C2 0x99E4 rachas_99C2  rachas (p00:4A8C) a la VRAM 0x1F20 (el 228) de la lista 0x933E (p00:44D1, fase 0); lo leen p00:44D1 (34 bytes)
+D 0x99E4 0x9A22 rachas_99E4  rachas (p00:4A8C) a la VRAM 0x1FA0 (el 244) de la lista 0x92F8 (p00:44D1, fase 5); lo leen p00:44D1 (62 bytes)
+D 0x9A22 0x9A7E rachas_9A22  rachas (p00:4A8C) a la VRAM 0x1EE0 (el 220) de la lista 0x92F8 (p00:44D1, fase 5); lo leen p00:44D1 (92 bytes)
+D 0x9A7E 0x9AD1 rachas_9A7E  rachas (p00:4A8C) a la VRAM 0x1EA0 (el 212) de la lista 0x930E (p00:44D1, fase 4); lo leen p00:44D1 (83 bytes)
+D 0x9AD1 0x9B13 rachas_9AD1  rachas (p00:4A8C) a la VRAM 0x1FC0 (el 248) de la lista 0x92CB (p00:44D1, fase 1); lo leen p00:44D1 (66 bytes)
+D 0x9B13 0x9B32 rachas_9B13  rachas (p00:4A8C) a la VRAM 0x1FE0 (el 252) de la lista 0x92E5 (p00:44D1, fase 9, 10, 11); lo leen p00:44D1 (31 bytes)
+D 0x9B32 0x9B4D rachas_9B32  rachas (p00:4A8C) a la VRAM 0x1F60 (el 236) de la lista 0x92CB (p00:44D1, fase 1); lo leen p00:44D1 (27 bytes)
+D 0x9B4D 0x9BA0 rachas_9B4D  rachas (p00:4A8C) a la VRAM 0x1E80 (el 208) de la lista 0x92F8 (p00:44D1, fase 5); lo leen p00:44D1 (83 bytes)
+D 0x9BA0 0x9C1B rachas_9BA0  rachas (p00:4A8C) a la VRAM 0x1D20 (el 164) de la lista 0x92CB (p00:44D1, fase 1); lo leen p00:44D1 (123 bytes)
+D 0x9C1B 0x9C77 rachas_9C1B  rachas (p00:4A8C) a la VRAM 0x1BA0 (el 116) de la lista 0x9327 (p00:44D1, fase 6); lo leen p00:44D1 (92 bytes)
+D 0x9C77 0x9CD7 rachas_9C77  rachas (p00:4A8C) a la VRAM 0x1E20 (el 196) de la lista 0x930E (p00:44D1, fase 4); lo leen p00:44D1 (96 bytes)
+D 0x9CD7 0x9D17 rachas_9CD7  rachas (p00:4A8C) a la VRAM 0x1F20 (el 228) de la lista 0x930E (p00:44D1, fase 4); lo leen p00:44D1 (64 bytes)
+D 0x9D17 0x9D68 rachas_9D17  rachas a la VRAM (p00:4A8C: <0x80 repite, 0x80 destino, >0x80 copia, 0 acaba); lo leen p00:4304 (81 bytes)
+D 0x9D68 0x9DA5 rachas_9D68  rachas a la VRAM (p00:4A8C: <0x80 repite, 0x80 destino, >0x80 copia, 0 acaba); lo leen p00:430D (61 bytes)
+D 0x9DA5 0x9EA1 piezas_por_cuadro  126 punteros, uno por cuadro (IX+32), que p00:52B8 lee con L_4B60; lo leen p00:52CB (252 bytes)
+F 0x9DA5 w8
+D 0x9EA1 0x9FF4 piezas_de_enemigos  las piezas de caracteres de 0x9DA5 que p00:52ED copia a la tabla de nombres de la RAM (IX+13 filas de IX+14 caracteres, recortadas por el borde); lo leen p00:52F1 (339 bytes)
+F 0x9EA1 8
+D 0x9FF4 0xA000 rachas_9FF4  rachas a la VRAM (p00:4A8C: <0x80 repite, 0x80 destino, >0x80 copia, 0 acaba) (sigue en el banco 9, en 0xA000); lo leen p00:42E6 (12 bytes)
+# --- fin de los bloques de bloques.py ---

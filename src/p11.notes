@@ -1,0 +1,120 @@
+# notas del banco 11
+
+# --- A MANO: comentarios, nombres y bloques ---
+
+# --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
+D 0xA0F4 0xA112 tabla_A0F4  15 destinos del despachador p00:4084 (call en p11:A0F1, el indice en A): A112, A112, A159, A159, A159, A159, A118, A118, A126, A118, A118, A118, A118, A159, A138; lo leen p11:A0F1 (30 bytes)
+F 0xA0F4 w8
+D 0xA188 0xA1A6 tabla_A188  15 destinos del despachador p00:4084 (call en p11:A185, el indice en A): A1A6, A1A6, A159, A159, A159, A159, A1B1, A1B1, A1C4, A1B1, A1B1, A1B1, A1B1, A159, A1DD; lo leen p11:A185 (30 bytes)
+F 0xA188 w8
+D 0xA221 0xA23F tabla_A221  15 destinos del despachador p00:4084 (call en p11:A21E, el indice en A): A23F, A23F, A159, A159, A159, A159, A24A, A24A, A25E, A24A, A24A, A24A, A24A, A159, A275; lo leen p11:A21E (30 bytes)
+F 0xA221 w8
+D 0xA44D 0xA4D1 filas_A44D  33 filas de 4 caracteres que p11:A412 copia (IX+0C filas) a la tabla de nombres de la RAM; lo leen p11:A41D (132 bytes)
+F 0xA44D 4
+D 0xA566 0xA56C tabla_A566  3 punteros (IX+0B) que p11:A55E lee con L_4B60; lo leen p11:A561 (6 bytes)
+F 0xA566 w3
+D 0xA56C 0xA5F0 dibujos_A56C  3 bloques de 44 bytes (0xA56C, 0xA598 y 0xA5C4), los de 0xA566; lo leen p11:A564 (132 bytes)
+F 0xA56C 16
+D 0xA634 0xA644 tabla_A634  16 bytes que p11:A619 lee con IX+2B & 0x0F y pone en IX+31, +37, +3B y +3F; lo leen p11:A624 (16 bytes)
+F 0xA634 16
+D 0xA65B 0xA663 tabla_A65B  4 destinos del despachador p00:4084 (call en p11:A658, el indice en A): A663, A69B, A6AA, A6C1; lo leen p11:A658 (8 bytes)
+F 0xA65B w4
+D 0xA73A 0xA744 tabla_A73A  10 bytes que p11:A703 recorre (B = 5) comparando con la distancia en X; lo leen p11:A706 (10 bytes)
+F 0xA73A 10
+D 0xA75C 0xA766 tablas_A75C  dos tablas de 5 bytes (0xA75C y 0xA761) que p11:A74C y p11:A756 leen con L_5CA6; lo leen p11:A74F (10 bytes)
+F 0xA75C 5
+D 0xA788 0xA78B tabla_A788  3 bytes que p11:A766 lee con IX+25 - 1; lo leen p11:A76D (3 bytes)
+F 0xA788 3
+D 0xA7BF 0xA811 filas_A7BF  filas de 8 bytes que p11:A71E lee con C x 8: la primera va a IX+30 y la direccion del resto a IX+26/27; lo leen p11:A725 (82 bytes)
+F 0xA7BF 8
+D 0xA82A 0xA82E tabla_A82A  4 bytes que p11:A81D lee con IX+0B; lo leen p11:A823 (4 bytes)
+F 0xA82A 4
+D 0xA875 0xA8B5 piezas_A875  4 piezas de 4 x 4 caracteres (IX+0C de 1 a 4: p11:A84B lee 0xA865 + 16 x IX+0C, y la 0 caeria en el codigo de delante); lo leen p11:A852 (64 bytes)
+F 0xA875 4
+D 0xA8BF 0xA8CD tabla_A8BF  7 destinos del despachador p00:4084 (call en p11:A8BC, el indice en A): A8CD, A90A, A928, A931, A95B, A98E, A99F; lo leen p11:A8BC (14 bytes)
+F 0xA8BF w7
+D 0xA900 0xA90A objeto_A900  10 bytes que p11:A8D3 pasa a L_A8E1 (con A = 0x11); lo leen p11:A8D6 (10 bytes)
+F 0xA900 10
+D 0xAAF9 0xAAFD tabla_AAF9  4 bytes que p11:AAB0 lee con 0xE340 - 1; lo leen p11:AAB7 (4 bytes)
+F 0xAAF9 4
+D 0xABBA 0xABD2 tabla_ABBA  6 fichas de 4 bytes que p11:AB7B recorre; lo leen p11:AB80 (24 bytes)
+F 0xABBA 4
+D 0xAC27 0xAC35 tabla_AC27  7 destinos del despachador p00:4084 (call en p11:AC24, el indice en A): AC35, AC53, AC5E, AC77, A95B, A98E, A99F; lo leen p11:AC24 (14 bytes)
+F 0xAC27 w7
+D 0xAC49 0xAC53 objeto_AC49  10 bytes que p11:AC39 pasa a L_A8E1 (con A = 0x22); lo leen p11:AC3E (10 bytes)
+F 0xAC49 10
+D 0xAC9F 0xACA9 tabla_AC9F  5 destinos del despachador p00:4084 (call en p11:AC9C, el indice en A): ACA9, ACAF, ACBB, ACC3, ACD0; lo leen p11:AC9C (10 bytes)
+F 0xAC9F w5
+D 0xAD33 0xAD41 tabla_AD33  7 destinos del despachador p00:4084 (call en p11:AD30, el indice en A): AD41, AD5D, AD68, AD77, A95B, A98E, A99F; lo leen p11:AD30 (14 bytes)
+F 0xAD33 w7
+D 0xAD53 0xAD5D objeto_AD53  10 bytes que p11:AD47 pasa a L_A8E1 (con A = 0x1A); lo leen p11:AD4A (10 bytes)
+F 0xAD53 10
+D 0xAE21 0xAE29 tabla_AE21  4 palabras (B de 1 a 4: p11:ADEC lee 0xAE1F + 2 x B, y la 0 caeria en el codigo de delante); lo leen p11:ADEF (8 bytes)
+F 0xAE21 w4
+D 0xAE33 0xAE41 tabla_AE33  7 destinos del despachador p00:4084 (call en p11:AE30, el indice en A): AE41, AE62, AE6D, AE77, A95B, A98E, A99F; lo leen p11:AE30 (14 bytes)
+F 0xAE33 w7
+D 0xAE58 0xAE62 objeto_AE58  10 bytes que p11:AE48 pasa a L_A8E1 (con A = 0x37); lo leen p11:AE4D (10 bytes)
+F 0xAE58 10
+D 0xAF78 0xAF7E tabla_AF78  3 destinos del despachador p00:4084 (call en p11:AF75, el indice en A): AF7E, AF94, AFAE; lo leen p11:AF75 (6 bytes)
+F 0xAF78 w3
+D 0xAFFE 0xB008 objeto_AFFE  10 bytes que p11:AFD9 copia a IX (ldir); lo leen p11:AFDF (10 bytes)
+F 0xAFFE 10
+D 0xB034 0xB03A tabla_B034  3 destinos del despachador p00:4084 (call en p11:B031, el indice en A): B03A, B088, B099; lo leen p11:B031 (6 bytes)
+F 0xB034 w3
+D 0xB080 0xB088 tabla_B080  8 bytes que p11:B070 lee con 0xE228 / 2; lo leen p11:B078 (8 bytes)
+F 0xB080 8
+D 0xB0F9 0xB109 tabla_B0F9  4 fichas de 4 bytes que p11:B0F1 pasa a L_AB80; lo leen p11:B0F6 (16 bytes)
+F 0xB0F9 4
+D 0xB179 0xB193 guion_B179  fichas de 3 bytes que p11:B124 lee con 0xE377 x 3, y FF FF acaba; lo leen p11:B12D (26 bytes)
+F 0xB179 3
+D 0xB2A8 0xB2B8 tabla_B2A8  16 bytes que p11:B225 lee con 0xE228 (+8 con el bit 6 de IX+00, y como mucho 15); lo leen p11:B239 (16 bytes)
+F 0xB2A8 16
+D 0xB35C 0xB362 tabla_B35C  6 bytes que p11:B20A lee con IX+02 (de 0 a 5); lo leen p11:B219 (6 bytes)
+F 0xB35C 6
+D 0xB362 0xB368 tabla_B362  3 punteros que p11:B2E8 lee con L_4B60; lo leen p11:B2EB (6 bytes)
+F 0xB362 w3
+D 0xB368 0xB410 bloques_B368  3 bloques de 56 bytes (0xB368, 0xB3A0 y 0xB3D8), los de 0xB362; lo leen p11:B2EE (168 bytes)
+F 0xB368 8
+D 0xB49E 0xB4AA posiciones_B49E  5 posiciones del scroll y 0xFFFF que p11:B432 lee con 0xE36B (L_4B67); lo leen p11:B438 (12 bytes)
+F 0xB49E w6
+D 0xB5D5 0xB5DF tabla_B5D5  5 punteros que p11:B562 lee con IX+06 (L_4B67); lo leen p11:B568 (10 bytes)
+F 0xB5D5 w5
+D 0xB5DF 0xB66B piezas_B5DF  5 piezas de 4 filas de 7 caracteres (las de 0xB5D5) que p11:B56F copia a la tabla de nombres; lo leen p11:B588 (140 bytes)
+F 0xB5DF 7
+D 0xB66B 0xB6CD filas_B66B  14 filas de 7 caracteres: p11:B5B8 copia 12 desde 0xB66B + 7 x IX+0C; lo leen p11:B5CF (98 bytes)
+F 0xB66B 7
+D 0xB77B 0xB77F texto_B77B  3 letras y un 0 que p11:B758 escribe en la VRAM 0x3090; lo leen p11:B75E (4 bytes)
+F 0xB77B 4
+D 0xB7A4 0xB7B4 textos_B7A4  dos textos acabados en 0 (letras numeradas desde la A = 1) que p11:B793 y p11:B79C escriben en 0x35D8 y 0x34D8; lo leen p11:B75E (16 bytes)
+F 0xB7A4 16
+D 0xB7B4 0xB81C fuente_cifras  13 caracteres de 8 bytes (las cifras y tres signos) que p11:B6CD, B6F0, B713 y B74C copian a la VRAM; lo leen p11:B6D6 (104 bytes)
+F 0xB7B4 8
+D 0xB81C 0xB8F4 fuente_letras  27 caracteres de 8 bytes (las letras) que p11:B6D9 y los de al lado copian a la VRAM, y p11:B76B saca de uno en uno; lo leen p11:B6E2 (216 bytes)
+F 0xB81C 8
+D 0xB987 0xB997 tablas_B987  tablas de 4 bytes (0xB987 y 0xB98B segun IX+32) que p11:B959 lee; lo leen p11:B965 (16 bytes)
+F 0xB987 4
+D 0xB997 0xB9A0 tabla_B997  9 bytes que p11:B941 lee con L_5CA6; lo leen p11:B941 (9 bytes)
+F 0xB997 9
+D 0xB9B8 0xB9C4 tabla_B9B8  6 destinos del despachador p00:4084 (call en p11:B9B5, el indice en A): B9DC, B9EA, B9FA, BA0E, BA54, BA64; lo leen p11:B9B5 (12 bytes)
+F 0xB9B8 w6
+D 0xBABB 0xBAC1 tabla_BABB  6 bytes que p11:BA96 recorre (B = 6); lo leen p11:BA9B (6 bytes)
+F 0xBABB 6
+D 0xBB0C 0xBB1E tabla_BB0C  9 destinos del despachador p00:4084 (call en p11:BB09, el indice en A): BB1E, BB49, BB60, BB81, BB8C, BB95, BBCC, BBDC, BBF8; lo leen p11:BB09 (18 bytes)
+F 0xBB0C w8
+D 0xBE68 0xBE72 tabla_BE68  5 destinos del despachador p00:4084 (call en p11:BE65, el indice en A): BE72, BE86, BEA1, BED0, BEE1; lo leen p11:BE65 (10 bytes)
+F 0xBE68 w5
+D 0xBF0B 0xBF10 tabla_BF0B  5 bytes que p11:BEE6 lee con IX+19 - 1; lo leen p11:BEED (5 bytes)
+F 0xBF0B 5
+D 0xBF63 0xBF70 caracteres_BF63  lista de caracteres (p00:4595): fichas de 6 bytes [tercios][colores][caracter][dibujos], 0 acaba; lo leen p00:43C1 (13 bytes)
+F 0xBF63 6
+D 0xBF70 0xBF91 colores_BF70  rachas (p00:4A8C) con los colores de los caracteres desde el 237, ficha 0 de la lista 0xBF63 (p00:4595); lo leen p00:43C1 (33 bytes)
+D 0xBF91 0xBFA8 colores_BF91  rachas (p00:4A8C) con los colores de los caracteres desde el 246, ficha 1 de la lista 0xBF63 (p00:4595); lo leen p00:43C1 (23 bytes)
+D 0xBFA8 0xBFBC dibujos_BFA8  rachas (p00:4A8C) con los dibujos de los caracteres desde el 237, ficha 0 de la lista 0xBF63 (p00:4595); lo leen p00:43C1 (20 bytes)
+D 0xBFBC 0xBFBF dibujos_BFBC  rachas (p00:4A8C) con los dibujos de los caracteres desde el 246, ficha 1 de la lista 0xBF63 (p00:4595); lo leen p00:43C1 (3 bytes)
+D 0xBFBF 0xBFC6 caracteres_BFBF  lista de caracteres (p00:4595) que p00:4343 pasa con el banco 11 puesto (si el bit 2 de 0xF0F5); lo leen p00:4350 (7 bytes)
+F 0xBFBF 6
+D 0xBFC6 0xBFE8 colores_BFC6  rachas (p00:4A8C) con los colores de los caracteres desde el 199, ficha 0 de la lista 0xBFBF (p00:4595); lo leen p00:4350 (34 bytes)
+D 0xBFE8 0xBFFF dibujos_BFE8  rachas (p00:4A8C) con los dibujos de los caracteres desde el 199, ficha 0 de la lista 0xBFBF (p00:4595); lo leen p00:4350 (23 bytes)
+D 0xBFFF 0xC000 relleno_ff  un 0xFF al final del banco: relleno; lo leen nadie (1 bytes)
+F 0xBFFF 1
+# --- fin de los bloques de bloques.py ---

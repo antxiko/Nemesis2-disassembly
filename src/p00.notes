@@ -1,0 +1,54 @@
+# notas del banco 00
+
+# --- A MANO: comentarios, nombres y bloques ---
+
+# --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
+D 0x4000 0x4010 cabecera  cabecera del cartucho: "AB", INIT = 0x4090 y STATEMENT, DEVICE y TEXT a cero; la lee la BIOS al arrancar; lo leen BIOS (16 bytes)
+F 0x4000 16
+D 0x4010 0x4023 cabecera_game_master  la segunda cabecera de Konami: "CD", 0x07 0x51 (RC-751) y 15 bytes que lee el Game Master desde la otra ranura; el propio cartucho la busca en el vecino (p03:BD06: Galious, Penguin Adventure y Q*bert la llevan); lo leen p03:BD06 (19 bytes)
+F 0x4010 16
+D 0x4358 0x435F caracteres_4358  lista de caracteres (p00:4595): fichas de 6 bytes [tercios][colores][caracter][dibujos], 0 acaba; lo leen p00:4350 (7 bytes)
+F 0x4358 6
+D 0x44EA 0x44F7 copias_44EA  lista de p00:43DA (fichas [tipo][cuantos][origen][destino], tipo 0 acaba) que p00:43C4 pasa en IX; lo leen p00:43C8 (13 bytes)
+F 0x44EA 4
+D 0x494A 0x4956 umbral_por_fase  12 bytes, uno por fase: cuantos metabloques de 16 bytes hay antes de los de 8 (p00:48E7); lo leen p00:48EA (12 bytes)
+F 0x494A 12
+D 0x49E0 0x49E8 pares_49E0  4 pares de bytes que p00:497A lee con (0xE1C3 & 6); lo leen p00:4986 (8 bytes)
+F 0x49E0 2
+D 0x49E8 0x4A08 tabla_49E8  32 bytes que p00:4956 lee con (0xE203 & 0x1F): la scroll en curso; lo leen p00:495E (32 bytes)
+F 0x49E8 16
+D 0x4BE8 0x4C24 bloque_4BE8  4 filas de 15 caracteres que p00:4B8E copia a la tabla de nombres de la RAM alineadas a la derecha (IX+14 de ancho, IX+13 filas); lo leen p00:4BA2 (60 bytes)
+F 0x4BE8 15
+D 0x4CD6 0x4CF6 tabla_4CD6  16 palabras con signo (una por direccion) que p00:4CC8 lee con L_4B67 y suma IX+?? veces; lo leen p00:4CCB (32 bytes)
+F 0x4CD6 w8
+D 0x4CF6 0x4D16 tabla_4CF6  16 palabras con signo (una por direccion) que p00:4CB8 lee con L_4B67; lo leen p00:4CBB (32 bytes)
+F 0x4CF6 w8
+D 0x4DF3 0x4E75 tabla_4DF3  65 destinos del despachador p00:4084 (call en p00:4DF0, el indice en A): 65B1, 4E76, 9867, A2EE, 9D6D, 4E75, A54A, 99A0, 9B4C, 4E75, A63C, 9A04, 9BA6, A340, 9BF7, B7BC, 9C8D, 4E75, 4E75, 9C50, 4E75, BBF6, 4E75, 4E75, A447, 4E75, A4E0, 4E75, B6E1, 4E75, B8FC, BA56, 4E75, BA47, ABD2, AF20, 9F9D, 9629, 4E75, 4E75, 9694, 9694, 96AA, 96B6, 96B2, 96A2, 970C, A71B, BACB, 744F, 9629, 933D, 4E75, 9629, 4E75, 4E7F, 9720, 970D, 9809, 985F, 4E75, 4E75, 4E75, BEE6, BC10; lo leen p00:4DF0 (130 bytes)
+F 0x4DF3 w8
+D 0x4EA4 0x4EB4 tabla_4EA4  16 bytes que p00:4E94 lee con 0xE228 y a los que suma un azar de 0 a 7 (ld a,r); lo leen p00:4E9A (16 bytes)
+F 0x4EA4 16
+D 0x4F4C 0x5113 fichas_de_tipo  65 fichas de 7 bytes, una por tipo de enemigo (0xE350 o IX+00), del 1 al 65: p00:4D42 y p01:6514 las leen en 0x4F45 + 7 x tipo (la del 0 caeria en el codigo de delante); lo leen p00:4D51 (455 bytes)
+F 0x4F4C 7
+D 0x5265 0x526A tabla_5265  5 bytes que p00:5219 lee con C (L_5CA6); lo leen p00:521D (5 bytes)
+F 0x5265 5
+D 0x5462 0x54C7 tablas_5462  8 punteros, uno por vuelta (0xE20F), a tablas de punteros (indice B en p00:53E7) a tiras de bytes que acaban en 0x54AE-0x54C6; las lee p00:53DC con L_4B67 dos veces; lo leen p00:53E2 (101 bytes)
+F 0x5462 16
+D 0x554F 0x5557 tabla_554F  8 bytes, uno por vuelta (0xE20F): la casilla 0xE3xx que p00:553E pone a cero; lo leen p00:5544 (8 bytes)
+F 0x554F 8
+D 0x5557 0x556F metabloques_por_fase  12 punteros (uno por fase, 0xE201) a los metabloques del banco 13; p00:48C3 los lee con L_4B67; lo leen p00:48C6 (24 bytes)
+F 0x5557 w6
+D 0x556F 0x559A caracteres_556F  lista de caracteres (p00:4595): fichas de 6 bytes [tercios][colores][caracter][dibujos], 0 acaba; lo leen p00:4B29 (43 bytes)
+F 0x556F 6
+D 0x559A 0x55A7 copias_559A  lista de copias de caracteres VRAM -> VRAM (p00:454E: 4 bytes, 3 si el tercero lleva los bits altos; 0 acaba); lo leen p00:4B35 (13 bytes)
+D 0x55A7 0x55DE caracteres_55A7  lista de caracteres (p00:4595): fichas de 6 bytes [tercios][colores][caracter][dibujos], 0 acaba; lo leen p01:6165 (55 bytes)
+F 0x55A7 6
+D 0x55DE 0x5601 copias_55DE  lista de copias de caracteres VRAM -> VRAM (p00:454E: 4 bytes, 3 si el tercero lleva los bits altos; 0 acaba); lo leen p01:6170 (35 bytes)
+D 0x5615 0x562B tabla_5615  11 destinos del despachador p00:4084 (call en p00:5612, el indice en A): 562B, 567D, 5699, 5727, 578A, 57DB, 5817, 5842, 58CF, 58FD, 5955; lo leen p00:5612 (22 bytes)
+F 0x5615 w8
+D 0x5AD8 0x5ADA inicio_E200  2 bytes que p00:5AB1 copia a 0xE200-0xE201 (la fase de arranque); lo leen p00:5AB1 (2 bytes)
+F 0x5AD8 2
+D 0x5D1D 0x5D25 registros_vdp  los 8 registros del VDP que p00:5D0C escribe (WRTVDP): SCREEN 2, nombres en 0x3800, colores en 0x0000, dibujos en 0x2000, atributos de sprite en 0x3B00 y sus dibujos en 0x1800; lo leen p00:5D13 (8 bytes)
+F 0x5D1D 8
+D 0x5F6D 0x5F77 tabla_5F6D  5 punteros (fases 2 a 6) al banco 15 que p00:5F4D lee en 0x5F69 + 2 x fase con L_4B67; las fases 0 y 1 caerian en el `jr` de delante; lo leen p00:5F53 (10 bytes)
+F 0x5F6D w5
+# --- fin de los bloques de bloques.py ---

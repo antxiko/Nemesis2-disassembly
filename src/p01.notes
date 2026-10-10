@@ -1,0 +1,123 @@
+# notas del banco 01
+
+# --- A MANO: comentarios, nombres y bloques ---
+
+# --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
+D 0x622D 0x6237 lista_622D  lista a la VRAM (p00:4A6B: [destino] y bytes; 0xFE otro destino; 0xFF acaba); lo leen p01:61DE (10 bytes)
+D 0x63CD 0x644F tabla_63CD  65 destinos del despachador p00:4084 (call en p01:63CA, el indice en A): 6624, 647D, 988A, A2FA, 9D97, 644F, A593, 9A13, 9B59, 644F, A662, 9AF9, 9BC5, A365, 9C0C, B7E7, 9CBF, 644F, 644F, 9C5B, 644F, BC0F, 644F, 644F, A495, 644F, A50B, 644F, B6FA, 644F, B91A, BA81, 644F, B6FA, 6474, 646B, 9FED, 9644, 644F, 644F, 644F, 644F, 644F, 96A1, 96A1, 644F, 96DE, 9FED, BAEC, 7461, 9644, 9359, 644F, 9632, 644F, 6462, 974E, 974E, 9811, 9811, 644F, 6450, 644F, 6450, 6459; lo leen p01:63CA (130 bytes)
+F 0x63CD w8
+D 0x66C0 0x66D0 tabla_66C0  16 bytes que p01:6667 lee con 0xE228 (con 0xE206 = 1, como mucho el 2); lo leen p01:6679 (16 bytes)
+F 0x66C0 16
+D 0x66D0 0x6700 tabla_66D0  4 filas de 12 bytes (IX+26 x 12 + fase) que p01:660A suma a C para IX+32; lo leen p01:6615 (48 bytes)
+F 0x66D0 12
+D 0x676C 0x6770 tabla_676C  4 bytes que p01:673A lee con IX+26; lo leen p01:6740 (4 bytes)
+F 0x676C 4
+D 0x67AF 0x67B9 tabla_67AF  5 destinos del despachador p00:4084 (call en p01:67AC, el indice en A): A8B5, AC1D, AE29, AD29, AF72; lo leen p01:67AC (10 bytes)
+F 0x67AF w5
+D 0x67C8 0x67CE tabla_67C8  6 bytes que p01:67CE pasa a L_67EC (3 pares, destino 0xEA07); lo leen p01:67CE (6 bytes)
+F 0x67C8 6
+D 0x694A 0x6962 tabla_694A  12 palabras, una por fase, que p01:6920 lee con L_4B67; lo leen p01:6923 (24 bytes)
+F 0x694A w6
+D 0x6962 0x6971 inicio_E400  15 bytes que p01:6888 copia a 0xE400; lo leen p01:6888 (15 bytes)
+F 0x6962 15
+D 0x6971 0x697A inicio_E430  9 bytes que p01:6893 copia a 0xE430; lo leen p01:6893 (9 bytes)
+F 0x6971 9
+D 0x697A 0x6986 tabla_697A  12 bytes, uno por fase, que p01:68F8 pone en 0xE305; lo leen p01:68FE (12 bytes)
+F 0x697A 12
+D 0x6986 0x69CE limites_por_fase  12 fichas de 6 bytes, una por fase, que p01:6908 copia a 0xE321 (los limites del scroll que mira p00:4889); lo leen p01:6912 (72 bytes)
+F 0x6986 6
+D 0x6B7C 0x6B7F tabla_6B7C  3 bytes que p01:6B5E lee con el indice de 0 a 2; lo leen p01:6B62 (3 bytes)
+F 0x6B7C 3
+D 0x6B7F 0x6B85 tabla_6B7F  3 punteros (fases 9, 10 y 11) al banco 15 que p01:6AED lee con fase - 9 (la 3 usa 0xA2AC); lo leen p01:6AF2 (6 bytes)
+F 0x6B7F w3
+D 0x6BEF 0x6BF7 tabla_6BEF  4 destinos del despachador p00:4084 (call en p01:6BEC, el indice en A): 6BF7, 6C07, 6C08, 6C33; lo leen p01:6BEC (8 bytes)
+F 0x6BEF w4
+D 0x6C96 0x6C9E tabla_6C96  4 destinos del despachador p00:4084 (call en p01:6C93, el indice en A): 6CAF, 6C9E, 6CB0, 6CAF; lo leen p01:6C93 (8 bytes)
+F 0x6C96 w4
+D 0x6E07 0x6E1D tabla_6E07  11 destinos del despachador p00:4084 (call en p01:6E04, el indice en A): 6FC4, 701A, 7216, 7151, 71EA, 71A2, 7106, 718A, 7065, 709F, 70CE; lo leen p01:6E04 (22 bytes)
+F 0x6E07 w8
+D 0x6EC1 0x6EC9 tabla_6EC1  8 bytes, uno por fase de la 0 a la 7, que p01:6E76 compara con el scroll; lo leen p01:6E7C (8 bytes)
+F 0x6EC1 8
+D 0x6EF2 0x6EFF tabla_6EF2  13 bytes, uno por fase, que p01:6E9A pone en 0xE393 (el 13 no lo pide ninguna); lo leen p01:6EA0 (13 bytes)
+F 0x6EF2 13
+D 0x6F22 0x6F32 tabla_6F22  16 bytes que p01:6F17 lee con 0xE356 & 0x0F (desde p01:6EFF y p01:6F0F); lo leen p01:6F1C (16 bytes)
+F 0x6F22 16
+D 0x6F32 0x6F42 tabla_6F32  16 bytes que p01:6F17 lee con 0xE356 & 0x0F (desde p01:6F07); lo leen p01:6F1C (16 bytes)
+F 0x6F32 16
+D 0x7006 0x700A tabla_7006  4 bytes que p01:6FD6 lee con (HL) & 3; lo leen p01:6FDC (4 bytes)
+F 0x7006 4
+D 0x700A 0x701A tabla_700A  16 bytes que p01:6FE7 lee con 0xE228; lo leen p01:6FED (16 bytes)
+F 0x700A 16
+D 0x7055 0x7065 tabla_7055  dos tablas de 8 bytes (0x7055 y 0x705D) que p01:7040 lee con B; lo leen p01:7041 (16 bytes)
+F 0x7055 8
+D 0x7097 0x709F tabla_7097  8 bytes que p01:706E lee con (HL) & 7; lo leen p01:7074 (8 bytes)
+F 0x7097 8
+D 0x70C6 0x70CE tabla_70C6  8 bytes que p01:70B1 lee con A & 7; lo leen p01:70B6 (8 bytes)
+F 0x70C6 8
+D 0x7141 0x7151 tabla_7141  8 palabras que p01:7124 lee en 0x713F + 2 x B (B de 8 a 1); lo leen p01:7129 (16 bytes)
+F 0x7141 w8
+D 0x7240 0x7248 tabla_7240  8 bytes que p01:7226 lee con 0xE35B; lo leen p01:722F (8 bytes)
+F 0x7240 8
+D 0x72DF 0x72E7 tabla_72DF  4 destinos del despachador p00:4084 (call en p01:72DC, el indice en A): 72E7, 731E, 7427, 7438; lo leen p01:72DC (8 bytes)
+F 0x72DF w4
+D 0x730E 0x731E inicio_EA70  16 bytes que p01:72EC copia a 0xEA70; lo leen p01:72EC (16 bytes)
+F 0x730E 16
+D 0x73B8 0x73D8 tabla_73B8  16 palabras que p01:7344 y p01:7375 leen al azar (ld a,r & 0x1E); lo leen p01:734B (32 bytes)
+F 0x73B8 w8
+D 0x73D8 0x73E0 tabla_73D8  4 palabras que p01:7360 lee al azar (ld a,r & 6); lo leen p01:736A (8 bytes)
+F 0x73D8 w4
+D 0x7417 0x7427 tabla_7417  4 fichas de 4 bytes que p01:7401 copia con ldi; lo leen p01:7406 (16 bytes)
+F 0x7417 4
+D 0x74AA 0x74C4 tabla_74AA  13 destinos del despachador p00:4084 (call en p01:74A7, el indice en A): 74C4, 74E2, 750F, 7543, 7569, 7596, 75DE, 75EF, 7614, 761F, 7636, 763E, 7686; lo leen p01:74A7 (26 bytes)
+F 0x74AA w8
+D 0x7565 0x7569 tabla_7565  4 bytes que p01:7543 lee con 0xE3C4; lo leen p01:7552 (4 bytes)
+F 0x7565 4
+D 0x7725 0x7731 inicio_EF0A  12 bytes que p01:7587 copia a 0xEF0A; lo leen p01:7587 (12 bytes)
+F 0x7725 12
+D 0x7731 0x7738 inicio_EF4C  7 bytes que p01:75A4 copia a 0xEF4C; lo leen p01:75A4 (7 bytes)
+F 0x7731 7
+D 0x7738 0x7758 tabla_7738  4 fichas de 8 bytes que p01:74EC copia a 0xEE2C y 0xEE4C; lo leen p01:74F2 (32 bytes)
+F 0x7738 8
+D 0x7758 0x77A8 tabla_7758  10 fichas de 8 bytes que p01:751D copia a 0xEE10; lo leen p01:7523 (80 bytes)
+F 0x7758 8
+D 0x77A8 0x77AE tabla_77A8  6 bytes que p01:769A lee con la vuelta (0xE20F); lo leen p01:76A0 (6 bytes)
+F 0x77A8 6
+D 0x77AE 0x77B6 tabla_77AE  8 bytes, uno por vuelta (0xE20F), que p01:76CF lee; lo leen p01:76D5 (8 bytes)
+F 0x77AE 8
+D 0x7825 0x782F tabla_7825  5 destinos del despachador p00:4084 (call en p01:7822, el indice en A): 782F, 7872, 78CD, 78E3, 790B; lo leen p01:7822 (10 bytes)
+F 0x7825 w5
+D 0x786A 0x7872 tabla_786A  8 bytes que p01:7853 copia de dos en dos a la tabla de nombres de la RAM; lo leen p01:7853 (8 bytes)
+F 0x786A 8
+D 0x79B3 0x79D3 tabla_79B3  16 destinos del despachador p00:4084 (call en p01:79B0, el indice en A): B483, 79AE, 79AE, B89F, B992, BBB6, A141, 7A2D, B3A7, B773, 79E5, 79EE, 79F7, 79D3, 79AE, 79DC; lo leen p01:79B0 (32 bytes)
+F 0x79B3 w8
+D 0x7A34 0x7A4C tabla_7A34  12 destinos del despachador p00:4084 (call en p01:7A31, el indice en A): 7A4C, 7A70, 7AA0, 7AB4, 7AE6, 7B2D, 7B67, 7B9A, 7BCF, 7C0C, 7BFD, 7C0C; lo leen p01:7A31 (24 bytes)
+F 0x7A34 w8
+D 0x7CE6 0x7CFE musica_por_fase  12 punteros, uno por fase (0xE201): listas [posicion del scroll][sonido] que p01:7CB4 lee con L_4B67; lo leen p01:7CBA (24 bytes)
+F 0x7CE6 w6
+D 0x7CFE 0x7D04 musica_por_fase_7CFE  lista de p01:7CC2 de la fase : fichas [posicion del scroll lo hi][sonido]; al pasar por la posicion suena el sonido (p00:4AE4), y la 0xFFFF acaba0; lo leen p01:7CBA (6 bytes)
+F 0x7CFE 3
+D 0x7D04 0x7D0D musica_por_fase_7D04  lista de p01:7CC2 de la fase : fichas [posicion del scroll lo hi][sonido]; al pasar por la posicion suena el sonido (p00:4AE4), y la 0xFFFF acaba1; lo leen p01:7CBA (9 bytes)
+F 0x7D04 3
+D 0x7D0D 0x7D16 musica_por_fase_7D0D  lista de p01:7CC2 de la fase : fichas [posicion del scroll lo hi][sonido]; al pasar por la posicion suena el sonido (p00:4AE4), y la 0xFFFF acaba2; lo leen p01:7CBA (9 bytes)
+F 0x7D0D 3
+D 0x7D16 0x7D1F musica_por_fase_7D16  lista de p01:7CC2 de la fase : fichas [posicion del scroll lo hi][sonido]; al pasar por la posicion suena el sonido (p00:4AE4), y la 0xFFFF acaba3; lo leen p01:7CBA (9 bytes)
+F 0x7D16 3
+D 0x7D1F 0x7D28 musica_por_fase_7D1F  lista de p01:7CC2 de la fase : fichas [posicion del scroll lo hi][sonido]; al pasar por la posicion suena el sonido (p00:4AE4), y la 0xFFFF acaba5; lo leen p01:7CBA (9 bytes)
+F 0x7D1F 3
+D 0x7D28 0x7D31 musica_por_fase_7D28  lista de p01:7CC2 de la fase : fichas [posicion del scroll lo hi][sonido]; al pasar por la posicion suena el sonido (p00:4AE4), y la 0xFFFF acaba4; lo leen p01:7CBA (9 bytes)
+F 0x7D28 3
+D 0x7D31 0x7D3A musica_por_fase_7D31  lista de p01:7CC2 de la fase : fichas [posicion del scroll lo hi][sonido]; al pasar por la posicion suena el sonido (p00:4AE4), y la 0xFFFF acaba6; lo leen p01:7CBA (9 bytes)
+F 0x7D31 3
+D 0x7D3A 0x7D43 musica_por_fase_7D3A  lista de p01:7CC2 de la fase : fichas [posicion del scroll lo hi][sonido]; al pasar por la posicion suena el sonido (p00:4AE4), y la 0xFFFF acaba7; lo leen p01:7CBA (9 bytes)
+F 0x7D3A 3
+D 0x7D43 0x7D49 musica_por_fase_7D43  lista de p01:7CC2 de la fase : fichas [posicion del scroll lo hi][sonido]; al pasar por la posicion suena el sonido (p00:4AE4), y la 0xFFFF acaba8; lo leen p01:7CBA (6 bytes)
+F 0x7D43 3
+D 0x7D49 0x7D4F musica_por_fase_7D49  lista de p01:7CC2 de las fases : fichas [posicion del scroll lo hi][sonido]; al pasar por la posicion suena el sonido (p00:4AE4), y la 0xFFFF acaba9, 10, 11; lo leen p01:7CBA (6 bytes)
+F 0x7D49 3
+D 0x7D8D 0x7D9D saltos_por_vuelta  8 punteros, uno por vuelta (0xE20F), a las tablas de destinos de p01:7D85 (L_4085: HL = tabla, A = 0xE33D); lo leen p01:7D7E (16 bytes)
+F 0x7D8D w8
+D 0x7D9D 0x7DD9 destinos_7D9B  las tablas de destinos de p01:7D85: 0x7D9B (6, su primera palabra es la ultima de 0x7D8D), 0x7DA7 (7), 0x7DB5 (8) y 0x7DC5 (10); lo leen p01:7D85 (60 bytes)
+F 0x7D9D w8
+D 0x7FFF 0x8000 partida_7FFF  el primer byte (0x3A) de `ld a,(0xE20F)`, la instruccion de p01:7FFF que acaba en el banco 2: su operando son 0x8000-0x8001 del banco que haya en 0x8000 (el 2: p01:7E90 la llama con los bancos 1-2-3), y sigue en p02:8002; lo leen p01:7E90 (1 bytes)
+F 0x7FFF 1
+# --- fin de los bloques de bloques.py ---

@@ -1,0 +1,50 @@
+# notas del banco 13
+
+# --- A MANO: comentarios, nombres y bloques ---
+
+# --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
+D 0x6000 0x6040 metabloques_comunes  los 4 metabloques comunes (16 bytes, 4 x 4 caracteres por filas), numeros 0-3 en todas las fases salvo la 0 y la 8 (p00:48DD); lo leen p00:48DD (64 bytes)
+F 0x6000 16
+D 0x6040 0x61B0 metabloques_6040  23 metabloques de 16 bytes (4 x 4 caracteres) de la fase 1; lo leen p00:490A (368 bytes)
+F 0x6040 16
+D 0x61B0 0x6290 medios_6040  28 metabloques de 8 bytes de la fase 1 (del 23 al 50; p00:48F1 los copia a 0xEAA8); lo leen p00:48FD (224 bytes)
+F 0x61B0 8
+D 0x6290 0x6570 metabloques_6290  46 metabloques de 16 bytes (4 x 4 caracteres) de la fase 2; lo leen p00:490A (736 bytes)
+F 0x6290 16
+D 0x6570 0x65E0 medios_6290  14 metabloques de 8 bytes de la fase 2 (del 46 al 59; p00:48F1 los copia a 0xEAA8); lo leen p00:48FD (112 bytes)
+F 0x6570 8
+D 0x65E0 0x6700 metabloques_65E0  18 metabloques de 16 bytes (4 x 4 caracteres) de la fase 3 y 9 y 10 y 11; lo leen p00:490A (288 bytes)
+F 0x65E0 16
+D 0x6700 0x6768 medios_65E0  13 metabloques de 8 bytes de la fase 3 y 9 y 10 y 11 (del 18 al 30; p00:48F1 los copia a 0xEAA8); lo leen p00:48FD (104 bytes)
+F 0x6700 8
+D 0x6768 0x6938 metabloques_6768  29 metabloques de 16 bytes (4 x 4 caracteres) de la fase 4; lo leen p00:490A (464 bytes)
+F 0x6768 16
+D 0x6938 0x6980 medios_6768  9 metabloques de 8 bytes de la fase 4 (del 29 al 37; p00:48F1 los copia a 0xEAA8); lo leen p00:48FD (72 bytes)
+F 0x6938 8
+D 0x6980 0x6AE0 metabloques_6980  22 metabloques de 16 bytes (4 x 4 caracteres) de la fase 5; lo leen p00:490A (352 bytes)
+F 0x6980 16
+D 0x6AE0 0x6B78 medios_6980  19 metabloques de 8 bytes de la fase 5 (del 22 al 40; p00:48F1 los copia a 0xEAA8); lo leen p00:48FD (152 bytes)
+F 0x6AE0 8
+D 0x6B78 0x6F38 metabloques_6B78  60 metabloques de 16 bytes (4 x 4 caracteres) de la fase 6; lo leen p00:490A (960 bytes)
+F 0x6B78 16
+D 0x6F38 0x6F50 medios_6B78  3 metabloques de 8 bytes de la fase 6 (del 60 al 62; p00:48F1 los copia a 0xEAA8); lo leen p00:48FD (24 bytes)
+F 0x6F38 8
+D 0x6F50 0x74E0 metabloques_6F50  89 metabloques de 16 bytes (4 x 4 caracteres) de la fase 7; lo leen p00:490A (1424 bytes)
+F 0x6F50 16
+D 0x74E0 0x7558 medios_6F50  15 metabloques de 8 bytes de la fase 7 (del 89 al 103; p00:48F1 los copia a 0xEAA8); lo leen p00:48FD (120 bytes)
+F 0x74E0 8
+D 0x7558 0x78A8 metabloques_7558  53 metabloques de 16 bytes (4 x 4 caracteres) de la fase 0 y 8; lo leen p00:490A (848 bytes)
+F 0x7558 16
+D 0x78A8 0x7900 medios_7558  11 metabloques de 8 bytes de la fase 0 y 8 (del 53 al 63; p00:48F1 los copia a 0xEAA8); lo leen p00:48FD (88 bytes)
+F 0x78A8 8
+D 0x7900 0x7918 columnas_por_fase  12 punteros (uno por fase) a las columnas del mapa (p00:48A0 con L_4B67); lo leen p00:48A6 (24 bytes)
+F 0x7900 w6
+D 0x7918 0x7BB8 columnas_fase_0  las 112 columnas de la fase 0: 6 bytes cada una, un metabloque por fila (p00:48CF); lo leen p00:48CF (672 bytes)
+F 0x7918 6
+D 0x7BB8 0x7D98 columnas_fase_1  las 80 columnas de la fase 1: 6 bytes cada una, un metabloque por fila (p00:48CF); lo leen p00:48CF (480 bytes)
+F 0x7BB8 6
+D 0x7D98 0x7FA8 columnas_fase_2  las 88 columnas de la fase 2: 6 bytes cada una, un metabloque por fila (p00:48CF); lo leen p00:48CF (528 bytes)
+F 0x7D98 6
+D 0x7FA8 0x8000 columnas_fase_3  las 96 columnas de la fase 3: 6 bytes cada una, un metabloque por fila (p00:48CF) (sigue en el banco 14, en 0x8000); lo leen p00:48CF (88 bytes)
+F 0x7FA8 6
+# --- fin de los bloques de bloques.py ---

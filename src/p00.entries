@@ -1,0 +1,99 @@
+# Puntos de entrada del banco 0 (se ejecuta en 0x4000).
+#
+# Cada uno lleva la instruccion que lo justifica. Los que ponen "pNN:XXXX"
+# vienen de OTRO banco: el trazador de una sola pagina no puede seguirlos,
+# porque en esa direccion -segun lo que haya en el registro del mapper- puede
+# estar cualquiera de seis bancos. Los que ponen "tabla" salen de una tabla
+# del despachador (cartucho.DESPACHADOR), que va pegada detras de su `call` y esta declarada
+# como datos en el .nocode: el trazador tampoco puede seguirla.
+#
+# Los saltos y llamadas DENTRO del propio banco no se ponen aqui: los
+# encuentra tools/z80trace.py solo, siguiendo el flujo.
+#
+# Este fichero lo regenera `make semillas` (tools/bancos.py escribe).
+0x4023   # gancho de interrupcion H.KEYI: INIT escribe 0xC3 en 0xFD9A y esta direccion en 0xFD9B (p00:4093-p00:409B)
+0x407A   # p03:B4F3 call
+0x407F   # p10:A85C call
+0x4084   # p10:A730 call
+0x4085   # p01:7D85 call
+0x4090   # cabecera AB: INIT
+0x4105   # 3 bytes: jp L_4AE4 (el sonido); nadie lo llama
+0x410D   # 5 bytes: push af / ld a,4 y los bancos 4-5-6 por p00:411A; nadie lo llama
+0x4149   # 5 bytes: ld a,6 / jp p00:414E, el banco 6 en 0xA000; nadie lo llama
+0x42DD   # p03:A9A9 jp
+0x42F5   # p02:90B7 call
+0x4396   # p01:60D1 call
+0x4482   # p01:7E8D call
+0x448E   # p01:7EBF jp
+0x47E0   # p01:60E0 call
+0x49A5   # p01:6835 jp
+0x4A08   # p03:BE87 call
+0x4A29   # 10 bytes: SETRD (0x0050) y C = puerto de lectura del VDP; nadie lo llama
+0x4A4C   # p10:A758 jp
+0x4A73   # p01:620D jp
+0x4AE4   # p02:8985 jp
+0x4B17   # p01:7584 call
+0x4B20   # p11:A8F1 jp
+0x4B60   # p01:681A call
+0x4B67   # p10:B9D2 call
+0x4B70   # p11:AF7E call
+0x4BC7   # p11:BE31 call
+0x4C24   # p11:B452 call
+0x4C84   # p11:AF82 call
+0x4CB7   # p02:99FE call
+0x4D16   # p02:8980 jp
+0x4D1E   # p01:6F95 call
+0x4E75   # p00:4DF0 entrada 5 de la tabla de 0x4DF3 (call 0x4084 en 0x4DF0)
+0x4E76   # p00:4DF0 entrada 1 de la tabla de 0x4DF3 (call 0x4084 en 0x4DF0)
+0x4E7F   # p00:4DF0 entrada 55 de la tabla de 0x4DF3 (call 0x4084 en 0x4DF0)
+0x4EB4   # 6 bytes: E = IX+4, D = IX+6 y cae en L_4EBA; nadie lo llama
+0x4EBA   # p03:A390 call
+0x4ECA   # p02:9BBE jp
+0x4ED5   # 2 bytes: A = 0x80 y cae en L_4ED7; nadie lo llama
+0x4ED7   # p03:A482 jp
+0x4F02   # p02:994D call
+0x4F09   # p11:AC0C call
+0x4F10   # p02:9B6F call
+0x4F17   # p03:B915 call
+0x4F1C   # p03:BC0C jp
+0x4F26   # p11:BF08 jp
+0x4F2C   # p02:9926 jp
+0x4F3C   # p02:9AB9 jp cc
+0x5227   # p02:8552 jp
+0x530C   # p01:6057 jp cc
+0x5327   # p01:6038 jp cc
+0x5366   # p01:6155 call
+0x53A3   # p02:81C7 jp
+0x53F9   # p01:76A6 call
+0x54C7   # p02:909E jp
+0x553E   # p02:8E40 jp
+0x562B   # p00:5612 entrada 0 de la tabla de 0x5615 (call 0x4084 en 0x5612)
+0x567D   # p00:5612 entrada 1 de la tabla de 0x5615 (call 0x4084 en 0x5612)
+0x5699   # p00:5612 entrada 2 de la tabla de 0x5615 (call 0x4084 en 0x5612)
+0x5727   # p00:5612 entrada 3 de la tabla de 0x5615 (call 0x4084 en 0x5612)
+0x578A   # p00:5612 entrada 4 de la tabla de 0x5615 (call 0x4084 en 0x5612)
+0x57DB   # p00:5612 entrada 5 de la tabla de 0x5615 (call 0x4084 en 0x5612)
+0x5817   # p00:5612 entrada 6 de la tabla de 0x5615 (call 0x4084 en 0x5612)
+0x5842   # p00:5612 entrada 7 de la tabla de 0x5615 (call 0x4084 en 0x5612)
+0x58CF   # p00:5612 entrada 8 de la tabla de 0x5615 (call 0x4084 en 0x5612)
+0x58FD   # p00:5612 entrada 9 de la tabla de 0x5615 (call 0x4084 en 0x5612)
+0x5955   # p00:5612 entrada 10 de la tabla de 0x5615 (call 0x4084 en 0x5612)
+0x5A3E   # vuelta de p00:5611 push hl antes de call L_4084 (C < 3)
+0x5B04   # p02:8937 call
+0x5C92   # p02:83BA call
+0x5CA6   # p03:A23E call
+0x5CAD   # p02:9441 call cc
+0x5CB5   # p11:ABD5 call
+0x5D25   # p01:61A6 call
+0x5D37   # 9 bytes: E = 0x8F, L_5D72, A & 0x3F; nadie lo llama
+0x5D80   # p10:BAD3 call
+0x5D8E   # p10:BFC1 call
+0x5D94   # p10:BFCA call
+0x5DCD   # p10:BBE9 call
+0x5E0C   # p10:BB56 call
+0x5E14   # p10:A5B9 call
+0x5E1D   # 3 bytes: call L_5E64 y cae en L_5E20; nadie lo llama
+0x5E9A   # p10:BA28 call
+0x5EA3   # p10:A432 call
+0x5ED7   # p10:A5BC call
+0x5EDC   # p10:BC0B call

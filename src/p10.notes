@@ -1,0 +1,75 @@
+# notas del banco 10
+
+# --- A MANO: comentarios, nombres y bloques ---
+
+# --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
+D 0xA007 0xA045 tabla_A007  31 destinos del despachador p00:4084 (call en p10:A004, el indice en A): A045, A088, A0B9, A0C5, A0FA, A124, A16B, A177, A1A8, A1B4, A1E8, A207, A2C5, A35D, A372, A386, A3C7, A3FF, A40B, A44C, A45A, A52E, A54C, A57A, A598, A377, A5AE, A5EF, A627, A37C, A633; lo leen p10:A004 (62 bytes)
+F 0xA007 w8
+D 0xA352 0xA35D tabla_A352  11 bytes que p10:A2E7 lee con el paso 0xE496; lo leen p10:A2ED (11 bytes)
+F 0xA352 16
+D 0xA733 0xA73B tabla_A733  4 destinos del despachador p00:4084 (call en p10:A730, el indice en A): A78E, A78F, A799, A78F; lo leen p10:A730 (8 bytes)
+F 0xA733 w4
+D 0xA7AD 0xA7B5 tabla_A7AD  4 destinos del despachador p00:4084 (call en p10:A7AA, el indice en A): A7B5, A7EA, A81D, A7EA; lo leen p10:A7AA (8 bytes)
+F 0xA7AD w4
+D 0xA8B9 0xA933 lista_A8B9  lista a la VRAM (p00:4A6B: [destino] y bytes; 0xFE otro destino; 0xFF acaba); lo leen p10:A666 (122 bytes)
+D 0xA933 0xA981 lista_A933  lista a la VRAM (p00:4A6B) que p10:A0B4 pinta en un MSX japones (0x002B & 0x0F = 0); en los demas, la de 0xB151; lo leen p10:A0B4 (78 bytes)
+D 0xA981 0xACAB listas_A981  11 listas a la VRAM (p00:4A6B) seguidas, de 0xA981 a 0xACAB: la primera la pinta p10:A0EC en un MSX japones (0x002B & 0x0F = 0) (en los demas, 0xB1AA), y p10:A1C5 pasa 0xAB29, de dentro de una de ellas, a L_A245; lo leen p10:A0F4 (810 bytes)
+F 0xA981 16
+D 0xACAB 0xADBD rachas_f_ACAB  rachas a la VRAM por filas (p10:A67B: <0x80 repite, 0x80 serie [cuantos][primero], >0x80 copia, 0 acaba; los ceros no se escriben); lo leen p10:A0A1 (274 bytes)
+D 0xADBD 0xAE67 rachas_f_ADBD  rachas a la VRAM por filas (p10:A67B: <0x80 repite, 0x80 serie [cuantos][primero], >0x80 copia, 0 acaba; los ceros no se escriben); lo leen p10:A0E1 (170 bytes)
+D 0xAE67 0xAE96 rachas_f_AE67  rachas a la VRAM por filas (p10:A67B: <0x80 repite, 0x80 serie [cuantos][primero], >0x80 copia, 0 acaba; los ceros no se escriben); lo leen p10:A13D (47 bytes)
+D 0xAE96 0xAEA8 rachas_f_AE96  rachas a la VRAM por filas (p10:A67B: <0x80 repite, 0x80 serie [cuantos][primero], >0x80 copia, 0 acaba; los ceros no se escriben); lo leen p10:A148 (18 bytes)
+D 0xAEA8 0xAEBD rachas_f_AEA8  rachas a la VRAM por filas (p10:A67B: <0x80 repite, 0x80 serie [cuantos][primero], >0x80 copia, 0 acaba; los ceros no se escriben); lo leen p10:A153 (21 bytes)
+D 0xAEBD 0xAF6D rachas_ram_AEBD  rachas a la RAM (p10:A6EB, el mismo formato que p00:4A8C); lo leen p10:A2DE (176 bytes)
+D 0xAF6D 0xAFE3 rachas_f_AF6D  rachas a la VRAM por filas (p10:A67B: <0x80 repite, 0x80 serie [cuantos][primero], >0x80 copia, 0 acaba; los ceros no se escriben); lo leen p10:A449 (118 bytes)
+D 0xAFE3 0xAFE6 rachas_f_AFE3  rachas a la VRAM por filas (p10:A67B: <0x80 repite, 0x80 serie [cuantos][primero], >0x80 copia, 0 acaba; los ceros no se escriben); lo leen p10:A204 (3 bytes)
+D 0xAFE6 0xB06F rachas_f_AFE6  rachas a la VRAM por filas (p10:A67B: <0x80 repite, 0x80 serie [cuantos][primero], >0x80 copia, 0 acaba; los ceros no se escriben); lo leen p10:A190 (137 bytes)
+D 0xB06F 0xB0AB rachas_f_B06F  rachas a la VRAM por filas (p10:A67B: <0x80 repite, 0x80 serie [cuantos][primero], >0x80 copia, 0 acaba; los ceros no se escriben); se solapan 2 bloques: (rachas_ram_B06F B06F-B0AB); lo leen p10:BC16, p10:A5CC (60 bytes)
+D 0xB0AB 0xB0B1 rachas_f_B0AB  rachas a la VRAM por filas (p10:A67B) que p10:A10C alterna cada 8 cuadros (0xB0AB y 0xB0B1); lo leen p10:A121 (6 bytes)
+D 0xB0B1 0xB0B7 rachas_f_B0B1  rachas a la VRAM por filas (p10:A67B: <0x80 repite, 0x80 serie [cuantos][primero], >0x80 copia, 0 acaba; los ceros no se escriben); lo leen p10:A121 (6 bytes)
+D 0xB0B7 0xB0CB tabla_B0B7  10 palabras (el paso 0xE496 de 0 a 9) que p10:A3A1 lee con L_4B60; lo leen p10:A3A7 (20 bytes)
+F 0xB0B7 16
+D 0xB0CB 0xB0D5 tabla_B0CB  10 bytes, uno por paso (0xE496), que p10:A3AB pasa en B a L_A717; lo leen p10:A3B1 (10 bytes)
+F 0xB0CB 16
+D 0xB0D5 0xB151 tabla_B0D5  fichas de 3 bytes por paso (0xE496 x 3): [cuantos][puntero] que leen p10:B700 (0xB0DB, por 0xF000/0xF006) y p10:A4E2 (0xB0E1); lo leen p10:B700 (124 bytes)
+F 0xB0D5 16
+D 0xB151 0xB1AA lista_B151  lista a la VRAM (p00:4A6B: [destino] y bytes; 0xFE otro destino; 0xFF acaba); lo leen p10:A0B4 (89 bytes)
+D 0xB1AA 0xB214 lista_B1AA  lista a la VRAM (p00:4A6B: [destino] y bytes; 0xFE otro destino; 0xFF acaba); lo leen p10:A0F4 (106 bytes)
+D 0xB214 0xB24E lista_B214  lista a la VRAM (p00:4A6B: [destino] y bytes; 0xFE otro destino; 0xFF acaba); lo leen p10:A166 (58 bytes)
+D 0xB24E 0xB29E lista_B24E  lista a la VRAM (p00:4A6B: [destino] y bytes; 0xFE otro destino; 0xFF acaba); lo leen p10:A1A3 (80 bytes)
+D 0xB29E 0xB332 lista_B29E  lista a la VRAM (p00:4A6B: [destino] y bytes; 0xFE otro destino; 0xFF acaba); lo leen p10:A1E3 (148 bytes)
+D 0xB332 0xB34E lista_B332  lista a la VRAM (p00:4A6B: [destino] y bytes; 0xFE otro destino; 0xFF acaba); lo leen p10:A23D (28 bytes)
+D 0xB34E 0xB39F lista_B34E  lista a la VRAM (p00:4A6B: [destino] y bytes; 0xFE otro destino; 0xFF acaba); lo leen p10:A3F9 (81 bytes)
+D 0xB39F 0xB3F0 lista_B39F  lista a la VRAM (p00:4A6B: [destino] y bytes; 0xFE otro destino; 0xFF acaba); lo leen p10:A42C (81 bytes)
+D 0xB3F0 0xB41D lista_B3F0  lista a la VRAM (p00:4A6B: [destino] y bytes; 0xFE otro destino; 0xFF acaba); lo leen p10:A592 (45 bytes)
+D 0xB41D 0xB461 lista_B41D  lista a la VRAM (p00:4A6B: [destino] y bytes; 0xFE otro destino; 0xFF acaba); lo leen p10:A621 (68 bytes)
+D 0xB461 0xB586 rachas_ED20  rachas a la RAM 0xED20 (p10:BFCF: 0 acaba; con el bit 7 repite el byte siguiente; sin el, copia n bytes); lo leen p10:BFD5 (293 bytes)
+D 0xB586 0xB5EC rachas_f_B586  rachas a la VRAM por filas (p10:A67B: <0x80 repite, 0x80 serie [cuantos][primero], >0x80 copia, 0 acaba; los ceros no se escriben); se solapan 2 bloques: (rachas_ram_B586 B586-B5EC); lo leen p10:A569, p10:BFB8 (102 bytes)
+D 0xB5EC 0xB604 tabla_B5EC  dos listas de 4 fichas de 3 bytes [dy][dx][dibujo] que p10:BF1E suma a las posiciones 0x7870 y 0x7890 y copia a 0xE280 y 0xE290; lo leen p10:BF42 (24 bytes)
+F 0xB5EC 16
+D 0xB604 0xB610 tabla_B604  dos listas de 2 fichas de 3 bytes (0xB604 y 0xB60A) que p10:BEAC y p10:BEBC pasan a L_BF42; lo leen p10:BF42 (12 bytes)
+F 0xB604 16
+D 0xB610 0xB621 rachas_f_B610  rachas a la VRAM por filas (p10:A67B: <0x80 repite, 0x80 serie [cuantos][primero], >0x80 copia, 0 acaba; los ceros no se escriben); lo leen p10:BF05 (17 bytes)
+D 0xB621 0xB636 rachas_f_B621  rachas a la VRAM por filas (p10:A67B: <0x80 repite, 0x80 serie [cuantos][primero], >0x80 copia, 0 acaba; los ceros no se escriben); lo leen p10:BF11 (21 bytes)
+D 0xB7A1 0xB832 rachas_f_B7A1  rachas a la VRAM por filas (p10:A67B) que p10:B641 elige: 0xB832 en un MSX japones (0x002B & 0x0F = 0), 0xB7A1 en los demas; lo leen p10:B63E (145 bytes)
+D 0xB832 0xB8B7 rachas_f_B832  rachas a la VRAM por filas (p10:A67B) que p10:B641 elige: 0xB832 en un MSX japones (0x002B & 0x0F = 0), 0xB7A1 en los demas; lo leen p10:B63E (133 bytes)
+D 0xB8B7 0xB8D7 rachas_f_B8B7  rachas a la VRAM por filas (p10:A67B: <0x80 repite, 0x80 serie [cuantos][primero], >0x80 copia, 0 acaba; los ceros no se escriben); lo leen p10:B79E (32 bytes)
+D 0xB8D7 0xB8F5 tabla_B8D7  fichas de 3 bytes por paso (0xE496 x 3), [cuantos][puntero], que p10:B668 deja en 0xF006 (0xB8D7) y 0xF000 (0xB8E6) para L_B700; lo leen p10:B700 (30 bytes)
+F 0xB8D7 16
+D 0xB8F5 0xB904 tabla_B8F5  la lista que p01:61B9 pasa a p10:A24C (DE = 0xB8F5): bytes hasta un 0; lo leen p10:A256 (15 bytes)
+F 0xB8F5 16
+D 0xB904 0xB92B lista_B904  lista a la VRAM (p00:4A6B) que pinta p01:61C1 (0xB904 con 0xE1C0 < 2; si no, 0xB936); lo leen p01:61CE (39 bytes)
+D 0xB92B 0xB936 lista_2players  lista a la VRAM sin lector a la vista: el texto 2PLAYERS en 0x3A6D, la fila de debajo del 1PLAYER de la lista de 0xB904. El juego es de un jugador y no lo pinta nadie; lo leen nadie (11 bytes)
+D 0xB936 0xB94F lista_B936  lista a la VRAM (p00:4A6B: [destino] y bytes; 0xFE otro destino; 0xFF acaba); lo leen p01:61CE (25 bytes)
+D 0xB94F 0xB959 lista_B94F  lista a la VRAM (p00:4A6B) que p01:61DE pinta en un MSX japones (0x002B & 0x0F = 0); en los demas, la de 0x622D; lo leen p01:61DE (10 bytes)
+D 0xB959 0xB993 lista_B959  lista a la VRAM (p00:4A6B: [destino] y bytes; 0xFE otro destino; 0xFF acaba); lo leen p01:61E4 (58 bytes)
+D 0xB99A 0xB9B6 tabla_B99A  14 destinos del despachador p00:4084 (call en p10:B997, el indice en A): BB7B, BA9C, B9B6, B9F0, BA05, BA3F, BB3C, BA70, BACD, BAF2, BB35, BB3F, BB4B, BB6F; lo leen p10:B997 (28 bytes)
+F 0xB99A w8
+D 0xBC23 0xBC85 lista_BC23  lista a la VRAM (p00:4A6B: [destino] y bytes; 0xFE otro destino; 0xFF acaba); lo leen p10:BBCD (98 bytes)
+D 0xBC85 0xBD1A lista_BC85  lista a la VRAM (p00:4A6B) que p10:BB69 pinta en un MSX japones (0x002B & 0x0F = 0); en los demas, la de 0xBD1A; lo leen p10:BB69 (149 bytes)
+D 0xBD1A 0xBDFD lista_BD1A  lista a la VRAM (p00:4A6B: [destino] y bytes; 0xFE otro destino; 0xFF acaba); lo leen p10:BB69 (227 bytes)
+D 0xBE04 0xBE0E tabla_BE04  5 destinos del despachador p00:4084 (call en p10:BE01, el indice en A): BE0E, BE94, BED0, BF5E, BF78; lo leen p10:BE01 (10 bytes)
+F 0xBE04 w5
+D 0xBFF3 0xC000 tabla_BFF3  13 bytes a 0xFF hasta el final del banco: relleno; lo leen nadie (13 bytes)
+F 0xBFF3 16
+# --- fin de los bloques de bloques.py ---

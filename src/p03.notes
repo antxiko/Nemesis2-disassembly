@@ -1,0 +1,94 @@
+# notas del banco 03
+
+# --- A MANO: comentarios, nombres y bloques ---
+
+# --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
+D 0xA000 0xA001 partida_A000  el desplazamiento (0x30) de `ld (ix+0x30),a`, la instruccion que empieza en p02:9FFE; detras, p03:A001 es su `ret`; lo leen p02:9FFE (1 bytes)
+F 0xA000 1
+D 0xA013 0xA017 tabla_A013  4 bytes que p03:A002 lee con (0xE1C3 / 4) & 3 y pone en IX+31; lo leen p03:A00C (4 bytes)
+F 0xA013 4
+D 0xA0FC 0xA108 tabla_A0FC  6 palabras que p03:A0DC lee con B (3 mas si el bit 0 de 0xE38B) con L_4B67; lo leen p03:A0EB (12 bytes)
+F 0xA0FC w6
+D 0xA156 0xA164 tabla_A156  7 destinos del despachador p00:4084 (call en p03:A153, el indice en A): A164, A170, A17E, A1AA, A1CA, A1F9, A210; lo leen p03:A153 (14 bytes)
+F 0xA156 w7
+D 0xA245 0xA255 tabla_A245  16 bytes que p03:A22F lee en 0xA226 + IX+07 (de 0x1F a 0x2E) con L_5CA6 y pone en IX+0D; lo leen p03:A23F (16 bytes)
+F 0xA245 16
+D 0xA43F 0xA447 tabla_A43F  8 bytes que p03:A40E lee con IX+26; lo leen p03:A414 (8 bytes)
+F 0xA43F 8
+D 0xA485 0xA48D tabla_A485  8 bytes delante de 0xA48D que no lee nadie a la vista (las referencias a 0xA485 y 0xA488 son del banco 10); lo leen nadie (8 bytes)
+F 0xA485 8
+D 0xA48D 0xA495 tabla_A48D  8 bytes que p03:A456 lee al azar (ld a,r & 7) y a los que suma 2 x 0xE228; lo leen p03:A45D (8 bytes)
+F 0xA48D 8
+D 0xA62C 0xA63C tabla_A62C  8 palabras que p03:A621 lee con 0xE228 / 2 (L_4B67); lo leen p03:A629 (16 bytes)
+F 0xA62C w8
+D 0xA70D 0xA711 tabla_A70D  4 bytes que p03:A704 pasa a L_6361 (BC = 0x0304); lo leen p03:A707 (4 bytes)
+F 0xA70D 4
+D 0xA741 0xA759 tabla_A741  4 fichas de 6 bytes que p03:A71B elige con L_4C24 & 6; lo leen p03:A72A (24 bytes)
+F 0xA741 6
+D 0xA879 0xA8C5 fichas_E407  fichas de 4 bytes que p03:A7C1 copia a 0xE407: 0xA879 y 0xA881 (2 cada una, segun el bit 7 de 0xE1C2 y el 3 de 0xE1C3), 0xA889 (3), 0xA895 (6) y 0xA8AD (6, una por paso de 0xE441); lo leen p03:A7C1 (76 bytes)
+F 0xA879 4
+D 0xA94E 0xA98E tabla_A94E  16 fichas de 4 bytes que p03:A902 lee con 0xE1C9 & 0x0F; lo leen p03:A90C (64 bytes)
+F 0xA94E 4
+D 0xA9F4 0xA9FC tabla_A9F4  4 punteros (0xE44E de 0 a 3) que p03:A9B8 lee con L_4B67; lo leen p03:A9BB (8 bytes)
+F 0xA9F4 w4
+D 0xA9FC 0xAA2F fichas_A9FC  3 fichas de 17 bytes: la cuenta (a 0xE44F) y cuatro grupos de 4 que p03:A9E1 suma a la posicion y copia a 0xE418, 0xE41C, 0xE428 y 0xE42C; lo leen p03:A9BF (51 bytes)
+F 0xA9FC 17
+D 0xAA93 0xAA9B tabla_AA93  4 pares que p03:AA82 lee con 0xE40D & 3 y copia a DE; lo leen p03:AA8B (8 bytes)
+F 0xAA93 2
+D 0xAB72 0xAB92 tabla_AB72  16 pares (dx, dy) que p03:AB39 lee con 0xE1C3 & 0x0F, y suma a 0xE404; lo leen p03:AB4B (32 bytes)
+F 0xAB72 2
+D 0xABC2 0xABE0 tabla_ABC2  15 destinos del despachador p00:4084 (call en p03:ABBF, el indice en A): ACD4, ACE0, AD1F, B0FB, B0FB, B1AF, AE07, AE85, AF37, AEB7, AECB, AEDB, AEFE, AFA7, B029; lo leen p03:ABBF (30 bytes)
+F 0xABC2 w8
+D 0xB1F0 0xB1F8 tabla_B1F0  4 pares (dx, dy) que p03:B1D3 lee con IY+08 & 3; lo leen p03:B1DC (8 bytes)
+F 0xB1F0 2
+D 0xB23D 0xB250 lista_B23D  lista a la VRAM (p00:4A6B: [destino] y bytes; 0xFE otro destino; 0xFF acaba); lo leen p00:5BA6 (19 bytes)
+D 0xB250 0xB255 lista_B250  lista a la VRAM (p00:4A6B: [destino] y bytes; 0xFE otro destino; 0xFF acaba); lo leen p00:5BB5 (5 bytes)
+D 0xB255 0xB25A lista_B255  lista a la VRAM (p00:4A6B: [destino] y bytes; 0xFE otro destino; 0xFF acaba); lo leen p00:5BB5 (5 bytes)
+D 0xB25A 0xB264 lista_B25A  lista a la VRAM (p00:4A6B: [destino] y bytes; 0xFE otro destino; 0xFF acaba); lo leen p00:573E (10 bytes)
+D 0xB264 0xB26F lista_B264  lista a la VRAM (p00:4A6B: [destino] y bytes; 0xFE otro destino; 0xFF acaba); lo leen p00:573E, p00:5741 (11 bytes)
+D 0xB26F 0xB272 lista_s_B26F  lista a la VRAM sin destino delante (p00:4A73; 0xFE otro destino; 0xFF acaba); lo leen p01:620D (3 bytes)
+D 0xB272 0xB27D lista_B272  lista a la VRAM (p00:4A6B: [destino] y bytes; 0xFE otro destino; 0xFF acaba); lo leen p00:5794 (11 bytes)
+D 0xB27D 0xB288 lista_B27D  lista a la VRAM (p00:4A6B: [destino] y bytes; 0xFE otro destino; 0xFF acaba); lo leen p00:5A92 (11 bytes)
+D 0xB288 0xB2A4 lista_B288  lista a la VRAM (p00:4A6B: [destino] y bytes; 0xFE otro destino; 0xFF acaba); se solapan 2 bloques: (lista_B295 B295-B2A4); lo leen p00:58B0, p00:5952 (28 bytes)
+D 0xB2A4 0xB2AF lista_B2A4  lista a la VRAM (p00:4A6B: [destino] y bytes; 0xFE otro destino; 0xFF acaba); lo leen p00:5C1A (11 bytes)
+D 0xB2AF 0xB2CA lista_B2AF  lista a la VRAM (p00:4A6B: [destino] y bytes; 0xFE otro destino; 0xFF acaba); se solapan 2 bloques: (lista_B2BA B2BA-B2CA); lo leen p00:596E, p00:59BC (27 bytes)
+D 0xB2CA 0xB2DB lista_B2CA  lista a la VRAM (p00:4A6B: [destino] y bytes; 0xFE otro destino; 0xFF acaba); lo leen p00:598D, p00:59A1 (17 bytes)
+D 0xB2DB 0xB2EE lista_B2DB  lista a la VRAM (p00:4A6B: [destino] y bytes; 0xFE otro destino; 0xFF acaba); lo leen p00:59C2 (19 bytes)
+D 0xB2EE 0xB2FD lista_B2EE  lista a la VRAM (p00:4A6B: [destino] y bytes; 0xFE otro destino; 0xFF acaba); lo leen p00:59AC (15 bytes)
+D 0xB2FD 0xB375 fichas_B2FD  30 fichas de 4 bytes (IX+0D de 1 a 30: p02:8A87 lee 0xB2F9 + 4 x IX+0D, y la 0 caeria en el codigo de delante); lo leen p02:8A93 (120 bytes)
+F 0xB2FD 4
+D 0xB375 0xB3A7 tabla_B375  50 bytes que p02:8B78 lee con A (si es 0x35 o mas, A - 0x16); lo leen p02:8B84 (50 bytes)
+F 0xB375 10
+D 0xB3B6 0xB3C0 tabla_B3B6  5 destinos del despachador p00:4084 (call en p03:B3B3, el indice en A): B3C0, B3C0, B3D0, B3EA, B407; lo leen p03:B3B3 (10 bytes)
+F 0xB3B6 w5
+D 0xB495 0xB4AB tabla_B495  11 destinos del despachador p00:4084 (call en p03:B492, el indice en A): B4B9, B4B9, B4AB, B50B, B57A, B514, B584, B51C, B5C5, B5DE, B625; lo leen p03:B492 (22 bytes)
+F 0xB495 w8
+D 0xB4FB 0xB50B tabla_B4FB  16 bytes que p03:B4ED lee con IX+07 y pone en IX+0D (0xFF: nada); lo leen p03:B4F3 (16 bytes)
+F 0xB4FB 16
+D 0xB6D1 0xB6D5 tabla_B6D1  4 bytes que p03:B68C lee con 0xE35C; lo leen p03:B692 (4 bytes)
+F 0xB6D1 4
+D 0xB6D5 0xB6E1 tabla_B6D5  6 pares que p03:B673 lee con IX+0D - 1; lo leen p03:B67B (12 bytes)
+F 0xB6D5 2
+D 0xB98C 0xB992 tabla_B98C  6 bytes que p03:B976 lee con IX+02 (de 0 a 5) y pone en IX+31; lo leen p03:B985 (6 bytes)
+F 0xB98C 6
+D 0xBB78 0xBB84 tablas_BB78  tres tablas de 4 bytes que p03:BB50 pasa a L_9B31: 0xBB78, 0xBB7C en la fase 5 y 0xBB80 en la 3; lo leen p03:BB66 (12 bytes)
+F 0xBB78 4
+D 0xBB84 0xBB90 tabla_BB84  12 bytes que p03:BB24 lee con IX+19; lo leen p03:BB2A (12 bytes)
+F 0xBB84 12
+D 0xBC5D 0xBC63 tabla_BC5D  3 pares que p03:BC3D recorre; lo leen p03:BC44 (6 bytes)
+F 0xBC5D 2
+D 0xBD55 0xBD67 firmas_del_vecino  lo que p03:BCF0 busca en la otra ranura (RDSLT): 00 30 31 13 35 AA en 0x7FFA (bit 1 de 0xF0F5), y en 0x4010 "CD 07 49" (RC-749, Maze of Galious: bit 3), "CD 07 43" (RC-743, Penguin Adventure: bit 2) y "CD 07 46" (RC-746, Q*bert: bit 0 y 0xE229 = 1); lo leen p03:BD40 (18 bytes)
+F 0xBD55 6
+D 0xBDD2 0xBDD8 tabla_BDD2  3 destinos del despachador p00:4084 (call en p03:BDCF, el indice en A): BDD8, BE87, BE90; lo leen p03:BDCF (6 bytes)
+F 0xBDD2 w3
+D 0xBE07 0xBE87 inicio_por_vuelta  8 filas de 16 bytes, una por vuelta (0xE20F): p03:BDD8 copia 9 a 0xE334 y 7 a 0xE430; lo leen p03:BDE2 (128 bytes)
+F 0xBE07 16
+D 0xBEAA 0xBEB0 palabras_clave  3 punteros (C en p03:BDB9, con L_4B67) a las palabras que se comparan con lo tecleado en 0xE3E8; lo leen p03:BDBD (6 bytes)
+F 0xBEAA w3
+D 0xBEB0 0xBECA textos_clave  las tres palabras, acabadas en 0x0D: LARS18TH, NEMESIS y METALION; lo leen p03:BDC3 (26 bytes)
+F 0xBEB0 9
+D 0xBEF2 0xBF3A teclado  9 filas de 8: el caracter de cada tecla de la matriz del teclado (p03:BEDE: 0xBEF2 + 8 x fila + bit), del 0 a la Z; lo leen p03:BEE6 (72 bytes)
+F 0xBEF2 8
+D 0xBFF6 0xC000 relleno_ff  10 bytes a 0xFF hasta el final del banco: relleno; lo leen nadie (10 bytes)
+F 0xBFF6 10
+# --- fin de los bloques de bloques.py ---

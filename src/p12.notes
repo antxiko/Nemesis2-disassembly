@@ -1,0 +1,50 @@
+# notas del banco 12
+
+# --- A MANO: comentarios, nombres y bloques ---
+
+# --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
+D 0xA000 0xA00D caracteres_A000  lista de caracteres (p00:4595): fichas de 6 bytes [tercios][colores][caracter][dibujos], 0 acaba; lo leen p00:5DFC (13 bytes)
+F 0xA000 6
+D 0xA00D 0xA019 copias_A00D  lista de copias de caracteres VRAM -> VRAM (p00:454E: 4 bytes, 3 si el tercero lleva los bits altos; 0 acaba); lo leen p00:5E07 (12 bytes)
+D 0xA019 0xA299 colores_A019  rachas (p00:4A8C) con los colores de los caracteres desde el 1, ficha 0 de la lista 0xA000 (p00:4595); lo leen p00:5DFC (640 bytes)
+D 0xA299 0xA5AE colores_A299  rachas (p00:4A8C) con los colores de los caracteres desde el 1, ficha 1 de la lista 0xA000 (p00:4595); lo leen p00:5DFC (789 bytes)
+D 0xA5AE 0xA793 dibujos_A5AE  rachas (p00:4A8C) con los dibujos de los caracteres desde el 1, ficha 0 de la lista 0xA000 (p00:4595); lo leen p00:5DFC (485 bytes)
+D 0xA793 0xA9BA dibujos_A793  rachas (p00:4A8C) con los dibujos de los caracteres desde el 1, ficha 1 de la lista 0xA000 (p00:4595); lo leen p00:5DFC (551 bytes)
+D 0xA9BA 0xAA75 rachas_A9BA  rachas a la VRAM (p00:4A8C: <0x80 repite, 0x80 destino, >0x80 copia, 0 acaba); lo leen p00:5DCA (187 bytes)
+D 0xAA75 0xAA83 rachas_AA75  rachas a la VRAM (p00:4A8C: <0x80 repite, 0x80 destino, >0x80 copia, 0 acaba); lo leen p01:619E (14 bytes)
+D 0xAA83 0xAA96 caracteres_AA83  lista de caracteres (p00:4595): fichas de 6 bytes [tercios][colores][caracter][dibujos], 0 acaba; lo leen p01:6181 (19 bytes)
+F 0xAA83 6
+D 0xAA96 0xAAA5 copias_AA96  lista de copias de caracteres VRAM -> VRAM (p00:454E: 4 bytes, 3 si el tercero lleva los bits altos; 0 acaba); lo leen p01:618C (15 bytes)
+D 0xAAA5 0xAB08 colores_AAA5  rachas (p00:4A8C) con los colores de los caracteres desde el 94, ficha 0 de la lista 0xAA83 (p00:4595); lo leen p01:6181 (99 bytes)
+D 0xAB08 0xAB57 colores_AB08  rachas (p00:4A8C) con los colores de los caracteres desde el 114, ficha 1 de la lista 0xAA83 (p00:4595); lo leen p01:6181 (79 bytes)
+D 0xAB57 0xABAE colores_AB57  rachas (p00:4A8C) con los colores de los caracteres desde el 136, ficha 2 de la lista 0xAA83 (p00:4595); lo leen p01:6181 (87 bytes)
+D 0xABAE 0xABD6 dibujos_ABAE  rachas (p00:4A8C) con los dibujos de los caracteres desde el 94, ficha 0 de la lista 0xAA83 (p00:4595); lo leen p01:6181 (40 bytes)
+D 0xABD6 0xABFE dibujos_ABD6  rachas (p00:4A8C) con los dibujos de los caracteres desde el 114, ficha 1 de la lista 0xAA83 (p00:4595); lo leen p01:6181 (40 bytes)
+D 0xABFE 0xAC44 dibujos_ABFE  rachas (p00:4A8C) con los dibujos de los caracteres desde el 136, ficha 2 de la lista 0xAA83 (p00:4595); lo leen p01:6181 (70 bytes)
+D 0xAC44 0xAC4B caracteres_AC44  lista de caracteres (p00:4595): fichas de 6 bytes [tercios][colores][caracter][dibujos], 0 acaba; lo leen p01:6A22 (7 bytes)
+F 0xAC44 6
+D 0xAC4B 0xB185 colores_AC4B  rachas (p00:4A8C) con los colores de los caracteres desde el 3, ficha 0 de la lista 0xAC44 (p00:4595); lo leen p01:6A22 (1338 bytes)
+D 0xB185 0xB223 dibujos_B185  rachas (p00:4A8C) con los dibujos de los caracteres desde el 3, ficha 0 de la lista 0xAC44 (p00:4595); lo leen p01:6A22 (158 bytes)
+D 0xB223 0xB22A caracteres_B223  lista de caracteres (p00:4595): fichas de 6 bytes [tercios][colores][caracter][dibujos], 0 acaba; lo leen p01:6A16 (7 bytes)
+F 0xB223 6
+D 0xB22A 0xB6B8 colores_B22A  rachas (p00:4A8C) con los colores de los caracteres desde el 1, ficha 0 de la lista 0xB223 (p00:4595); lo leen p01:6A16 (1166 bytes)
+D 0xB6B8 0xBA12 dibujos_B6B8  rachas (p00:4A8C) con los dibujos de los caracteres desde el 1, ficha 0 de la lista 0xB223 (p00:4595); lo leen p01:6A16 (858 bytes)
+D 0xBA12 0xBA2A guion_BA12  12 punteros, uno por fase, a las listas que p02:8879 lee con 0xE359 x 3 (L_4B67 y L_407F); lo leen p02:8882 (24 bytes)
+F 0xBA12 w6
+D 0xBA2A 0xBB72 guion_BA12_fichas  las listas de 0xBA12: fichas de 3 bytes [posicion lo][posicion hi (3 bits) y marcas][dato] que p02:888F compara con el scroll; acaban en una de posicion 0xFFFF, cuyo dato es a veces el primer byte de la lista de otra fase (0xBA53) o de la tabla de 0xBB72; lo leen p02:888F (328 bytes)
+F 0xBA2A 3
+D 0xBB72 0xBB8A enemigos_BB72  12 punteros, uno por fase (0xE201): las oleadas de enemigos que p00:5130 crea al pasar por cada posicion (0xE37D, L_4C32); lo leen p00:5139 (24 bytes)
+F 0xBB72 w6
+D 0xBB8A 0xBBB9 enemigos_BB72_fichas  las listas de enemigos_BB72: fichas [posicion lo hi][tipo y cuantos]; las de varias fases comparten fichas y acaban en la de posicion 0xFFFF; el dato de la ultima ficha 0xFFFF (que se lee pero no se usa) son los 1 primeros bytes de lo que va detras, en 0xBBB9; lo leen p00:5139 (47 bytes)
+F 0xBB8A 3
+D 0xBBB9 0xBC09 tabla_BBB9  8 fichas de 10 bytes que p00:5C48 lee con (0xE1C3 & 7) x 10; lo leen p00:5C59 (80 bytes)
+F 0xBBB9 10
+D 0xBC09 0xBEF1 caracteres_BC09  0x2E8 bytes de dibujos de caracteres que p00:5E32 copia tal cual (LDIRVM) a la VRAM 0x2508 en los tres tercios; lo leen p00:5E3B (744 bytes)
+F 0xBC09 8
+D 0xBEF1 0xBF19 caracteres_BEF1  0x28 bytes de dibujos de caracteres que p00:5E3E copia tal cual a la VRAM 0x2108 en los tres tercios; lo leen p00:5E47 (40 bytes)
+F 0xBEF1 8
+D 0xBF19 0xBF82 rachas_BF19  rachas a la VRAM (p00:4A8C: <0x80 repite, 0x80 destino, >0x80 copia, 0 acaba); lo leen p00:438A (105 bytes)
+D 0xBF82 0xBFBE rachas_BF82  rachas a la VRAM (p00:4A8C: <0x80 repite, 0x80 destino, >0x80 copia, 0 acaba); lo leen p00:4393 (60 bytes)
+D 0xBFBE 0xC000 relleno_ff  66 bytes a 0xFF hasta el final del banco: relleno; lo leen nadie (66 bytes)
+F 0xBFBE 16
+# --- fin de los bloques de bloques.py ---

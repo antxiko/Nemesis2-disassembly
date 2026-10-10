@@ -1,0 +1,235 @@
+# notas del banco 15
+
+# --- A MANO: comentarios, nombres y bloques ---
+
+# --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
+D 0xA000 0xA0B7 cifras_grandes_dibujos_cola  dibujos de 48 bytes (8 filas de 6) que p00:541B saca al VDP fila a fila, con un byte de borde a cada lado (0xFF, o 0x00 desde el 0x14) (sigue del banco 14); lo leen p00:5420 (183 bytes)
+F 0xA000 6
+D 0xA0B7 0xA0DB guion_fase_7  la lista de la fase 7 que p01:7248 da a p01:72B2 (0xE3B1 x 3): fichas [dato][posicion lo][posicion hi (3 bits) e Y], hasta FF FF FF; lo leen p01:72C3 (36 bytes)
+F 0xA0B7 3
+D 0xA0DB 0xA14D guion_fase_9  la lista de la fase 9 que p01:7248 da a p01:72B2 (0xE3B1 x 3): fichas [dato][posicion lo][posicion hi (3 bits) e Y], hasta FF FF FF; lo leen p01:72C3 (114 bytes)
+F 0xA0DB 3
+D 0xA14D 0xA1E0 guion_fase_10  la lista de la fase 10 que p01:7248 da a p01:72B2 (0xE3B1 x 3): fichas [dato][posicion lo][posicion hi (3 bits) e Y], hasta FF FF FF; lo leen p01:72C3 (147 bytes)
+F 0xA14D 3
+D 0xA1E0 0xA2AC guion_fase_11  la lista de la fase 11 que p01:7248 da a p01:72B2 (0xE3B1 x 3): fichas [dato][posicion lo][posicion hi (3 bits) e Y], hasta FF FF FF; lo leen p01:72C3 (204 bytes)
+F 0xA1E0 3
+D 0xA2AC 0xA362 objetos_fase_3  la lista de la fase 3 de p01:6AE0 (0xA2AC en la 3, la tabla 0x6B7F en las 9-11; 0xE369 x 3): fichas [posicion lo][bit alto de la posicion e Y][tipo], hasta FF FF; lo leen p01:6AFC (182 bytes)
+F 0xA2AC 3
+D 0xA362 0xA41E objetos_fase_9  la lista de la fase 9 de p01:6AE0 (0xA2AC en la 3, la tabla 0x6B7F en las 9-11; 0xE369 x 3): fichas [posicion lo][bit alto de la posicion e Y][tipo], hasta FF FF; lo leen p01:6AFC (188 bytes)
+F 0xA362 3
+D 0xA41E 0xA4CB objetos_fase_10  la lista de la fase 10 de p01:6AE0 (0xA2AC en la 3, la tabla 0x6B7F en las 9-11; 0xE369 x 3): fichas [posicion lo][bit alto de la posicion e Y][tipo], hasta FF FF; lo leen p01:6AFC (173 bytes)
+F 0xA41E 3
+D 0xA4CB 0xA561 objetos_fase_11  la lista de la fase 11 de p01:6AE0 (0xA2AC en la 3, la tabla 0x6B7F en las 9-11; 0xE369 x 3): fichas [posicion lo][bit alto de la posicion e Y][tipo], hasta FF FF; lo leen p01:6AFC (150 bytes)
+F 0xA4CB 3
+D 0xA561 0xA583 tabla_A561  17 pares (tipos 0 a 16) que p01:6B41 copia (ldi, ldi) con el tipo de la ficha x 2; el ultimo es tambien la entrada 0 de 0xA581; lo leen p01:6B47 (34 bytes)
+F 0xA561 2
+D 0xA583 0xA5A3 piezas_A581  16 punteros (A de 1 a 16: p01:6D11 lee 0xA581 + 2 x A con L_4B60, y la 0 es el ultimo par de 0xA561): piezas que L_5327 pinta en la tabla de nombres; lo leen p01:6D14 (32 bytes)
+F 0xA583 w8
+D 0xA5A3 0xA5BB piezas_A581_A5A3  pieza de caracteres (filas x columnas de IX+04 e IX+05, L_5327) de las entradas 0 de 0xA581; lo leen p01:6D23 (24 bytes)
+F 0xA5A3 8
+D 0xA5BB 0xA5EB piezas_A581_A5BB  pieza de caracteres (filas x columnas de IX+04 e IX+05, L_5327) de las entradas 1 de 0xA581; lo leen p01:6D23 (48 bytes)
+F 0xA5BB 8
+D 0xA5EB 0xA60F piezas_A581_A5EB  pieza de caracteres (filas x columnas de IX+04 e IX+05, L_5327) de las entradas 2 de 0xA581; lo leen p01:6D23 (36 bytes)
+F 0xA5EB 8
+D 0xA60F 0xA64B piezas_A581_A60F  pieza de caracteres (filas x columnas de IX+04 e IX+05, L_5327) de las entradas 3 de 0xA581; lo leen p01:6D23 (60 bytes)
+F 0xA60F 8
+D 0xA64B 0xA65B piezas_A581_A64B  pieza de caracteres (filas x columnas de IX+04 e IX+05, L_5327) de las entradas 4, 10 de 0xA581; lo leen p01:6D23 (16 bytes)
+F 0xA64B 8
+D 0xA65B 0xA673 piezas_A581_A65B  pieza de caracteres (filas x columnas de IX+04 e IX+05, L_5327) de las entradas 5, 11 de 0xA581; lo leen p01:6D23 (24 bytes)
+F 0xA65B 8
+D 0xA673 0xA693 piezas_A581_A673  pieza de caracteres (filas x columnas de IX+04 e IX+05, L_5327) de las entradas 6, 12 de 0xA581; lo leen p01:6D23 (32 bytes)
+F 0xA673 8
+D 0xA693 0xA6A3 piezas_A581_A693  pieza de caracteres (filas x columnas de IX+04 e IX+05, L_5327) de las entradas 7, 13 de 0xA581; lo leen p01:6D23 (16 bytes)
+F 0xA693 8
+D 0xA6A3 0xA6BB piezas_A581_A6A3  pieza de caracteres (filas x columnas de IX+04 e IX+05, L_5327) de las entradas 8, 14 de 0xA581; lo leen p01:6D23 (24 bytes)
+F 0xA6A3 8
+D 0xA6BB 0xA6DB piezas_A581_A6BB  pieza de caracteres (filas x columnas de IX+04 e IX+05, L_5327) de las entradas 9, 15 de 0xA581; lo leen p01:6D23 (32 bytes)
+F 0xA6BB 8
+D 0xA6DB 0xA949 colores_A6DB  rachas (p00:4A8C) con los colores de los caracteres desde el 31, ficha 0 de la lista 0x556F (p00:4595); lo leen p00:4B29 (622 bytes)
+D 0xA949 0xAA63 colores_A949  rachas (p00:4A8C) con los colores de los caracteres desde el 112, ficha 1 de la lista 0x556F (p00:4595); lo leen p00:4B29 (282 bytes)
+D 0xAA63 0xAA7D colores_AA63  rachas (p00:4A8C) con los colores de los caracteres desde el 109, ficha 2 de la lista 0x556F (p00:4595); lo leen p00:4B29 (26 bytes)
+D 0xAA7D 0xAA97 colores_AA7D  rachas (p00:4A8C) con los colores de los caracteres desde el 192, ficha 3 de la lista 0x556F (p00:4595); lo leen p00:4B29 (26 bytes)
+D 0xAA97 0xAAA1 colores_AA97  rachas (p00:4A8C) con los colores de los caracteres desde el 198, ficha 6 de la lista 0x556F (p00:4595); lo leen p00:4B29 (10 bytes)
+D 0xAAA1 0xAAAB dibujos_AAA1  rachas (p00:4A8C) con los dibujos de los caracteres desde el 198, ficha 6 de la lista 0x556F (p00:4595); lo leen p00:4B29 (10 bytes)
+D 0xAAAB 0xACC4 dibujos_AAAB  rachas (p00:4A8C) con los dibujos de los caracteres desde el 31, ficha 0 de la lista 0x556F (p00:4595); lo leen p00:4B29 (537 bytes)
+D 0xACC4 0xADA9 dibujos_ACC4  rachas (p00:4A8C) con los dibujos de los caracteres desde el 112, ficha 1 de la lista 0x556F (p00:4595); lo leen p00:4B29 (229 bytes)
+D 0xADA9 0xADC2 dibujos_ADA9  rachas (p00:4A8C) con los dibujos de los caracteres desde el 109, ficha 2 de la lista 0x556F (p00:4595); lo leen p00:4B29 (25 bytes)
+D 0xADC2 0xADDA dibujos_ADC2  rachas (p00:4A8C) con los dibujos de los caracteres desde el 192, ficha 3 de la lista 0x556F (p00:4595); lo leen p00:4B29 (24 bytes)
+D 0xADDA 0xAEAF colores_ADDA  rachas (p00:4A8C) con los colores de los caracteres desde el 160, ficha 4 de la lista 0x556F (p00:4595); lo leen p00:4B29 (213 bytes)
+D 0xAEAF 0xAF60 dibujos_AEAF  rachas (p00:4A8C) con los dibujos de los caracteres desde el 160, ficha 4 de la lista 0x556F (p00:4595); lo leen p00:4B29 (177 bytes)
+D 0xAF60 0xAF6F dibujos_AF60  rachas (p00:4A8C) con los dibujos de los caracteres desde el 199, ficha 5 de la lista 0x556F (p00:4595); lo leen p00:4B29 (15 bytes)
+D 0xAF6F 0xAF7E colores_AF6F  rachas (p00:4A8C) con los colores de los caracteres desde el 199, ficha 5 de la lista 0x556F (p00:4595); lo leen p00:4B29 (15 bytes)
+D 0xAF7E 0xAF98 colores_AF7E  rachas (p00:4A8C) con los colores de los caracteres desde el 64, ficha 0 de la lista 0x55A7 (p00:4595); lo leen p01:6165 (26 bytes)
+D 0xAF98 0xAFCE colores_AF98  rachas (p00:4A8C) con los colores de los caracteres desde el 78, ficha 1 de la lista 0x55A7 (p00:4595); lo leen p01:6165 (54 bytes)
+D 0xAFCE 0xB04D colores_AFCE  rachas (p00:4A8C) con los colores de los caracteres desde el 94, ficha 2 de la lista 0x55A7 (p00:4595); lo leen p01:6165 (127 bytes)
+D 0xB04D 0xB09C colores_B04D  rachas (p00:4A8C) con los colores de los caracteres desde el 114, ficha 3 de la lista 0x55A7 (p00:4595); lo leen p01:6165 (79 bytes)
+D 0xB09C 0xB0F9 colores_B09C  rachas (p00:4A8C) con los colores de los caracteres desde el 136, ficha 4 de la lista 0x55A7 (p00:4595); lo leen p01:6165 (93 bytes)
+D 0xB0F9 0xB132 colores_B0F9  rachas (p00:4A8C) con los colores de los caracteres desde el 155, ficha 5 de la lista 0x55A7 (p00:4595); lo leen p01:6165 (57 bytes)
+D 0xB132 0xB195 colores_B132  rachas (p00:4A8C) con los colores de los caracteres desde el 165, ficha 6 de la lista 0x55A7 (p00:4595); lo leen p01:6165 (99 bytes)
+D 0xB195 0xB19A dibujos_B195  rachas (p00:4A8C) con los dibujos de los caracteres desde el 64, ficha 0 de la lista 0x55A7 (p00:4595); lo leen p01:6165 (5 bytes)
+D 0xB19A 0xB1D2 dibujos_B19A  rachas (p00:4A8C) con los dibujos de los caracteres desde el 78, ficha 1 de la lista 0x55A7 (p00:4595); lo leen p01:6165 (56 bytes)
+D 0xB1D2 0xB213 dibujos_B1D2  rachas (p00:4A8C) con los dibujos de los caracteres desde el 94, ficha 2 de la lista 0x55A7 (p00:4595); lo leen p01:6165 (65 bytes)
+D 0xB213 0xB23B dibujos_B213  rachas (p00:4A8C) con los dibujos de los caracteres desde el 114, ficha 3 de la lista 0x55A7 (p00:4595); lo leen p01:6165 (40 bytes)
+D 0xB23B 0xB283 dibujos_B23B  rachas (p00:4A8C) con los dibujos de los caracteres desde el 136, ficha 4 de la lista 0x55A7 (p00:4595); lo leen p01:6165 (72 bytes)
+D 0xB283 0xB2B9 dibujos_B283  rachas (p00:4A8C) con los dibujos de los caracteres desde el 155, ficha 5 de la lista 0x55A7 (p00:4595); lo leen p01:6165 (54 bytes)
+D 0xB2B9 0xB319 dibujos_B2B9  rachas (p00:4A8C) con los dibujos de los caracteres desde el 165, ficha 6 de la lista 0x55A7 (p00:4595); lo leen p01:6165 (96 bytes)
+D 0xB319 0xB379 dibujos_B319  rachas (p00:4A8C) con los dibujos de los caracteres desde el 187, ficha 7 de la lista 0x55A7 (p00:4595); lo leen p01:6165 (96 bytes)
+D 0xB379 0xB3AF dibujos_B379  rachas (p00:4A8C) con los dibujos de los caracteres desde el 208, ficha 8 de la lista 0x55A7 (p00:4595); lo leen p01:6165 (54 bytes)
+D 0xB3AF 0xB3BC caracteres_B3AF  lista de caracteres (p00:4595): fichas de 6 bytes [tercios][colores][caracter][dibujos], 0 acaba; lo leen p00:4C8B (13 bytes)
+F 0xB3AF 6
+D 0xB3BC 0xB3C5 copias_B3BC  lista de copias de caracteres VRAM -> VRAM (p00:454E: 4 bytes, 3 si el tercero lleva los bits altos; 0 acaba); lo leen p00:4C97 (9 bytes)
+D 0xB3C5 0xB44E colores_B3C5  rachas (p00:4A8C) con los colores de los caracteres desde el 31, ficha 0 de la lista 0xB3AF (p00:4595); lo leen p00:4C8B (137 bytes)
+D 0xB44E 0xB525 colores_B44E  rachas (p00:4A8C) con los colores de los caracteres desde el 112, ficha 1 de la lista 0xB3AF (p00:4595); lo leen p00:4C8B (215 bytes)
+D 0xB525 0xB5A2 dibujos_B525  rachas (p00:4A8C) con los dibujos de los caracteres desde el 31, ficha 0 de la lista 0xB3AF (p00:4595); lo leen p00:4C8B (125 bytes)
+D 0xB5A2 0xB661 dibujos_B5A2  rachas (p00:4A8C) con los dibujos de los caracteres desde el 112, ficha 1 de la lista 0xB3AF (p00:4595); lo leen p00:4C8B (191 bytes)
+D 0xB661 0xB6F1 formas_B661  72 punteros que p01:6017 lee con IX+07 (L_4B67): formas que p01:6040 copia a la tabla de nombres (IX+09 de ancho, IX+0A filas); lo leen p01:601D (144 bytes)
+F 0xB661 w8
+D 0xB6F1 0xB70F formas_B661_B6F1  forma de caracteres (de p01:6040) de las entradas 0 de 0xB661; lo leen p01:6046 (30 bytes)
+F 0xB6F1 8
+D 0xB70F 0xB732 formas_B661_B70F  forma de caracteres (de p01:6040) de las entradas 1 de 0xB661; lo leen p01:6046 (35 bytes)
+F 0xB70F 8
+D 0xB732 0xB750 formas_B661_B732  forma de caracteres (de p01:6040) de las entradas 2 de 0xB661; lo leen p01:6046 (30 bytes)
+F 0xB732 8
+D 0xB750 0xB76E formas_B661_B750  forma de caracteres (de p01:6040) de las entradas 3 de 0xB661; lo leen p01:6046 (30 bytes)
+F 0xB750 8
+D 0xB76E 0xB78C formas_B661_B76E  forma de caracteres (de p01:6040) de las entradas 4 de 0xB661; lo leen p01:6046 (30 bytes)
+F 0xB76E 8
+D 0xB78C 0xB7AA formas_B661_B78C  forma de caracteres (de p01:6040) de las entradas 5 de 0xB661; lo leen p01:6046 (30 bytes)
+F 0xB78C 8
+D 0xB7AA 0xB7C8 formas_B661_B7AA  forma de caracteres (de p01:6040) de las entradas 6 de 0xB661; lo leen p01:6046 (30 bytes)
+F 0xB7AA 8
+D 0xB7C8 0xB7E6 formas_B661_B7C8  forma de caracteres (de p01:6040) de las entradas 7 de 0xB661; lo leen p01:6046 (30 bytes)
+F 0xB7C8 8
+D 0xB7E6 0xB804 formas_B661_B7E6  forma de caracteres (de p01:6040) de las entradas 8 de 0xB661; lo leen p01:6046 (30 bytes)
+F 0xB7E6 8
+D 0xB804 0xB822 formas_B661_B804  forma de caracteres (de p01:6040) de las entradas 9 de 0xB661; lo leen p01:6046 (30 bytes)
+F 0xB804 8
+D 0xB822 0xB840 formas_B661_B822  forma de caracteres (de p01:6040) de las entradas 10 de 0xB661; lo leen p01:6046 (30 bytes)
+F 0xB822 8
+D 0xB840 0xB85E formas_B661_B840  forma de caracteres (de p01:6040) de las entradas 11 de 0xB661; lo leen p01:6046 (30 bytes)
+F 0xB840 8
+D 0xB85E 0xB87C formas_B661_B85E  forma de caracteres (de p01:6040) de las entradas 12 de 0xB661; lo leen p01:6046 (30 bytes)
+F 0xB85E 8
+D 0xB87C 0xB89A formas_B661_B87C  forma de caracteres (de p01:6040) de las entradas 13 de 0xB661; lo leen p01:6046 (30 bytes)
+F 0xB87C 8
+D 0xB89A 0xB8B8 formas_B661_B89A  forma de caracteres (de p01:6040) de las entradas 14 de 0xB661; lo leen p01:6046 (30 bytes)
+F 0xB89A 8
+D 0xB8B8 0xB8D6 formas_B661_B8B8  forma de caracteres (de p01:6040) de las entradas 15 de 0xB661; lo leen p01:6046 (30 bytes)
+F 0xB8B8 8
+D 0xB8D6 0xB8EA formas_B661_B8D6  forma de caracteres (de p01:6040) de las entradas 16 de 0xB661; lo leen p01:6046 (20 bytes)
+F 0xB8D6 8
+D 0xB8EA 0xB8FE formas_B661_B8EA  forma de caracteres (de p01:6040) de las entradas 17 de 0xB661; lo leen p01:6046 (20 bytes)
+F 0xB8EA 8
+D 0xB8FE 0xB912 formas_B661_B8FE  forma de caracteres (de p01:6040) de las entradas 18 de 0xB661; lo leen p01:6046 (20 bytes)
+F 0xB8FE 8
+D 0xB912 0xB922 formas_B661_B912  forma de caracteres (de p01:6040) de las entradas 19, 20 de 0xB661; lo leen p01:6046 (16 bytes)
+F 0xB912 8
+D 0xB922 0xB934 formas_B661_B922  forma de caracteres (de p01:6040) de las entradas 21, 53 de 0xB661; lo leen p01:6046 (18 bytes)
+F 0xB922 8
+D 0xB934 0xB946 formas_B661_B934  forma de caracteres (de p01:6040) de las entradas 22 de 0xB661; lo leen p01:6046 (18 bytes)
+F 0xB934 8
+D 0xB946 0xB958 formas_B661_B946  forma de caracteres (de p01:6040) de las entradas 23 de 0xB661; lo leen p01:6046 (18 bytes)
+F 0xB946 8
+D 0xB958 0xB96A formas_B661_B958  forma de caracteres (de p01:6040) de las entradas 24 de 0xB661; lo leen p01:6046 (18 bytes)
+F 0xB958 8
+D 0xB96A 0xB97C formas_B661_B96A  forma de caracteres (de p01:6040) de las entradas 25 de 0xB661; lo leen p01:6046 (18 bytes)
+F 0xB96A 8
+D 0xB97C 0xB98E formas_B661_B97C  forma de caracteres (de p01:6040) de las entradas 26 de 0xB661; lo leen p01:6046 (18 bytes)
+F 0xB97C 8
+D 0xB98E 0xB99A formas_B661_B98E  forma de caracteres (de p01:6040) de las entradas 29 de 0xB661; lo leen p01:6046 (12 bytes)
+F 0xB98E 8
+D 0xB99A 0xB9A6 formas_B661_B99A  forma de caracteres (de p01:6040) de las entradas 30 de 0xB661; lo leen p01:6046 (12 bytes)
+F 0xB99A 8
+D 0xB9A6 0xB9B8 formas_B661_B9A6  forma de caracteres (de p01:6040) de las entradas 27 de 0xB661; lo leen p01:6046 (18 bytes)
+F 0xB9A6 8
+D 0xB9B8 0xB9CA formas_B661_B9B8  forma de caracteres (de p01:6040) de las entradas 28 de 0xB661; lo leen p01:6046 (18 bytes)
+F 0xB9B8 8
+D 0xB9CA 0xB9FA formas_B661_B9CA  forma de caracteres (de p01:6040) de las entradas 31 de 0xB661; lo leen p01:6046 (48 bytes)
+F 0xB9CA 8
+D 0xB9FA 0xBA2A formas_B661_B9FA  forma de caracteres (de p01:6040) de las entradas 32 de 0xB661; lo leen p01:6046 (48 bytes)
+F 0xB9FA 8
+D 0xBA2A 0xBA5A formas_B661_BA2A  forma de caracteres (de p01:6040) de las entradas 33 de 0xB661; lo leen p01:6046 (48 bytes)
+F 0xBA2A 8
+D 0xBA5A 0xBA8A formas_B661_BA5A  forma de caracteres (de p01:6040) de las entradas 34 de 0xB661; lo leen p01:6046 (48 bytes)
+F 0xBA5A 8
+D 0xBA8A 0xBABA formas_B661_BA8A  forma de caracteres (de p01:6040) de las entradas 35 de 0xB661; lo leen p01:6046 (48 bytes)
+F 0xBA8A 8
+D 0xBABA 0xBAEA formas_B661_BABA  forma de caracteres (de p01:6040) de las entradas 36 de 0xB661; lo leen p01:6046 (48 bytes)
+F 0xBABA 8
+D 0xBAEA 0xBB1A formas_B661_BAEA  forma de caracteres (de p01:6040) de las entradas 37 de 0xB661; lo leen p01:6046 (48 bytes)
+F 0xBAEA 8
+D 0xBB1A 0xBB4A formas_B661_BB1A  forma de caracteres (de p01:6040) de las entradas 38 de 0xB661; lo leen p01:6046 (48 bytes)
+F 0xBB1A 8
+D 0xBB4A 0xBB7A formas_B661_BB4A  forma de caracteres (de p01:6040) de las entradas 39 de 0xB661; lo leen p01:6046 (48 bytes)
+F 0xBB4A 8
+D 0xBB7A 0xBBAA formas_B661_BB7A  forma de caracteres (de p01:6040) de las entradas 40 de 0xB661; lo leen p01:6046 (48 bytes)
+F 0xBB7A 8
+D 0xBBAA 0xBBDA formas_B661_BBAA  forma de caracteres (de p01:6040) de las entradas 41 de 0xB661; lo leen p01:6046 (48 bytes)
+F 0xBBAA 8
+D 0xBBDA 0xBC0A formas_B661_BBDA  forma de caracteres (de p01:6040) de las entradas 42 de 0xB661; lo leen p01:6046 (48 bytes)
+F 0xBBDA 8
+D 0xBC0A 0xBC3A formas_B661_BC0A  forma de caracteres (de p01:6040) de las entradas 43 de 0xB661; lo leen p01:6046 (48 bytes)
+F 0xBC0A 8
+D 0xBC3A 0xBC6A formas_B661_BC3A  forma de caracteres (de p01:6040) de las entradas 44 de 0xB661; lo leen p01:6046 (48 bytes)
+F 0xBC3A 8
+D 0xBC6A 0xBC9A formas_B661_BC6A  forma de caracteres (de p01:6040) de las entradas 45 de 0xB661; lo leen p01:6046 (48 bytes)
+F 0xBC6A 8
+D 0xBC9A 0xBCCA formas_B661_BC9A  forma de caracteres (de p01:6040) de las entradas 46 de 0xB661; lo leen p01:6046 (48 bytes)
+F 0xBC9A 8
+D 0xBCCA 0xBCCE formas_B661_BCCA  forma de caracteres (de p01:6040) de las entradas 47 de 0xB661; lo leen p01:6046 (4 bytes)
+F 0xBCCA 8
+D 0xBCCE 0xBCD2 formas_B661_BCCE  forma de caracteres (de p01:6040) de las entradas 48 de 0xB661; lo leen p01:6046 (4 bytes)
+F 0xBCCE 8
+D 0xBCD2 0xBCD6 formas_B661_BCD2  forma de caracteres (de p01:6040) de las entradas 49 de 0xB661; lo leen p01:6046 (4 bytes)
+F 0xBCD2 8
+D 0xBCD6 0xBCDA formas_B661_BCD6  forma de caracteres (de p01:6040) de las entradas 50 de 0xB661; lo leen p01:6046 (4 bytes)
+F 0xBCD6 8
+D 0xBCDA 0xBCE6 formas_B661_BCDA  forma de caracteres (de p01:6040) de las entradas 51 de 0xB661; lo leen p01:6046 (12 bytes)
+F 0xBCDA 8
+D 0xBCE6 0xBCF2 formas_B661_BCE6  forma de caracteres (de p01:6040) de las entradas 52 de 0xB661; lo leen p01:6046 (12 bytes)
+F 0xBCE6 8
+D 0xBCF2 0xBCFE formas_B661_BCF2  forma de caracteres (de p01:6040) de las entradas 54, 55, 56 de 0xB661; lo leen p01:6046 (12 bytes)
+F 0xBCF2 8
+D 0xBCFE 0xBD0A formas_B661_BCFE  forma de caracteres (de p01:6040) de las entradas 57 de 0xB661; lo leen p01:6046 (12 bytes)
+F 0xBCFE 8
+D 0xBD0A 0xBD16 formas_B661_BD0A  forma de caracteres (de p01:6040) de las entradas 58 de 0xB661; lo leen p01:6046 (12 bytes)
+F 0xBD0A 8
+D 0xBD16 0xBD22 formas_B661_BD16  forma de caracteres (de p01:6040) de las entradas 59 de 0xB661; lo leen p01:6046 (12 bytes)
+F 0xBD16 8
+D 0xBD22 0xBD2E formas_B661_BD22  forma de caracteres (de p01:6040) de las entradas 60 de 0xB661; lo leen p01:6046 (12 bytes)
+F 0xBD22 8
+D 0xBD2E 0xBD3A formas_B661_BD2E  forma de caracteres (de p01:6040) de las entradas 61 de 0xB661; lo leen p01:6046 (12 bytes)
+F 0xBD2E 8
+D 0xBD3A 0xBD46 formas_B661_BD3A  forma de caracteres (de p01:6040) de las entradas 62 de 0xB661; lo leen p01:6046 (12 bytes)
+F 0xBD3A 8
+D 0xBD46 0xBD52 formas_B661_BD46  forma de caracteres (de p01:6040) de las entradas 63 de 0xB661; lo leen p01:6046 (12 bytes)
+F 0xBD46 8
+D 0xBD52 0xBD5E formas_B661_BD52  forma de caracteres (de p01:6040) de las entradas 64 de 0xB661; lo leen p01:6046 (12 bytes)
+F 0xBD52 8
+D 0xBD5E 0xBD6A formas_B661_BD5E  forma de caracteres (de p01:6040) de las entradas 65 de 0xB661; lo leen p01:6046 (12 bytes)
+F 0xBD5E 8
+D 0xBD6A 0xBD76 formas_B661_BD6A  forma de caracteres (de p01:6040) de las entradas 66 de 0xB661; lo leen p01:6046 (12 bytes)
+F 0xBD6A 8
+D 0xBD76 0xBD82 formas_B661_BD76  forma de caracteres (de p01:6040) de las entradas 67 de 0xB661; lo leen p01:6046 (12 bytes)
+F 0xBD76 8
+D 0xBD82 0xBD8E formas_B661_BD82  forma de caracteres (de p01:6040) de las entradas 68 de 0xB661; lo leen p01:6046 (12 bytes)
+F 0xBD82 8
+D 0xBD8E 0xBD9A formas_B661_BD8E  forma de caracteres (de p01:6040) de las entradas 69 de 0xB661; lo leen p01:6046 (12 bytes)
+F 0xBD8E 8
+D 0xBD9A 0xBDA6 formas_B661_BD9A  forma de caracteres (de p01:6040) de las entradas 70 de 0xB661; lo leen p01:6046 (12 bytes)
+F 0xBD9A 8
+D 0xBDA6 0xBDB2 formas_B661_BDA6  forma de caracteres (de p01:6040) de las entradas 71 de 0xB661; lo leen p01:6046 (12 bytes)
+F 0xBDA6 8
+D 0xBDB2 0xBE29 tira_fase_2  la tira de la fase 2 (tabla p00:5F6D): pares que p00:5F46 lee con el contador 0xE1CB+2 (x 2); lo leen p00:5F5A (119 bytes)
+F 0xBDB2 16
+D 0xBE29 0xBEAA tira_fase_3  la tira de la fase 3 (tabla p00:5F6D): pares que p00:5F46 lee con el contador 0xE1CB+2 (x 2); lo leen p00:5F5A (129 bytes)
+F 0xBE29 16
+D 0xBEAA 0xBF0F tira_fase_4  la tira de la fase 4 (tabla p00:5F6D): pares que p00:5F46 lee con el contador 0xE1CB+2 (x 2); lo leen p00:5F5A (101 bytes)
+F 0xBEAA 16
+D 0xBF0F 0xBF80 tira_fase_5  la tira de la fase 5 (tabla p00:5F6D): pares que p00:5F46 lee con el contador 0xE1CB+2 (x 2); lo leen p00:5F5A (113 bytes)
+F 0xBF0F 16
+D 0xBF80 0xBFEE tira_fase_6  la tira de la fase 6 (tabla p00:5F6D): pares que p00:5F46 lee con el contador 0xE1CB+2 (x 2); lo leen p00:5F5A (110 bytes)
+F 0xBF80 16
+D 0xBFEE 0xC000 relleno_ff  18 bytes a 0xFF hasta el final del banco: relleno; lo leen nadie (18 bytes)
+F 0xBFEE 16
+# --- fin de los bloques de bloques.py ---

@@ -1,0 +1,70 @@
+# notas del banco 05
+
+# --- A MANO: comentarios, nombres y bloques ---
+
+# --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
+D 0x8000 0x84A5 partitura_7269_cola  partitura (p04:699A: ordenes 0xD0-0xFF y notas) de los sonidos 0x01, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E y otros; 28 bytes los leen dos canales con distinto largo de nota (uno con el volumen en modo 0, otro en modo 2: ver 0x7E09 y 0x7E1B, sonido 0x22) (sigue del banco 4); lo leen p04:69A6 (1189 bytes)
+F 0x8000 16
+D 0x84A5 0x84A6 suelto_84A5  1 bytes 0xFF sueltos entre partituras: no los lee nadie; lo leen nadie (1 bytes)
+F 0x84A5 16
+D 0x84A6 0x8D28 partitura_84A6  partitura (p04:699A: ordenes 0xD0-0xFF y notas) de los sonidos 0x2B, 0x2C, 0x2D; lo leen p04:69A6 (2178 bytes)
+F 0x84A6 16
+D 0x8D28 0x8D29 suelto_8D28  1 byte 0xFF de cierre que no se alcanza: la partitura de delante acaba saltando con 0xFD; lo leen nadie (1 bytes)
+F 0x8D28 16
+D 0x8D29 0x8D9A partitura_8D29  partitura (p04:699A: ordenes 0xD0-0xFF y notas) de los sonidos 0x2D; lo leen p04:69A6 (113 bytes)
+F 0x8D29 16
+D 0x8D9A 0x8DA8 suelto_8D9A  subpartitura de 14 bytes que acaba en 0xFA, como las que se llaman con 0xF9, pero no la llama ninguna: sin lector a la vista; lo leen nadie (14 bytes)
+F 0x8D9A 16
+D 0x8DA8 0x8E85 partitura_8DA8  partitura (p04:699A: ordenes 0xD0-0xFF y notas) de los sonidos 0x2D; lo leen p04:69A6 (221 bytes)
+F 0x8DA8 16
+D 0x8E85 0x8E86 suelto_8E85  1 byte 0xFF de cierre que no se alcanza: la partitura de delante acaba saltando con 0xFD; lo leen nadie (1 bytes)
+F 0x8E85 16
+D 0x8E86 0x8F2E partitura_8E86  partitura (p04:699A: ordenes 0xD0-0xFF y notas) de los sonidos 0x2D; lo leen p04:69A6 (168 bytes)
+F 0x8E86 16
+D 0x8F2E 0x8F2F suelto_8F2E  1 byte 0xFF de cierre que no se alcanza: la partitura de delante acaba saltando con 0xFD; lo leen nadie (1 bytes)
+F 0x8F2E 16
+D 0x8F2F 0x9090 partitura_8F2F  partitura (p04:699A: ordenes 0xD0-0xFF y notas) de los sonidos 0x2D, 0x2E; lo leen p04:69A6 (353 bytes)
+F 0x8F2F 16
+D 0x9090 0x9091 suelto_9090  1 byte 0xFF de cierre que no se alcanza: la partitura de delante acaba saltando con 0xFD; lo leen nadie (1 bytes)
+F 0x9090 16
+D 0x9091 0x90FF partitura_9091  partitura (p04:699A: ordenes 0xD0-0xFF y notas) de los sonidos 0x2E; lo leen p04:69A6 (110 bytes)
+F 0x9091 16
+D 0x90FF 0x9100 suelto_90FF  1 byte 0xFF de cierre que no se alcanza: la partitura de delante acaba saltando con 0xFD; lo leen nadie (1 bytes)
+F 0x90FF 16
+D 0x9100 0x91A1 partitura_9100  partitura (p04:699A: ordenes 0xD0-0xFF y notas) de los sonidos 0x2E; lo leen p04:69A6 (161 bytes)
+F 0x9100 16
+D 0x91A1 0x91A2 suelto_91A1  1 byte 0xFF de cierre que no se alcanza: la partitura de delante acaba saltando con 0xFD; lo leen nadie (1 bytes)
+F 0x91A1 16
+D 0x91A2 0x91D9 partitura_91A2  partitura (p04:699A: ordenes 0xD0-0xFF y notas) de los sonidos 0x2E; lo leen p04:69A6 (55 bytes)
+F 0x91A2 16
+D 0x91D9 0x91DA suelto_91D9  1 byte 0xFF de cierre que no se alcanza: la partitura de delante acaba saltando con 0xFD; lo leen nadie (1 bytes)
+F 0x91D9 16
+D 0x91DA 0x929B partitura_91DA  partitura (p04:699A: ordenes 0xD0-0xFF y notas) de los sonidos 0x2E; lo leen p04:69A6 (193 bytes)
+F 0x91DA 16
+D 0x929B 0x929C suelto_929B  1 byte 0xFF de cierre que no se alcanza: la partitura de delante acaba saltando con 0xFD; lo leen nadie (1 bytes)
+F 0x929B 16
+D 0x929C 0x9610 partitura_929C  partitura (p04:699A: ordenes 0xD0-0xFF y notas) de los sonidos 0x2F, 0x30; lo leen p04:69A6 (884 bytes)
+F 0x929C 16
+D 0x9610 0x9611 suelto_9610  1 byte 0xFF de cierre que no se alcanza: la partitura de delante acaba saltando con 0xFD; lo leen nadie (1 bytes)
+F 0x9610 16
+D 0x9611 0x9696 partitura_9611  partitura (p04:699A: ordenes 0xD0-0xFF y notas) de los sonidos 0x30; lo leen p04:69A6 (133 bytes)
+F 0x9611 16
+D 0x9696 0x9697 suelto_9696  1 byte 0xFF de cierre que no se alcanza: la partitura de delante acaba saltando con 0xFD; lo leen nadie (1 bytes)
+F 0x9696 16
+D 0x9697 0x9DDC partitura_9697  partitura (p04:699A: ordenes 0xD0-0xFF y notas) de los sonidos 0x31, 0x32, 0x33; lo leen p04:69A6 (1861 bytes)
+F 0x9697 16
+D 0x9DDC 0x9DDD suelto_9DDC  1 byte 0xFF de cierre que no se alcanza: la partitura de delante acaba saltando con 0xFD; lo leen nadie (1 bytes)
+F 0x9DDC 16
+D 0x9DDD 0x9E7C partitura_9DDD  partitura (p04:699A: ordenes 0xD0-0xFF y notas) de los sonidos 0x33; lo leen p04:69A6 (159 bytes)
+F 0x9DDD 16
+D 0x9E7C 0x9E7D suelto_9E7C  1 byte 0xFF de cierre que no se alcanza: la partitura de delante acaba saltando con 0xFD; lo leen nadie (1 bytes)
+F 0x9E7C 16
+D 0x9E7D 0x9F2B partitura_9E7D  partitura (p04:699A: ordenes 0xD0-0xFF y notas) de los sonidos 0x33; lo leen p04:69A6 (174 bytes)
+F 0x9E7D 16
+D 0x9F2B 0x9F2C suelto_9F2B  1 byte 0xFF de cierre que no se alcanza: la partitura de delante acaba saltando con 0xFD; lo leen nadie (1 bytes)
+F 0x9F2B 16
+D 0x9F2C 0x9FFF partitura_9F2C  partitura (p04:699A: ordenes 0xD0-0xFF y notas) de los sonidos 0x33; lo leen p04:69A6 (211 bytes)
+F 0x9F2C 16
+D 0x9FFF 0xA000 suelto_9FFF  1 byte 0xFF de cierre que no se alcanza: la partitura de delante acaba saltando con 0xFD; lo leen nadie (1 bytes)
+F 0x9FFF 16
+# --- fin de los bloques de bloques.py ---

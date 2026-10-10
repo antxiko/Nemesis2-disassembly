@@ -1,0 +1,70 @@
+# notas del banco 02
+
+# --- A MANO: comentarios, nombres y bloques ---
+
+# --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
+D 0x8000 0x8002 partida_8000  el operando (0xE20F) de `ld a,(nn)`, la instruccion que empieza en p01:7FFF; el codigo sigue en 0x8002; lo leen p01:7FFF (2 bytes)
+F 0x8000 2
+D 0x806D 0x8074 tabla_806D  8 bytes, uno por vuelta (0xE20F), que p02:8060 pone en 0xE331; el octavo es el primero de 0x8074; lo leen p02:8066 (7 bytes)
+F 0x806D 7
+D 0x8074 0x80BC tabla_8074  8 filas de 9 bytes, una por vuelta: p02:804A lee 0x8074 + 9 x 0xE20F + 0xE33D; lo leen p02:805D (72 bytes)
+F 0x8074 9
+D 0x80BC 0x80BD tabla_8074_cola  el byte de detras de las 8 filas de 0x8074: la casilla 9 de la fila 7, si 0xE33D llegara a 9; lo leen p02:805D (1 bytes)
+F 0x80BC 1
+D 0x8148 0x8156 listas_por_vuelta  7 punteros (vueltas 1 a 7: p02:80E5 lee 0x8146 + 2 x 0xE20F con L_4B67, y la 0 caeria en el `ret` de delante) a listas [casilla][valor]; lo leen p02:80EB (14 bytes)
+F 0x8148 w7
+D 0x8156 0x8196 listas_8156  las listas de p02:80EF: pares [casilla de 0xE333][valor] hasta un 0 (0x8156, 0x8163, 0x8172, 0x8174 y 0x8185, que comparten finales); lo leen p02:80EF (64 bytes)
+F 0x8156 16
+D 0x81CA 0x81DA inicio_E334  9 bytes que p02:81A0 copia a 0xE334 y 7 a 0xE430; lo leen p02:81A0 (16 bytes)
+F 0x81CA 16
+D 0x81FB 0x8219 tabla_81FB  15 destinos del despachador p00:4084 (call en p02:81F8, el indice en A): 8219, 8227, 8219, 824A, 824A, 81F2, 827C, 827C, 8308, 82D8, 82D8, 82D8, 82D8, 8366, 827C; lo leen p02:81F8 (30 bytes)
+F 0x81FB w8
+D 0x84CA 0x8526 tabla_84CA  92 bytes que p02:84AA lee con (DE) - 0x1F < 0x5C (L_5CA6); lo leen p02:84B3 (92 bytes)
+F 0x84CA 16
+D 0x8762 0x8768 tabla_8762  3 punteros que p02:873D lee con IX+06 (L_4B67); lo leen p02:8748 (6 bytes)
+F 0x8762 w3
+D 0x8768 0x8798 filas_8768  3 filas de 16 bytes (las de 0x8762), que p02:874B recorre; lo leen p02:874B (48 bytes)
+F 0x8768 16
+D 0x882C 0x884C tabla_882C  16 destinos del despachador p00:4084 (call en p02:8829, el indice en A): B719, 8827, 8827, B885, BA13, BB90, A119, 8827, B448, B74D, 885E, 8867, 8870, 884C, 8827, 8855; lo leen p02:8829 (32 bytes)
+F 0x882C w8
+D 0x8F71 0x8F7D tabla_8F71  6 destinos del despachador p00:4084 (call en p02:8F6E, el indice en A): 8F7D, 8F9C, 8FE6, 8FD1, 8FD1, 89E8; lo leen p02:8F6E (12 bytes)
+F 0x8F71 w6
+D 0x9026 0x9034 tabla_9026  7 palabras (0xE357 de 1 a 7; p02:900D lee 0x9024 + 2 x A con L_4B67, y la 0 caeria en el `ld (hl),a / ret` de delante); lo leen p02:9013 (14 bytes)
+F 0x9026 w7
+D 0x94D9 0x95D9 arcotangente  16 x 16 bytes: el angulo (0x00-0x3F) para cada par |dx|/16, |dy|/16 que p02:9492 calcula (0x94D9 + 16 x fila + columna); lo leen p02:949D (256 bytes)
+F 0x94D9 16
+D 0x95D9 0x9619 seno  64 bytes que suben de 0x00 a 0xFF: p02:9425 lee 0x95D9 + (0x3F - E) y 0x95D9 + E; lo leen p02:942C (64 bytes)
+F 0x95D9 16
+D 0x9619 0x9621 tabla_9619  4 pares que p02:9644 lee con (IX+02 / 2) & 6 y pone en IX+30 e IX+31; lo leen p02:9654 (8 bytes)
+F 0x9619 2
+D 0x9621 0x9629 tabla_9621  4 palabras que p02:963F y p03:B204 leen con L_4B67; lo leen p02:963F (8 bytes)
+F 0x9621 w4
+D 0x97B9 0x97BD tabla_97B9  4 bytes (IX+02 de 1 a 4: p02:976A lee 0x97B8 + IX+02 con L_5CA6, y la 0 caeria en el codigo de delante); lo leen p02:9770 (4 bytes)
+F 0x97B9 4
+D 0x9998 0x99A0 tabla_9998  dos tablas de 4 bytes (0x9998 y 0x999C) que p02:9989 pasa a L_9B31 segun el bit 0 de IX+19; lo leen p02:9995 (8 bytes)
+F 0x9998 4
+D 0x9AAA 0x9AAE tabla_9AAA  4 bytes que p02:9A99 lee con 0xE228 / 4; lo leen p02:9AA3 (4 bytes)
+F 0x9AAA 4
+D 0x9B48 0x9B4C tabla_9B48  4 bytes que p02:9B2E pasa a L_9B31; lo leen p02:9B2E (4 bytes)
+F 0x9B48 4
+D 0x9B98 0x9BA6 tabla_9B98  dos tablas de 7 bytes (0x9B98, y 0x9B9F en la fase 4) que p02:9B85 pasa a L_6361; lo leen p02:9B92 (14 bytes)
+F 0x9B98 7
+D 0x9BC1 0x9BC5 tabla_9BC1  4 bytes que p02:9BB1 lee con 0xE228 / 4; lo leen p02:9BBB (4 bytes)
+F 0x9BC1 4
+D 0x9BEB 0x9BF7 tabla_9BEB  dos tablas de 6 bytes (0x9BEB, y 0x9BF1 en la fase 4) que p02:9BCB lee con IX+25; lo leen p02:9BD8 (12 bytes)
+F 0x9BEB 6
+D 0x9C3C 0x9C40 tabla_9C3C  4 bytes que p02:9C36 pasa a L_9B31; lo leen p02:9C36 (4 bytes)
+F 0x9C3C 4
+D 0x9C87 0x9C8D tabla_9C87  6 bytes que p02:9C71 lee con IX+27 (de 0 a 5); lo leen p02:9C80 (6 bytes)
+F 0x9C87 6
+D 0x9CBB 0x9CBF tabla_9CBB  4 bytes que p02:9CAA lee con 0xE228 / 4; lo leen p02:9CB4 (4 bytes)
+F 0x9CBB 4
+D 0x9D63 0x9D6D tablas_9D63  dos tablas de 4 bytes (0x9D63, y 0x9D67 en la fase 5) que p02:9CCA lee, y 2 bytes en 0x9D6B que lee p02:9CE5; lo leen p02:9CCA (10 bytes)
+F 0x9D63 4
+D 0x9F18 0x9F20 tabla_9F18  4 pares que p02:9EFC lee (0x9F18 o 0x9F1A segun IX+0A, y el bit 0 de IX+27); lo leen p02:9F00 (8 bytes)
+F 0x9F18 2
+D 0x9FCD 0x9FED tabla_9FCD  8 fichas de 4 bytes que p02:9F9D elige al azar (ld a,r & 7) con L_4B67; lo leen p02:9FA5 (32 bytes)
+F 0x9FCD 4
+D 0x9FFE 0xA000 partida_9FFE  `ld (ix+d),a` (DD 77), que acaba en el banco 3: el desplazamiento (0x30) es el primer byte de p03:A000, y el codigo sigue en p03:A001; lo leen p02:9FFE (2 bytes)
+F 0x9FFE 2
+# --- fin de los bloques de bloques.py ---

@@ -1,0 +1,82 @@
+# Semillas a mano: 'pNN 0xADDR b6000 b8000 bA000  # por que'.
+#
+# Destinos de las tablas de SALTO que el trazador de cartucho entero no sigue:
+# un `jp (hl)` con HL sacado de una tabla por indice.
+#
+# p04:6D12: los codigos 0xE0-0xFE de la partitura saltan por la tabla de
+# 0x6D27 (HL = 0x6D27 + 2 x (codigo & 0x1F); jp (hl) en p04:6D26). El
+# sonido corre con los bancos 4-5-6 (p00:4AE4, p00:4023).
+p04 0x6D65 4 5 6  # codigo 0xE0 de la partitura: tabla 0x6D27 (p04:6D26 jp (hl))
+p04 0x6D7B 4 5 6  # codigo 0xE1 de la partitura: tabla 0x6D27 (p04:6D26 jp (hl))
+p04 0x6D65 4 5 6  # codigo 0xE2 de la partitura: tabla 0x6D27 (p04:6D26 jp (hl))
+p04 0x6D7B 4 5 6  # codigo 0xE3 de la partitura: tabla 0x6D27 (p04:6D26 jp (hl))
+p04 0x6D98 4 5 6  # codigo 0xE4 de la partitura: tabla 0x6D27 (p04:6D26 jp (hl))
+p04 0x6DC2 4 5 6  # codigo 0xE5 de la partitura: tabla 0x6D27 (p04:6D26 jp (hl))
+p04 0x6DD5 4 5 6  # codigo 0xE6 de la partitura: tabla 0x6D27 (p04:6D26 jp (hl))
+p04 0x6DE4 4 5 6  # codigo 0xE7 de la partitura: tabla 0x6D27 (p04:6D26 jp (hl))
+p04 0x6DF6 4 5 6  # codigo 0xE8 de la partitura: tabla 0x6D27 (p04:6D26 jp (hl))
+p04 0x6E05 4 5 6  # codigo 0xE9 de la partitura: tabla 0x6D27 (p04:6D26 jp (hl))
+p04 0x6E0C 4 5 6  # codigo 0xEA de la partitura: tabla 0x6D27 (p04:6D26 jp (hl))
+p04 0x6E13 4 5 6  # codigo 0xEB de la partitura: tabla 0x6D27 (p04:6D26 jp (hl))
+p04 0x6E30 4 5 6  # codigo 0xEC de la partitura: tabla 0x6D27 (p04:6D26 jp (hl))
+p04 0x6E36 4 5 6  # codigo 0xED de la partitura: tabla 0x6D27 (p04:6D26 jp (hl))
+p04 0x6E7B 4 5 6  # codigo 0xEE de la partitura: tabla 0x6D27 (p04:6D26 jp (hl))
+p04 0x6E81 4 5 6  # codigo 0xEF de la partitura: tabla 0x6D27 (p04:6D26 jp (hl))
+p04 0x6E8C 4 5 6  # codigo 0xF0 de la partitura: tabla 0x6D27 (p04:6D26 jp (hl))
+p04 0x6E92 4 5 6  # codigo 0xF1 de la partitura: tabla 0x6D27 (p04:6D26 jp (hl))
+p04 0x6EAD 4 5 6  # codigo 0xF2 de la partitura: tabla 0x6D27 (p04:6D26 jp (hl))
+p04 0x6EB7 4 5 6  # codigo 0xF3 de la partitura: tabla 0x6D27 (p04:6D26 jp (hl))
+p04 0x6EC6 4 5 6  # codigo 0xF4 de la partitura: tabla 0x6D27 (p04:6D26 jp (hl))
+p04 0x6ECC 4 5 6  # codigo 0xF5 de la partitura: tabla 0x6D27 (p04:6D26 jp (hl))
+p04 0x6ED2 4 5 6  # codigo 0xF6 de la partitura: tabla 0x6D27 (p04:6D26 jp (hl))
+p04 0x6EDC 4 5 6  # codigo 0xF7 de la partitura: tabla 0x6D27 (p04:6D26 jp (hl))
+p04 0x6EE2 4 5 6  # codigo 0xF8 de la partitura: tabla 0x6D27 (p04:6D26 jp (hl))
+p04 0x6EFC 4 5 6  # codigo 0xF9 de la partitura: tabla 0x6D27 (p04:6D26 jp (hl))
+p04 0x6F07 4 5 6  # codigo 0xFA de la partitura: tabla 0x6D27 (p04:6D26 jp (hl))
+p04 0x6F0F 4 5 6  # codigo 0xFB de la partitura: tabla 0x6D27 (p04:6D26 jp (hl))
+p04 0x6F29 4 5 6  # codigo 0xFC de la partitura: tabla 0x6D27 (p04:6D26 jp (hl))
+p04 0x6F3E 4 5 6  # codigo 0xFD de la partitura: tabla 0x6D27 (p04:6D26 jp (hl))
+p04 0x6F41 4 5 6  # codigo 0xFE de la partitura: tabla 0x6D27 (p04:6D26 jp (hl))
+#
+# p01:7D85: `call 0x4085` (el despachador sin el pop: HL = tabla, A = indice)
+# con HL = 0x7D8D[0xE20F] (8 punteros) y A = 0xE33D: tablas de destinos en
+# 0x7D9B-0x7DD8 (la primera empieza con la ultima palabra de 0x7D8D). Se
+# ejecuta con los bancos 1-2-3.
+p01 0x7DD9 1 2 3  # destino de las tablas de 0x7D9B (p01:7D85 -> L_4085, A = 0xE33D)
+p01 0x7E32 1 2 3  # destino de las tablas de 0x7D9B (p01:7D85 -> L_4085, A = 0xE33D)
+p01 0x7E4F 1 2 3  # destino de las tablas de 0x7D9B (p01:7D85 -> L_4085, A = 0xE33D)
+p01 0x7E6B 1 2 3  # destino de las tablas de 0x7D9B (p01:7D85 -> L_4085, A = 0xE33D)
+p01 0x7ED9 1 2 3  # destino de las tablas de 0x7D9B (p01:7D85 -> L_4085, A = 0xE33D)
+p01 0x7F0B 1 2 3  # destino de las tablas de 0x7D9B (p01:7D85 -> L_4085, A = 0xE33D)
+p01 0x7F3F 1 2 3  # destino de las tablas de 0x7D9B (p01:7D85 -> L_4085, A = 0xE33D)
+p01 0x7F66 1 2 3  # destino de las tablas de 0x7D9B (p01:7D85 -> L_4085, A = 0xE33D)
+p01 0x7F87 1 2 3  # destino de las tablas de 0x7D9B (p01:7D85 -> L_4085, A = 0xE33D)
+#
+# Direcciones de vuelta: se empujan con `ld hl,X / push hl` antes de saltar
+# por el despachador, y la rutina a la que se llega vuelve ahi con su ret.
+p00 0x5A3E 1 2 3  # vuelta de p00:5611 push hl antes de call L_4084 (C < 3)
+p02 0x82FE 1 2 3  # vuelta de p03:ABB9 ld hl,0x82FE / push hl antes de call L_4084
+p03 0xA22F 1 2 3  # vuelta de p03:A14C ld hl,0xA22F / push hl antes de call L_4084
+#
+# Entradas alternativas: unos bytes de codigo delante de una rutina, a los
+# que no salta nadie a la vista (cargan algo y caen en ella).
+p00 0x4A29 1 2 3  # 10 bytes: SETRD (0x0050) y C = puerto de lectura del VDP; nadie lo llama
+p00 0x4EB4 1 2 3  # 6 bytes: E = IX+4, D = IX+6 y cae en L_4EBA; nadie lo llama
+p00 0x4ED5 1 2 3  # 2 bytes: A = 0x80 y cae en L_4ED7; nadie lo llama
+p00 0x5D37 1 2 3  # 9 bytes: E = 0x8F, L_5D72, A & 0x3F; nadie lo llama
+p00 0x5E1D 1 2 3  # 3 bytes: call L_5E64 y cae en L_5E20; nadie lo llama
+#
+# Rutinas de banco del banco 0 que no llama nadie (las demas de la familia si).
+p00 0x4105 1 2 3  # 3 bytes: jp L_4AE4 (el sonido); nadie lo llama
+p00 0x410D 1 2 3  # 5 bytes: push af / ld a,4 y los bancos 4-5-6 por p00:411A; nadie lo llama
+p00 0x4149 1 2 3  # 5 bytes: ld a,6 / jp p00:414E, el banco 6 en 0xA000; nadie lo llama
+#
+# Codigo del banco 2 al que no salta nadie a la vista.
+p02 0x83B1 1 2 3  # 40 bytes: X = IX+4 - 8, L_5C92 y busca en la tabla de 0xE305; nadie lo llama
+p02 0x8983 1 2 3  # 5 bytes: el sonido 9 (L_4AE4); nadie lo llama
+p02 0x93F3 1 2 3  # 2 bytes: A = 0x80 y cae en L_93F5; nadie lo llama
+p02 0x9952 1 2 3  # 4 bytes: cp 0x18 / jr nc; nadie lo llama
+p02 0x83CD 1 2 3  # 12 bytes: A = IX+4 + 0x30, y si no pasa de 0xA0 vuelve a L_83B8; nadie lo llama
+p03 0xB4D7 1 2 3  # 13 bytes: B = 2 menos lo que diga 0xE40B, y cae en L_B4E4; nadie lo llama
+p10 0xA061 1 2 10  # 7 bytes: HL = 0x1008, C = 1 y salta atras a L_A05A; nadie lo llama
+p10 0xA068 1 2 10  # 5 bytes: HL = 0x0008 y salta a L_A07D; nadie lo llama

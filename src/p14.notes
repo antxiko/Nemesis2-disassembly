@@ -1,0 +1,70 @@
+# notas del banco 14
+
+# --- A MANO: comentarios, nombres y bloques ---
+
+# --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
+D 0x8000 0x81E8 columnas_fase_3_cola  las 96 columnas de la fase 3: 6 bytes cada una, un metabloque por fila (p00:48CF) (sigue del banco 13); lo leen p00:48CF (488 bytes)
+F 0x8000 6
+D 0x81E8 0x8398 columnas_fase_5  las 72 columnas de la fase 5: 6 bytes cada una, un metabloque por fila (p00:48CF); lo leen p00:48CF (432 bytes)
+F 0x81E8 6
+D 0x8398 0x85D8 columnas_fase_4  las 96 columnas de la fase 4: 6 bytes cada una, un metabloque por fila (p00:48CF); lo leen p00:48CF (576 bytes)
+F 0x8398 6
+D 0x85D8 0x87E8 columnas_fase_6  las 88 columnas de la fase 6: 6 bytes cada una, un metabloque por fila (p00:48CF); lo leen p00:48CF (528 bytes)
+F 0x85D8 6
+D 0x87E8 0x8BA8 columnas_fase_7  las 160 columnas de la fase 7: 6 bytes cada una, un metabloque por fila (p00:48CF); lo leen p00:48CF (960 bytes)
+F 0x87E8 6
+D 0x8BA8 0x8C98 columnas_fase_8  las 40 columnas de la fase 8: 6 bytes cada una, un metabloque por fila (p00:48CF); lo leen p00:48CF (240 bytes)
+F 0x8BA8 6
+D 0x8C98 0x8E48 columnas_fase_9  las 72 columnas de la fase 9: 6 bytes cada una, un metabloque por fila (p00:48CF); lo leen p00:48CF (432 bytes)
+F 0x8C98 6
+D 0x8E48 0x8FF8 columnas_fase_10  las 72 columnas de la fase 10: 6 bytes cada una, un metabloque por fila (p00:48CF); lo leen p00:48CF (432 bytes)
+F 0x8E48 6
+D 0x8FF8 0x91A8 columnas_fase_11  las 72 columnas de la fase 11: 6 bytes cada una, un metabloque por fila (p00:48CF); lo leen p00:48CF (432 bytes)
+F 0x8FF8 6
+D 0x91A8 0x9222 rachas_f_91A8  rachas a la VRAM por filas (p10:A67B: <0x80 repite, 0x80 serie [cuantos][primero], >0x80 copia, 0 acaba; los ceros no se escriben); lo leen p10:BBFF (122 bytes)
+D 0x9222 0x922C textos_9222  5 punteros que p10:B9CF lee con 0xE496 (L_4B67): listas a la VRAM, y la que empieza por 0 (0x94C3) acaba; lo leen p10:B9C0 (10 bytes)
+F 0x9222 w8
+D 0x922C 0x9241 lista_922C  lista a la VRAM (p00:4A6B) de la tabla 0x9222, entrada 0; lo leen p10:B9DA (21 bytes)
+D 0x9241 0x9251 lista_9241  lista a la VRAM (p00:4A6B) de la tabla 0x9222, entrada 1; lo leen p10:B9DA (16 bytes)
+D 0x9251 0x9267 lista_9251  lista a la VRAM (p00:4A6B) de la tabla 0x9222, entrada 2; lo leen p10:B9DA (22 bytes)
+D 0x9267 0x9281 lista_9267  lista a la VRAM (p00:4A6B) de la tabla 0x9222, entrada 3; lo leen p10:B9DA (26 bytes)
+D 0x9281 0x928D textos_9281  6 punteros que p10:B9CF lee con 0xE496 (L_4B67): listas a la VRAM, y la que empieza por 0 (0x94C3) acaba; lo leen p10:BA1C (12 bytes)
+F 0x9281 w8
+D 0x928D 0x92AE lista_928D  lista a la VRAM (p00:4A6B) de la tabla 0x9281, entrada 0; lo leen p10:B9DA (33 bytes)
+D 0x92AE 0x92BD lista_92AE  lista a la VRAM (p00:4A6B) de la tabla 0x9281, entrada 1; lo leen p10:B9DA (15 bytes)
+D 0x92BD 0x92F1 lista_92BD  lista a la VRAM (p00:4A6B) de la tabla 0x9281, entrada 2; lo leen p10:B9DA (52 bytes)
+D 0x92F1 0x930E lista_92F1  lista a la VRAM (p00:4A6B) de la tabla 0x9281, entrada 4; lo leen p10:B9DA (29 bytes)
+D 0x930E 0x9317 lista_930E  lista a la VRAM (p00:4A6B) de la tabla 0x9281, entrada 5; lo leen p10:B9DA (9 bytes)
+D 0x9317 0x9361 lista_9317  lista a la VRAM (p00:4A6B: [destino] y bytes; 0xFE otro destino; 0xFF acaba); lo leen p10:BA31 (74 bytes)
+D 0x9361 0x93B4 lista_9361  lista a la VRAM (p00:4A6B: [destino] y bytes; 0xFE otro destino; 0xFF acaba); lo leen p10:BA67 (83 bytes)
+D 0x93B4 0x93C4 textos_93B4  8 punteros que p10:B9CF lee con 0xE496 (L_4B67): listas a la VRAM, y la que empieza por 0 (0x94C3) acaba; lo leen p10:BAFF (16 bytes)
+F 0x93B4 w8
+D 0x93C4 0x93E4 lista_93C4  lista a la VRAM (p00:4A6B) de la tabla 0x93B4, entrada 0; lo leen p10:B9DA (32 bytes)
+D 0x93E4 0x93FC lista_93E4  lista a la VRAM (p00:4A6B) de la tabla 0x93B4, entrada 1; lo leen p10:B9DA (24 bytes)
+D 0x93FC 0x940D lista_93FC  lista a la VRAM (p00:4A6B) de la tabla 0x93B4, entrada 2; lo leen p10:B9DA (17 bytes)
+D 0x940D 0x942D lista_940D  lista a la VRAM (p00:4A6B) de la tabla 0x93B4, entrada 3; lo leen p10:B9DA (32 bytes)
+D 0x942D 0x9486 lista_942D  lista a la VRAM (p00:4A6B) de la tabla 0x93B4, entrada 4; lo leen p10:B9DA (89 bytes)
+D 0x9486 0x94A1 lista_9486  lista a la VRAM (p00:4A6B) de la tabla 0x93B4, entrada 5; lo leen p10:B9DA (27 bytes)
+D 0x94A1 0x94C3 lista_94A1  lista a la VRAM (p00:4A6B) de la tabla 0x93B4, entrada 6; lo leen p10:B9DA (34 bytes)
+D 0x94C3 0x94C4 lista_vacia  un 0: la lista vacia con la que p10:B9D5 sabe que se acabaron las tablas de 0x9222, 0x9281 y 0x93B4; lo leen p10:B9D5 (1 bytes)
+F 0x94C3 1
+D 0x94C4 0x94D1 lista_94C4  lista a la VRAM (p00:4A6B: [destino] y bytes; 0xFE otro destino; 0xFF acaba); lo leen p10:B9FF, p10:BA86, p10:BA89 (13 bytes)
+D 0x94D1 0x950F lista_94D1  lista a la VRAM (p00:4A6B: [destino] y bytes; 0xFE otro destino; 0xFF acaba); lo leen p10:BA96, p10:BA99 (62 bytes)
+D 0x950F 0x9554 lista_950F  lista a la VRAM (p00:4A6B) que p10:BBC0 pinta en un MSX japones (0x002B & 0x0F = 0); en los demas, la de 0xBC23 del banco 10; lo leen p10:BBCD (69 bytes)
+D 0x9554 0x956C guion_9554  12 punteros, uno por fase (0xE201): las listas que p01:657C lee con 0xE358 (L_4C32); lo leen p01:6585 (24 bytes)
+F 0x9554 w6
+D 0x956C 0x99C7 guion_9554_fichas  las listas de guion_9554: fichas [posicion lo hi][dato]; las de varias fases comparten fichas y acaban en la de posicion 0xFFFF; el dato de la ultima ficha 0xFFFF (que se lee pero no se usa) son los 1 primeros bytes de lo que va detras, en 0x99C7; lo leen p01:6585 (1115 bytes)
+F 0x956C 3
+D 0x99C7 0x99D9 sucesos_por_fase  9 punteros, uno por fase de la 0 a la 8, que p01:6DC2 lee con L_4B60; lo leen p01:6DCB (18 bytes)
+F 0x99C7 w9
+D 0x99D9 0x9A67 sucesos  por fase, un byte por cada 32 de scroll (p01:6DCE: 0x99xx + (0xE203 / 32)): sus dos cifras son dos sucesos de la tabla de p01:6E07 (la baja solo con 0xE228 >= 10); lo leen p01:6DE0 (142 bytes)
+F 0x99D9 16
+D 0x9A67 0x9A79 guion_9A67  9 punteros, uno por fase (0xE201): las listas que p01:6F64 lee con 0xE37C (p01:6F9A, fases 0 a 8); lo leen p01:6F6D (18 bytes)
+F 0x9A67 w6
+D 0x9A79 0x9BD3 guion_9A67_fichas  las listas de guion_9A67: fichas [posicion lo hi][dos datos]; las de varias fases comparten fichas y acaban en la de posicion 0xFFFF; el dato de la ultima ficha 0xFFFF (que se lee pero no se usa) son los 2 primeros bytes de lo que va detras, en 0x9BD3; lo leen p01:6F6D (346 bytes)
+F 0x9A79 4
+D 0x9BD3 0x9C07 cifras_grandes  26 punteros (p00:5409, A de 1 a 25 con L_4B67) a dibujos de 8 filas de 6 bytes; lo leen p00:540C (52 bytes)
+F 0x9BD3 w8
+D 0x9C07 0xA000 cifras_grandes_dibujos  dibujos de 48 bytes (8 filas de 6) que p00:541B saca al VDP fila a fila, con un byte de borde a cada lado (0xFF, o 0x00 desde el 0x14) (sigue en el banco 15, en 0xA000); lo leen p00:5420 (1017 bytes)
+F 0x9C07 6
+# --- fin de los bloques de bloques.py ---

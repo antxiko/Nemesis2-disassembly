@@ -1,0 +1,14 @@
+# notas del banco 06
+
+# --- A MANO: comentarios, nombres y bloques ---
+
+# --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
+D 0xA000 0xB62B partitura_A000  partitura (p04:699A: ordenes 0xD0-0xFF y notas) de los sonidos 0x29, 0x33, 0x34, 0x35, 0x36, 0x3F y otros; lo leen p04:69A6 (5675 bytes)
+F 0xA000 16
+D 0xB62B 0xB63B suelto_B62B  subpartitura de 16 bytes que acaba en 0xFA, como las que se llaman con 0xF9, pero no la llama ninguna: sin lector a la vista; lo leen nadie (16 bytes)
+F 0xB62B 16
+D 0xB63B 0xBFDE partitura_B63B  partitura (p04:699A: ordenes 0xD0-0xFF y notas) de los sonidos 0x3E, 0x3F; lo leen p04:69A6 (2467 bytes)
+F 0xB63B 16
+D 0xBFDE 0xC000 relleno_ff  34 bytes a 0xFF hasta el final del banco: relleno; lo leen nadie (34 bytes)
+F 0xBFDE 16
+# --- fin de los bloques de bloques.py ---
