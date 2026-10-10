@@ -1162,7 +1162,7 @@ L_87F8:
 	push af			;87ff
 	inc l			;8800   ; IX+01 = 0
 	ld (hl),000h		;8801
-	ld de,(0f012h)		;8803   ; lee la velocidad Y calculada (16 bits) y el byte siguiente (16 bits)
+	ld de,(0f012h)		;8803   ; lee la velocidad Y calculada (16 bits)
 	inc l			;8807
 	ld a,d			;8808   ; IX+02 = 0 en el borde derecho, 0xFF si no
 	cp 0f8h		;8809
@@ -1210,23 +1210,23 @@ DATA_tabla_882C:
 
 clase_be49:		; con el banco 11, p11:BE49
 	call 04137h		;884c   ; banco_11: pone el banco 11 en 0xA000 (y 0xF0F3)
-	call 0be49h		;884f
+	call 0be49h		;884f   ; clase_14_empieza: la clase 14: la forma 0x2F, 4 golpes, 2 x 2, 48 cuadros y sin caja
 	jp 04157h		;8852   ; bancos_2_3: pone los bancos 2 y 3 en 0x8000 y 0xA000 (y 0xF0F2-0xF0F3)
 clase_badc:		; con el banco 11, p11:BADC
 	call 04137h		;8855   ; banco_11: pone el banco 11 en 0xA000 (y 0xF0F3)
-	call 0badch		;8858
+	call 0badch		;8858   ; clase_16_empieza: la clase 16: la forma 0x3A (+ 7 con IX+0B bit 0), 6 golpes, 4 x 3, 48 cuadros y sin caja
 	jp 04157h		;885b   ; bancos_2_3: pone los bancos 2 y 3 en 0x8000 y 0xA000 (y 0xF0F2-0xF0F3)
 clase_a3ab:		; con el banco 11, p11:A3AB
 	call 04137h		;885e   ; banco_11: pone el banco 11 en 0xA000 (y 0xF0F3)
-	call 0a3abh		;8861
+	call 0a3abh		;8861   ; clase_11_empieza: la clase 11: sin caja, 11 pasos (14 con IX+0B bit 1)
 	jp 04157h		;8864   ; bancos_2_3: pone los bancos 2 y 3 en 0x8000 y 0xA000 (y 0xF0F2-0xF0F3)
 clase_a4d1:		; con el banco 11, p11:A4D1
 	call 04137h		;8867   ; banco_11: pone el banco 11 en 0xA000 (y 0xF0F3)
-	call 0a4d1h		;886a
+	call 0a4d1h		;886a   ; clase_12_empieza: la clase 12: sin caja, 11 pasos, uno cada 6 cuadros
 	jp 04157h		;886d   ; bancos_2_3: pone los bancos 2 y 3 en 0x8000 y 0xA000 (y 0xF0F2-0xF0F3)
 clase_a811:		; con el banco 11, p11:A811
 	call 04137h		;8870   ; banco_11: pone el banco 11 en 0xA000 (y 0xF0F3)
-	call 0a811h		;8873
+	call 0a811h		;8873   ; clase_13_empieza: la clase 13: sin caja, 1 cuadro, y la X a la que se abre de p11:A82A
 	jp 04157h		;8876   ; bancos_2_3: pone los bancos 2 y 3 en 0x8000 y 0xA000 (y 0xF0F2-0xF0F3)
 ficha_de_objeto:		; con el banco 12, la ficha 0xE359 de la lista de objetos de la fase (p12:BA12, 3 bytes): DE la columna (11 bits), B y C; compara con el scroll
 	call 0413bh		;8879   ; la lista en el banco 12
@@ -2771,9 +2771,9 @@ tipo_rumbo_50:		; IX+07-IX+0A = la velocidad hacia la nave con rapidez 0x50
 	ld e,(ix+004h)		;9342
 	ld d,(ix+006h)		;9345
 	call rumbo_f00f		;9348   ; la velocidad hacia la nave
-	ld de,(0f012h)		;934b   ; lee la velocidad Y calculada (16 bits) y el byte siguiente (16 bits)
+	ld de,(0f012h)		;934b   ; lee la velocidad Y calculada (16 bits)
 	call 04efbh		;934f   ; pon_vy: IX+07/IX+08 = DE
-	ld de,(0f014h)		;9352   ; lee la velocidad X calculada (16 bits) y el byte siguiente (16 bits)
+	ld de,(0f014h)		;9352   ; lee la velocidad X calculada (16 bits)
 	jp 04f02h		;9356   ; pon_vx: IX+09/IX+0A = DE
 tipo_contra_el_mapa:		; el enemigo se quita si toca el mapa delante o debajo (p02:9360)
 	call toca_mapa_delante		;9359   ; toca_mapa_delante: C si hay mapa en el sitio del enemigo (8 pixeles mas alla si va a la derecha) o debajo
@@ -2795,7 +2795,7 @@ L_936E:
 	jp es_mapa_hl_b		;937a   ; es_mapa_hl_b: C si el caracter de HL es mapa (de 1 a 0xE305)
 dispara_bala_con:		; una bala desde D/E + 8 con la velocidad BC (Y) y HL (X), si no esta 0xF00E
 	ld (0f012h),bc		;937d   ; la velocidad que viene
-	ld (0f014h),hl		;9381   ; guarda la velocidad X calculada (16 bits) y el byte siguiente (16 bits)
+	ld (0f014h),hl		;9381   ; guarda la velocidad X calculada (16 bits)
 	ld a,e			;9384   ; Y + 8
 	add a,008h		;9385
 	ld e,a			;9387
@@ -3242,7 +3242,7 @@ tipo_39:		; los tipos 0x39 y 0x3A: una fila de caracteres que crece hacia la izq
 	ld hl,l97b8h		;976a
 	ld a,(ix+002h)		;976d
 	call 05ca6h		;9770   ; byte_a: A = el byte A de la tabla HL
-	ld a,(0ea03h)		;9773
+	ld a,(0ea03h)		;9773   ; lee la Y del jefe (16 bits)
 	add a,(hl)			;9776
 	ld (ix+004h),a		;9777
 	cp 0b0h		;977a   ; fuera por abajo: se va

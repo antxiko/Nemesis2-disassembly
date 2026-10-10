@@ -1341,10 +1341,10 @@ L_A935:
 mueve_la_nave:		; Y (0xE403-0xE404) + DE y X (0xE405-0xE406) + BC
 	ld hl,(0e403h)		;a93f   ; la Y
 	add hl,de			;a942
-	ld (0e403h),hl		;a943   ; guarda la Y de la nave (16 bits) y el byte siguiente (16 bits)
+	ld (0e403h),hl		;a943   ; guarda la Y de la nave (16 bits)
 	ld hl,(0e405h)		;a946   ; la X
 	add hl,bc			;a949
-	ld (0e405h),hl		;a94a   ; guarda la X de la nave (16 bits) y el byte siguiente (16 bits)
+	ld (0e405h),hl		;a94a   ; guarda la X de la nave (16 bits)
 	ret			;a94d
 
 ; ----------------------------------------------------------------------
@@ -3291,8 +3291,8 @@ tipo_1d_empieza:		; el tipo 0x1D: sin tocar los disparos, hacia la nave, 12 cuad
 pon_rumbo_y_espera:		; 12 cuadros con IX+2F = 1 y la velocidad de 0xF012/0xF014
 	ld (ix+002h),00ch		;b6e8   ; 12 cuadros
 	ld (ix+02fh),001h		;b6ec   ; sin chocar con el mapa
-	ld de,(0f014h)		;b6f0   ; lee la velocidad X calculada (16 bits) y el byte siguiente (16 bits)
-	ld hl,(0f012h)		;b6f4   ; lee la velocidad Y calculada (16 bits) y el byte siguiente (16 bits)
+	ld de,(0f014h)		;b6f0   ; lee la velocidad X calculada (16 bits)
+	ld hl,(0f012h)		;b6f4   ; lee la velocidad Y calculada (16 bits)
 	jp 04f26h		;b6f7   ; pon_vx_y_vy: IX+09/IX+0A = DE y IX+07/IX+08 = HL
 tipo_1d:		; los tipos 0x1D y 0x22: al acabar la espera, ya chocan con el mapa (IX+2F = 0)
 	ld a,(ix+001h)		;b6fa   ; en el paso 0
@@ -3430,8 +3430,8 @@ L_B80D:
 	ld d,(ix+006h)		;b821
 	call 093f5h		;b824   ; hacia la nave
 	inc (ix+001h)		;b827
-	ld hl,(0f012h)		;b82a   ; lee la velocidad Y calculada (16 bits) y el byte siguiente (16 bits)
-	ld de,(0f014h)		;b82d   ; lee la velocidad X calculada (16 bits) y el byte siguiente (16 bits)
+	ld hl,(0f012h)		;b82a   ; lee la velocidad Y calculada (16 bits)
+	ld de,(0f014h)		;b82d   ; lee la velocidad X calculada (16 bits)
 	jp 04f26h		;b831   ; pon_vx_y_vy: IX+09/IX+0A = DE y IX+07/IX+08 = HL
 tipo_10_dibujo:		; el dibujo: 0x58 + 4 x (cuadro & 3)
 	ld a,(0e1c3h)		;b834   ; cada cuadro, uno de 4
@@ -3701,9 +3701,9 @@ clase_5_empieza:		; la clase 5: la forma 0x10, 40 golpes, 4 x 5, caja 7, el ritm
 	ret			;ba46
 tipo_22_empieza:		; el tipo 0x22: hacia la izquierda (vx 0xFC00), 12 cuadros sin chocar
 	ld hl,00000h		;ba47   ; vy 0
-	ld (0f012h),hl		;ba4a   ; guarda la velocidad Y calculada (16 bits) y el byte siguiente (16 bits)
+	ld (0f012h),hl		;ba4a   ; guarda la velocidad Y calculada (16 bits)
 	ld hl,0fc00h		;ba4d   ; vx 0xFC00
-	ld (0f014h),hl		;ba50   ; guarda la velocidad X calculada (16 bits) y el byte siguiente (16 bits)
+	ld (0f014h),hl		;ba50   ; guarda la velocidad X calculada (16 bits)
 	jp pon_rumbo_y_espera		;ba53   ; pon_rumbo_y_espera: 12 cuadros con IX+2F = 1 y la velocidad de 0xF012/0xF014
 tipo_20_empieza:		; el tipo 0x20: 4 x 2 caracteres, IX+10 = 0x1B; sube o baja 8 pixeles cada 16 cuadros (8 con B)
 	ld (ix+010h),01bh		;ba56   ; IX+10 = 0x1B
@@ -4378,7 +4378,7 @@ aparece_la_entrada:		; en la columna de la fase (0x174 la 3, 0x164 la 6, 0xDF la
 	and a			;bf65
 	ret z			;bf66
 	ld a,(0e201h)		;bf67   ; lee la fase (0-11)
-	ld hl,(0e203h)		;bf6a   ; lee la columna del scroll (16 bits) y el byte siguiente (16 bits)
+	ld hl,(0e203h)		;bf6a   ; lee la columna del scroll (16 bits)
 	cp 003h		;bf6d   ; la fase 3
 	jr z,L_BF7A		;bf6f
 	cp 006h		;bf71   ; la 6
@@ -4450,7 +4450,7 @@ L_BFD6:
 L_BFDB:
 	ld hl,001ffh		;bfdb
 L_BFDE:
-	ld (0e325h),hl		;bfde   ; guarda la columna en la que acaba el scroll (16 bits) y el byte siguiente (16 bits)
+	ld (0e325h),hl		;bfde   ; guarda la columna en la que acaba el scroll (16 bits)
 	ld a,040h		;bfe1   ; 64 cuadros parado
 	ld (0e3d5h),a		;bfe3   ; guarda la espera con el scroll parado
 	xor a			;bfe6   ; ya no se ve

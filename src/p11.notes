@@ -1,6 +1,956 @@
 # notas del banco 11
 
 # --- A MANO: comentarios, nombres y bloques ---
+C 0xA000 los sprites desde el primero
+C 0xA003 sin nave
+C 0xA009 cayendo
+C 0xA00C intocable acabandose?
+C 0xA017 parpadea
+C 0xA01E Y
+C 0xA024 X
+C 0xA026 dibujo y color
+C 0xA02D con escudo, el segundo sprite
+C 0xA036 Y
+C 0xA039 con el pinguino, en el mismo sitio
+C 0xA03E si no, 8 pixeles delante
+C 0xA04B el segundo sprite
+C 0xA052 dibujo y color
+C 0xA056 la primera opcion
+C 0xA05C la segunda
+C 0xA05F no esta
+C 0xA063 su Y
+C 0xA06A su X, dibujo y color
+C 0xA071 4 escondidos
+C 0xA079 dos de la explosion
+C 0xA07F y otros dos
+C 0xA088 desde el sprite 4
+C 0xA08F 9 disparos, 6 sprites
+C 0xA09F los que sobran
+C 0xA0A1 escondidos
+C 0xA0AA Y = 0xE0
+C 0xA0B2 el tipo
+C 0xA0B3 el 14
+C 0xA0B7 el 6, segun su paso
+C 0xA0BB los 3-5
+C 0xA0C3 Y
+C 0xA0C6 X, dibujo y color
+C 0xA0CD uno menos
+C 0xA0D1 el 6 en el paso 0
+C 0xA0D6 6 disparos
+C 0xA0DA el fondo a 0xEC00
+C 0xA0E3 16 bytes por disparo
+C 0xA0EC libre
+C 0xA0F1 por tipo
+C 0xA115 un byte
+C 0xA11B IX+0A
+C 0xA123 la fila
+C 0xA12E un caracter
+C 0xA130 el de abajo
+C 0xA13B la primera fila
+C 0xA148 con el bit 0, otra
+C 0xA15A L = Y
+C 0xA15D H = X
+C 0xA163 el sitio
+C 0xA16A 6 disparos
+C 0xA177 16 bytes por disparo
+C 0xA180 libre
+C 0xA185 por tipo
+C 0xA1A7 su sitio
+C 0xA1AD el byte
+C 0xA1B1 el largo
+C 0xA1BA su sitio
+C 0xA1C0 la fila
+C 0xA1C4 el alto
+C 0xA1D0 un caracter
+C 0xA1D3 el de abajo
+C 0xA1E5 su sitio
+C 0xA1F2 con el bit 0, otra
+C 0xA206 9 disparos
+C 0xA210 16 bytes por disparo
+C 0xA219 libre
+C 0xA21E por tipo
+C 0xA23F su sitio
+C 0xA245 el caracter
+C 0xA24A el largo
+C 0xA256 el caracter
+C 0xA259 en fila
+C 0xA25E el alto
+C 0xA26A el caracter
+C 0xA270 en columna
+C 0xA275 el largo
+C 0xA284 el caracter - 13
+C 0xA286 la fila
+C 0xA28A con el bit 0
+C 0xA295 la fila de abajo
+C 0xA29C con el siguiente
+C 0xA2A2 el paso
+C 0xA2B0 paso 0: sin acabar
+C 0xA2B4 caracter 0, mascara 0xF0
+C 0xA2B9 el caracter
+C 0xA2BF el 0 vale 0x1F
+C 0xA2C1 los dibujos del tercio de abajo
+C 0xA2C7 del medio
+C 0xA2CD y de arriba
+C 0xA2D3 los 64 siguientes
+C 0xA2DA la vuelta entera
+C 0xA2DC al paso 1
+C 0xA2E0 mascara 0xFE
+C 0xA2E2 suena 0x38
+C 0xA2E7 paso 1: los colores
+C 0xA2EF del tercio de abajo
+C 0xA2F5 del medio
+C 0xA2FB y de arriba
+C 0xA301 los 64 siguientes
+C 0xA309 la vuelta entera: la mascara pierde un bit
+C 0xA311 sin bits: al paso 2
+C 0xA317 paso 2: la pantalla de RAM a cero
+C 0xA324 los enemigos
+C 0xA331 y su cuenta
+C 0xA33E 60 cuadros
+C 0xA343 al paso 3
+C 0xA349 paso 3: la espera
+C 0xA34E acabado
+C 0xA357 33 caracteres con el 0x1F
+C 0xA35E 7 de 0xC0 en adelante
+C 0xA365 si no, 64
+C 0xA368 x 8 + el tercio
+C 0xA370 a 0xE600
+C 0xA37C la mascara
+C 0xA385 y de vuelta
+C 0xA38B en los dibujos rota
+C 0xA391 cada byte
+C 0xA39B cada byte
+C 0xA39F la mascara rota 3 bits
+C 0xA3AB sin caja
+C 0xA3AF 1 cuadro
+C 0xA3B3 cuenta 0
+C 0xA3B7 11 pasos, o 14
+C 0xA3C5 cerca del borde derecho, nada
+C 0xA3CB cada 8 cuadros
+C 0xA3D0 suena 0x11
+C 0xA3D5 la espera
+C 0xA3D9 7 cuadros
+C 0xA3DD una fila mas
+C 0xA3E0 un paso menos
+C 0xA3E5 se acabo
+C 0xA3E9 hacia arriba o abajo
+C 0xA3EF baja 8
+C 0xA3F5 las filas de p11:A48D
+C 0xA3FD 4 caracteres
+C 0xA402 la fila de arriba
+C 0xA40C sube 8
+C 0xA412 las filas de p11:A44D
+C 0xA41F la fila de abajo
+C 0xA42A la Y
+C 0xA42E + B
+C 0xA432 la X
+C 0xA435 con scroll, 8 a la izquierda
+C 0xA43E al borde: se va
+C 0xA441 el sitio
+C 0xA447 libre
+C 0xA4D1 sin caja
+C 0xA4D5 11 pasos
+C 0xA4D9 desde la fila 0
+C 0xA4DD 6 cuadros
+C 0xA4E2 en marcha?
+C 0xA4E8 hasta X 0x80
+C 0xA4F2 la espera
+C 0xA4FA la de arriba
+C 0xA4FD y la de abajo
+C 0xA500 la fila siguiente
+C 0xA503 un paso menos
+C 0xA507 libre
+C 0xA50C 20 - la fila
+C 0xA514 su mascara
+C 0xA526 la mascara de 16 bits
+C 0xA530 16 columnas
+C 0xA533 el bit siguiente
+C 0xA536 al azar
+C 0xA53B 0x67 o 0x69
+C 0xA542 ha puesto alguno
+C 0xA544 la columna siguiente
+C 0xA549 suena 0x11
+C 0xA54E x 8: la Y
+C 0xA552 su X
+C 0xA55B la forma
+C 0xA5F0 32 pixeles atras
+C 0xA5F8 los tres sprites escondidos
+C 0xA603 8 cuadros
+C 0xA60B IX+10 = 1, IX+25 = 1
+C 0xA613 IX+2B = IX+2C = 2
+C 0xA619 el color siguiente
+C 0xA627 en los cuatro sprites
+C 0xA647 cada 2 cuadros
+C 0xA64F en el paso 0, cada cuadro
+C 0xA658 por paso
+C 0xA663 la espera
+C 0xA668 cada 2 cuadros
+C 0xA66D el dibujo siguiente
+C 0xA676 vuelta a 0xD0
+C 0xA67C 16 atras
+C 0xA684 su Y
+C 0xA68A el rumbo
+C 0xA692 suena 0x17
+C 0xA697 al paso siguiente
+C 0xA69E uno mas
+C 0xA6A2 hasta 4
+C 0xA6AA el ultimo sprite
+C 0xA6C4 uno menos
+C 0xA6C7 ninguno: se quita
+C 0xA6CA el ultimo, escondido
+C 0xA6CF el segundo sprite
+C 0xA6D2 a la ficha
+C 0xA6E7 los demas, un sitio adelante
+C 0xA6FA una mas
+C 0xA6FF una de cada cuatro, al azar
+C 0xA703 5 tramos
+C 0xA709 la nave por encima o por debajo
+C 0xA716 el tramo de la distancia
+C 0xA71F 8 bytes por ficha
+C 0xA722 en p11:A7BF
+C 0xA729 su recorrido
+C 0xA72F su dibujo
+C 0xA744 el dibujo desde 0xD0, / 4
+C 0xA74C con B = 1, de p11:A75C
+C 0xA752 a IX+28
+C 0xA756 si no, de p11:A761
+C 0xA766 el sprite que toca
+C 0xA778 su recorrido
+C 0xA77F el byte siguiente
+C 0xA791 la Y
+C 0xA798 sin pasar de 0xD0
+C 0xA79C escondido
+C 0xA7A5 el sprite que toca
+C 0xA7B5 su X
+C 0xA7B9 la siguiente, 16 a la izquierda
+C 0xA811 sin caja
+C 0xA815 1 cuadro
+C 0xA819 paso 0
+C 0xA81D la X de p11:A82A
+C 0xA82E hasta su X
+C 0xA835 la espera
+C 0xA839 24 cuadros
+C 0xA83D el paso siguiente
+C 0xA843 al cuarto, libre
+C 0xA84B 16 bytes por paso
+C 0xA855 su sitio
+C 0xA860 4 filas
+C 0xA863 de 4
+C 0xA868 la fila siguiente
+C 0xA870 suena 0x25
+C 0xA8B9 el paso
+C 0xA8D1 17 golpes
+C 0xA8D3 su ficha
+C 0xA8D9 p11:AA20
+C 0xA8E4 10 bytes
+C 0xA8E9 los golpes
+C 0xA8F4 quedan enemigos?
+C 0xA8F8 la espera
+C 0xA8FE un cuadro menos
+C 0xA90A hasta Y 0x40
+C 0xA916 cada 8 cuadros
+C 0xA91E 8 mas arriba
+C 0xA92B espera 1
+C 0xA937 el nucleo, 32 por debajo y 16 a la derecha
+C 0xA93F vencido?
+C 0xA944 la forma rota
+C 0xA949 300 cuadros
+C 0xA953 en la fase 7, 1
+C 0xA95B en la fase 7 no se entra
+C 0xA963 ha entrado?
+C 0xA969 la espera
+C 0xA973 no ha entrado: estalla
+C 0xA979 30 cuadros
+C 0xA97E sin enemigos ni su dibujo
+C 0xA984 la nave ya no esta
+C 0xA988 dos pasos mas: se deshace
+C 0xA98E la espera
+C 0xA994 sin jefe
+C 0xA99A vencido
+C 0xA9A2 hasta que acabe
+C 0xA9AD la Y + DE
+C 0xA9B4 dentro de la pantalla
+C 0xA9BB la X + C
+C 0xA9C3 fuera: Y 0xE0
+C 0xA9C8 la parte
+C 0xA9CD libre
+C 0xA9D0 90 cuadros
+C 0xA9D5 su sitio
+C 0xA9E4 la explosion
+C 0xA9E8 el 5: suena 9; los demas, 0x3B
+C 0xA9F3 la Y + A
+C 0xAA09 la X + B
+C 0xAA17 + C
+C 0xAA22 32 abajo, 16 a la derecha, 40 de ancho
+C 0xAA28 un paso de forma cada 2 golpes
+C 0xAA2E cuantas veces cabe B
+C 0xAA37 la forma
+C 0xAA3B con la vuelta, mas disparos
+C 0xAA44 el paso
+C 0xAA4E paso 0: la espera
+C 0xAA52 elige direccion
+C 0xAA5D 0x38 - nivel
+C 0xAA6C dispara
+C 0xAA6F 8 cuadros, paso 0
+C 0xAA78 se mueve
+C 0xAA7C con la vuelta, otra vez
+C 0xAA82 4 cuadros, al paso de disparar
+C 0xAA8A una de cada cuatro
+C 0xAA92 lejos de arriba?
+C 0xAA98 sube o baja hacia el centro
+C 0xAAA0 con la nave a la derecha
+C 0xAAA7 y el jefe a la izquierda, a la derecha
+C 0xAAB0 la altura de su boca (p11:AAF9)
+C 0xAAC1 la nave por encima: sube
+C 0xAAC9 si no, baja
+C 0xAACB la direccion
+C 0xAACE la cuenta
+C 0xAAD2 8-11 pasos, o 10-13 en horizontal
+C 0xAAE2 la rapidez: 0x40 + 2 x nivel
+C 0xAAEC la nave a la izquierda: 3
+C 0xAAF6 a la derecha: 4
+C 0xAAFD suma la rapidez
+C 0xAB06 sin pasar, nada
+C 0xAB07 un paso menos
+C 0xAB0F la direccion
+C 0xAB1D 4: a la derecha, hasta 0xB0
+C 0xAB2B 3: a la izquierda, desde 0x19
+C 0xAB36 2: baja
+C 0xAB41 hasta 0x80 (0x68 el jefe 2)
+C 0xAB55 1: sube
+C 0xAB62 hasta 0xF0 (0xC0 el jefe 3)
+C 0xAB70 al llegar, da la vuelta
+C 0xAB7B 6 puntos de disparo
+C 0xAB82 la Y del jefe
+C 0xAB88 + la del punto
+C 0xAB8E fuera de la pantalla, no
+C 0xAB98 la X + la del punto
+C 0xABA8 un 0x23
+C 0xABAF 4 bytes por punto
+C 0xABB5 suena 0x16
+C 0xABD2 la rapidez
+C 0xABD5 hacia la izquierda
+C 0xABDF 1 x 2
+C 0xABE7 IX+10 = 5
+C 0xABEB su dibujo: 0x72 + B
+C 0xABF4 32 x nivel
+C 0xABFF + 0x700
+C 0xAC06 como mucho 0x8FF
+C 0xAC0C la vx
+C 0xAC0F la X
+C 0xAC17 al salir, se quita
+C 0xAC21 el paso
+C 0xAC3C 34 golpes
+C 0xAC61 1 cuadro
+C 0xAC65 64
+C 0xAC69 32
+C 0xAC71 al paso 2
+C 0xAC7D el nucleo, 40 por debajo y 40 a la derecha
+C 0xAC8A 40 abajo, 48 a la derecha, 32 de ancho
+C 0xAC90 un paso de forma cada 5 golpes, desde 9
+C 0xAC99 por paso
+C 0xACB3 vuelve atras
+C 0xACB6 4 cuadros
+C 0xACC6 hasta X 8
+C 0xACD3 hasta X 0x80
+C 0xACDD vuelve al paso guardado
+C 0xACE7 en los pasos 0-2
+C 0xACEA la espera
+C 0xACEE guarda el paso
+C 0xACF4 a embestir
+C 0xACFC tres de cada cuatro
+C 0xAD00 32 cuadros
+C 0xAD04 si no, 0x40 - 2 x nivel
+C 0xAD0F dos, a 16 y luego 64 por debajo
+C 0xAD13 su X
+C 0xAD1E un 0x38
+C 0xAD2D el paso
+C 0xAD45 26 golpes
+C 0xAD5D hasta Y 0x18
+C 0xAD7D el nucleo, 56 por debajo y 24 a la derecha
+C 0xAD8A 56 abajo, 24 a la derecha, 32 de ancho
+C 0xAD90 un paso de forma cada 3 golpes
+C 0xAD96 andando?
+C 0xAD9C la espera
+C 0xADA1 elige direccion
+C 0xADA7 anda
+C 0xADAC acabado: pausa
+C 0xADB3 disparando?
+C 0xADB9 la espera
+C 0xADBD 6 rayos cada 24 (12 cada 12 con la vuelta)
+C 0xADCD la espera entre rayos
+C 0xADD1 24 en la fase 2, 12 en las demas
+C 0xADDF uno menos; al ultimo, 60 cuadros
+C 0xADE8 4 a la vez
+C 0xADEC el punto de p11:AE1F
+C 0xADF2 la Y del jefe + la del punto
+C 0xADF6 fuera, no
+C 0xADFC la X
+C 0xAE02 12 de largo en la fase 2, 6 en las demas
+C 0xAE0D 0x39, o 0x3A con la vuelta
+C 0xAE1C suena 0x19
+C 0xAE2D el paso
+C 0xAE4B 55 golpes
+C 0xAE62 hasta Y 0x20
+C 0xAE7D el nucleo, 56 por debajo y 24 a la derecha
+C 0xAE8A 56 abajo, 24 a la derecha, 24 de ancho
+C 0xAE90 un paso de forma cada 8 golpes, desde 9
+C 0xAE99 andando?
+C 0xAE9F la espera
+C 0xAEAA la espera de disparo
+C 0xAEAE 40 cuadros
+C 0xAEB2 su boca: Y + 0x30
+C 0xAEBC fuera, no
+C 0xAEC1 X - 8
+C 0xAEC9 un 0x24
+C 0xAECE suena 0x18
+C 0xAED3 anda
+C 0xAED8 su limite
+C 0xAEDF acabado: 16 cuadros
+C 0xAEEA bajando o subiendo
+C 0xAEF0 arriba: hasta 0x60
+C 0xAEF8 abajo
+C 0xAEFF lejos de arriba?
+C 0xAF0E su boca contra la nave
+C 0xAF21 4 x 1
+C 0xAF29 IX+10 = 1
+C 0xAF2D su dibujo
+C 0xAF36 jefe vencido: se va
+C 0xAF3D a la altura del jefe + 0x30
+C 0xAF47 el paso
+C 0xAF4D 8 pixeles mas de ancho
+C 0xAF55 un caracter mas
+C 0xAF58 8 a la izquierda
+C 0xAF63 al borde: 16 cuadros
+C 0xAF6B la espera
+C 0xAF75 el paso
+C 0xAF7E quedan enemigos?
+C 0xAF85 10 piezas
+C 0xAF8A espera 1
+C 0xAF97 las dos piezas
+C 0xAF9A quedan por salir?
+C 0xAF9F o en pantalla?
+C 0xAFA7 30 cuadros
+C 0xAFB4 sin jefe
+C 0xAFB8 vencido
+C 0xAFBC la espera
+C 0xAFC1 144 cuadros
+C 0xAFC6 hueco en la primera?
+C 0xAFCA o en la segunda?
+C 0xAFCF quedan por salir?
+C 0xAFD5 una menos
+C 0xAFD9 su ficha
+C 0xAFE1 arriba (0x20) o abajo (0x68)
+C 0xAFEE 23 golpes
+C 0xAFF3 10 pasos
+C 0xB008 la primera
+C 0xB00F la segunda
+C 0xB013 libre
+C 0xB018 su paso
+C 0xB01B el nucleo
+C 0xB023 la caja
+C 0xB026 rota?
+C 0xB03A la espera
+C 0xB03E la siguiente
+C 0xB041 8 a la izquierda
+C 0xB049 hasta X 0x10
+C 0xB04D cada 10 pasos
+C 0xB051 dispara
+C 0xB059 sube o baja hacia la nave
+C 0xB068 al paso 2
+C 0xB070 nivel / 2
+C 0xB088 la espera
+C 0xB08C 4 disparos
+C 0xB093 a avanzar
+C 0xB099 la espera
+C 0xB0A0 la Y
+C 0xB0A9 baja 8, o sube 8
+C 0xB0B9 al salirse por arriba o por abajo
+C 0xB0D0 libre
+C 0xB0D5 libre ya?
+C 0xB0DA 0x0030 puntos
+C 0xB0E5 24 abajo, 16 a la derecha, 24 de ancho
+C 0xB0EB un paso de forma cada 4 golpes, desde 0x17
+C 0xB0F4 4 puntos
+C 0xB109 solo en la fase 1
+C 0xB111 Z: puesto; el siguiente
+C 0xB113 C: todavia no
+C 0xB114 pasado: el siguiente
+C 0xB11F por el borde derecho
+C 0xB124 3 bytes por ficha
+C 0xB130 la columna
+C 0xB134 B
+C 0xB135 los bits 6-7: el modo
+C 0xB13B la columna: 14 bits
+C 0xB13F la compara con el scroll
+C 0xB144 gastada
+C 0xB14E 4 huecos de 8 bytes
+C 0xB153 libre?
+C 0xB160 ninguno
+C 0xB161 el modo, paso 1
+C 0xB163 8 cuadros
+C 0xB169 la X
+C 0xB16E la direccion
+C 0xB173 16 cuadros
+C 0xB176 5
+C 0xB197 4 giratorios
+C 0xB1B6 solo con scroll
+C 0xB1BB 8 a la izquierda
+C 0xB1C4 al borde
+C 0xB1C8 el paso siguiente
+C 0xB1CE hasta 4
+C 0xB1D3 libre
+C 0xB1D8 con el bit 6 no gira
+C 0xB1DD cada 8 cuadros
+C 0xB1E5 hacia un lado
+C 0xB1EF de 0 a 13
+C 0xB1F4 o hacia el otro
+C 0xB202 cada 16 cuadros
+C 0xB20A el paso siguiente
+C 0xB20E 6 pasos
+C 0xB216 su dibujo
+C 0xB221 la espera
+C 0xB225 segun el nivel
+C 0xB22B + 8 con el bit 6
+C 0xB230 como mucho 15
+C 0xB236 en p11:B2A8
+C 0xB23F la nave
+C 0xB242 cerrado (0) o abierto (2)
+C 0xB24B su boca segun el paso
+C 0xB25E la nave delante?
+C 0xB262 en el paso 1
+C 0xB26C 8 pixeles antes
+C 0xB271 la Y de la boca
+C 0xB274 muy cerca, no
+C 0xB278 lejos (128 o mas), no
+C 0xB283 un 0x34
+C 0xB28B suena 0x15
+C 0xB290 del nivel 5, siempre
+C 0xB296 la X de la nave a +-32
+C 0xB29F la Y a +-32
+C 0xB2B8 la direccion - 5
+C 0xB2C1 x 8 + 0x18
+C 0xB2C8 al otro lado
+C 0xB2D2 4 giratorios
+C 0xB2DD 8 bytes cada uno
+C 0xB2E5 el dibujo de su paso
+C 0xB2EE + el modo
+C 0xB2F7 0xF000 = el principio
+C 0xB2FB + 4 x direccion
+C 0xB303 0xF002 = la fila de la direccion
+C 0xB307 su X, fila 1 (Y 0x20)
+C 0xB30F 0xF004 = el sitio
+C 0xB312 el ancho: 5 - el modo
+C 0xB31C cerca del borde derecho, recortado
+C 0xB32F 14 filas
+C 0xB33B una fila
+C 0xB342 la fila siguiente
+C 0xB347 4 bytes por fila
+C 0xB34C a los 14, vuelta al principio
+C 0xB410 solo en la fase 5
+C 0xB419 Z: puesta; la siguiente
+C 0xB41B C: todavia no
+C 0xB41C pasada: la siguiente
+C 0xB42D por el borde derecho
+C 0xB432 la columna de la siguiente
+C 0xB43B la compara con el scroll
+C 0xB442 gastada
+C 0xB447 un hueco en 0xE580
+C 0xB44D o en 0xE590
+C 0xB452 una de 6 alturas
+C 0xB460 0x40 + 8 x azar
+C 0xB463 cerca del borde derecho, menos ancha
+C 0xB468 2 x 7
+C 0xB46D o 1 x lo que quepa
+C 0xB477 [modo][0][Y][X][ancho][ancho x 8][0][24][4]
+C 0xB497 [0][3]
+C 0xB4AF solo en la fase 5
+C 0xB4B0 la primera
+C 0xB4B7 la segunda
+C 0xB4BB libre
+C 0xB4C0 el scroll; C: se ha ido
+C 0xB4C4 su dibujo
+C 0xB4C7 tocada?
+C 0xB4CC cada 24 cuadros
+C 0xB4D4 un paso de rotura menos
+C 0xB4D8 entera otra vez
+C 0xB4E0 cada 3 cuadros
+C 0xB4E8 el dibujo siguiente
+C 0xB4EE 3 dibujos
+C 0xB4F6 solo con scroll
+C 0xB4FB 8 a la izquierda
+C 0xB505 entrando por la derecha
+C 0xB509 entera: modo 2, ancho 7
+C 0xB516 entrando: modo 1, un caracter mas
+C 0xB520 saliendo: modo 3, uno menos
+C 0xB527 sin nada: libre
+C 0xB52C x 8
+C 0xB540 la primera
+C 0xB547 la segunda
+C 0xB54B libre
+C 0xB550 su cabeza
+C 0xB553 tocada?
+C 0xB55B su sitio
+C 0xB562 la rotura del paso
+C 0xB56D 4 filas
+C 0xB572 segun el modo
+C 0xB57C el ancho
+C 0xB583 una fila
+C 0xB58B la siguiente de la pantalla
+C 0xB591 y del dibujo (7)
+C 0xB599 entrando: lo que no cabe a la izquierda
+C 0xB5A5 entera: filas de 7
+C 0xB5AF la siguiente (25 + 7)
+C 0xB5B8 desde la fila 5 (Y 0x28)
+C 0xB5C1 su paso
+C 0xB5CB x 7
+C 0xB5D0 12 filas
+C 0xB6CD las cifras
+C 0xB6D9 las letras
+C 0xB6E5 colores 0xF0
+C 0xB6F0 las cifras, tercio de arriba
+C 0xB6FC las letras
+C 0xB708 colores
+C 0xB713 tercio del medio
+C 0xB71F las letras
+C 0xB72B colores
+C 0xB736 colores de las cifras
+C 0xB741 y de las letras
+C 0xB74C las cifras desde el caracter 1
+C 0xB758 las letras de la lista
+C 0xB764 0 acaba
+C 0xB768 x 8
+C 0xB76B en p11:B81C
+C 0xB771 8 bytes
+C 0xB77F colores
+C 0xB793 la primera lista
+C 0xB79C la segunda
+C 0xB8F7 en la fase 3, otro dibujo
+C 0xB8FF IX+2B = 1, IX+2C = 7
+C 0xB907 sin velocidad propia
+C 0xB90B su Y
+C 0xB915 vx 0xFF00
+C 0xB91B arriba: hacia abajo
+C 0xB924 y otro dibujo
+C 0xB930 vy 0x0300
+C 0xB935 la cuenta siguiente
+C 0xB93E su espera (p11:B997)
+C 0xB947 por debajo (+16) o por encima (-16)
+C 0xB956 el sitio en el borde derecho
+C 0xB959 la compuerta de arriba o la de abajo
+C 0xB965 en la fase 3, otra
+C 0xB971 abierta?
+C 0xB97A dos caracteres
+C 0xB981 y dos debajo
+C 0xB983 cambia
+C 0xB9A0 abierta del todo?
+C 0xB9A7 en el borde derecho, la compuerta
+C 0xB9AF su dibujo
+C 0xB9B2 por paso
+C 0xB9C8 8
+C 0xB9CD cada 8 cuadros
+C 0xB9D3 8 a la izquierda
+C 0xB9DF hasta su X
+C 0xB9ED caja 1
+C 0xB9F1 10 cuadros
+C 0xB9F5 se mueve solo
+C 0xB9FA parpadea
+C 0xB9FD el abanico
+C 0xBA00 al pasar el centro
+C 0xBA08 vuelve
+C 0xBA11 subiendo o bajando
+C 0xBA1A ha vuelto?
+C 0xBA1E en su sitio
+C 0xBA24 quieto
+C 0xBA2E su dibujo
+C 0xBA39 sin caja
+C 0xBA57 con scroll
+C 0xBA5F 8 cuadros
+C 0xBA67 la espera
+C 0xBA6B al paso 0
+C 0xBA70 la cuenta
+C 0xBA7B a los 4, se para
+C 0xBA8D a cero, su vy otra vez
+C 0xBA96 6 direcciones
+C 0xBA9F de p11:BABB
+C 0xBAA2 rapidez 2
+C 0xBAAA desde su sitio
+C 0xBAB3 una bala
+C 0xBAC1 cada 2 cuadros
+C 0xBAC9 4, o 12 en la fase 3
+C 0xBAD4 cambia de dibujo
+C 0xBAE5 6 golpes
+C 0xBAE9 4 x 3
+C 0xBAF1 48 cuadros
+C 0xBAF5 sin caja
+C 0xBB00 el otro lado
+C 0xBB09 por paso
+C 0xBB1E la espera
+C 0xBB25 la nave a +-32 en X?
+C 0xBB30 con caja
+C 0xBB38 3 pasos
+C 0xBB3F segun la columna
+C 0xBB51 la forma siguiente
+C 0xBB58 6 cuadros
+C 0xBB63 la espera
+C 0xBB67 la forma 0x3E
+C 0xBB6C 2 pasos
+C 0xBB81 la forma siguiente
+C 0xBBA0 por arriba
+C 0xBBA9 o por abajo
+C 0xBBB1 con scroll, 8 mas cerca
+C 0xBBC2 un 0x41
+C 0xBBC7 suena 0x26
+C 0xBBCC la espera
+C 0xBBD4 3 pasos
+C 0xBBDC la espera
+C 0xBBE4 la forma - 1
+C 0xBBEB sin caja
+C 0xBBEF 32 cuadros
+C 0xBBF8 con IX+0B, libre
+C 0xBC02 la forma rota
+C 0xBC11 choca con el mapa
+C 0xBC15 1 x 1
+C 0xBC1B IX+10 = 9
+C 0xBC1F 10 cuadros
+C 0xBC24 menguando?
+C 0xBC2A hacia arriba o abajo
+C 0xBC30 ya cortada, no crece
+C 0xBC36 sube 32
+C 0xBC3E 4 caracteres mas
+C 0xBC46 32 pixeles mas de alto
+C 0xBC4E recortada
+C 0xBC51 toca el mapa?
+C 0xBC54 la espera
+C 0xBC5C cortada?
+C 0xBC62 sube o baja 32
+C 0xBC76 su sitio
+C 0xBC7C hacia abajo
+C 0xBC85 de fila en fila
+C 0xBC8F mengua 4
+C 0xBC97 sin nada, se quita
+C 0xBC9F su alto
+C 0xBCA5 hacia abajo, el principio baja
+C 0xBCB3 hacia arriba, desde su fondo
+C 0xBCC2 de fila en fila hacia arriba
+C 0xBCCC el primer caracter que no es mapa
+C 0xBCD0 sus filas
+C 0xBCD7 vacio: sigue
+C 0xBCDB mapa: corta
+C 0xBCDE una fila mas
+C 0xBCE4 sin mapa
+C 0xBCE6 cortada
+C 0xBCEB su alto hasta el mapa
+C 0xBCF7 en pixeles
+C 0xBCFF hacia arriba, su principio
+C 0xBD08 0xF000
+C 0xBD0E hacia abajo
+C 0xBD14 el final
+C 0xBD1D pasado 0xC0?
+C 0xBD23 hacia arriba: se sale por arriba?
+C 0xBD28 desde 0
+C 0xBD2C lo que se sale
+C 0xBD34 en caracteres
+C 0xBD3B menos alto
+C 0xBD43 sin nada, se quita
+C 0xBD47 con 0xE3AA, nada
+C 0xBD4C el fondo a 0xEB00
+C 0xBD4F 12 enemigos
+C 0xBD64 de caracteres?
+C 0xBD6E el 0x24 no
+C 0xBD71 los 0x39-0x3C: una fila
+C 0xBD77 en el borde derecho, no
+C 0xBD81 su sitio
+C 0xBD8A sus filas
+C 0xBD8D lo que cabe hasta el borde
+C 0xBD9B su ancho, o lo que quepa
+C 0xBDA2 una fila
+C 0xBDA8 la siguiente
+C 0xBDB3 su largo
+C 0xBDBF su sitio
+C 0xBDC8 la fila
+C 0xBDD2 desde 0xEB00
+C 0xBDD5 12 enemigos
+C 0xBDDC de caracteres?
+C 0xBDE8 el 0x24 se borra
+C 0xBDEC los 0x39-0x3C: una fila
+C 0xBDF9 su sitio
+C 0xBE17 una fila
+C 0xBE1D la siguiente
+C 0xBE28 el siguiente
+C 0xBE37 su largo
+C 0xBE49 la forma 0x2F
+C 0xBE4D 4 golpes
+C 0xBE51 2 x 2
+C 0xBE59 48 cuadros
+C 0xBE5D sin caja
+C 0xBE65 por paso
+C 0xBE72 la espera
+C 0xBE7D 2 pasos
+C 0xBE81 caja 30
+C 0xBE86 cada 3 cuadros
+C 0xBE8E la forma siguiente
+C 0xBE95 5 por soltar
+C 0xBEA1 cada 8 cuadros
+C 0xBEA9 su boca: Y - 12, X - 4
+C 0xBEB5 un 0x40
+C 0xBEBF suena 0x15
+C 0xBEC4 uno menos
+C 0xBEC8 64 cuadros
+C 0xBED4 1 cuadro
+C 0xBED8 5 por soltar
+C 0xBEDC al paso 2
+C 0xBEE6 su espera de p11:BF0B
+C 0xBEF4 la espera de disparo
+C 0xBEFA animacion
+C 0xBF02 hacia arriba
+C 0xBF10 su dibujo
+C 0xBF13 dispara
+C 0xBF16 paso 1: a la altura de la nave
+C 0xBF1D arriba del todo: a por la nave
+C 0xBF24 con el scroll
+C 0xBF2D la espera
+C 0xBF31 vx 0x0280 hacia la nave
+C 0xBF43 al paso 1
+C 0xBF47 cada 4 cuadros
+C 0xBF4F el dibujo siguiente
+C 0xBF5B 0xC4 + 4 x paso
+C 0xA044 la X
+C 0xA045 + B
+C 0xA092 cada disparo
+C 0xA098 16 bytes por disparo
+C 0xA0A2 todos sprites: nada mas
+C 0xA0AC Y = 0xE0
+C 0xA0AD al sprite siguiente
+C 0xA1C8 sin alto, nada
+C 0xA1CA su sitio
+C 0xA1D2 la fila de abajo
+C 0xA1D8 una menos
+C 0xA1E1 sin largo, nada
+C 0xA1EF la primera fila
+C 0xA1FA la de abajo
+C 0xA202 otra fila
+C 0xA29D la segunda fila
+C 0xA392 con la mascara
+C 0xA395 cuantos quedan
+C 0xA39C con la mascara
+C 0xA3A5 cuantos quedan
+C 0xA400 4 caracteres
+C 0xA405 la fila de arriba (- 36 + 4)
+C 0xA409 tantas filas como pasos
+C 0xA41D 4 caracteres
+C 0xA421 la fila de abajo (+ 28 + 4)
+C 0xA6D5 X
+C 0xA6DB dibujo
+C 0xA6E1 color
+C 0xA6F4 8 bytes: los otros dos sprites
+C 0xA717 en este tramo
+C 0xA719 el siguiente
+C 0xA9F9 + A
+C 0xA9FD IX+0A/IX+0B: la Y de la caja
+C 0xAA03 IX+0E/IX+0F
+C 0xAA10 + B
+C 0xAA11 IX+0C/IX+0D: la X de la caja
+C 0xAA18 + C
+C 0xAA19 IX+10/IX+11: el final de la caja
+C 0xAA2F cabe otra vez?
+C 0xAA34 una mas
+C 0xAADC 0-3
+C 0xAADF los pasos
+C 0xAAE8 la rapidez
+C 0xAB30 hasta 0x19
+C 0xAB3C + 8
+C 0xAB3F fuera: se queda
+C 0xAB44 el jefe 2, hasta 0x68
+C 0xAB80 el punto
+C 0xAB8B su Y
+C 0xAB8D sumada a la del jefe
+C 0xAB93 por debajo de 0xB0
+C 0xAB9C la X del punto
+C 0xAB9E por debajo de 0xE0
+C 0xABA3 B
+C 0xABF7 el nivel
+C 0xABFA x 32
+C 0xAC02 + 0x700
+C 0xAC08 como mucho 0x6FF
+C 0xACC8 al llegar, el paso siguiente
+C 0xACCA 8 a la izquierda
+C 0xACD7 8 a la derecha
+C 0xAE10 con la vuelta
+C 0xAEFB por debajo de 0xD8
+C 0xB0B2 + 8 o - 8
+C 0xB0B3 la Y
+C 0xB0BE subiendo
+C 0xB0C3 por encima: hasta 0xC0
+C 0xB0C8 bajando
+C 0xB0CD hasta 0xC0
+C 0xB154 libre?
+C 0xB157 8 bytes
+C 0xB19A libre
+C 0xB1A2 8 bytes
+C 0xB1F7 la direccion
+C 0xB1FA de 0 a 13
+C 0xB2C2 x 8
+C 0xB2C4 + 0x18
+C 0xB2D5 libre
+C 0xB356 la fila de la direccion
+C 0xB358 una fila menos
+C 0xB455 0-7
+C 0xB45B 6 alturas
+C 0xB479 0
+C 0xB47C la Y
+C 0xB481 la X
+C 0xB483 el ancho
+C 0xB485 en pixeles
+C 0xB48E 24
+C 0xB491 4
+C 0xB49A 3
+C 0xB588 la fila
+C 0xB58E la siguiente
+C 0xB594 7 en el dibujo
+C 0xB59B lo que no cabe
+C 0xB773 un byte
+C 0xB775 a la VRAM
+C 0xB94C arriba o abajo
+C 0xB954 X 0xF8
+C 0xB962 la de abajo
+C 0xB975 cerrada
+C 0xB977 abierta
+C 0xBA42 el dibujo
+C 0xBA45 arriba, + 4
+C 0xBA4E ya ha subido?
+C 0xBA73 sin cuenta, nada
+C 0xBA7E guarda la vy
+C 0xBB4D 1 cuadro
+C 0xBB54 3 veces
+C 0xBB74 cada cuadro
+C 0xBB84 IX+0C veces
+C 0xBBAF la Y de la boca
+C 0xBBB5 16
+C 0xBBB9 o 8 con scroll
+C 0xBCEE el alto
+C 0xBCF0 sin nada: C
+C 0xBCF6 en pixeles
+C 0xBD02 hacia arriba, sube
+C 0xBD5A 64 bytes
+C 0xBD96 / 8
+C 0xBD9F cabe entero?
+C 0xBDA5 la fila
+C 0xBDAB la siguiente
+C 0xBDE2 libre
+C 0xBDF2 en el borde derecho, no
+C 0xBDFC su sitio
+C 0xBDFF sus filas
+C 0xBE02 su X
+C 0xBE0B / 8: lo que cabe
+C 0xBE10 su ancho
+C 0xBE13 cabe entero?
+C 0xBE16 recortado
+C 0xBE1A la fila
+C 0xBE20 la siguiente
+C 0xBE2B 64 bytes
+C 0xBE45 la fila
+C 0xBF5C x 4
 
 # --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
 D 0xA0F4 0xA112 tabla_A0F4  15 destinos del despachador p00:4084 (call en p11:A0F1, el indice en A): A112, A112, A159, A159, A159, A159, A118, A118, A126, A118, A118, A118, A118, A159, A138; lo leen p11:A0F1 (30 bytes)
@@ -120,63 +1070,288 @@ F 0xBFFF 1
 # --- fin de los bloques de bloques.py ---
 
 # --- ANOTACIONES AUTOMATICAS (seccion que reescribe tools/anota.py; no editar a mano) ---
-C 0xA000 apunta a los atributos de los 32 sprites (Y, X, dibujo, color)
-C 0xA003 lee la forma de la nave (1 normal, 2 con escudo, 3 R.DRILL)
-C 0xA00C lee la marca de nave intocable y el byte siguiente (16 bits)
-C 0xA017 lee la cuenta de cuadros
-C 0xA01E apunta a la Y de la nave
+L 0xA000 sprites_de_la_nave la nave y sus opciones a la tabla de sprites (0xE280): sin nave ninguno; cayendo, la explosion; intocable parpadea al final; con escudo, el segundo sprite 8 pixeles delante
+L 0xA05F sprite_de_opcion la opcion HL, si esta, a la tabla de sprites; si no, escondida
+L 0xA071 cuatro_escondidos 4 sprites escondidos
+L 0xA079 explosion_a_sprites los 4 sprites de la explosion de la nave (0xE418, 0xE428)
+L 0xA082 copia_un_sprite_doble 8 bytes (dos sprites) de HL a DE
+L 0xA088 sprites_de_disparos los disparos de la nave que son sprites (tipos 3-5, 14 y el 6 en marcha) a 0xE290; los demas sprites, escondidos
+L 0xA0AA esconde_un_sprite Y = 0xE0 y el sprite siguiente
+L 0xA0B2 sprite_de_disparo el disparo HL a la tabla de sprites si es de los que lo son (C' cuenta los que quedan)
+L 0xA0D6 guarda_fondo_disparos el fondo bajo los 6 primeros disparos de caracteres, a 0xEC00
+L 0xA0EC guarda_fondo_por_tipo segun el tipo del disparo IX (p11:A0F4)
+L 0xA112 guarda_un_caracter el caracter bajo el disparo
+L 0xA118 guarda_una_fila la fila de IX+0A caracteres bajo el disparo
+L 0xA126 guarda_una_columna la columna de IX+0A caracteres bajo el disparo
+L 0xA138 guarda_dos_filas una fila de IX+0A (y otra debajo con IX+06 bit 0)
+L 0xA15A sitio_del_disparo IX+0E/IX+0F = el sitio del disparo (IX+03, IX+05) en la pantalla de RAM
+L 0xA16A repone_fondo_disparos devuelve el fondo de 0xEC00 bajo los 6 primeros disparos
+L 0xA180 repone_fondo_por_tipo segun el tipo del disparo IX (p11:A188)
+L 0xA1A6 repone_un_caracter el caracter del fondo
+L 0xA1B1 repone_una_fila la fila del fondo
+L 0xA1C4 repone_una_columna la columna del fondo
+L 0xA1DD repone_dos_filas una o dos filas del fondo
+L 0xA206 pinta_disparos los 9 disparos de la nave que son caracteres, en la pantalla de RAM (p11:A221)
+L 0xA219 pinta_por_tipo segun el tipo del disparo IX
+L 0xA23F pinta_un_caracter el caracter IX+06 en su sitio
+L 0xA24A pinta_una_fila IX+0A caracteres IX+06 en fila
+L 0xA25E pinta_una_columna IX+0A caracteres IX+06 en columna
+L 0xA275 pinta_dos_filas IX+0A caracteres IX+06 - 13 y, con el bit 0, otra fila con el siguiente
+L 0xA2A2 pantalla_se_deshace la pantalla se deshace (paso 0xE3AB): los dibujos y luego los colores van perdiendo bits; despues todo a cero, 60 cuadros y 0xE3AE = 1
+L 0xA354 deshace_tercio los caracteres 0xE3AC del tercio DE con la mascara 0xE3AD
+L 0xA357 deshace_caracteres lee los caracteres A del tercio DE (1, 7 o 64 de golpe), les aplica la mascara y los devuelve
+L 0xA38B aplica_mascara BC bytes de HL AND E (en los dibujos la mascara rota 3 bits por byte)
+L 0xA3AB clase_11_empieza la clase 11: sin caja, 11 pasos (14 con IX+0B bit 1)
+L 0xA3C5 clase_11 la clase 11: en pantalla, suena 0x11 cada 8 cuadros y cada 7 crece una fila de 4 caracteres arriba o abajo (p11:A48D, p11:A44D); al acabar sus pasos, libre
+L 0xA42A clase_11_mueve la Y + B y la X con el scroll; DE = su sitio; C si se ha salido
+L 0xA4D1 clase_12_empieza la clase 12: sin caja, 11 pasos, uno cada 6 cuadros
+L 0xA4E2 clase_12 la clase 12: al pasar de X 0x80, cada 6 cuadros llena una fila por arriba y otra por abajo (p11:A566) con caracteres 0x67/0x69 al azar; al acabar, libre
+L 0xA50C clase_12_abajo la fila 20 - IX+0E de la mascara de su forma
+L 0xA51C clase_12_arriba la fila IX+0E de la mascara de su forma
+L 0xA526 llena_fila los bits de la palabra A de la tabla HL: cada bit a 1, un caracter 0x67 o 0x69 al azar en la pantalla de RAM (0xF000); suena 0x11 si pone alguno
+L 0xA54E sitio_de_fila 0xF000 = el sitio de la fila A x 8 en su columna; HL = la tabla de su forma (p11:A566)
+L 0xA5F0 tipo_38_empieza el tipo 0x38: cuatro sprites (IX+34, IX+38, IX+3C) escondidos, 8 cuadros, con el scroll y el color que toca
+L 0xA619 tipo_38_color el color siguiente (p11:A634) en los cuatro sprites
+L 0xA644 tipo_38 el tipo 0x38: cambia de color y, cada 2 cuadros, lo de su paso (p11:A65B)
+L 0xA663 tipo_38_abre se anima (0xD0-0xE0) y, al acabar, 16 pixeles atras, su rumbo (p11:A6FA) y suena 0x17
+L 0xA69B tipo_38_suelta uno mas de sus sprites (hasta 4)
+L 0xA6AA tipo_38_avanza mientras el ultimo no llegue (IX+3D >= 9) corre la fila de sprites
+L 0xA6B4 tipo_38_corre el siguiente paso de su recorrido y la Y del sprite que toca
+L 0xA6C1 tipo_38_se_va corre la fila y suelta uno; sin ninguno, se quita
+L 0xA6CF corre_sprites el primero toma el sitio del segundo (IX+34-IX+37) y los demas avanzan uno
+L 0xA6FA tipo_38_rumbo tres de cada cuatro hacia la nave (segun su Y, p11:A73A); uno al azar; la ficha de p11:A7BF
+L 0xA744 tipo_38_paso A = el desplazamiento del dibujo A (p11:A75C con B = 1, p11:A761 si no)
+L 0xA766 tipo_38_siguiente el siguiente byte de su recorrido al sprite que toca (p11:A788)
+L 0xA78B tipo_38_y la Y del sprite que toca, sin pasar de 0xD0, y su X 16 pixeles a la izquierda
+L 0xA811 clase_13_empieza la clase 13: sin caja, 1 cuadro, y la X a la que se abre de p11:A82A
+L 0xA82E clase_13 la clase 13: al pasar su X, cada 24 cuadros el dibujo siguiente de 4 x 4 (p11:A865), 4 pasos, y suena 0x25
+L 0xA8B5 jefe_1 el jefe 1 (0xEA00): su paso 0xE341 (p11:A8C0)
+L 0xA8CD jefe_1_sale sin enemigos y acabada la espera 0xE343: su ficha (p11:A900), 17 golpes y sus caracteres
+L 0xA8DC jefe_siguiente el paso siguiente del jefe (0xE341 + 1)
+L 0xA8E1 ficha_del_jefe los 10 bytes de HL a 0xEA00, A golpes (0xEA12), 0xEA13 = 0xE0 y los caracteres de los jefes
+L 0xA8F4 espera_al_jefe NZ mientras queden enemigos o dure la espera 0xE343
+L 0xA90A jefe_1_entra el jefe 1 baja hasta Y 0x40 y luego al paso siguiente
+L 0xA915 jefe_baja cada 8 cuadros la Y del jefe (0xEA03) - 8; C al llegar a C
+L 0xA928 jefe_1_dispara los 6 disparos del jefe (p11:AB7B)
+L 0xA931 jefe_1_pelea el jefe 1 se mueve (p11:AA3B), su caja y su nucleo; vencido, p11:A93F
+L 0xA93F jefe_vencido_abre vencido (0xE345): la forma rota (0x15) y 300 cuadros (1 en la fase 7) para entrar; al paso siguiente
+L 0xA95B jefe_espera_a_la_nave mientras dura la espera, si la nave entra (0xE22B) desaparece y la pantalla se deshace; si no entra, el jefe estalla
+L 0xA98E jefe_estalla_espera al acabar la espera, el jefe se acaba (p11:A993)
+L 0xA993 jefe_acabado sin jefe (0xE340 = 0, 0xE34F = 0) y 0xE342 = 1: vencido
+L 0xA99F jefe_se_deshace la pantalla se deshace (p11:A2A2); al acabar, 0xE3AA = 0 y el jefe se acaba
+L 0xA9AD nucleo_del_jefe IX+13/IX+14 = el nucleo: la Y + DE y la X + C (Y 0xE0 si se sale)
+L 0xA9C8 jefe_estalla la parte IX libre, 90 cuadros de espera, una explosion en su sitio y suena 9 (el 5) o 0x3B
+L 0xA9F3 caja_del_jefe la caja de la parte IX: IX+0A/IX+0E = Y + A, IX+0C = X + B, IX+10 = X + B + C
+L 0xAA20 caja_del_jefe_1 la caja del jefe 1 y su forma segun los golpes
+L 0xAA2B forma_por_golpes IX+08 = C + los golpes (IX+12) / B
+L 0xAA3B jefe_1_mueve con la vuelta (0xE20A) dispara antes; el paso de su movimiento: quieto, se mueve, dispara
+L 0xAA59 jefe_dispara_antes al acabar IX+18, dispara y la espera de nuevo (0x38 - nivel)
+L 0xAA68 jefe_espera_disparo al acabar IX+18, dispara (p11:AB7B) y vuelve al paso 0
+L 0xAA78 jefe_1_anda se mueve (p11:AAFD); al acabar, al paso de disparar (4 cuadros)
+L 0xAA8A jefe_elige_rumbo una direccion al azar (tres de cada cuatro segun la nave, si no hacia ella en X)
+L 0xAA92 jefe_rumbo_segun_nave segun donde esta: hacia el centro en Y, o hacia la nave
+L 0xAACB pon_rumbo_del_jefe IX+15 = la direccion A, sus pasos (8-11 o 10-13) y la rapidez (0x40 + 2 x nivel)
+L 0xAAEC jefe_rumbo_en_x hacia la nave en X (3 o 4)
+L 0xAAFD jefe_anda suma la rapidez; cada vez que pasa, 8 pixeles en su direccion (1 arriba, 2 abajo, 3 izquierda, 4 derecha) sin salirse; C al acabar
+L 0xAB70 jefe_da_la_vuelta invierte la direccion vertical (IX+15 XOR 3)
+L 0xAB79 jefe_acaba_rumbo C
+L 0xAB7B jefe_dispara 6 disparos 0x23 desde los puntos de p11:ABBA que esten en pantalla; suena 0x16
+L 0xABD2 tipo_23_empieza el tipo 0x23: hacia la izquierda (la rapidez segun el nivel), 1 x 2, IX+10 = 5 y su dibujo
+L 0xABF4 rapidez_23 HL = 0x700 + 32 x nivel; de 0x900 en adelante, 0x6FF
+L 0xAC0C tipo_23 el tipo 0x23: se quita al salir por la izquierda
+L 0xAC1D jefe_2 el jefe 2 (0xEA00): su paso 0xE341 (p11:AC27)
+L 0xAC35 jefe_2_sale sin enemigos y acabada la espera: su ficha (p11:AC49), 34 golpes y su caja
+L 0xAC44 jefe_2_siguiente el paso siguiente
+L 0xAC53 jefe_2_entra baja hasta Y 0x40
+L 0xAC5E jefe_2_empieza su primer movimiento, esperas 64 y 32
+L 0xAC77 jefe_2_pelea se mueve, su caja y su nucleo; vencido, p11:A93F
+L 0xAC88 caja_del_jefe_2 la caja del jefe 2 y su forma segun los golpes
+L 0xAC96 jefe_2_mueve lo de su paso (p11:AC9F)
+L 0xACA9 jefe_2_elige elige direccion y al paso siguiente
+L 0xACAF jefe_2_anda se mueve; al acabar, vuelve atras
+L 0xACBB jefe_2_espera espera IX+1A
+L 0xACBF jefe_2_paso_siguiente IX+01 + 1
+L 0xACC3 jefe_2_a_la_izquierda 8 a la izquierda hasta X 8
+L 0xACD0 jefe_2_a_la_derecha 8 a la derecha hasta X 0x80; luego al paso guardado
+L 0xACE4 jefe_2_embiste cada IX+18 cuadros guarda el paso y embiste (pasos 2-4)
+L 0xAD0F jefe_2_suelta dos tipo 0x38 desde el jefe, en su Y + 16 y + 64
+L 0xAD29 jefe_4 el jefe 4 (0xEA00): su paso 0xE341 (p11:AD33)
+L 0xAD41 jefe_4_sale sin enemigos y acabada la espera: su ficha (p11:AD53), 26 golpes y su caja
+L 0xAD5D jefe_4_entra baja hasta Y 0x18
+L 0xAD68 jefe_4_empieza 0xEA18 = 1 y esperas de 1
+L 0xAD77 jefe_4_pelea se mueve y dispara, su caja y su nucleo; vencido, p11:A93F
+L 0xAD88 caja_del_jefe_4 la caja del jefe 4 y su forma segun los golpes
+L 0xAD96 jefe_4_mueve elige direccion y anda; en la pausa de disparos, al acabar IX+18 suelta 4 rayos (tipos 0x39/0x3A, p11:AE1F) y suena 0x19
+L 0xAE29 jefe_3 el jefe 3 (0xEA00): su paso 0xE341 (p11:AE33)
+L 0xAE41 jefe_3_sale sin enemigos: los caracteres de los jefes, su ficha (p11:AE58), 55 golpes y su caja
+L 0xAE53 jefe_3_siguiente el paso siguiente
+L 0xAE62 jefe_3_entra baja hasta Y 0x20
+L 0xAE6D jefe_3_empieza esperas de 1
+L 0xAE77 jefe_3_pelea se mueve y dispara, su caja y su nucleo; vencido, p11:A93F
+L 0xAE88 caja_del_jefe_3 la caja del jefe 3 y su forma segun los golpes
+L 0xAE96 jefe_3_mueve dispara y elige direccion o anda
+L 0xAEAA jefe_3_dispara cada 40 cuadros un tipo 0x24 desde su boca (Y + 0x30, X - 8) y suena 0x18
+L 0xAED3 jefe_3_anda anda; al acabar, 16 cuadros; si llega a su limite, da la vuelta
+L 0xAEE7 jefe_3_limite C si ha llegado arriba (Y < 0x60) o abajo (Y >= 0xD8 de la parte alta) segun su direccion
+L 0xAEFF jefe_3_rumbo sube o baja hacia la altura de la nave (o hacia el centro)
+L 0xAF20 tipo_24_empieza el tipo 0x24: 4 x 1 caracteres, IX+10 = 1 y su dibujo (B)
+L 0xAF36 tipo_24 el tipo 0x24: crece 8 pixeles por cuadro hacia la izquierda a la altura del jefe; al llegar al borde espera 16 y se va; con el jefe vencido, se va
+L 0xAF72 jefe_5 el jefe 5: su paso 0xE341 (p11:AF78)
+L 0xAF7E jefe_5_empieza sin enemigos: sus caracteres, 10 piezas por salir (0xE3D6) y espera 1
+L 0xAF94 jefe_5_pelea salen piezas (p11:AFBC) y se mueven (p11:B008); sin piezas por salir ni en pantalla, 30 cuadros y acabado
+L 0xAFAE jefe_5_acaba al acabar la espera, sin jefe y vencido (0xE342 = 1)
+L 0xAFBC jefe_5_pieza_nueva cada 144 cuadros, si hay hueco (0xEA00 o 0xEA20), una pieza nueva (p11:AFFE) arriba o abajo con 23 golpes
+L 0xB008 jefe_5_piezas las dos piezas: se mueven, su nucleo, su caja y, rotas, sus puntos
+L 0xB013 jefe_5_pieza la pieza IX: lo de su paso, su nucleo y su caja; rota (IX+1F), puntos y estalla
+L 0xB02E jefe_5_paso lo del paso IX+01 de la pieza (p11:B034)
+L 0xB03A pieza_avanza cada IX+02 cuadros 8 a la izquierda; cada 10 pasos dispara; al llegar a X 0x10 elige subir o bajar
+L 0xB070 espera_de_pieza IX+02 = p11:B080 segun el nivel / 2
+L 0xB088 pieza_dispara al acabar IX+16, 4 disparos (p11:B0F9) y vuelve a avanzar
+L 0xB099 pieza_sube_o_baja cada IX+02 cuadros 8 arriba o abajo; al salirse, libre
+L 0xB0D5 pieza_rota 0x0030 puntos y estalla
+L 0xB0E3 caja_de_pieza la caja de la pieza y su forma segun los golpes
+L 0xB0F1 pieza_4_disparos 4 disparos 0x23 desde los puntos de p11:B0F9
+L 0xB109 giratorios_de_la_lista en la fase 1, lo que trae cada columna (p11:B124) hasta ponerse al dia (0xE377)
+L 0xB11A giratorios_del_scroll si el scroll avanzo, lo de la columna nueva (X = 0xF8)
+L 0xB124 aparicion_de_giratorio la siguiente ficha de p11:B179 ([columna con 2 bits de modo][B]): si es su columna, un giratorio (p11:B14D)
+L 0xB14D pon_giratorio el primer hueco de 0xEA20 (4 de 8 bytes): [modo y paso 1][8][0][X][direccion B][0][16][5]
+L 0xB193 mueve_giratorios en la fase 1, los 4 giratorios de 0xEA20: el scroll, el giro, la animacion y el disparo
+L 0xB1AA mueve_giratorio el giratorio IX: el scroll, el giro, la animacion y el disparo
+L 0xB1B6 giratorio_con_el_scroll 8 pixeles a la izquierda con el scroll; al llegar al borde, el paso siguiente (hasta 4) y libre
+L 0xB1D8 giratorio_gira sin el bit 6, cada 8 cuadros la direccion (IX+04, 0-13) sube o baja segun el bit 7
+L 0xB202 giratorio_anima cada 16 cuadros el paso siguiente (6) y su dibujo (p11:B35C)
+L 0xB221 giratorio_dispara al acabar la espera (p11:B2A8 segun el nivel), si esta abierto y la nave cae por delante, un 0x34 desde su boca y suena 0x15
+L 0xB290 nave_cerca por debajo del nivel 5, C si la nave esta a menos de 32 pixeles de D/E (entonces no dispara)
+L 0xB2B8 boca_del_giratorio E = la Y de la boca segun la direccion (de 0x18 a 0x78)
+L 0xB2CE pinta_giratorios en la fase 1, cada giratorio en la pantalla de RAM (p11:B2E5)
+L 0xB2E5 pinta_giratorio 14 filas de su dibujo (p11:B362 por paso y direccion) desde la fila 1 en su X, recortado por la derecha
+L 0xB410 piezas_de_fase_5 en la fase 5, lo que trae cada columna (p11:B432) hasta ponerse al dia (0xE36B)
+L 0xB422 piezas_de_fase_5_scroll en la fase 5, si el scroll avanzo, lo de la columna nueva
+L 0xB432 aparicion_de_pieza_5 en las columnas de p11:B49E, una pieza en 0xE580 o 0xE590 (si hay hueco) a una Y al azar (0x40-0x68)
+L 0xB4AA mueve_piezas_de_fase_5 en la fase 5, las dos piezas de 0xE580 y 0xE590
+L 0xB4BB mueve_pieza_5 el scroll, su animacion y, tocada, la vuelta a entera tras cada espera
+L 0xB4E0 anima_pieza_5 cada 3 cuadros el dibujo siguiente (IX+0C, 3)
+L 0xB4F6 pieza_5_con_el_scroll con el scroll, 8 a la izquierda: entra por la derecha creciendo (modo 1), entera (2) o sale por la izquierda menguando (3); libre al salir (C)
+L 0xB529 ancho_de_pieza_5 IX+05 = IX+04 x 8 (NZ)
+L 0xB53A pinta_piezas_de_fase_5 en la fase 5, las dos piezas de 0xE580/0xE590 en la pantalla de RAM
+L 0xB54B pinta_pieza_5 su cabeza (p11:B5B8) y, tocada, su rotura (p11:B5D5 por paso): 4 filas de su ancho, recortadas segun entra o sale
+L 0xB56F pinta_filas_7 A filas de un dibujo de 7 de ancho en DE: enteras, o recortadas por la izquierda o por la derecha segun el modo
+L 0xB5B8 cabeza_de_pieza_5 el dibujo de su paso (p11:B66B, 7 x 12) desde la fila 5
+L 0xB6CD fuente_tres_tercios las letras y cifras (p11:B7B4 desde el caracter 0x10 y p11:B81C desde el 0x20) en los tres tercios, con colores 0xF0
+L 0xB6F0 fuente_dos_tercios las letras y cifras en los tercios de arriba y del medio
+L 0xB736 fuente_del_marcador colores 0xF0 y las cifras del tercio de abajo (p11:B7B4 desde el caracter 1) y las letras de p11:B77B desde el 0x12
+L 0xB75E letras_por_lista en la VRAM HL, los dibujos de las letras de la lista DE (indices en p11:B81C, 0 acaba)
+L 0xB77F letras_de_you_captured colores 0xF0 y las letras de p11:B7A4 en el caracter 0xBB y de p11:B7B1 en el 0x9B del tercio de abajo
+L 0xB8F4 tipo_02_empieza el tipo 2: sale de su compuerta del borde derecho (arriba o abajo) hacia el centro, con su cuenta (p11:B997)
+L 0xB947 compuerta_del_tipo_2 los 2 x 2 caracteres de su compuerta (p11:B987/B98B, + 8 en la fase 3) en el borde derecho, abierta o cerrada
+L 0xB9A0 tipo_02 el tipo 2: su compuerta y lo de su paso (p11:B9B8)
+L 0xB9C4 tipo_02_espera_8 IX+2C - 1; a cero, 8 otra vez
+L 0xB9CD tipo_02_avanza cada 8 cuadros, 8 pixeles a la izquierda
+L 0xB9DC tipo_02_hasta_su_x avanza hasta la X de IX+2D
+L 0xB9EA tipo_02_sale se puede tocar (caja 1), 10 cuadros y se mueve solo
+L 0xB9FA tipo_02_dispara parpadea, a los 4 cuadros se para y suelta 6 balas en abanico (p11:BABB); al pasar el centro, vuelve
+L 0xBA0E tipo_02_vuelve parpadea y vuelve a su altura (IX+25): entonces se cierra en su compuerta
+L 0xBA54 tipo_02_con_el_scroll con el scroll, al paso siguiente con 8 cuadros
+L 0xBA64 tipo_02_espera avanza y, al acabar la espera, al paso 0
+L 0xBA70 tipo_02_abanico a los 4 cuadros se para (guarda su vy); a cero, recupera la vy y 6 balas en abanico
+L 0xBAC1 tipo_02_parpadea cada 2 cuadros cambia de dibujo (4, o 12 en la fase 3)
+L 0xBADC clase_16_empieza la clase 16: la forma 0x3A (+ 7 con IX+0B bit 0), 6 golpes, 4 x 3, 48 cuadros y sin caja
+L 0xBAFA forma_por_lado IX+07 = A (+ 7 con IX+0B bit 0)
+L 0xBB06 clase_16 la clase 16: lo de su paso (p11:BB0C)
+L 0xBB1E clase_16_espera con la nave a menos de 32 pixeles en X: con caja y a abrirse
+L 0xBB49 clase_16_abre cada cuadro la forma + 1 (3 veces); luego 6 cuadros
+L 0xBB60 clase_16_tiembla alterna dos formas; al acabar, la 0x3E y 2 pasos
+L 0xBB74 forma_alterna la forma 0x3D o 0x3E segun el cuadro
+L 0xBB81 clase_16_forma_mas la forma + 1, IX+0C veces
+L 0xBB8C clase_16_forma_3d la forma 0x3D
+L 0xBB95 clase_16_suelta un 0x41 por su boca y 6 cuadros
+L 0xBBA0 boca_de_clase_16 un tipo 0x41 por arriba (-8) o por abajo (+24), 16 (8 con scroll) a la derecha; suena 0x26
+L 0xBBCC clase_16_cierra_espera al acabar la espera, 3 pasos de cerrar
+L 0xBBDC clase_16_cierra cada cuadro la forma - 1; cerrada, sin caja y 32 cuadros
+L 0xBBF8 clase_16_rota sin IX+0B, sin caja y la forma 0x33 + IX+0F; con el, libre
+L 0xBC10 tipo_41_empieza el tipo 0x41: 1 x 1, IX+10 = 9, 10 cuadros
+L 0xBC24 tipo_41 el tipo 0x41: una columna que crece 4 caracteres por cuadro hacia arriba o abajo hasta tocar el mapa y luego mengua
+L 0xBC76 tipo_41_toca C si la columna toca el mapa (entonces se quita)
+L 0xBCCC columna_toca_mapa recorre las IX+13 filas de la columna en HL (de DE en DE): al tocar mapa, la corta ahi (IX+2F = 1)
+L 0xBD08 columna_recorta recorta la columna si se sale por arriba o por abajo de la pantalla
+L 0xBD47 guarda_fondo_de_enemigos sin 0xE3AA, el fondo bajo cada enemigo de caracteres (no el 0x24) a 0xEB00
+L 0xBD64 guarda_fondo_de_uno el fondo de IX+13 filas x IX+14 bajo el enemigo IX (una fila los 0x39-0x3C), con su sitio en IX+11
+L 0xBDCD repone_fondo_de_enemigos sin 0xE3AA, devuelve el fondo de 0xEB00 bajo cada enemigo de caracteres; el 0x24 se borra (p00:4BC7)
+L 0xBE49 clase_14_empieza la clase 14: la forma 0x2F, 4 golpes, 2 x 2, 48 cuadros y sin caja
+L 0xBE62 clase_14 la clase 14: lo de su paso (p11:BE68)
+L 0xBE72 clase_14_espera al acabar la espera, a abrirse (2 pasos) con caja 30
+L 0xBE86 clase_14_abre cada 3 cuadros la forma + 1; abierta, 5 por soltar
+L 0xBEA1 clase_14_suelta cada 8 cuadros un 0x40 por su boca (suena 0x15); al acabar, 64 cuadros
+L 0xBED0 clase_14_otra_vez al acabar la espera, 5 por soltar otra vez
+L 0xBEE1 clase_14_rota la forma 0x32
+L 0xBEE6 tipo_40_empieza el tipo 0x40: su espera (p11:BF0B por B), su espera de disparo y hacia arriba (vy 0xFD00)
+L 0xBF10 tipo_40 el tipo 0x40: se anima y dispara; sube hasta Y 8 (o acaba su espera) y luego va hacia la nave en X y se acerca a su altura
+L 0xBF47 tipo_40_dibujo cada 4 cuadros uno de 3 dibujos (0xC4, 0xC8, 0xCC)
 C 0xA02A apunta a la Y de la nave
-C 0xA02D lee la forma de la nave (1 normal, 2 con escudo, 3 R.DRILL)
-C 0xA039 lee lo que hay en la otra ranura (bit 3 Galious, 2 Penguin Adventure, 1 los 6 bytes de 0x7FFA, 0 Q*bert)
-C 0xA056 apunta a la primera opcion (16 bytes)
-C 0xA05C apunta a la segunda opcion (16 bytes)
+C 0xA059 sprite_de_opcion: la opcion HL, si esta, a la tabla de sprites; si no, escondida
+C 0xA073 esconde_un_sprite: Y = 0xE0 y el sprite siguiente
+C 0xA07C copia_un_sprite_doble: 8 bytes (dos sprites) de HL a DE
 C 0xA08B apunta a los 9 disparos de la nave (16 bytes: tipo, Y, X, largo...)
-C 0xA0D6 apunta a los 9 disparos de la nave (16 bytes: tipo, Y, X, largo...)
-C 0xA0F1 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
-C 0xA13B guarda variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo) o un puntero y el byte siguiente (16 bits)
+C 0xA094 sprite_de_disparo: el disparo HL a la tabla de sprites si es de los que lo son (C' cuenta los que quedan)
+C 0xA0A4 esconde_un_sprite: Y = 0xE0 y el sprite siguiente
+C 0xA0E0 guarda_fondo_por_tipo: segun el tipo del disparo IX (p11:A0F4)
+C 0xA112 sitio_del_disparo: IX+0E/IX+0F = el sitio del disparo (IX+03, IX+05) en la pantalla de RAM
+C 0xA118 sitio_del_disparo: IX+0E/IX+0F = el sitio del disparo (IX+03, IX+05) en la pantalla de RAM
+C 0xA126 sitio_del_disparo: IX+0E/IX+0F = el sitio del disparo (IX+03, IX+05) en la pantalla de RAM
+C 0xA138 sitio_del_disparo: IX+0E/IX+0F = el sitio del disparo (IX+03, IX+05) en la pantalla de RAM
 C 0xA14D lee variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo) o un puntero y el byte siguiente (16 bits)
 C 0xA160 sitio_en_pantalla: HL = 0xED00 + el caracter de la pantalla de RAM bajo L (Y) y H (X)
-C 0xA16A apunta a los 9 disparos de la nave (16 bytes: tipo, Y, X, largo...)
-C 0xA185 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
+C 0xA16E apunta a el fondo bajo los disparos de caracteres
+C 0xA174 repone_fondo_por_tipo: segun el tipo del disparo IX (p11:A188)
 C 0xA1EB guarda variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo) o un puntero y el byte siguiente (16 bits)
 C 0xA1F7 lee variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo) o un puntero y el byte siguiente (16 bits)
-C 0xA206 apunta a los 9 disparos de la nave (16 bytes: tipo, Y, X, largo...)
-C 0xA21E despacha: salta a la palabra A de la tabla que va pegada detras del `call`
+C 0xA20D pinta_por_tipo: segun el tipo del disparo IX
 C 0xA2B1 guarda la marca de fin de p11:A2A2
+C 0xA2C4 deshace_caracteres: lee los caracteres A del tercio DE (1, 7 o 64 de golpe), les aplica la mascara y los devuelve
+C 0xA2CA deshace_tercio: los caracteres 0xE3AC del tercio DE con la mascara 0xE3AD
+C 0xA2D0 deshace_tercio: los caracteres 0xE3AC del tercio DE con la mascara 0xE3AD
 C 0xA2E4 sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
-C 0xA317 apunta a la pantalla en RAM: la tabla de nombres de 22 filas de 32
-C 0xA324 apunta a las fichas de 64 bytes (0xE600-0xE8FF), y tambien el bufer de graficos al cargar
-C 0xA331 apunta a el tipo del enemigo que se crea
+C 0xA2F2 deshace_caracteres: lee los caracteres A del tercio DE (1, 7 o 64 de golpe), les aplica la mascara y los devuelve
+C 0xA2F8 deshace_tercio: los caracteres 0xE3AC del tercio DE con la mascara 0xE3AD
+C 0xA2FE deshace_tercio: los caracteres 0xE3AC del tercio DE con la mascara 0xE3AD
+C 0xA313 guarda el paso de la pantalla que se deshace
 C 0xA334 apunta a el dato C del enemigo que se crea
 C 0xA340 guarda la espera del suceso
-C 0xA349 apunta a la espera del suceso
+C 0xA345 guarda el paso de la pantalla que se deshace
 C 0xA350 guarda la marca de fin de p11:A2A2
-C 0xA370 apunta a las fichas de 64 bytes (0xE600-0xE8FF), y tambien el bufer de graficos al cargar
+C 0xA354 lee el caracter que se deshace
 C 0xA379 apunta a las fichas de 64 bytes (0xE600-0xE8FF), y tambien el bufer de graficos al cargar
-C 0xA385 apunta a las fichas de 64 bytes (0xE600-0xE8FF), y tambien el bufer de graficos al cargar
+C 0xA380 aplica_mascara: BC bytes de HL AND E (en los dibujos la mascara rota 3 bits por byte)
 C 0xA388 copia_a_vram: copia BC bytes de DE a la VRAM HL (LDIRVM)
-C 0xA3CB lee la cuenta de cuadros
 C 0xA3D2 sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
-C 0xA435 lee la marca de scroll hecho en este cuadro
-C 0xA441 sitio_en_pantalla: HL = 0xED00 + el caracter de la pantalla de RAM bajo L (Y) y H (X)
-C 0xA526 hl_mas_a: HL = HL + A
+C 0xA3F1 clase_11_mueve: la Y + B y la X con el scroll; DE = su sitio; C si se ha salido
+C 0xA40E clase_11_mueve: la Y + B y la X con el scroll; DE = su sitio; C si se ha salido
+C 0xA511 sitio_de_fila: 0xF000 = el sitio de la fila A x 8 en su columna; HL = la tabla de su forma (p11:A566)
+C 0xA51F sitio_de_fila: 0xF000 = el sitio de la fila A x 8 en su columna; HL = la tabla de su forma (p11:A566)
 C 0xA52C lee variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo) o un puntero y el byte siguiente (16 bits)
 C 0xA54B sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
 C 0xA555 sitio_en_pantalla: HL = 0xED00 + el caracter de la pantalla de RAM bajo L (Y) y H (X)
 C 0xA558 guarda variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo) o un puntero y el byte siguiente (16 bits)
 C 0xA561 palabra_a_de: DE = la palabra A de la tabla DE (HL apunta a su byte alto)
+C 0xA608 guarda la cuenta de rumbos del tipo 0x38
 C 0xA624 byte_a: A = el byte A de la tabla HL
-C 0xA658 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
+C 0xA644 tipo_38_color: el color siguiente (p11:A634) en los cuatro sprites
+C 0xA68F tipo_38_paso: A = el desplazamiento del dibujo A (p11:A75C con B = 1, p11:A761 si no)
 C 0xA694 sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
-C 0xA6C7 quita_enemigo: quita el enemigo IX: uno menos (0xE352), devuelve sus sprites (0xE355), 0xE36D si es 0x2A, y descuenta su grupo (IX+16, IX+17, p02:89A8)
+C 0xA69B tipo_38_corre: el siguiente paso de su recorrido y la Y del sprite que toca
+C 0xA6B1 corre_sprites: el primero toma el sitio del segundo (IX+34-IX+37) y los demas avanzan uno
+C 0xA6B4 tipo_38_siguiente: el siguiente byte de su recorrido al sprite que toca (p11:A788)
+C 0xA6B8 tipo_38_y: la Y del sprite que toca, sin pasar de 0xD0, y su X 16 pixeles a la izquierda
+C 0xA6BE tipo_38_paso: A = el desplazamiento del dibujo A (p11:A75C con B = 1, p11:A761 si no)
+C 0xA6C1 corre_sprites: el primero toma el sitio del segundo (IX+34-IX+37) y los demas avanzan uno
 C 0xA6EC de_mas_a: DE = DE + A
-C 0xA709 lee la Y de la nave
 C 0xA725 byte_a: A = el byte A de la tabla HL
 C 0xA733 azar_rapido: A = R rotado XOR la cuenta de cuadros
 C 0xA74F byte_a: A = el byte A de la tabla HL
 C 0xA759 byte_a: A = el byte A de la tabla HL
 C 0xA76D byte_a: A = el byte A de la tabla HL
 C 0xA775 de_mas_a: DE = DE + A
+C 0xA78D tipo_38_paso: A = el desplazamiento del dibujo A (p11:A75C con B = 1, p11:A761 si no)
 C 0xA7AC de_mas_a: DE = DE + A
 C 0xA7B0 hl_mas_a: HL = HL + A
 C 0xA823 byte_a: A = el byte A de la tabla HL
@@ -185,156 +1360,189 @@ C 0xA85B sitio_en_pantalla: HL = 0xED00 + el caracter de la pantalla de RAM bajo
 C 0xA86A de_mas_a: DE = DE + A
 C 0xA872 sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
 C 0xA8B5 apunta a la ficha del jefe
-C 0xA8B9 lee el estado del jefe
 C 0xA8BC despacha: salta a la palabra A de la tabla que va pegada detras del `call`
+C 0xA8CD espera_al_jefe: NZ mientras queden enemigos o dure la espera 0xE343
+C 0xA8D6 ficha_del_jefe: los 10 bytes de HL a 0xEA00, A golpes (0xEA12), 0xEA13 = 0xE0 y los caracteres de los jefes
 C 0xA8DC apunta a el estado del jefe
 C 0xA8E1 apunta a la ficha del jefe
-C 0xA8E9 guarda los golpes que le quedan al nucleo de la fase 0
+C 0xA8EE guarda 0xE0 al salir el jefe
 C 0xA8F1 caracteres_de_jefe: con los bancos 13-14-15, los caracteres de los jefes 1-4 (p00:556F, copias p00:559A) y los sprites de p09:BF6D
-C 0xA8F4 queda_alguien: A distinto de 0 si queda ocupada alguna de las 12 fichas de 0xE600 (64 bytes) o de las 10 de 0xE900 (16 bytes)
-C 0xA8F8 apunta a dato del jefe (8 al salir)
-C 0xA93F lee la marca de nucleo destruido
+C 0xA90C jefe_baja: cada 8 cuadros la Y del jefe (0xEA03) - 8; C al llegar a C
+C 0xA90F jefe_siguiente: el paso siguiente del jefe (0xE341 + 1)
+C 0xA912 caja_del_jefe_1: la caja del jefe 1 y su forma segun los golpes
+C 0xA923 guarda la Y del jefe (16 bits)
+C 0xA928 jefe_dispara: 6 disparos 0x23 desde los puntos de p11:ABBA que esten en pantalla; suena 0x16
+C 0xA931 jefe_1_mueve: con la vuelta (0xE20A) dispara antes; el paso de su movimiento: quieto, se mueve, dispara
+C 0xA934 caja_del_jefe_1: la caja del jefe 1 y su forma segun los golpes
+C 0xA93C nucleo_del_jefe: IX+13/IX+14 = el nucleo: la Y + DE y la X + C (Y 0xE0 si se sale)
+C 0xA946 guarda la forma del jefe
 C 0xA94C lee la fase (0-11)
-C 0xA956 guarda dato del jefe (8 al salir) y el byte siguiente (16 bits)
-C 0xA95B lee la fase (0-11)
+C 0xA956 guarda la espera del jefe (16 bits)
 C 0xA960 nave_entra_al_jefe: si la nave esta junto a la entrada del jefe (0xEA0E, 0xEA10), 0xE22B = 1: al interior
-C 0xA963 lee la marca de jefe vencido: al interior
-C 0xA969 lee dato del jefe (8 al salir) y el byte siguiente (16 bits)
-C 0xA96D guarda dato del jefe (8 al salir) y el byte siguiente (16 bits)
-C 0xA97B guarda dato del jefe (8 al salir)
+C 0xA96D guarda la espera del jefe (16 bits)
+C 0xA976 jefe_siguiente: el paso siguiente del jefe (0xE341 + 1)
+C 0xA97B guarda la espera del jefe (16 bits)
 C 0xA981 guarda la marca de 0xE3AA: sin enemigos ni su dibujo y el byte siguiente (16 bits)
 C 0xA985 guarda la forma de la nave (1 normal, 2 con escudo, 3 R.DRILL)
-C 0xA988 apunta a el estado del jefe
-C 0xA98E apunta a dato del jefe (8 al salir)
-C 0xA994 guarda el tipo de jefe (1-5; 0 sin jefe)
 C 0xA997 guarda la marca de jefe o suceso acabado
 C 0xA99B guarda la marca de jefe vencido
-C 0xA9A2 lee la marca de fin de p11:A2A2
+C 0xA99F pantalla_se_deshace: la pantalla se deshace (paso 0xE3AB): los dibujos y luego los colores van perdiendo bits; despues todo a cero, 60 cuadros y 0xE3AE = 1
 C 0xA9A8 guarda la marca de 0xE3AA: sin enemigos ni su dibujo
-C 0xA9D2 guarda dato del jefe (8 al salir)
-C 0xA9E4 crea_explosion: una explosion de 4x4 caracteres en D (X), E (Y), si esta en pantalla y hay hueco en 0xEA40
+C 0xA9D2 guarda la espera del jefe (16 bits)
 C 0xA9F0 sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
-C 0xAA3B lee la vuelta (bit 0: las fases bajan)
-C 0xAA5D lee el nivel de dificultad
-C 0xAA7C lee la vuelta (bit 0: las fases bajan)
-C 0xAAA0 lee la X de la nave
-C 0xAAB0 lee el tipo de jefe (1-5; 0 sin jefe)
+C 0xAA25 caja_del_jefe: la caja de la parte IX: IX+0A/IX+0E = Y + A, IX+0C = X + B, IX+10 = X + B + C
+C 0xAA41 jefe_dispara_antes: al acabar IX+18, dispara y la espera de nuevo (0x38 - nivel)
+C 0xAA4B jefe_espera_disparo: al acabar IX+18, dispara (p11:AB7B) y vuelve al paso 0
+C 0xAA59 jefe_espera_disparo: al acabar IX+18, dispara (p11:AB7B) y vuelve al paso 0
+C 0xAA9A pon_rumbo_del_jefe: IX+15 = la direccion A, sus pasos (8-11 o 10-13) y la rapidez (0x40 + 2 x nivel)
 C 0xAAB7 hl_mas_a: HL = HL + A
-C 0xAAC1 apunta a la Y de la nave
-C 0xAAE2 lee el nivel de dificultad
-C 0xAAEC lee la X de la nave
 C 0xAB4A lee el tipo de jefe (1-5; 0 sin jefe)
-C 0xAB62 lee el tipo de jefe (1-5; 0 sin jefe)
+C 0xAB50 guarda la Y del jefe (16 bits)
+C 0xAB5C guarda la Y del jefe (16 bits)
 C 0xABAA crea_enemigo_ix: crea_enemigo conservando IX
 C 0xABB7 sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
-C 0xABD5 menos_hl: HL = - HL
 C 0xABDC pon_vx_y_vy: IX+09/IX+0A = DE y IX+07/IX+08 = HL
-C 0xABF4 lee el nivel de dificultad
-C 0xAC0C lee_vx: DE = IX+09/IX+0A
 C 0xAC1A quita_enemigo: quita el enemigo IX: uno menos (0xE352), devuelve sus sprites (0xE355), 0xE36D si es 0x2A, y descuenta su grupo (IX+16, IX+17, p02:89A8)
 C 0xAC1D apunta a la ficha del jefe
-C 0xAC21 lee el estado del jefe
 C 0xAC24 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
+C 0xAC35 espera_al_jefe: NZ mientras queden enemigos o dure la espera 0xE343
+C 0xAC3E ficha_del_jefe: los 10 bytes de HL a 0xEA00, A golpes (0xEA12), 0xEA13 = 0xE0 y los caracteres de los jefes
+C 0xAC41 caja_del_jefe_2: la caja del jefe 2 y su forma segun los golpes
 C 0xAC44 apunta a el estado del jefe
+C 0xAC55 jefe_baja: cada 8 cuadros la Y del jefe (0xEA03) - 8; C al llegar a C
+C 0xAC58 jefe_2_siguiente: el paso siguiente
+C 0xAC5B caja_del_jefe_2: la caja del jefe 2 y su forma segun los golpes
+C 0xAC5E jefe_2_suelta: dos tipo 0x38 desde el jefe, en su Y + 16 y + 64
+C 0xAC77 jefe_2_mueve: lo de su paso (p11:AC9F)
+C 0xAC7A caja_del_jefe_2: la caja del jefe 2 y su forma segun los golpes
+C 0xAC82 nucleo_del_jefe: IX+13/IX+14 = el nucleo: la Y + DE y la X + C (Y 0xE0 si se sale)
+C 0xAC85 jefe_vencido_abre: vencido (0xE345): la forma rota (0x15) y 300 cuadros (1 en la fase 7) para entrar; al paso siguiente
+C 0xAC8D caja_del_jefe: la caja de la parte IX: IX+0A/IX+0E = Y + A, IX+0C = X + B, IX+10 = X + B + C
+C 0xAC93 forma_por_golpes: IX+08 = C + los golpes (IX+12) / B
+C 0xAC96 jefe_2_embiste: cada IX+18 cuadros guarda el paso y embiste (pasos 2-4)
 C 0xAC9C despacha: salta a la palabra A de la tabla que va pegada detras del `call`
-C 0xAD04 lee el nivel de dificultad
+C 0xACAC jefe_rumbo_segun_nave: segun donde esta: hacia el centro en Y, o hacia la nave
+C 0xACAF jefe_anda: suma la rapidez; cada vez que pasa, 8 pixeles en su direccion (1 arriba, 2 abajo, 3 izquierda, 4 derecha) sin salirse; C al acabar
 C 0xAD20 crea_enemigo_ix: crea_enemigo conservando IX
 C 0xAD29 apunta a la ficha del jefe
-C 0xAD2D lee el estado del jefe
 C 0xAD30 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
+C 0xAD41 espera_al_jefe: NZ mientras queden enemigos o dure la espera 0xE343
+C 0xAD4A ficha_del_jefe: los 10 bytes de HL a 0xEA00, A golpes (0xEA12), 0xEA13 = 0xE0 y los caracteres de los jefes
+C 0xAD4D caja_del_jefe_4: la caja del jefe 4 y su forma segun los golpes
+C 0xAD50 jefe_siguiente: el paso siguiente del jefe (0xE341 + 1)
+C 0xAD5F jefe_baja: cada 8 cuadros la Y del jefe (0xEA03) - 8; C al llegar a C
+C 0xAD62 jefe_siguiente: el paso siguiente del jefe (0xE341 + 1)
+C 0xAD65 caja_del_jefe_4: la caja del jefe 4 y su forma segun los golpes
+C 0xAD6B guarda dato del jefe 4 y el byte siguiente (16 bits)
+C 0xAD74 jefe_siguiente: el paso siguiente del jefe (0xE341 + 1)
+C 0xAD77 jefe_4_mueve: elige direccion y anda; en la pausa de disparos, al acabar IX+18 suelta 4 rayos (tipos 0x39/0x3A, p11:AE1F) y suena 0x19
+C 0xAD7A caja_del_jefe_4: la caja del jefe 4 y su forma segun los golpes
+C 0xAD82 nucleo_del_jefe: IX+13/IX+14 = el nucleo: la Y + DE y la X + C (Y 0xE0 si se sale)
+C 0xAD85 jefe_vencido_abre: vencido (0xE345): la forma rota (0x15) y 300 cuadros (1 en la fase 7) para entrar; al paso siguiente
+C 0xAD8D caja_del_jefe: la caja de la parte IX: IX+0A/IX+0E = Y + A, IX+0C = X + B, IX+10 = X + B + C
+C 0xAD93 forma_por_golpes: IX+08 = C + los golpes (IX+12) / B
+C 0xADA4 jefe_rumbo_segun_nave: segun donde esta: hacia el centro en Y, o hacia la nave
 C 0xADC0 lee la vuelta (bit 0: las fases bajan)
-C 0xADD1 lee la fase (0-11)
+C 0xADC9 guarda dato del jefe 4 y el byte siguiente (16 bits)
 C 0xADEF palabra_a: DE = la palabra A de la tabla HL (HL apunta a su byte alto)
 C 0xAE04 lee la fase (0-11)
-C 0xAE0D lee la vuelta (bit 0: las fases bajan)
 C 0xAE16 crea_enemigo_ix: crea_enemigo conservando IX
 C 0xAE1E sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
 C 0xAE29 apunta a la ficha del jefe
-C 0xAE2D lee el estado del jefe
 C 0xAE30 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
+C 0xAE41 espera_al_jefe: NZ mientras queden enemigos o dure la espera 0xE343
 C 0xAE45 caracteres_de_jefe: con los bancos 13-14-15, los caracteres de los jefes 1-4 (p00:556F, copias p00:559A) y los sprites de p09:BF6D
+C 0xAE4D ficha_del_jefe: los 10 bytes de HL a 0xEA00, A golpes (0xEA12), 0xEA13 = 0xE0 y los caracteres de los jefes
+C 0xAE50 caja_del_jefe_3: la caja del jefe 3 y su forma segun los golpes
 C 0xAE53 apunta a el estado del jefe
+C 0xAE64 jefe_baja: cada 8 cuadros la Y del jefe (0xEA03) - 8; C al llegar a C
+C 0xAE67 jefe_3_siguiente: el paso siguiente
+C 0xAE6A caja_del_jefe_3: la caja del jefe 3 y su forma segun los golpes
+C 0xAE77 jefe_3_mueve: dispara y elige direccion o anda
+C 0xAE7A caja_del_jefe_3: la caja del jefe 3 y su forma segun los golpes
+C 0xAE82 nucleo_del_jefe: IX+13/IX+14 = el nucleo: la Y + DE y la X + C (Y 0xE0 si se sale)
+C 0xAE85 jefe_vencido_abre: vencido (0xE345): la forma rota (0x15) y 300 cuadros (1 en la fase 7) para entrar; al paso siguiente
+C 0xAE8D caja_del_jefe: la caja de la parte IX: IX+0A/IX+0E = Y + A, IX+0C = X + B, IX+10 = X + B + C
+C 0xAE93 forma_por_golpes: IX+08 = C + los golpes (IX+12) / B
+C 0xAE96 jefe_3_dispara: cada 40 cuadros un tipo 0x24 desde su boca (Y + 0x30, X - 8) y suena 0x18
+C 0xAEA3 jefe_3_rumbo: sube o baja hacia la altura de la nave (o hacia el centro)
 C 0xAECB crea_enemigo_ix: crea_enemigo conservando IX
 C 0xAED0 sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
+C 0xAEDB jefe_da_la_vuelta: invierte la direccion vertical (IX+15 XOR 3)
+C 0xAEE7 lee la Y del jefe (16 bits)
+C 0xAF07 pon_rumbo_del_jefe: IX+15 = la direccion A, sus pasos (8-11 o 10-13) y la rapidez (0x40 + 2 x nivel)
+C 0xAF0B pon_rumbo_del_jefe: IX+15 = la direccion A, sus pasos (8-11 o 10-13) y la rapidez (0x40 + 2 x nivel)
 C 0xAF13 apunta a la Y de la nave
-C 0xAF36 lee la marca de nucleo destruido
+C 0xAF19 pon_rumbo_del_jefe: IX+15 = la direccion A, sus pasos (8-11 o 10-13) y la rapidez (0x40 + 2 x nivel)
+C 0xAF1D pon_rumbo_del_jefe: IX+15 = la direccion A, sus pasos (8-11 o 10-13) y la rapidez (0x40 + 2 x nivel)
 C 0xAF3A quita_enemigo: quita el enemigo IX: uno menos (0xE352), devuelve sus sprites (0xE355), 0xE36D si es 0x2A, y descuenta su grupo (IX+16, IX+17, p02:89A8)
 C 0xAF6F quita_enemigo: quita el enemigo IX: uno menos (0xE352), devuelve sus sprites (0xE355), 0xE36D si es 0x2A, y descuenta su grupo (IX+16, IX+17, p02:89A8)
 C 0xAF72 lee el estado del jefe
-C 0xAF75 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
-C 0xAF7E queda_alguien: A distinto de 0 si queda ocupada alguna de las 12 fichas de 0xE600 (64 bytes) o de las 10 de 0xE900 (16 bytes)
 C 0xAF82 caracteres_del_jefe_5: con los bancos 13-14-15, los caracteres del jefe 5 (p15:B3AF, copias p15:B3BC) y el banco 11
-C 0xAF8C guarda dato del jefe (8 al salir)
+C 0xAF87 guarda las piezas del jefe 5 por salir
+C 0xAF8C guarda la espera del jefe (16 bits)
 C 0xAF8F apunta a el estado del jefe
-C 0xAF9F lee la ficha del jefe
+C 0xAF94 jefe_5_pieza_nueva: cada 144 cuadros, si hay hueco (0xEA00 o 0xEA20), una pieza nueva (p11:AFFE) arriba o abajo con 23 golpes
 C 0xAFA2 apunta a la segunda ficha del jefe (el 5)
-C 0xAFA9 guarda dato del jefe (8 al salir)
-C 0xAFAE apunta a dato del jefe (8 al salir)
-C 0xAFB4 guarda el tipo de jefe (1-5; 0 sin jefe)
-C 0xAFB8 guarda la marca de jefe vencido
-C 0xAFBC apunta a dato del jefe (8 al salir)
+C 0xAFA9 guarda la espera del jefe (16 bits)
+C 0xAFAE apunta a la espera del jefe (16 bits)
 C 0xAFC3 apunta a la ficha del jefe
-C 0xB008 apunta a la ficha del jefe
-C 0xB00F apunta a la segunda ficha del jefe (el 5)
+C 0xAFFB caja_de_pieza: la caja de la pieza y su forma segun los golpes
+C 0xB00C jefe_5_pieza: la pieza IX: lo de su paso, su nucleo y su caja; rota (IX+1F), puntos y estalla
+C 0xB020 nucleo_del_jefe: IX+13/IX+14 = el nucleo: la Y + DE y la X + C (Y 0xE0 si se sale)
+C 0xB02B pieza_rota: 0x0030 puntos y estalla
 C 0xB031 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 C 0xB05B lee la Y de la nave
-C 0xB070 lee el nivel de dificultad
 C 0xB078 hl_mas_a: HL = HL + A
+C 0xB09D espera_de_pieza: IX+02 = p11:B080 segun el nivel / 2
 C 0xB0DD suma_puntos: jugando, suma DE (BCD) a los puntos del jugador en turno; vida extra al pasar 0xE207 y record (0xE1F1) si no esta la ranura de 0xF0F5 bit 1
-C 0xB109 lee la fase (0-11)
+C 0xB0E0 jefe_estalla: la parte IX libre, 90 cuadros de espera, una explosion en su sitio y suena 9 (el 5) o 0x3B
+C 0xB0E8 caja_del_jefe: la caja de la parte IX: IX+0A/IX+0E = Y + A, IX+0C = X + B, IX+10 = X + B + C
+C 0xB0EE forma_por_golpes: IX+08 = C + los golpes (IX+12) / B
+C 0xB10E aparicion_de_giratorio: la siguiente ficha de p11:B179 ([columna con 2 bits de modo][B]): si es su columna, un giratorio (p11:B14D)
 C 0xB11A lee la marca de scroll hecho en este cuadro
 C 0xB121 guarda variable de paso
+C 0xB127 lee la siguiente aparicion de giratorio (indice)
 C 0xB12D hl_mas_a: HL = HL + A
-C 0xB13F lee la columna del scroll (16 bits) y el byte siguiente (16 bits)
-C 0xB14E apunta a la segunda ficha del jefe (el 5)
-C 0xB169 lee variable de paso
+C 0xB148 pon_giratorio: el primer hueco de 0xEA20 (4 de 8 bytes): [modo y paso 1][8][0][X][direccion B][0][16][5]
 C 0xB193 apunta a la segunda ficha del jefe (el 5)
-C 0xB1B6 lee la marca de scroll hecho en este cuadro
+C 0xB19E mueve_giratorio: el giratorio IX: el scroll, el giro, la animacion y el disparo
+C 0xB1AA giratorio_con_el_scroll: 8 pixeles a la izquierda con el scroll; al llegar al borde, el paso siguiente (hasta 4) y libre
+C 0xB1AD giratorio_gira: sin el bit 6, cada 8 cuadros la direccion (IX+04, 0-13) sube o baja segun el bit 7
+C 0xB1B0 giratorio_anima: cada 16 cuadros el paso siguiente (6) y su dibujo (p11:B35C)
+C 0xB1B3 giratorio_dispara: al acabar la espera (p11:B2A8 segun el nivel), si esta abierto y la nave cae por delante, un 0x34 desde su boca y suena 0x15
 C 0xB219 hl_mas_a: HL = HL + A
-C 0xB225 lee el nivel de dificultad
 C 0xB239 byte_a: A = el byte A de la tabla HL
-C 0xB23F apunta a la X de la nave
 C 0xB288 crea_enemigo_ix: crea_enemigo conservando IX
 C 0xB28D sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
-C 0xB290 lee el nivel de dificultad
-C 0xB296 lee la X de la nave
-C 0xB29F lee la Y de la nave
 C 0xB2CE apunta a la segunda ficha del jefe (el 5)
+C 0xB2D9 pinta_giratorio: 14 filas de su dibujo (p11:B362 por paso y direccion) desde la fila 1 en su X, recortado por la derecha
 C 0xB2EB palabra_a_de: DE = la palabra A de la tabla DE (HL apunta a su byte alto)
 C 0xB2F4 de_mas_a: DE = DE + A
-C 0xB2F7 guarda variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo) o un puntero y el byte siguiente (16 bits)
 C 0xB300 de_mas_a: DE = DE + A
-C 0xB303 guarda variable de paso: el puntero del mapa y el byte siguiente (16 bits)
 C 0xB30C sitio_en_pantalla: HL = 0xED00 + el caracter de la pantalla de RAM bajo L (Y) y H (X)
-C 0xB30F guarda variable de paso y el byte siguiente (16 bits)
 C 0xB331 lee variable de paso: el puntero del mapa y el byte siguiente (16 bits)
 C 0xB335 lee variable de paso y el byte siguiente (16 bits)
 C 0xB351 lee variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo) o un puntero y el byte siguiente (16 bits)
-C 0xB410 lee la fase (0-11)
+C 0xB416 aparicion_de_pieza_5: en las columnas de p11:B49E, una pieza en 0xE580 o 0xE590 (si hay hueco) a una Y al azar (0x40-0x68)
 C 0xB422 lee la fase (0-11)
 C 0xB428 lee la marca de scroll hecho en este cuadro
 C 0xB42F guarda variable de paso
+C 0xB435 lee la siguiente aparicion de pieza de la fase 5 (indice)
 C 0xB438 palabra_a: DE = la palabra A de la tabla HL (HL apunta a su byte alto)
-C 0xB43B lee la columna del scroll (16 bits) y el byte siguiente (16 bits)
-C 0xB447 apunta a las 16 piezas de 8 bytes de las fases 3 y 9-11
-C 0xB44D apunta a la segunda pieza de la fase 5
-C 0xB452 azar: 0xE306 = 0xE306 + 3 x R: el azar del juego
-C 0xB463 lee variable de paso
 C 0xB47E lee variable de paso
 C 0xB4AA lee la fase (0-11)
-C 0xB4B0 apunta a las 16 piezas de 8 bytes de las fases 3 y 9-11
-C 0xB4B7 apunta a la segunda pieza de la fase 5
-C 0xB4F6 lee la marca de scroll hecho en este cuadro
+C 0xB4B4 mueve_pieza_5: el scroll, su animacion y, tocada, la vuelta a entera tras cada espera
+C 0xB51D ancho_de_pieza_5: IX+05 = IX+04 x 8 (NZ)
 C 0xB53A lee la fase (0-11)
-C 0xB540 apunta a las 16 piezas de 8 bytes de las fases 3 y 9-11
-C 0xB547 apunta a la segunda pieza de la fase 5
+C 0xB544 pinta_pieza_5: su cabeza (p11:B5B8) y, tocada, su rotura (p11:B5D5 por paso): 4 filas de su ancho, recortadas segun entra o sale
 C 0xB55E sitio_en_pantalla: HL = 0xED00 + el caracter de la pantalla de RAM bajo L (Y) y H (X)
 C 0xB568 palabra_a: DE = la palabra A de la tabla HL (HL apunta a su byte alto)
 C 0xB56F guarda variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo) o un puntero
 C 0xB57F lee variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo) o un puntero
-C 0xB5A5 lee variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo) o un puntero
 C 0xB5B1 de_mas_a: DE = DE + A
 C 0xB5BD sitio_en_pantalla: HL = 0xED00 + el caracter de la pantalla de RAM bajo L (Y) y H (X)
+C 0xB5D2 pinta_filas_7: A filas de un dibujo de 7 de ancho en DE: enteras, o recortadas por la izquierda o por la derecha segun el modo
 C 0xB6D6 copia_a_vram_x3: copia a la VRAM en los tres tercios (HL, + 0x800, + 0x1000)
 C 0xB6E2 copia_a_vram_x3: copia a la VRAM en los tres tercios (HL, + 0x800, + 0x1000)
 C 0xB6ED rellena_vram_x3: rellena BC bytes de la VRAM con A en los tres tercios (HL, + 0x800, + 0x1000)
@@ -345,58 +1553,51 @@ C 0xB728 copia_a_vram: copia BC bytes de DE a la VRAM HL (LDIRVM)
 C 0xB755 copia_a_vram: copia BC bytes de DE a la VRAM HL (LDIRVM)
 C 0xB75F prepara_escritura_vram: SETWRT en HL y C' = el puerto de datos del VDP (0x0007 de la BIOS); conserva AF
 C 0xB76E de_mas_a: DE = DE + A
+C 0xB799 letras_por_lista: en la VRAM HL, los dibujos de las letras de la lista DE (indices en p11:B81C, 0 acaba)
 C 0xB8F4 lee la fase (0-11)
 C 0xB918 pon_vx: IX+09/IX+0A = DE
 C 0xB932 pon_vy: IX+07/IX+08 = DE
+C 0xB93B guarda la cuenta de los tipo 2
 C 0xB941 byte_a: A = el byte A de la tabla HL
-C 0xB956 sitio_en_pantalla: HL = 0xED00 + el caracter de la pantalla de RAM bajo L (Y) y H (X)
-C 0xB965 lee la fase (0-11)
 C 0xB96E de_mas_a: DE = DE + A
 C 0xB97E de_mas_a: DE = DE + A
+C 0xB9AC compuerta_del_tipo_2: los 2 x 2 caracteres de su compuerta (p11:B987/B98B, + 8 en la fase 3) en el borde derecho, abierta o cerrada
 C 0xB9B5 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
+C 0xB9DC tipo_02_avanza: cada 8 cuadros, 8 pixeles a la izquierda
 C 0xBA0B invierte_vy: IX+07/IX+08 = - IX+07/IX+08
+C 0xBA0E tipo_02_parpadea: cada 2 cuadros cambia de dibujo (4, o 12 en la fase 3)
 C 0xBA30 lee la fase (0-11)
 C 0xBA4A invierte_vy: IX+07/IX+08 = - IX+07/IX+08
-C 0xBA57 lee la marca de scroll hecho en este cuadro
+C 0xBA64 tipo_02_avanza: cada 8 cuadros, 8 pixeles a la izquierda
 C 0xBA8A vy_cero: IX+07/IX+08 = 0
 C 0xBA93 pon_vy: IX+07/IX+08 = DE
-C 0xBA9F byte_a: A = el byte A de la tabla HL
 C 0xBAA4 velocidad_en_direccion: para la direccion A (0-15) y la rapidez B: HL = B x p00:4CF6[A] y DE = B x p00:4CD6[A]
-C 0xBAB3 dispara_bala_con: una bala desde D/E + 8 con la velocidad BC (Y) y HL (X), si no esta 0xF00E
 C 0xBACB lee la fase (0-11)
-C 0xBB09 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
-C 0xBB25 lee la X de la nave
-C 0xBB3F lee la columna del scroll (16 bits)
-C 0xBBB1 lee la marca de scroll hecho en este cuadro
+C 0xBAE2 forma_por_lado: IX+07 = A (+ 7 con IX+0B bit 0)
+C 0xBB60 forma_alterna: la forma 0x3D o 0x3E segun el cuadro
+C 0xBB69 forma_por_lado: IX+07 = A (+ 7 con IX+0B bit 0)
+C 0xBB7E forma_por_lado: IX+07 = A (+ 7 con IX+0B bit 0)
+C 0xBB8E forma_por_lado: IX+07 = A (+ 7 con IX+0B bit 0)
+C 0xBB95 boca_de_clase_16: un tipo 0x41 por arriba (-8) o por abajo (+24), 16 (8 con scroll) a la derecha; suena 0x26
 C 0xBBC4 crea_enemigo_ix: crea_enemigo conservando IX
 C 0xBBC9 sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
+C 0xBC73 columna_recorta: recorta la columna si se sale por arriba o por abajo de la pantalla
 C 0xBC82 sitio_en_pantalla: HL = 0xED00 + el caracter de la pantalla de RAM bajo L (Y) y H (X)
+C 0xBC88 columna_toca_mapa: recorre las IX+13 filas de la columna en HL (de DE en DE): al tocar mapa, la corta ahi (IX+2F = 1)
 C 0xBC8C quita_enemigo: quita el enemigo IX: uno menos (0xE352), devuelve sus sprites (0xE355), 0xE36D si es 0x2A, y descuenta su grupo (IX+16, IX+17, p02:89A8)
-C 0xBC97 quita_enemigo: quita el enemigo IX: uno menos (0xE352), devuelve sus sprites (0xE355), 0xE36D si es 0x2A, y descuenta su grupo (IX+16, IX+17, p02:89A8)
 C 0xBC9B quita_enemigo: quita el enemigo IX: uno menos (0xE352), devuelve sus sprites (0xE355), 0xE36D si es 0x2A, y descuenta su grupo (IX+16, IX+17, p02:89A8)
 C 0xBCBC guarda variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo) o un puntero
 C 0xBCBF sitio_en_pantalla: HL = 0xED00 + el caracter de la pantalla de RAM bajo L (Y) y H (X)
+C 0xBCC5 columna_toca_mapa: recorre las IX+13 filas de la columna en HL (de DE en DE): al tocar mapa, la corta ahi (IX+2F = 1)
 C 0xBCC9 quita_enemigo: quita el enemigo IX: uno menos (0xE352), devuelve sus sprites (0xE355), 0xE36D si es 0x2A, y descuenta su grupo (IX+16, IX+17, p02:89A8)
-C 0xBCCC lee dato de la fase de p01:697A
-C 0xBCFF lee variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo) o un puntero
-C 0xBD08 guarda variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo) o un puntero
-C 0xBD43 quita_enemigo: quita el enemigo IX: uno menos (0xE352), devuelve sus sprites (0xE355), 0xE36D si es 0x2A, y descuenta su grupo (IX+16, IX+17, p02:89A8)
-C 0xBD47 lee la marca de 0xE3AA: sin enemigos ni su dibujo
-C 0xBD4F apunta a las fichas de 64 bytes (0xE600-0xE8FF), y tambien el bufer de graficos al cargar
-C 0xBD81 sitio_en_pantalla: HL = 0xED00 + el caracter de la pantalla de RAM bajo L (Y) y H (X)
-C 0xBDBF sitio_en_pantalla: HL = 0xED00 + el caracter de la pantalla de RAM bajo L (Y) y H (X)
+C 0xBD56 guarda_fondo_de_uno: el fondo de IX+13 filas x IX+14 bajo el enemigo IX (una fila los 0x39-0x3C), con su sitio en IX+11
 C 0xBDCD lee la marca de 0xE3AA: sin enemigos ni su dibujo
-C 0xBDD5 apunta a las fichas de 64 bytes (0xE600-0xE8FF), y tambien el bufer de graficos al cargar
 C 0xBE31 quita_el_jefe: borra IX+13 filas de IX+14 caracteres de la pantalla de RAM en IX+04/IX+06
-C 0xBE65 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 C 0xBEBC crea_enemigo_ix: crea_enemigo conservando IX
 C 0xBEC1 sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
 C 0xBEED hl_mas_a: HL = HL + A
-C 0xBEF4 azar_por_nivel: A = p00:4EA4[0xE228] + un azar de 0 a 7 (R)
 C 0xBF08 pon_vx_y_vy: IX+09/IX+0A = DE y IX+07/IX+08 = HL
-C 0xBF13 dispara_al_acabar: IX+15 - 1 y, al llegar a 0, p01:6774
 C 0xBF1A hacia_la_y_de_la_nave: la velocidad Y + o - 0x16 hacia la Y de la nave
-C 0xBF24 lee la marca de fin del scroll
 C 0xBF34 lee la X de la nave
 C 0xBF3A menos_de: DE = - DE
 C 0xBF40 pon_vx_y_vy: IX+09/IX+0A = DE y IX+07/IX+08 = HL

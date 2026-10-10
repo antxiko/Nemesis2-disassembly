@@ -129,7 +129,7 @@ vuelve_a_la_fase:		; los graficos, el marcador y la pantalla desde la columna 0;
 	call 04396h		;60d1   ; carga_graficos_de_fase: con los bancos 11 y 7-8-9: p11:B736 y luego caracteres y sprites de la fase (p00:43A5)
 	call 05ba3h		;60d4   ; pinta_el_marcador: los textos del marcador (p03:B23D y el del jugador), las vidas y los puntos
 	ld hl,00000h		;60d7   ; desde la columna 0
-	ld (0e203h),hl		;60da   ; guarda la columna del scroll (16 bits) y el byte siguiente (16 bits)
+	ld (0e203h),hl		;60da   ; guarda la columna del scroll (16 bits)
 	call borra_la_fase		;60dd   ; borra_la_fase: 0xE22C, 0xE300, 0xEAA8-0xEAB7, 0xE340-0xE3FF y 0xE500-0xECFF a cero; luego p01:68E4
 	call 047e0h		;60e0   ; pinta_la_pantalla: las 32 columnas de la pantalla de una vez (0xE203 - 32 en adelante), con el cuadro entero de enemigos por cada una
 	ld a,(0e1dbh)		;60e3   ; con 0xE1DB, la nave en su sitio de salida
@@ -138,9 +138,9 @@ vuelve_a_la_fase:		; los graficos, el marcador y la pantalla desde la columna 0;
 	xor a			;60e8
 	ld (0e1dbh),a		;60e9   ; guarda la marca de nave en su sitio al volver
 	ld hl,04a00h		;60ec   ; Y 0x4A
-	ld (0e403h),hl		;60ef   ; guarda la Y de la nave (16 bits) y el byte siguiente (16 bits)
+	ld (0e403h),hl		;60ef   ; guarda la Y de la nave (16 bits)
 	ld h,050h		;60f2   ; X 0x50
-	ld (0e405h),hl		;60f4   ; guarda la X de la nave (16 bits) y el byte siguiente (16 bits)
+	ld (0e405h),hl		;60f4   ; guarda la X de la nave (16 bits)
 	call 0aa2fh		;60f7   ; rastro_a_la_nave: las 16 posiciones del rastro (0xE450) en la nave y 0xE40E = 0
 	jp 0aaech		;60fa   ; opciones_al_rastro: la primera opcion a 8 pasos del rastro y la segunda a 16
 empieza_la_fase:		; la fase de la vida (la mas alta en 0xE206; con 0xE22C la de p01:7C59; de la 8 en adelante, 0xE22A), sus graficos, 0xE300-0xEFFF a cero y la primera pantalla
@@ -165,7 +165,7 @@ L_611C:
 L_611F:
 	ld (0e201h),a		;611f   ; guarda la fase (0-11)
 	ld hl,00020h		;6122   ; desde la columna 32
-	ld (0e203h),hl		;6125   ; guarda la columna del scroll (16 bits) y el byte siguiente (16 bits)
+	ld (0e203h),hl		;6125   ; guarda la columna del scroll (16 bits)
 L_6128:
 	call 04396h		;6128   ; carga_graficos_de_fase: con los bancos 11 y 7-8-9: p11:B736 y luego caracteres y sprites de la fase (p00:43A5)
 	call 04c76h		;612b   ; esconde_sprites: los 32 sprites de 0xE280 con Y = 0xE0 (fuera de la pantalla)
@@ -267,10 +267,10 @@ L_6203:
 	ld c,000h		;6208   ; y borra la otra
 flecha:		; los dos caracteres de la flecha (p03:B26F) en HL con la mascara C
 	ld de,0b26fh		;620a
-	jp 04a73h		;620d
+	jp 04a73h		;620d   ; escribe_texto sin la direccion (p00:4A73): los caracteres de DE en HL con la mascara C
 borra_e490:		; 0xE490-0xE4A3 a cero
 	ld hl,0e490h		;6210   ; 20 bytes desde 0xE490
-	ld de,0e491h		;6213
+	ld de,0e491h		;6213   ; apunta a la fila del fundido
 	ld bc,00013h		;6216
 	xor a			;6219   ; a cero
 	ld (hl),a			;621a
@@ -426,14 +426,14 @@ L_631D:
 	ld de,00010h		;6327
 	or a			;632a
 	sbc hl,de		;632b
-	ld de,(0e203h)		;632d   ; lee la columna del scroll (16 bits) y el byte siguiente (16 bits)
+	ld de,(0e203h)		;632d   ; lee la columna del scroll (16 bits)
 	rst 20h			;6331
 	ret			;6332
 L_6333:
 	ld a,(0e3beh)		;6333   ; en la fase 7, con 0xE3BE nunca
 	or a			;6336
 	ret nz			;6337
-	ld de,(0e203h)		;6338   ; lee la columna del scroll (16 bits) y el byte siguiente (16 bits)
+	ld de,(0e203h)		;6338   ; lee la columna del scroll (16 bits)
 	ld hl,000e0h		;633c   ; hasta la columna 0xE0, no
 	or a			;633f
 	sbc hl,de		;6340
@@ -548,27 +548,27 @@ L_644F:
 	ret			;644f
 tipo_bf10:		; con el banco 11, p11:BF10
 	call 04137h		;6450   ; banco_11: pone el banco 11 en 0xA000 (y 0xF0F3)
-	call 0bf10h		;6453
+	call 0bf10h		;6453   ; tipo_40: el tipo 0x40: se anima y dispara; sube hasta Y 8 (o acaba su espera) y luego va hacia la nave en X y se acerca a su altura
 	jp 04157h		;6456   ; bancos_2_3: pone los bancos 2 y 3 en 0x8000 y 0xA000 (y 0xF0F2-0xF0F3)
 tipo_bc24:		; con el banco 11, p11:BC24
 	call 04137h		;6459   ; banco_11: pone el banco 11 en 0xA000 (y 0xF0F3)
-	call 0bc24h		;645c
+	call 0bc24h		;645c   ; tipo_41: el tipo 0x41: una columna que crece 4 caracteres por cuadro hacia arriba o abajo hasta tocar el mapa y luego mengua
 	jp 04157h		;645f   ; bancos_2_3: pone los bancos 2 y 3 en 0x8000 y 0xA000 (y 0xF0F2-0xF0F3)
 tipo_a644:		; con el banco 11, p11:A644
 	call 04137h		;6462   ; banco_11: pone el banco 11 en 0xA000 (y 0xF0F3)
-	call 0a644h		;6465
+	call 0a644h		;6465   ; tipo_38: el tipo 0x38: cambia de color y, cada 2 cuadros, lo de su paso (p11:A65B)
 	jp 04157h		;6468   ; bancos_2_3: pone los bancos 2 y 3 en 0x8000 y 0xA000 (y 0xF0F2-0xF0F3)
 tipo_af36:		; con el banco 11, p11:AF36
 	call 04137h		;646b   ; banco_11: pone el banco 11 en 0xA000 (y 0xF0F3)
-	call 0af36h		;646e
+	call 0af36h		;646e   ; tipo_24: el tipo 0x24: crece 8 pixeles por cuadro hacia la izquierda a la altura del jefe; al llegar al borde espera 16 y se va; con el jefe vencido, se va
 	jp 04157h		;6471   ; bancos_2_3: pone los bancos 2 y 3 en 0x8000 y 0xA000 (y 0xF0F2-0xF0F3)
 tipo_ac0c:		; con el banco 11, p11:AC0C
 	call 04137h		;6474   ; banco_11: pone el banco 11 en 0xA000 (y 0xF0F3)
-	call 0ac0ch		;6477
+	call 0ac0ch		;6477   ; tipo_23: el tipo 0x23: se quita al salir por la izquierda
 	jp 04157h		;647a   ; bancos_2_3: pone los bancos 2 y 3 en 0x8000 y 0xA000 (y 0xF0F2-0xF0F3)
 tipo_b9a0:		; con el banco 11, p11:B9A0
 	call 04137h		;647d   ; banco_11: pone el banco 11 en 0xA000 (y 0xF0F3)
-	call 0b9a0h		;6480
+	call 0b9a0h		;6480   ; tipo_02: el tipo 2: su compuerta y lo de su paso (p11:B9B8)
 	jp 04157h		;6483   ; bancos_2_3: pone los bancos 2 y 3 en 0x8000 y 0xA000 (y 0xF0F2-0xF0F3)
 enemigo_con_el_scroll:		; los que van con el mapa (IX+10 bit 3, o todos con 0xE3D0) se corren 8 pixeles con cada paso de scroll; al salir por la izquierda, fuera (C)
 	ld a,(0e3d0h)		;6486   ; con 0xE3D0, todos con el scroll
@@ -1026,7 +1026,7 @@ cuadro_del_jefe:		; con un jefe (0xE340), un cuadro mas de pelea (0xE346, sin pa
 	jr nz,L_679F		;679c   ; sin pasar de 0xFFFF
 	dec hl			;679e
 L_679F:
-	ld (0e346h),hl		;679f   ; guarda los cuadros de pelea con el jefe (16 bits) y el byte siguiente (16 bits)
+	ld (0e346h),hl		;679f   ; guarda los cuadros de pelea con el jefe (16 bits)
 	call 04137h		;67a2   ; banco_11: pone el banco 11 en 0xA000 (y 0xF0F3)
 	ld a,c			;67a5
 	call jefe_por_tipo		;67a6   ; por tipo de jefe
@@ -1279,7 +1279,7 @@ datos_de_la_fase:		; las cuentas de aparicion, 0xE305 (p01:697A), los limites de
 	jr nz,L_6938		;6934
 	ld e,060h		;6936   ; o de la 96 en la demo
 L_6938:
-	ld (0e203h),de		;6938   ; guarda la columna del scroll (16 bits) y el byte siguiente (16 bits)
+	ld (0e203h),de		;6938   ; guarda la columna del scroll (16 bits)
 	xor a			;693c
 	ld (0e205h),a		;693d   ; guarda el paso del guion de la fase
 	inc a			;6940   ; el ritmo del scroll
@@ -1526,7 +1526,7 @@ L_6AF6:
 	ld d,a			;6b04
 	inc hl			;6b05
 	ld (0f005h),hl		;6b06   ; 0xF005 = el resto de la ficha
-	ld hl,(0e203h)		;6b09   ; lee la columna del scroll (16 bits) y el byte siguiente (16 bits)
+	ld hl,(0e203h)		;6b09   ; lee la columna del scroll (16 bits)
 	rst 20h			;6b0c   ; no es su columna: fuera
 	jp nz,04108h		;6b0d   ; bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xF0F1-0xF0F3)
 	ld hl,0e369h		;6b10   ; gastada
@@ -1930,7 +1930,7 @@ en_la_fase_1:		; en la fase 1, con el banco 11, p11:B11A
 	dec a			;6d9e
 	ret nz			;6d9f
 	call 04137h		;6da0   ; banco_11: pone el banco 11 en 0xA000 (y 0xF0F3)
-	call 0b11ah		;6da3
+	call 0b11ah		;6da3   ; giratorios_del_scroll: si el scroll avanzo, lo de la columna nueva (X = 0xF8)
 	jp 04157h		;6da6   ; bancos_2_3: pone los bancos 2 y 3 en 0x8000 y 0xA000 (y 0xF0F2-0xF0F3)
 espera_de_aparicion:		; NZ mientras dure la espera 0xE354, haya jefe o 0xE204 sea 2 o mas
 	ld hl,0e354h		;6da9   ; la espera de salida de la fase
@@ -2066,7 +2066,7 @@ L_6E71:
 	call 0407ah		;6e7c   ; hl_mas_a: HL = HL + A
 	ld d,000h		;6e7f
 	ld e,(hl)			;6e81
-	ld hl,(0e203h)		;6e82   ; lee la columna del scroll (16 bits) y el byte siguiente (16 bits)
+	ld hl,(0e203h)		;6e82   ; lee la columna del scroll (16 bits)
 	rst 20h			;6e85   ; aun no
 	ret nc			;6e86
 	ld a,l			;6e87   ; y en columna multiplo de 8
@@ -2855,9 +2855,9 @@ suceso_piezas:		; mientras queden piezas (0xE34C), las anima y cada dos cuadros 
 	ld d,(hl)			;7350
 	bit 1,c		;7351   ; al otro lado, uno de cada dos
 	call nz,05cadh		;7353   ; menos_de: DE = - DE
-	ld (0f012h),de		;7356   ; guarda la velocidad Y calculada (16 bits) y el byte siguiente (16 bits)
+	ld (0f012h),de		;7356   ; guarda la velocidad Y calculada (16 bits)
 	ld hl,0f900h		;735a   ; velocidad Y 0xF900 (hacia arriba)
-	ld (0f014h),hl		;735d   ; guarda la velocidad X calculada (16 bits) y el byte siguiente (16 bits)
+	ld (0f014h),hl		;735d   ; guarda la velocidad X calculada (16 bits)
 	ld hl,073d8h		;7360   ; desde una de las 4 piezas de p01:73D8
 	ld a,r		;7363
 	and 006h		;7365
@@ -2888,14 +2888,14 @@ L_7375:
 	ld l,05bh		;7391
 L_7393:
 	ex de,hl			;7393
-	ld (0f014h),hl		;7394   ; guarda la velocidad X calculada (16 bits) y el byte siguiente (16 bits)
+	ld (0f014h),hl		;7394   ; guarda la velocidad X calculada (16 bits)
 	ld a,(0e404h)		;7397   ; hacia abajo (0x0500) o hacia arriba (0xFB00)
 	cp 04dh		;739a
 	ld hl,00500h		;739c
 	jr nc,L_73A4		;739f
 	ld hl,0fb00h		;73a1
 L_73A4:
-	ld (0f012h),hl		;73a4   ; guarda la velocidad Y calculada (16 bits) y el byte siguiente (16 bits)
+	ld (0f012h),hl		;73a4   ; guarda la velocidad Y calculada (16 bits)
 	jp L_736E		;73a7
 L_73AA:
 	ld de,00100h		;73aa   ; las piezas destruidas: 0x0100 puntos (BCD)
@@ -3004,7 +3004,7 @@ tipo_32_empieza:		; el tipo 0x32: IX+2F = 0, IX+02 = 4 y la velocidad de 0xF012 
 	ld (ix+02fh),000h		;744f   ; IX+2F = 0
 	ld (ix+002h),004h		;7453   ; IX+02 = 4
 	ld de,(0f014h)		;7457   ; la velocidad que dejo el suceso
-	ld hl,(0f012h)		;745b   ; lee la velocidad Y calculada (16 bits) y el byte siguiente (16 bits)
+	ld hl,(0f012h)		;745b   ; lee la velocidad Y calculada (16 bits)
 	jp 04f26h		;745e   ; pon_vx_y_vy: IX+09/IX+0A = DE y IX+07/IX+08 = HL
 tipo_32:		; el tipo 0x32: parpadea (color 3/9 cada 4 cuadros) y se quita al tocar mapa (por debajo de 0xE305) en su sitio o en la fila hacia la que va
 	dec (ix+002h)		;7461   ; cada 4 cuadros
@@ -3297,14 +3297,14 @@ nave_se_va:		; 0xE3BF = 1, 0xE3C7 = 0 y suena 0x3C
 	ld a,001h		;7656
 	ld (0e3bfh),a		;7658   ; guarda la marca de la nave yendose
 	ld hl,00000h		;765b
-	ld (0e3c7h),hl		;765e   ; guarda la velocidad de la nave al irse (16 bits) y el byte siguiente (16 bits)
+	ld (0e3c7h),hl		;765e   ; guarda la velocidad de la nave al irse (16 bits)
 	ld a,03ch		;7661   ; suena 0x3C
 	jp 04ae4h		;7663   ; sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
 nave_acelera:		; 0xE3C7 + 0x40; al llegar a X 0xF0, pantalla en blanco, sin sprites y 0xE3BF = 0
 	ld hl,(0e3c7h)		;7666   ; cada vez mas deprisa
 	ld de,00040h		;7669
 	add hl,de			;766c
-	ld (0e3c7h),hl		;766d   ; guarda la velocidad de la nave al irse (16 bits) y el byte siguiente (16 bits)
+	ld (0e3c7h),hl		;766d   ; guarda la velocidad de la nave al irse (16 bits)
 	ld a,008h		;7670   ; el dibujo 8
 	ld (0e3c2h),a		;7672   ; guarda el dibujo de la nave en el final
 	ld a,(0e406h)		;7675   ; hasta X 0xF0
@@ -3356,7 +3356,7 @@ casilla_del_arma:		; 0xE3C5 = la casilla del medidor del arma 0xE20F (p01:77AE) 
 	sub 001h		;76d9
 	ld hl,03ac0h		;76db   ; en la fila 22
 	call 0407ah		;76de   ; hl_mas_a: HL = HL + A
-	ld (0e3c5h),hl		;76e1   ; guarda la casilla que parpadea en el final (VRAM, 16 bits) y el byte siguiente (16 bits)
+	ld (0e3c5h),hl		;76e1   ; guarda la casilla que parpadea en el final (VRAM, 16 bits)
 	ret			;76e4
 nave_al_centro:		; un pixel hacia Y 0x48 y X 0x50, su dibujo (0xE3C2), p03:A82E y p03:A79A; Z al llegar
 	ld hl,0e404h		;76e5   ; la Y de la nave
@@ -3784,23 +3784,23 @@ DATA_tabla_79B3:
 
 clase_be62:		; con el banco 11, p11:BE62
 	call 04137h		;79d3   ; banco_11: pone el banco 11 en 0xA000 (y 0xF0F3)
-	call 0be62h		;79d6
+	call 0be62h		;79d6   ; clase_14: la clase 14: lo de su paso (p11:BE68)
 	jp 04157h		;79d9   ; bancos_2_3: pone los bancos 2 y 3 en 0x8000 y 0xA000 (y 0xF0F2-0xF0F3)
 clase_bb06:		; con el banco 11, p11:BB06
 	call 04137h		;79dc   ; banco_11: pone el banco 11 en 0xA000 (y 0xF0F3)
-	call 0bb06h		;79df
+	call 0bb06h		;79df   ; clase_16: la clase 16: lo de su paso (p11:BB0C)
 	jp 04157h		;79e2   ; bancos_2_3: pone los bancos 2 y 3 en 0x8000 y 0xA000 (y 0xF0F2-0xF0F3)
 clase_a3c5:		; con el banco 11, p11:A3C5
 	call 04137h		;79e5   ; banco_11: pone el banco 11 en 0xA000 (y 0xF0F3)
-	call 0a3c5h		;79e8
+	call 0a3c5h		;79e8   ; clase_11: la clase 11: en pantalla, suena 0x11 cada 8 cuadros y cada 7 crece una fila de 4 caracteres arriba o abajo (p11:A48D, p11:A44D); al acabar sus pasos, libre
 	jp 04157h		;79eb   ; bancos_2_3: pone los bancos 2 y 3 en 0x8000 y 0xA000 (y 0xF0F2-0xF0F3)
 clase_a4e2:		; con el banco 11, p11:A4E2
 	call 04137h		;79ee   ; banco_11: pone el banco 11 en 0xA000 (y 0xF0F3)
-	call 0a4e2h		;79f1
+	call 0a4e2h		;79f1   ; clase_12: la clase 12: al pasar de X 0x80, cada 6 cuadros llena una fila por arriba y otra por abajo (p11:A566) con caracteres 0x67/0x69 al azar; al acabar, libre
 	jp 04157h		;79f4   ; bancos_2_3: pone los bancos 2 y 3 en 0x8000 y 0xA000 (y 0xF0F2-0xF0F3)
 clase_a82e:		; con el banco 11, p11:A82E
 	call 04137h		;79f7   ; banco_11: pone el banco 11 en 0xA000 (y 0xF0F3)
-	call 0a82eh		;79fa
+	call 0a82eh		;79fa   ; clase_13: la clase 13: al pasar su X, cada 24 cuadros el dibujo siguiente de 4 x 4 (p11:A865), 4 pasos, y suena 0x25
 	jp 04157h		;79fd   ; bancos_2_3: pone los bancos 2 y 3 en 0x8000 y 0xA000 (y 0xF0F2-0xF0F3)
 enemigos_contra_el_mapa:		; los tipos 0x1D, 0x20 y 0x22 (sin IX+2F) se quitan al tocar el mapa (p02:9317)
 	ld ix,0e600h		;7a00   ; 12 fichas de enemigo
@@ -3882,11 +3882,11 @@ sale_el_jefe:		; el jefe L: 0xE340 = L, la pelea a cero, 0xE34D = 1, 0xE343 = 8 
 	ld h,a			;7a88   ; 0xE340 = L, 0xE341 = 0
 	ld (0e340h),hl		;7a89   ; guarda el tipo de jefe (1-5; 0 sin jefe) y el byte siguiente (16 bits)
 	ld l,a			;7a8c   ; la pelea a cero
-	ld (0e346h),hl		;7a8d   ; guarda los cuadros de pelea con el jefe (16 bits) y el byte siguiente (16 bits)
+	ld (0e346h),hl		;7a8d   ; guarda los cuadros de pelea con el jefe (16 bits)
 	ld a,001h		;7a90
 	ld (0e34dh),a		;7a92   ; guarda dato del jefe (1 al salir, 3 el nucleo)
 	ld a,008h		;7a95
-	ld (0e343h),a		;7a97   ; guarda dato del jefe (8 al salir)
+	ld (0e343h),a		;7a97   ; guarda la espera del jefe (16 bits)
 	ld a,070h		;7a9a
 	ld (0e305h),a		;7a9c   ; guarda dato de la fase de p01:697A
 	ret			;7a9f
@@ -3943,17 +3943,17 @@ guion_fase_4:		; al acabar el scroll 600 cuadros mas, el final se alarga a 0x220
 	and a			;7af9
 	ret z			;7afa
 	ld hl,00258h		;7afb   ; paso 0: al acabar el scroll, 600 cuadros
-	ld (0e3a8h),hl		;7afe   ; guarda la espera de la fase 4 (16 bits) y el byte siguiente (16 bits)
+	ld (0e3a8h),hl		;7afe   ; guarda la espera de la fase 4 (16 bits)
 	jr guion_siguiente		;7b01
 L_7B03:
 	ld hl,(0e3a8h)		;7b03   ; paso 1: los cuenta
 	dec hl			;7b06
-	ld (0e3a8h),hl		;7b07   ; guarda la espera de la fase 4 (16 bits) y el byte siguiente (16 bits)
+	ld (0e3a8h),hl		;7b07   ; guarda la espera de la fase 4 (16 bits)
 	ld a,l			;7b0a
 	or h			;7b0b
 	ret nz			;7b0c
 	ld hl,00220h		;7b0d   ; y el scroll sigue hasta la columna 0x220
-	ld (0e325h),hl		;7b10   ; guarda la columna en la que acaba el scroll (16 bits) y el byte siguiente (16 bits)
+	ld (0e325h),hl		;7b10   ; guarda la columna en la que acaba el scroll (16 bits)
 	jr guion_siguiente		;7b13
 L_7B15:
 	ld a,(0e327h)		;7b15   ; paso 2: al acabar, el jefe 5
@@ -4075,9 +4075,9 @@ guion_fase_8:		; al irse la nave del interior (0xE3C1), a la fase siguiente
 	ld (hl),a			;7bd8
 	jr a_la_siguiente		;7bd9
 alarga_el_scroll:		; el final del scroll (0xE325) + DE
-	ld hl,(0e325h)		;7bdb   ; lee la columna en la que acaba el scroll (16 bits) y el byte siguiente (16 bits)
+	ld hl,(0e325h)		;7bdb   ; lee la columna en la que acaba el scroll (16 bits)
 	add hl,de			;7bde
-	ld (0e325h),hl		;7bdf   ; guarda la columna en la que acaba el scroll (16 bits) y el byte siguiente (16 bits)
+	ld (0e325h),hl		;7bdf   ; guarda la columna en la que acaba el scroll (16 bits)
 	ret			;7be2
 jefe_vencido:		; con el jefe vencido (0xE342), al interior
 	ld a,(0e342h)		;7be3   ; lee la marca de jefe vencido
@@ -4209,7 +4209,7 @@ musica_de_la_zona:		; jugando sin jefe ni sucesos, la musica que toca por la col
 	call 04b67h		;7cba   ; palabra_a: DE = la palabra A de la tabla HL (HL apunta a su byte alto)
 	ld c,e			;7cbd
 	ld b,d			;7cbe
-	ld hl,(0e203h)		;7cbf   ; lee la columna del scroll (16 bits) y el byte siguiente (16 bits)
+	ld hl,(0e203h)		;7cbf   ; lee la columna del scroll (16 bits)
 L_7CC2:
 	ld a,(bc)			;7cc2   ; [columna][sonido]
 	ld e,a			;7cc3
@@ -4655,7 +4655,7 @@ sube_el_nivel:		; el nivel (0xE227-0xE228) + DE, como mucho 0x0FFF
 	jr c,L_7FAF		;7fab
 	ld h,00fh		;7fad
 L_7FAF:
-	ld (0e227h),hl		;7faf   ; guarda el nivel (16 bits: 0xE228 entero, 0xE227 fraccion) y el byte siguiente (16 bits)
+	ld (0e227h),hl		;7faf   ; guarda el nivel (16 bits: 0xE228 entero, 0xE227 fraccion)
 	ret			;7fb2
 suelta_por_capturas:		; con 2-5 armas capturadas 0xE338 = 0, con 6 o mas 0xE339 = 0
 	ld a,(0e20fh)		;7fb3   ; 0 o 1: nada

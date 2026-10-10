@@ -1449,8 +1449,8 @@ C 0xA920 guarda variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza ab
 C 0xA92C lee variable de paso: el puntero del mapa y el byte siguiente (16 bits)
 C 0xA931 lee variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo) o un puntero
 C 0xA93A lee variable de paso y el byte siguiente (16 bits)
-C 0xA943 guarda la Y de la nave (16 bits) y el byte siguiente (16 bits)
-C 0xA94A guarda la X de la nave (16 bits) y el byte siguiente (16 bits)
+C 0xA943 guarda la Y de la nave (16 bits)
+C 0xA94A guarda la X de la nave (16 bits)
 C 0xA98F guarda la marca de vida en marcha (0: la nave ha caido)
 C 0xA99A guarda el paso de la explosion de la nave
 C 0xA9A2 guarda la segunda opcion (16 bytes)
@@ -1605,8 +1605,8 @@ C 0xB6BF guarda variable de paso: cuantos bytes
 C 0xB6C5 rumbo_del_angulo: la velocidad del angulo ya calculado (0xF017), con error del nivel 7 en adelante
 C 0xB6C8 lee la Y de la nave
 C 0xB6E5 rumbo_cerca_de_la_nave: la velocidad (rapidez 0x60) hacia la nave mas o menos un desplazamiento (p03:B6D1)
-C 0xB6F0 lee la velocidad X calculada (16 bits) y el byte siguiente (16 bits)
-C 0xB6F4 lee la velocidad Y calculada (16 bits) y el byte siguiente (16 bits)
+C 0xB6F0 lee la velocidad X calculada (16 bits)
+C 0xB6F4 lee la velocidad Y calculada (16 bits)
 C 0xB6F7 pon_vx_y_vy: IX+09/IX+0A = DE y IX+07/IX+08 = HL
 C 0xB74F lee la fase (0-11)
 C 0xB7AC crea_enemigo_ix: crea_enemigo conservando IX
@@ -1615,8 +1615,8 @@ C 0xB7E4 pon_vx_y_vy: IX+09/IX+0A = DE y IX+07/IX+08 = HL
 C 0xB7F8 frena_en_x: la aceleracion X hacia IX+26 (4 x la distancia) y la suma
 C 0xB810 frena_en_y: la aceleracion Y hacia IX+25 (4 x la distancia) y la suma
 C 0xB819 lee el nivel de dificultad
-C 0xB82A lee la velocidad Y calculada (16 bits) y el byte siguiente (16 bits)
-C 0xB82D lee la velocidad X calculada (16 bits) y el byte siguiente (16 bits)
+C 0xB82A lee la velocidad Y calculada (16 bits)
+C 0xB82D lee la velocidad X calculada (16 bits)
 C 0xB831 pon_vx_y_vy: IX+09/IX+0A = DE y IX+07/IX+08 = HL
 C 0xB845 dispara_desde_ix: una bala desde el enemigo IX (X + 8) hacia la nave
 C 0xB848 azar_por_nivel: A = p00:4EA4[0xE228] + un azar de 0 a 7 (R)
@@ -1635,8 +1635,8 @@ C 0xB985 byte_a: A = el byte A de la tabla HL
 C 0xB997 clase_5_suelta: cada IX+01 cuadros un 0x22 por su boca; cada 16, una pausa de 52
 C 0xB9FC boca_de_clase_5: D/E = su posicion + 16 en Y y - 4 en X
 C 0xBA03 crea_enemigo_ix: crea_enemigo conservando IX
-C 0xBA4A guarda la velocidad Y calculada (16 bits) y el byte siguiente (16 bits)
-C 0xBA50 guarda la velocidad X calculada (16 bits) y el byte siguiente (16 bits)
+C 0xBA4A guarda la velocidad Y calculada (16 bits)
+C 0xBA50 guarda la velocidad X calculada (16 bits)
 C 0xBA53 pon_rumbo_y_espera: 12 cuadros con IX+2F = 1 y la velocidad de 0xF012/0xF014
 C 0xBAE9 pon_vx_y_vy: IX+09/IX+0A = DE y IX+07/IX+08 = HL
 C 0xBAFC tipo_31_dispara_mas: del nivel 9 en adelante, cada 9 cuadros
@@ -1682,10 +1682,10 @@ C 0xBF4C guarda la fase secreta: 1 entrando (scroll parado), 2 yendo (scroll cad
 C 0xBF51 sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
 C 0xBF5F entrada_con_el_scroll: la entrada se corre 8 pixeles con el scroll; al salir, desaparece
 C 0xBF67 lee la fase (0-11)
-C 0xBF6A lee la columna del scroll (16 bits) y el byte siguiente (16 bits)
+C 0xBF6A lee la columna del scroll (16 bits)
 C 0xBFA0 lee la marca de scroll hecho en este cuadro
 C 0xBFB5 lee la Y de la nave
-C 0xBFDE guarda la columna en la que acaba el scroll (16 bits) y el byte siguiente (16 bits)
+C 0xBFDE guarda la columna en la que acaba el scroll (16 bits)
 C 0xBFE3 guarda la espera con el scroll parado
 C 0xBFE7 guarda la entrada secreta a la vista
 C 0xBFEB guarda la fase secreta: 1 entrando (scroll parado), 2 yendo (scroll cada cuadro)

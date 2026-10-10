@@ -135,12 +135,15 @@ def ventanas_de(filas, b):
     """Para cada instruccion, {ventana: banco} visible: el trio del banco al
     empezar cada tramo (tras `ret` o `jp`), cambiado por las llamadas a las
     rutinas de CAMBIOS_DE_BANCO."""
+    # una vez bautizadas, las rutinas del mapper salen en el listado por su
+    # nombre (las del banco 0 y las del propio banco), no como L_xxxx
+    por_nombre = {nom: aa for (bb, aa), (nom, _) in RUTINAS.items() if bb in (0, b)}
     fuera, ahora = {}, trio(b)
     for k, (a, t) in enumerate(filas):
         fuera[k] = dict(ahora)
-        m = re.match(r"(?:call|jp)\s+(?:(?:nz|z|nc|c|po|pe|p|m),)?(?:L_([0-9A-F]{4})|0([0-9a-f]{4})h)$", t)
+        m = re.match(r"(?:call|jp)\s+(?:(?:nz|z|nc|c|po|pe|p|m),)?(?:L_([0-9A-F]{4})|0([0-9a-f]{4})h|([a-z_][a-z0-9_]*))$", t)
         if m:
-            d = int(m.group(1) or m.group(2), 16)
+            d = int(m.group(1) or m.group(2), 16) if not m.group(3) else por_nombre.get(m.group(3))
             ahora.update(CAMBIOS_DE_BANCO.get(d, {}))
         if t == "ret" or (t.startswith("jp ") and "," not in t):
             ahora = trio(b)
@@ -211,7 +214,9 @@ def comentario(b, filas, k, fichas, ventanas=None, medido=None):
         if v in RAM16:
             return ("lee " if m16.group(1) else "guarda ") + RAM16[v]
         if v in RAM:
-            return ("lee " if m16.group(1) else "guarda ") + RAM[v][0] + " y el byte siguiente (16 bits)"
+            # si la descripcion ya dice que es de 16 bits, no se repite
+            resto = "" if "16 bits" in RAM[v][0] else " y el byte siguiente (16 bits)"
+            return ("lee " if m16.group(1) else "guarda ") + RAM[v][0] + resto
     for x in re.findall(r"\b0([c-f][0-9a-f]{3})h\b", t):
         v = int(x, 16)
         if v in RAM and v >= RAM_DESDE:

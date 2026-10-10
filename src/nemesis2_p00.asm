@@ -277,7 +277,7 @@ L_417F:
 	call 0be97h		;41ae   ; cuenta_intocable: cada 32 cuadros 0xE447 - 1; al acabar, 0xE446 = 0
 	call 0a765h		;41b1   ; cuadro_de_la_nave: la nave: los mandos, se mueve, sus limites y su dibujo; al caer, la explosion; entrando al jefe o saliendo del interior, sin mandos
 	call 07d4fh		;41b4   ; usa_el_medidor: con el otro boton recien pulsado y una casilla encendida que no este gastada, la usa (p01:7D8D por armas capturadas) y suena 6
-	call 0aa53h		;41b7
+	call 0aa53h		;41b7   ; anima_opciones: cada 2 cuadros (4 con el pinguino) el dibujo siguiente de las opciones (p03:AA93)
 	call 0aa9bh		;41ba   ; rastro_de_la_nave: si la nave se mueve, su posicion entra en el rastro (16, 0xE450) y las opciones la siguen 8 y 16 pasos atras
 	call 0ab15h		;41bd   ; opciones_giran: con la capsula 3, las opciones giran alrededor de la nave (16 posiciones de p03:AB72)
 	call 0abe5h		;41c0   ; dispara_la_nave: con el disparo recien pulsado, o cada 15 cuadros si se mantiene, disparan la nave y sus opciones (p03:AC30)
@@ -301,14 +301,14 @@ L_41E4:
 	dec a			;41f0   ; la fase 1 tiene algo mas: p11:B193
 	jr nz,L_41FC		;41f1
 	call banco_11		;41f3   ; banco_11: pone el banco 11 en 0xA000 (y 0xF0F3)
-	call 0b193h		;41f6
+	call 0b193h		;41f6   ; mueve_giratorios: en la fase 1, los 4 giratorios de 0xEA20: el scroll, el giro, la animacion y el disparo
 	call bancos_2_3		;41f9   ; bancos_2_3: pone los bancos 2 y 3 en 0x8000 y 0xA000 (y 0xF0F2-0xF0F3)
 L_41FC:
 	call 06b85h		;41fc   ; mueve_piezas: sin jefe con partes, en las fases 3 y 9-11, las 16 piezas de 0xE580 (p01:6BA4)
 	call 06acch		;41ff   ; apariciones_de_piezas_scroll: si el scroll avanzo (0xE320), lo de la columna nueva (X = 0xF8)
 	call banco_11		;4202   ; banco_11: pone el banco 11 en 0xA000 (y 0xF0F3)
-	call 0b4aah		;4205
-	call 0b422h		;4208
+	call 0b4aah		;4205   ; mueve_piezas_de_fase_5: en la fase 5, las dos piezas de 0xE580 y 0xE590
+	call 0b422h		;4208   ; piezas_de_fase_5_scroll: en la fase 5, si el scroll avanzo, lo de la columna nueva
 	call bancos_2_3		;420b   ; bancos_2_3: pone los bancos 2 y 3 en 0x8000 y 0xA000 (y 0xF0F2-0xF0F3)
 	call 0a04dh		;420e   ; cuadro_suceso_fase_5: cuenta los cuadros del suceso (0xE349); al acabar, 0xE348 = 1; paso 1: salen compuertas; paso 2: espera
 	call 072d6h		;4211   ; suceso_e34b: el paso del suceso 0xE34B (4, p01:72DF): las dos piezas de 0xEA70, sus rocas, los puntos, 0xE3AA y p11:A2A2
@@ -322,7 +322,7 @@ L_41FC:
 	call banco_11		;4229   ; banco_11: pone el banco 11 en 0xA000 (y 0xF0F3)
 	ld a,(0e201h)		;422c   ; lee la fase (0-11)
 	dec a			;422f   ; en la fase 1, p11:B2CE
-	call z,0b2ceh		;4230
+	call z,0b2ceh		;4230   ; pinta_giratorios: en la fase 1, cada giratorio en la pantalla de RAM (p11:B2E5)
 	call bancos_2_3		;4233   ; bancos_2_3: pone los bancos 2 y 3 en 0x8000 y 0xA000 (y 0xF0F2-0xF0F3)
 	call 067b9h		;4236   ; partes_del_jefe: si p01:6878 no da Z, con el banco 9, p01:67CE con C = 1
 	call 08be3h		;4239   ; disparos_a_piezas: sin jefe, en las fases 3 y 9-11, las piezas de 0xE580 contra los disparos
@@ -349,31 +349,31 @@ L_425D:
 	call 06cedh		;4270   ; pinta_piezas: sin jefe con partes, en las fases 3 y 9-11, con los bancos 14-15, cada pieza en la pantalla de RAM (p01:6D11)
 	call 06c48h		;4273   ; caen_las_piezas: sin jefe con partes, en las fases 3 y 9-11, las 16 piezas de 0xE580 (p01:6C67)
 	call banco_11		;4276   ; banco_11: pone el banco 11 en 0xA000 (y 0xF0F3)
-	call 0b53ah		;4279
+	call 0b53ah		;4279   ; pinta_piezas_de_fase_5: en la fase 5, las dos piezas de 0xE580/0xE590 en la pantalla de RAM
 	call bancos_2_3		;427c   ; bancos_2_3: pone los bancos 2 y 3 en 0x8000 y 0xA000 (y 0xF0F2-0xF0F3)
 	call 0853eh		;427f   ; pinta_capsula: la capsula especial: 2x2 caracteres desde el 0xE9 en la pantalla de RAM (sitio en 0xEA63)
 	call 086b1h		;4282   ; guarda_fondo_explosiones: el fondo de 4x4 caracteres bajo cada explosion a 0xECC0 (16 bytes cada una) y su sitio
 	call banco_11		;4285   ; banco_11: pone el banco 11 en 0xA000 (y 0xF0F3)
-	call 0bd47h		;4288
-	call 0a0d6h		;428b
+	call 0bd47h		;4288   ; guarda_fondo_de_enemigos: sin 0xE3AA, el fondo bajo cada enemigo de caracteres (no el 0x24) a 0xEB00
+	call 0a0d6h		;428b   ; guarda_fondo_disparos: el fondo bajo los 6 primeros disparos de caracteres, a 0xEC00
 	call bancos_2_3		;428e   ; bancos_2_3: pone los bancos 2 y 3 en 0x8000 y 0xA000 (y 0xF0F2-0xF0F3)
 	call bancos_2_3		;4291   ; bancos_2_3: pone los bancos 2 y 3 en 0x8000 y 0xA000 (y 0xF0F2-0xF0F3)
 	call 0872ah		;4294   ; pinta_explosiones: cada explosion: los 4x4 caracteres de su paso (p02:8762) en la pantalla de RAM
 	call sprites_de_enemigos		;4297   ; sprites_de_enemigos: si no esta 0xE3AA, los enemigos de 0xE600 a sprites (0xE2A8) o a caracteres, con los bancos 7-8-9
 	call sprites_de_balas		;429a   ; sprites_de_balas: los atributos de sprite de las 10 fichas de 0xE900 (Y, X, dibujo, color) a 0xE2D8; las libres con Y = 0xE0
 	call banco_11		;429d   ; banco_11: pone el banco 11 en 0xA000 (y 0xF0F3)
-	call 0a000h		;42a0
-	call 0a088h		;42a3
-	call 0a206h		;42a6
+	call 0a000h		;42a0   ; sprites_de_la_nave: la nave y sus opciones a la tabla de sprites (0xE280): sin nave ninguno; cayendo, la explosion; intocable parpadea al final; con escudo, el segundo sprite 8 pixeles delante
+	call 0a088h		;42a3   ; sprites_de_disparos: los disparos de la nave que son sprites (tipos 3-5, 14 y el 6 en marcha) a 0xE290; los demas sprites, escondidos
+	call 0a206h		;42a6   ; pinta_disparos: los 9 disparos de la nave que son caracteres, en la pantalla de RAM (p11:A221)
 	call bancos_2_3		;42a9   ; bancos_2_3: pone los bancos 2 y 3 en 0x8000 y 0xA000 (y 0xF0F2-0xF0F3)
 	call banco_9		;42ac   ; el banco 9 en 0xA000 para p01:6A27
 	call 06a27h		;42af   ; anima_el_fondo: sin jefe, un caracter animado de la fase (p09:B901): fichas de 10 bytes [caracter][tercios][8 bytes], una por cuadro (0xE3BB)
 	call bancos_1_2_3		;42b2   ; bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xF0F1-0xF0F3)
 	call estrellas_titilan		;42b5   ; estrellas_titilan: los dibujos de las estrellas (caracteres 0xFE y 0xFF de los tres tercios) segun 0xE202 y la mascara de p00:49E0
-	call 077f1h		;42b8
+	call 077f1h		;42b8   ; pantalla_a_vram: las 22 filas de la pantalla de RAM (0xED00) a la tabla de nombres, movidas un caracter si tiembla (0xE34E)
 	call banco_11		;42bb   ; banco_11: pone el banco 11 en 0xA000 (y 0xF0F3)
-	call 0a16ah		;42be
-	call 0bdcdh		;42c1
+	call 0a16ah		;42be   ; repone_fondo_disparos: devuelve el fondo de 0xEC00 bajo los 6 primeros disparos
+	call 0bdcdh		;42c1   ; repone_fondo_de_enemigos: sin 0xE3AA, devuelve el fondo de 0xEB00 bajo cada enemigo de caracteres; el 0x24 se borra (p00:4BC7)
 	call bancos_2_3		;42c4   ; bancos_2_3: pone los bancos 2 y 3 en 0x8000 y 0xA000 (y 0xF0F2-0xF0F3)
 	call 086f1h		;42c7   ; repone_fondo_explosiones: devuelve el fondo de 0xECC0 bajo cada explosion
 	call 06826h		;42ca   ; quita_partes_del_jefe: si hay jefe con partes, con el banco 9 las borra (C = 0) y vuelve a poner las estrellas
@@ -529,14 +529,14 @@ sprites_cabeza_abajo:		; copia IX+01 dibujos de sprite de IX+02 a IX+03 cabeza a
 	add hl,hl			;43fd
 	ld bc,01800h		;43fe
 	add hl,bc			;4401
-	ld (0f012h),hl		;4402   ; guarda la velocidad Y calculada (16 bits) y el byte siguiente (16 bits)
+	ld (0f012h),hl		;4402   ; guarda la velocidad Y calculada (16 bits)
 	ld l,(ix+003h)		;4405   ; IX+03: el de destino
 	ld h,000h		;4408
 	add hl,hl			;440a
 	add hl,hl			;440b
 	add hl,hl			;440c
 	add hl,bc			;440d
-	ld (0f014h),hl		;440e   ; guarda la velocidad X calculada (16 bits) y el byte siguiente (16 bits)
+	ld (0f014h),hl		;440e   ; guarda la velocidad X calculada (16 bits)
 L_4411:
 	ld hl,(0f012h)		;4411   ; lee los 32 bytes del sprite
 	ld de,0e600h		;4414   ; apunta a las fichas de 64 bytes (0xE600-0xE8FF), y tambien el bufer de graficos al cargar
@@ -548,12 +548,12 @@ L_4411:
 	ld bc,00020h		;4426
 	call copia_a_vram		;4429   ; copia_a_vram: copia BC bytes de DE a la VRAM HL (LDIRVM)
 	ld bc,00020h		;442c   ; los dos al sprite siguiente
-	ld hl,(0f012h)		;442f   ; lee la velocidad Y calculada (16 bits) y el byte siguiente (16 bits)
+	ld hl,(0f012h)		;442f   ; lee la velocidad Y calculada (16 bits)
 	add hl,bc			;4432
-	ld (0f012h),hl		;4433   ; guarda la velocidad Y calculada (16 bits) y el byte siguiente (16 bits)
-	ld hl,(0f014h)		;4436   ; lee la velocidad X calculada (16 bits) y el byte siguiente (16 bits)
+	ld (0f012h),hl		;4433   ; guarda la velocidad Y calculada (16 bits)
+	ld hl,(0f014h)		;4436   ; lee la velocidad X calculada (16 bits)
 	add hl,bc			;4439
-	ld (0f014h),hl		;443a   ; guarda la velocidad X calculada (16 bits) y el byte siguiente (16 bits)
+	ld (0f014h),hl		;443a   ; guarda la velocidad X calculada (16 bits)
 	ld hl,0f010h		;443d   ; apunta a variable de paso: la lista
 	dec (hl)			;4440   ; cuantos quedan
 	jr nz,L_4411		;4441
@@ -1058,7 +1058,7 @@ pinta_la_pantalla:		; las 32 columnas de la pantalla de una vez (0xE203 - 32 en 
 	ld hl,(0e203h)		;47e4   ; la columna 32 atras
 	ld de,00020h		;47e7
 	sbc hl,de		;47ea
-	ld (0e203h),hl		;47ec   ; guarda la columna del scroll (16 bits) y el byte siguiente (16 bits)
+	ld (0e203h),hl		;47ec   ; guarda la columna del scroll (16 bits)
 	ld hl,0ed00h		;47ef   ; la primera columna de la pantalla de RAM
 	ld (0f000h),hl		;47f2   ; guarda variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo) o un puntero y el byte siguiente (16 bits)
 	ld b,020h		;47f5   ; 32 columnas
@@ -1073,8 +1073,8 @@ L_47F7:
 	call 06f42h		;480a   ; enemigos_de_la_lista: en las fases 0-8, lo que trae cada columna de la lista (p01:6F64) hasta ponerse al dia (0xE37C)
 	call 06abch		;480d   ; apariciones_de_piezas: en las fases 3 y 9-11, lo que trae cada columna (p01:6AE0) hasta ponerse al dia (0xE369)
 	call banco_11		;4810   ; banco_11: pone el banco 11 en 0xA000 (y 0xF0F3)
-	call 0b109h		;4813
-	call 0b410h		;4816
+	call 0b109h		;4813   ; giratorios_de_la_lista: en la fase 1, lo que trae cada columna (p11:B124) hasta ponerse al dia (0xE377)
+	call 0b410h		;4816   ; piezas_de_fase_5: en la fase 5, lo que trae cada columna (p11:B432) hasta ponerse al dia (0xE36B)
 	call bancos_2_3		;4819   ; bancos_2_3: pone los bancos 2 y 3 en 0x8000 y 0xA000 (y 0xF0F2-0xF0F3)
 	call apariciones_de_capsula		;481c   ; apariciones_de_capsula: lo que trae la columna (p00:5130) hasta ponerse al dia (0xE37D)
 	ld hl,(0f000h)		;481f   ; a la columna siguiente de la pantalla
@@ -1086,12 +1086,12 @@ L_47F7:
 	ld (hl),a			;482c
 	ld hl,(0e203h)		;482d   ; y del mapa
 	inc hl			;4830
-	ld (0e203h),hl		;4831   ; guarda la columna del scroll (16 bits) y el byte siguiente (16 bits)
+	ld (0e203h),hl		;4831   ; guarda la columna del scroll (16 bits)
 	pop bc			;4834
 	djnz L_47F7		;4835
 	ld hl,(0e203h)		;4837   ; la ultima no cuenta: la pinta el scroll
 	dec hl			;483a
-	ld (0e203h),hl		;483b   ; guarda la columna del scroll (16 bits) y el byte siguiente (16 bits)
+	ld (0e203h),hl		;483b   ; guarda la columna del scroll (16 bits)
 	ret			;483e
 L_483F:
 	ld a,001h		;483f
@@ -1102,7 +1102,7 @@ paso_de_scroll:		; si toca (0xE3D0, 0xE202) corre la pantalla de 0xED00 una colu
 	ld (0e320h),a		;4846   ; guarda la marca de scroll hecho en este cuadro
 	ld (0e327h),a		;4849   ; guarda la marca de fin del scroll
 	ld de,(0e325h)		;484c   ; ya ha llegado al final?
-	ld hl,(0e203h)		;4850   ; lee la columna del scroll (16 bits) y el byte siguiente (16 bits)
+	ld hl,(0e203h)		;4850   ; lee la columna del scroll (16 bits)
 	rst 20h			;4853
 	jr nc,L_483F		;4854
 	ld a,(0e3d0h)		;4856   ; la velocidad del scroll
@@ -1118,7 +1118,7 @@ paso_de_scroll:		; si toca (0xE3D0, 0xE202) corre la pantalla de 0xED00 una colu
 	ret z			;4866
 L_4867:
 	inc hl			;4867   ; una columna mas
-	ld (0e203h),hl		;4868   ; guarda la columna del scroll (16 bits) y el byte siguiente (16 bits)
+	ld (0e203h),hl		;4868   ; guarda la columna del scroll (16 bits)
 	ld a,001h		;486b   ; hay scroll en este cuadro
 	ld (0e320h),a		;486d   ; guarda la marca de scroll hecho en este cuadro
 	ld hl,0ed01h		;4870   ; corre a la izquierda las 22 filas de la pantalla de RAM
@@ -1135,7 +1135,7 @@ L_4878:
 	ld hl,0ed1fh		;4883   ; la columna nueva es la ultima (31)
 	ld (0f000h),hl		;4886   ; guarda variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo) o un puntero y el byte siguiente (16 bits)
 pinta_columna:		; la columna 0xE203 del mapa de la fase (p13:7900) en 0xF000, metabloque a metabloque; fuera de 0xE321-0xE323, estrellas
-	ld hl,(0e203h)		;4889   ; lee la columna del scroll (16 bits) y el byte siguiente (16 bits)
+	ld hl,(0e203h)		;4889   ; lee la columna del scroll (16 bits)
 	ld de,(0e323h)		;488c   ; pasada la ultima columna con mapa?
 	rst 20h			;4890
 	ccf			;4891
@@ -1744,7 +1744,7 @@ aparicion_de_fase:		; la ficha A (3 bytes [columna][dato]) de la lista HL de la 
 	ld d,(hl)			;4c43
 	inc hl			;4c44
 	ld c,(hl)			;4c45   ; C = su dato
-	ld hl,(0e203h)		;4c46   ; lee la columna del scroll (16 bits) y el byte siguiente (16 bits)
+	ld hl,(0e203h)		;4c46   ; lee la columna del scroll (16 bits)
 	rst 20h			;4c49   ; la compara con la del scroll
 	ret			;4c4a
 cuenta_atras:		; en los estados 2 y 5, la cuenta de la capsula especial (0xE439): un segundo cada 60 cuadros en 0xE43A (BCD); 0xE1D5 = 1 en cada segundo, 2 al acabar
@@ -2017,13 +2017,13 @@ L_4E75:
 	ret			;4e75
 tipo_banco_11_b8f4:		; con el banco 11, p11:B8F4, y vuelve a 2-3
 	call banco_11		;4e76   ; banco_11: pone el banco 11 en 0xA000 (y 0xF0F3)
-	call 0b8f4h		;4e79
+	call 0b8f4h		;4e79   ; tipo_02_empieza: el tipo 2: sale de su compuerta del borde derecho (arriba o abajo) hacia el centro, con su cuenta (p11:B997)
 	jp bancos_2_3		;4e7c   ; bancos_2_3: pone los bancos 2 y 3 en 0x8000 y 0xA000 (y 0xF0F2-0xF0F3)
 tipo_banco_11_a5f0:		; con el banco 11, p11:A5F0, y devuelve el banco de 0xA000
 	ld a,(0f0f3h)		;4e7f   ; guarda el banco de 0xA000
 	push af			;4e82
 	call banco_11		;4e83   ; banco_11: pone el banco 11 en 0xA000 (y 0xF0F3)
-	call 0a5f0h		;4e86
+	call 0a5f0h		;4e86   ; tipo_38_empieza: el tipo 0x38: cuatro sprites (IX+34, IX+38, IX+3C) escondidos, 8 cuadros, con el scroll y el color que toca
 	pop af			;4e89   ; y lo devuelve
 	di			;4e8a
 	ld (0b000h),a		;4e8b   ; el mapper: pone en 0xA000 el banco de A
@@ -2081,9 +2081,9 @@ rumbo_de_a:		; IX+07-IX+0A desde IX+04/IX+06 con p02:9467 y p02:93FD (A en 0xF00
 	call 09467h		;4ee8   ; angulo_a_f000: el angulo desde D/E hasta 0xF000 (Y), 0xF001 (X)
 	ld d,001h		;4eeb
 	call 093fdh		;4eed   ; rumbo_del_angulo_d: lo mismo con D = 1 para no poner error
-	ld de,(0f014h)		;4ef0   ; lee la velocidad X calculada (16 bits) y el byte siguiente (16 bits)
+	ld de,(0f014h)		;4ef0   ; lee la velocidad X calculada (16 bits)
 	call pon_vx		;4ef4   ; pon_vx: IX+09/IX+0A = DE
-	ld de,(0f012h)		;4ef7   ; lee la velocidad Y calculada (16 bits) y el byte siguiente (16 bits)
+	ld de,(0f012h)		;4ef7   ; lee la velocidad Y calculada (16 bits)
 pon_vy:		; IX+07/IX+08 = DE
 	ld (ix+007h),e		;4efb   ; IX+07/IX+08: la velocidad Y
 	ld (ix+008h),d		;4efe
@@ -2822,8 +2822,8 @@ L_5500:
 	ld a,(0e439h)		;5505   ; la capsula 3: p03:AA2F y p03:AAEC
 	sub 003h		;5508
 	jr nz,L_5514		;550a
-	call 0aa2fh		;550c
-	call 0aaech		;550f
+	call 0aa2fh		;550c   ; rastro_a_la_nave (p03:AA2F): las opciones dejan de girar y vuelven al rastro
+	call 0aaech		;550f   ; opciones_al_rastro (p03:AAEC)
 	jr L_5534		;5512
 L_5514:
 	dec a			;5514   ; la capsula 4
@@ -2971,17 +2971,17 @@ L_563A:
 	dec (hl)			;563f
 	ret nz			;5640
 	call banco_10		;5641   ; con el banco 10, p01:615B y p10:B64F
-	call 0615bh		;5644
-	call 0b64fh		;5647
+	call 0615bh		;5644   ; pantalla_del_titulo (p01:615B)
+	call 0b64fh		;5647   ; empieza_el_titulo: paso 1, sin sprites, el logo descomprimido en la pantalla de RAM y su aparicion por pasos
 	call bancos_1_2_3		;564a   ; bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xF0F1-0xF0F3)
 	xor a			;564d
 	jp siguiente_paso_con_espera		;564e   ; siguiente_paso_con_espera: 0xE1C4 = A y el paso siguiente (0xE1C1 + 1)
 L_5651:
 	djnz L_5668		;5651   ; paso 3: p10:B737 hasta que 0xE1D7 sea 0
 	call banco_10		;5653   ; banco_10: pone el banco 10 en 0xA000 (y 0xF0F3)
-	call 0b737h		;5656
+	call 0b737h		;5656   ; titulo_aparece: los fundidos del logo paso a paso (5); luego el de los textos y los textos del titulo; al acabar, 0xE1D7 = 0
 	call bancos_1_2_3		;5659   ; bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xF0F1-0xF0F3)
-	ld a,(0e1d7h)		;565c
+	ld a,(0e1d7h)		;565c   ; lee el paso de la historia o de la secuencia en marcha (0: ninguna)
 	and a			;565f
 	ret nz			;5660
 	xor a			;5661   ; al estado 1 (el titulo)
@@ -2991,14 +2991,14 @@ L_5668:
 	call registros_del_vdp		;5668   ; paso 0: el VDP, la pantalla en blanco, p11:B6CD y p01:6237
 	call borra_nombres		;566b   ; borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
 	call banco_11		;566e   ; banco_11: pone el banco 11 en 0xA000 (y 0xF0F3)
-	call 0b6cdh		;5671
+	call 0b6cdh		;5671   ; fuente_tres_tercios: las letras y cifras (p11:B7B4 desde el caracter 0x10 y p11:B81C desde el 0x20) en los tres tercios, con colores 0xF0
 	call bancos_2_3		;5674   ; bancos_2_3: pone los bancos 2 y 3 en 0x8000 y 0xA000 (y 0xF0F2-0xF0F3)
 	call 06237h		;5677   ; logo_de_konami: descomprime p09:B79F, borra sus colores y pone los 21 x 6 caracteres del logo (0x40 en adelante) en la fila 8
 	jp siguiente_paso		;567a   ; siguiente_paso: el paso siguiente del estado (0xE1C1 + 1)
 estado_1_titulo:		; el titulo: p01:621E y luego p10:B77C cada cuadro durante 0xE1C4; despues el estado 2
 	djnz L_5692		;567d   ; paso 1: p10:B77C mientras dure 0xE1C4
 	call banco_10		;567f   ; banco_10: pone el banco 10 en 0xA000 (y 0xF0F3)
-	call 0b77ch		;5682
+	call 0b77ch		;5682   ; titulo_cada_cuadro: sin sprites, los dos sprites de p10:B8FC y, cada 4 cuadros, una de las dos imagenes del logo (brillo)
 	call bancos_1_2_3		;5685   ; bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xF0F1-0xF0F3)
 	ld hl,0e1c4h		;5688   ; apunta a la espera del paso, en cuadros
 	dec (hl)			;568b
@@ -3011,9 +3011,9 @@ L_5692:
 estado_2_demo:		; la demostracion: p10:A643, p10:A000, p10:B64F, p10:B737, y una fase jugada sola (p00:5EF6, p00:5F2A); luego el estado 0
 	djnz L_56AB		;5699   ; paso 1: p10:A000 hasta que 0xE1D7 sea 0
 	call banco_10		;569b   ; banco_10: pone el banco 10 en 0xA000 (y 0xF0F3)
-	call 0a000h		;569e
+	call 0a000h		;569e   ; historia: la historia de la demostracion: el paso 0xE1D7 (31, p10:A007), cada uno espera su cuadro (0xF0F7) o pinta una escena con su texto (ingles fuera de Japon, 0x002B)
 	call bancos_1_2_3		;56a1   ; bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xF0F1-0xF0F3)
-	ld a,(0e1d7h)		;56a4
+	ld a,(0e1d7h)		;56a4   ; lee el paso de la historia o de la secuencia en marcha (0: ninguna)
 	and a			;56a7
 	ret nz			;56a8
 	jr siguiente_paso		;56a9
@@ -3021,15 +3021,15 @@ L_56AB:
 	djnz L_56BC		;56ab   ; paso 2: p01:615B y p10:B64F
 	call banco_10		;56ad   ; banco_10: pone el banco 10 en 0xA000 (y 0xF0F3)
 	call 0615bh		;56b0   ; pantalla_del_titulo: los caracteres del titulo (p00:55A7) y, fuera de Japon, los de NEMESIS (p12:AA83), p11:B6CD, sprites (p12:AA75) y p10:A24C
-	call 0b64fh		;56b3
+	call 0b64fh		;56b3   ; empieza_el_titulo: paso 1, sin sprites, el logo descomprimido en la pantalla de RAM y su aparicion por pasos
 	call bancos_1_2_3		;56b6   ; bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xF0F1-0xF0F3)
 	jp siguiente_paso		;56b9   ; siguiente_paso: el paso siguiente del estado (0xE1C1 + 1)
 L_56BC:
 	djnz L_56D0		;56bc   ; paso 3: p10:B737 hasta que 0xE1D7 sea 0
 	call banco_10		;56be   ; banco_10: pone el banco 10 en 0xA000 (y 0xF0F3)
-	call 0b737h		;56c1
+	call 0b737h		;56c1   ; titulo_aparece: los fundidos del logo paso a paso (5); luego el de los textos y los textos del titulo; al acabar, 0xE1D7 = 0
 	call bancos_1_2_3		;56c4   ; bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xF0F1-0xF0F3)
-	ld a,(0e1d7h)		;56c7
+	ld a,(0e1d7h)		;56c7   ; lee el paso de la historia o de la secuencia en marcha (0: ninguna)
 	and a			;56ca
 	ret nz			;56cb
 	xor a			;56cc
@@ -3040,7 +3040,7 @@ L_56D0:
 	dec (hl)			;56d5
 	jr z,L_571D		;56d6
 	call banco_10		;56d8   ; banco_10: pone el banco 10 en 0xA000 (y 0xF0F3)
-	call 0b77ch		;56db
+	call 0b77ch		;56db   ; titulo_cada_cuadro: sin sprites, los dos sprites de p10:B8FC y, cada 4 cuadros, una de las dos imagenes del logo (brillo)
 	jp bancos_1_2_3		;56de   ; bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xF0F1-0xF0F3)
 L_56E1:
 	djnz L_56F6		;56e1   ; paso 5: silencio, pantalla en blanco, p01:6210, jugadores a cero y la demo
@@ -3069,7 +3069,7 @@ al_estado_a:		; estado A, paso 0, 0xE1C4 = 32 cuadros
 L_5711:
 	call borra_nombres		;5711   ; paso 0: pantalla en blanco y p10:A643
 	call banco_10		;5714   ; banco_10: pone el banco 10 en 0xA000 (y 0xF0F3)
-	call 0a643h		;5717
+	call 0a643h		;5717   ; empieza_historia: suena 0x3F, la cuenta de cuadros a cero; en Japon un texto primero (paso 1), fuera la escena 1 (paso 2)
 	call bancos_1_2_3		;571a   ; bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xF0F1-0xF0F3)
 L_571D:
 	ld a,020h		;571d
@@ -3097,15 +3097,15 @@ L_5744:
 	djnz L_5754		;5744   ; paso 2: pantalla en blanco y p10:BF9E
 	call borra_nombres		;5746   ; borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
 	call banco_10		;5749   ; banco_10: pone el banco 10 en 0xA000 (y 0xF0F3)
-	call 0bf9eh		;574c
+	call 0bf9eh		;574c   ; empieza_el_piloto: paso 1: caracteres, pantalla de RAM a cero, los ojos en 0x3848, el fondo y la imagen del piloto (p10:B586) a 0xE500
 	call bancos_1_2_3		;574f   ; bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xF0F1-0xF0F3)
 	jr siguiente_paso		;5752
 L_5754:
 	djnz L_5766		;5754   ; paso 3: p10:BDFD hasta que 0xE1D7 sea 0
 	call banco_10		;5756   ; banco_10: pone el banco 10 en 0xA000 (y 0xF0F3)
-	call 0bdfdh		;5759
+	call 0bdfdh		;5759   ; escena_del_piloto: la escena del piloto al empezar la partida, paso 0xE1D7 (p10:BE04)
 	call bancos_1_2_3		;575c   ; bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xF0F1-0xF0F3)
-	ld a,(0e1d7h)		;575f
+	ld a,(0e1d7h)		;575f   ; lee el paso de la historia o de la secuencia en marcha (0: ninguna)
 	and a			;5762
 	ret nz			;5763
 	jr siguiente_paso		;5764
@@ -3291,8 +3291,8 @@ L_58A6:
 	jp siguiente_paso_con_espera		;58c0   ; siguiente_paso_con_espera: 0xE1C4 = A y el paso siguiente (0xE1C1 + 1)
 b736_y_b6f0:		; con el banco 11, p11:B736 y p11:B6F0
 	call banco_11		;58c3   ; banco_11: pone el banco 11 en 0xA000 (y 0xF0F3)
-	call 0b736h		;58c6
-	call 0b6f0h		;58c9
+	call 0b736h		;58c6   ; fuente_del_marcador: colores 0xF0 y las cifras del tercio de abajo (p11:B7B4 desde el caracter 1) y las letras de p11:B77B desde el 0x12
+	call 0b6f0h		;58c9   ; fuente_dos_tercios: las letras y cifras en los tercios de arriba y del medio
 	jp bancos_2_3		;58cc   ; bancos_2_3: pone los bancos 2 y 3 en 0x8000 y 0xA000 (y 0xF0F2-0xF0F3)
 estado_8_vuelve:		; 0xE1DA = 0, p01:7C1C, el marcador y el medidor; el R.DRILL vuelve a ser nave; al estado 5
 	xor a			;58cf
@@ -3332,7 +3332,7 @@ estado_9_pausa:		; la pausa: con F1 suena 0xF2 y vuelve al 5; mientras, p11:BD7C
 	call banco_11		;5912   ; banco_11: pone el banco 11 en 0xA000 (y 0xF0F3)
 	call 0a000h		;5915   ; p11:A000
 	call bancos_2_3		;5918   ; bancos_2_3: pone los bancos 2 y 3 en 0x8000 y 0xA000 (y 0xF0F2-0xF0F3)
-	jp 077b6h		;591b
+	jp 077b6h		;591b   ; sprites_a_vram (p01:77B6)
 L_591E:
 	ld a,0f2h		;591e   ; suena 0xF2 y vuelve al juego
 	call sonido		;5920   ; sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
@@ -3447,7 +3447,7 @@ L_59ED:
 L_5A05:
 	call bancos_13_14_15		;5a05   ; paso 0: con los bancos 13-14-15 y 10, p10:B993
 	call banco_10		;5a08   ; banco_10: pone el banco 10 en 0xA000 (y 0xF0F3)
-	call 0b993h		;5a0b
+	call 0b993h		;5a0b   ; final: el final del juego, paso 0xE1E6 (14, p10:B99A): textos, la nave y los creditos
 	call bancos_1_2_3		;5a0e   ; bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xF0F1-0xF0F3)
 	ld a,(0e1e6h)		;5a11   ; lee la marca del final (estado 10)
 	or a			;5a14
@@ -3505,7 +3505,7 @@ L_5A70:
 	inc hl			;5a72
 	xor a			;5a73
 	ld (hl),a			;5a74
-	ld (0e1d7h),a		;5a75
+	ld (0e1d7h),a		;5a75   ; guarda el paso de la historia o de la secuencia en marcha (0: ninguna)
 	ld a,043h		;5a78   ; silencio
 	jp sonido		;5a7a   ; sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
 L_5A7D:
@@ -4027,7 +4027,7 @@ lee_joystick:		; A = el registro 14 del PSG (el puerto del joystick que elige E 
 	ret			;5d7f
 aa2f_con_bancos:		; con los bancos 1-2-3, p03:AA2F, y el banco 10
 	call bancos_1_2_3		;5d80   ; bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xF0F1-0xF0F3)
-	call 0aa2fh		;5d83
+	call 0aa2fh		;5d83   ; rastro_a_la_nave: las 16 posiciones del rastro (0xE450) en la nave y 0xE40E = 0
 	jp banco_10		;5d86   ; banco_10: pone el banco 10 en 0xA000 (y 0xF0F3)
 cuadros_desde:		; C si la cuenta de interrupciones 0xF0F7 no llega a DE
 	ld hl,(0f0f7h)		;5d89   ; lee la cuenta de interrupciones (16 bits)
@@ -4116,7 +4116,7 @@ caracteres_del_final:		; p09:AFF8, p12:BC09 y p12:BEF1 a los tres tercios y colo
 	jp rellena_vram_x3		;5e56   ; rellena_vram_x3: rellena BC bytes de la VRAM con A en los tres tercios (HL, + 0x800, + 0x1000)
 caracteres_b6cd_y_69f2:		; p00:5E64 y p01:69F2
 	call caracteres_b6cd		;5e59   ; caracteres_b6cd: con el banco 11, p11:B6CD y caracteres copiados de un sitio a otro de la VRAM
-	jp 069f2h		;5e5c
+	jp 069f2h		;5e5c   ; bancos_1_2_3_y_10 (p01:69F2)
 caracteres_b6cd_y_borra:		; p00:5E64 y p00:5D97
 	call caracteres_b6cd		;5e5f   ; caracteres_b6cd: con el banco 11, p11:B6CD y caracteres copiados de un sitio a otro de la VRAM
 L_5E62:
@@ -4143,11 +4143,11 @@ caracteres_b6cd:		; con el banco 11, p11:B6CD y caracteres copiados de un sitio 
 caracteres_a214_y_borra:		; p00:5EA9, p00:5D97 y p10:A435
 	call caracteres_a214_sin		;5e9a   ; caracteres_a214_sin: con el banco 9, la lista p09:A214 con sus copias y, fuera del MSX japones (0x002B), p09:A221
 	call borra_e600_bancos		;5e9d   ; borra_e600_bancos: con los bancos 13-14-15 vacia 0xE600-0xE9FF y deja el banco 10
-	jp 0a435h		;5ea0
+	jp 0a435h		;5ea0   ; imagen_de_la_nave: borra 8 dibujos desde 0x0170 en dos tercios y pinta la imagen p10:AF6D
 caracteres_a214:		; p00:5EA9 y p01:69EF
 	call caracteres_a214_sin		;5ea3   ; caracteres_a214_sin: con el banco 9, la lista p09:A214 con sus copias y, fuera del MSX japones (0x002B), p09:A221
 L_5EA6:
-	jp 069efh		;5ea6
+	jp 069efh		;5ea6   ; borra_e600_y_banco_10 (p01:69EF)
 caracteres_a214_sin:		; con el banco 9, la lista p09:A214 con sus copias y, fuera del MSX japones (0x002B), p09:A221
 	call banco_9		;5ea9   ; banco_9: pone el banco 9 en 0xA000 (y 0xF0F3)
 	ld ix,0a214h		;5eac   ; la lista p09:A214
@@ -4311,7 +4311,7 @@ objeto_de_caracteres_a:		; segun la clase (IX+00) y IX+06, a p00:5FFB
 	jr z,objeto_de_caracteres		;5fcf
 	ret			;5fd1
 objetos_5fdf:		; si p01:6878 da Z, con el banco 15, p00:5FDF
-	call 06878h		;5fd2
+	call 06878h		;5fd2   ; hay_jefe_con_partes (p01:6878)
 	ret nz			;5fd5
 	call banco_15		;5fd6   ; banco_15: pone el banco 15 en 0xA000 (y 0xF0F3)
 	call objetos_de_caracteres_b		;5fd9   ; objetos_de_caracteres_b: las 0xE3B2 fichas de 0xE500 con 0xF000 = 0xFF (p00:5FFB)

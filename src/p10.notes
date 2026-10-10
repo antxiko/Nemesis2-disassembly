@@ -1,6 +1,402 @@
 # notas del banco 10
 
 # --- A MANO: comentarios, nombres y bloques ---
+C 0xA000 el paso
+C 0xA045 el cuadro 0x2DB
+C 0xA04B todavia no: el fundido
+C 0xA056 desde 0x0008
+C 0xA059 tres tercios
+C 0xA05C 0xFE caracteres
+C 0xA05E y empieza
+C 0xA061 desde 0x1008
+C 0xA06F desde 0x0980, dos tercios
+C 0xA072 0xD0 caracteres
+C 0xA084 tipo 3
+C 0xA088 el fundido
+C 0xA08B hasta que acabe
+C 0xA090 pantalla en blanco
+C 0xA093 los caracteres de la historia
+C 0xA099 la imagen p10:ACAB, 27 columnas, en 0x3843
+C 0xA0A4 y el fundido del texto
+C 0xA0A7 Japon o no
+C 0xA0AC el texto japones
+C 0xA0B1 o DR.VENOM THE DIRECTOR GENERAL...
+C 0xA0B9 el cuadro 0x4BB
+C 0xA0D9 la imagen p10:ADBD, 21 columnas, en 0x3866
+C 0xA0EC el texto japones
+C 0xA0F1 o DR.VENOM FAILED IN A COUP D'ETAT...
+C 0xA0FA el cuadro 0x6D7
+C 0xA106 cada 8 cuadros
+C 0xA10C alterna
+C 0xA114 uno de los dos trozos
+C 0xA11C 4 columnas en 0x38EC
+C 0xA135 tres imagenes
+C 0xA15E el texto japones
+C 0xA163 o COSMIC YEAR ... DR.VENOM ESCAPED FROM PLANET SARD
+C 0xA16B el cuadro 0x8B7
+C 0xA188 la imagen p10:AFE6, 31 columnas
+C 0xA19B el texto japones
+C 0xA1A0 o HE WAS NOT FOUND, DESPITE THE SEARCH OF IMPERIAL ARMADA
+C 0xA1A8 el cuadro 0xA5B
+C 0xA1C2 copias de caracteres
+C 0xA1C8 fuera de Japon, mas
+C 0xA1D0 la nave
+C 0xA1DB el texto japones
+C 0xA1E0 o el de p10:B29E
+C 0xA1E8 el cuadro 0xBC3
+C 0xA1F4 la mitad del tiempo, la nave
+C 0xA1FC la otra, p10:AFE3
+C 0xA215 Japon o no
+C 0xA225 fundido de tipo 1
+C 0xA235 el texto japones
+C 0xA23A o THE INVADER WAS DR.VENOM
+C 0xA245 los dibujos
+C 0xA24C 1: con colores
+C 0xA24F la base
+C 0xA252 los tercios
+C 0xA256 0 acaba
+C 0xA25A el origen
+C 0xA25D a 0xE500
+C 0xA267 el destino
+C 0xA279 copiado a los tercios
+C 0xA281 con colores?
+C 0xA289 sus colores (0x2000 antes)
+C 0xA295 a 0xF0
+C 0xA29B el par siguiente
+C 0xA29E x 8
+C 0xA2A4 + la base
+C 0xA2AA los dibujos del tercio de abajo
+C 0xA2B9 a 0x2B08 y siguientes
+C 0xA2CD el cuadro 0xC77
+C 0xA2D4 la fila 0
+C 0xA2D8 la imagen a la pantalla de RAM
+C 0xA2E4 borra las filas de arriba
+C 0xA2EA la fila de la imagen (p10:A352)
+C 0xA2F4 2 filas
+C 0xA2F6 de 23
+C 0xA2FC el ancho
+C 0xA300 sin fila de imagen (0xF000 = 0)
+C 0xA307 una fila
+C 0xA30D la siguiente de RAM
+C 0xA311 y de VRAM
+C 0xA31A la fila A + 2
+C 0xA31F en la tabla de nombres
+C 0xA323 columna 5
+C 0xA329 la fila A x 23
+C 0xA32D de la pantalla de RAM
+C 0xA34A x 8
+C 0xA34C x 16 + x 8 = x 24
+C 0xA34F - 1 = x 23
+C 0xA35D cada 8 cuadros
+C 0xA363 la fila siguiente
+C 0xA367 a la sexta, el paso siguiente
+C 0xA386 cada 16 cuadros
+C 0xA390 hasta la 10
+C 0xA399 la 9
+C 0xA3A1 la fila
+C 0xA3A4 su VRAM (p10:B0B7)
+C 0xA3AE sus caracteres (p10:B0CB)
+C 0xA3B6 el fundido de tipo 2
+C 0xA3BC la fila
+C 0xA3C2 una fila
+C 0xA3C7 cada 4 cuadros
+C 0xA3D5 una fila menos
+C 0xA3E1 acabadas: el fundido
+C 0xA3EC el texto japones
+C 0xA3F6 o DR.VENOM ATTEMPTED TO INVADE PLANET NEMESIS...
+C 0xA3FF el cuadro 0xFBF
+C 0xA41F el texto japones
+C 0xA429 o COSMIC YEAR ... THE NEMESIS HIGHEST COUNCIL...
+C 0xA435 desde 0x0170
+C 0xA43C dos tercios
+C 0xA441 la imagen
+C 0xA444 en 0x3885
+C 0xA447 23 columnas
+C 0xA45A el cuadro 0x128F
+C 0xA463 cada 8 cuadros
+C 0xA46C hasta el 12
+C 0xA47D del 3 en adelante, la luz 2
+C 0xA490 cada 8 cuadros
+C 0xA49D hasta el 30
+C 0xA4A5 en 0x3925
+C 0xA4AC encendida
+C 0xA4AF 5 caracteres
+C 0xA4B7 en 0x398A
+C 0xA4C6 en 0x38D8
+C 0xA4D2 apagada
+C 0xA4D7 cada 16 cuadros cambia
+C 0xA4E2 3 bytes por paso
+C 0xA4EB el caracter
+C 0xA4EE la columna
+C 0xA4F1 la fila x 32
+C 0xA4F9 en la tabla de nombres
+C 0xA501 un caracter
+C 0xA515 solo en Japon
+C 0xA51D el texto de p10:AB72
+C 0xA52E el cuadro 0x14AB
+C 0xA53C las luces encendidas
+C 0xA547 en Japon, p10:ABD1
+C 0xA54C el cuadro 0x17F3
+C 0xA55E los del piloto
+C 0xA561 su imagen
+C 0xA564 en 0x3906
+C 0xA567 20 columnas
+C 0xA585 el texto japones
+C 0xA58F o JAMES BURTON WAS CHOSEN TO FLY METALION
+C 0xA598 el cuadro 0x1CA3
+C 0xA5A7 las filas 16-23
+C 0xA5C6 la imagen a la pantalla de RAM
+C 0xA5EF cada 4 cuadros
+C 0xA5F8 el segundo fundido
+C 0xA5FB los dos fundidos acabados?
+C 0xA606 2 pasos
+C 0xA619 el texto japones
+C 0xA61E o MR.JAMES BURTON SPECIAL CAPTAIN...
+C 0xA627 el cuadro 0x1FEB
+C 0xA63E se acabo la historia
+C 0xA643 la musica
+C 0xA648 desde el cuadro 0
+C 0xA64E Japon?
+C 0xA655 en Japon, paso 1: un texto primero
+C 0xA663 p10:A8B9
+C 0xA669 fuera, la escena 1 directamente (paso 2)
+C 0xA671 16 filas
+C 0xA67B C: las filas (0xF000)
+C 0xA67F 0xF001: la VRAM de la fila
+C 0xA683 0 acaba
+C 0xA688 bit 7 a cero: n caracteres
+C 0xA68B 0x80 + n: n veces el mismo
+C 0xA68D 0x80: una serie
+C 0xA691 el caracter
+C 0xA694 el 0 no se pinta
+C 0xA698 fin de fila?
+C 0xA6A8 n caracteres seguidos
+C 0xA6B8 la fila siguiente
+C 0xA6C3 sin filas: C = la cuenta
+C 0xA6CD una fila menos
+C 0xA6D2 cuantos
+C 0xA6D5 desde cual
+C 0xA6D9 el caracter
+C 0xA6E3 el siguiente de la serie
+C 0xA6EB 0 acaba
+C 0xA6EF 0x80: serie
+C 0xA6F3 bit 7: repeticion
+C 0xA6FA n bytes
+C 0xA702 un byte n veces
+C 0xA70A cuantos
+C 0xA70D desde cual
+C 0xA710 la serie
+C 0xA717 el tipo
+C 0xA71A cuantos caracteres
+C 0xA71E cuantos tercios
+C 0xA722 desde donde
+C 0xA725 la fila 0
+C 0xA729 en marcha
+C 0xA72D lo de su tipo al empezar
+C 0xA73B cuantos
+C 0xA73F desde donde
+C 0xA742 la fila 0
+C 0xA746 en marcha
+C 0xA74D cuantos bytes
+C 0xA753 los tercios
+C 0xA761 dos tercios
+C 0xA76B x 8
+C 0xA77C a 0xE500
+C 0xA788 a 0xE800
+C 0xA79C desde la fila 7
+C 0xA7A2 sin fundido, nada
+C 0xA7A7 por tipo
+C 0xA7BE la fila
+C 0xA7C9 en los tercios
+C 0xA7CD a cero
+C 0xA7D2 el caracter siguiente
+C 0xA7D9 la fila siguiente
+C 0xA7DD 8 filas
+C 0xA7E6 acabado
+C 0xA7F1 desde 0xE500
+C 0xA7F7 la fila
+C 0xA7FE en los tercios
+C 0xA805 el caracter siguiente
+C 0xA811 la fila siguiente
+C 0xA82A una fila
+C 0xA82D la anterior
+C 0xA83C la fila
+C 0xA840 dos tercios
+C 0xA845 el caracter siguiente
+C 0xA855 la fila (0-7)
+C 0xA863 sin segundo fundido, nada
+C 0xA86F desde 0xE800
+C 0xA875 la fila
+C 0xA878 la siguiente
+C 0xA884 acabado
+C 0xA889 128 bytes
+C 0xA895 la pantalla de RAM a cero
+C 0xA8A2 sus dos primeras filas a 0xEFC0
+C 0xA8AD 768 nombres
+C 0xB636 en 0x3843
+C 0xB63C 26 columnas
+C 0xB644 Japon?
+C 0xB64B fuera: NEMESIS
+C 0xB651 paso 1
+C 0xB654 el paso 0 de la aparicion
+C 0xB665 el logo a la pantalla de RAM
+C 0xB668 las fichas de la aparicion
+C 0xB685 la ficha del paso
+C 0xB68B el segundo fundido
+C 0xB68E la fila de arriba
+C 0xB6A8 la otra ficha
+C 0xB6B1 el fundido de tipo 2
+C 0xB6B4 la fila de abajo
+C 0xB6D6 una fila
+C 0xB6D8 26 de ancho
+C 0xB6E0 o 16
+C 0xB6F7 la columna
+C 0xB704 3 bytes por paso
+C 0xB709 B
+C 0xB70B HL
+C 0xB72A x 2
+C 0xB72E x 8
+C 0xB730 x 10
+C 0xB735 x 16 + x 10 = x 26
+C 0xB737 sin secuencia, nada
+C 0xB73D paso 2
+C 0xB73F los fundidos
+C 0xB745 los dos acabados?
+C 0xB750 5 pasos
+C 0xB75B el fundido de los textos
+C 0xB767 los textos
+C 0xB76A paso 2
+C 0xB76F hasta que acabe el fundido
+C 0xB777 acabado
+C 0xB782 dos sprites
+C 0xB78E cada 4 cuadros
+C 0xB796 la otra imagen
+C 0xB993 el paso del final
+C 0xB9BA 300 cuadros
+C 0xB9C0 los textos de p14:9222
+C 0xB9C6 con el quinto, 60 cuadros
+C 0xB9CF el texto del paso
+C 0xB9D6 0: no hay
+C 0xB9DD el siguiente
+C 0xB9E5 un cuadro
+C 0xB9F4 suena 0x28
+C 0xB9FC el aviso
+C 0xBA0C 300 cuadros
+C 0xBA14 120 con el quinto
+C 0xBA1C los textos de p14:9281
+C 0xBA22 al septimo
+C 0xBA28 la nave
+C 0xBA2E p14:9317
+C 0xBA34 paso 14 de las luces
+C 0xBA39 1740 cuadros
+C 0xBA44 el fundido
+C 0xBA47 las luces
+C 0xBA4A cada 8 cuadros
+C 0xBA53 hasta 30
+C 0xBA5E borra las filas de abajo
+C 0xBA64 p14:9361
+C 0xBA6A 1680 cuadros
+C 0xBA81 cada 8 cuadros
+C 0xBA8F 100 de cada 128 cuadros
+C 0xBA9C mientras suene la musica
+C 0xBAAB al paso 8
+C 0xBAB6 Y 0x48
+C 0xBAC1 X 0x30
+C 0xBAD3 el rastro
+C 0xBAD6 la RAM de enemigos
+C 0xBADF sin final
+C 0xBAE4 0xE500-0xEFFF
+C 0xBAF6 480 cuadros
+C 0xBAFC la imagen
+C 0xBAFF los textos de p14:93B4
+C 0xBB05 al septimo, 540 cuadros
+C 0xBB14 el 2: imagen 1
+C 0xBB1C el 4: imagen 2
+C 0xBB24 el 5: imagen 1
+C 0xBB2C el 6: imagen 2
+C 0xBB45 el fundido
+C 0xBB53 pantalla en blanco
+C 0xBB59 el fundido
+C 0xBB5C Japon?
+C 0xBB66 fuera: COSMIC YEAR ... NEMESIS IS COMPLETELY RESTORED
+C 0xBB6F el cuadro 0x1518
+C 0xBB78 a jugar
+C 0xBB7B desde el cuadro 0
+C 0xBB84 el final de verdad?
+C 0xBB8A si no, suena 0x40
+C 0xBB8F la imagen
+C 0xBB97 fuera de Japon, el aviso
+C 0xBB9D el primer texto
+C 0xBBA4 la espera
+C 0xBBA7 el paso siguiente
+C 0xBBAC suena 0x41
+C 0xBBB1 Japon?
+C 0xBBB8 fuera: paso 11
+C 0xBBBD el piloto
+C 0xBBC5 el texto japones
+C 0xBBCA o OPERATIONS TO ERADICATE VENOM WERE ACHIEVED BY METALION...
+C 0xBBD0 1080 cuadros
+C 0xBBD6 en Japon: paso 9
+C 0xBBE6 los caracteres
+C 0xBBEC colores 0x80
+C 0xBBF7 la imagen en 0x38A7
+C 0xBC0E la imagen en 0x38E8
+C 0xBC19 la espera
+C 0xBDFD el paso
+C 0xBE0E los ojos
+C 0xBE11 cada 8 cuadros
+C 0xBE17 el fondo
+C 0xBE1D la fila de la imagen
+C 0xBE23 de abajo arriba
+C 0xBE2F + 9
+C 0xBE38 columna 6
+C 0xBE3C la imagen en 0xE500
+C 0xBE40 7 - la fila
+C 0xBE44 20 columnas
+C 0xBE49 cada 16 cuadros
+C 0xBE5B los de arriba
+C 0xBE6D los de abajo
+C 0xBE7F cambia
+C 0xBE84 un nombre
+C 0xBE8A sin fila
+C 0xBE8F 60 cuadros
+C 0xBE94 la espera
+C 0xBE9E cada dos cuadros
+C 0xBEA6 2 sprites, color 7
+C 0xBEA9 en Y 0x78, X 0x70
+C 0xBEB9 en Y 0x78, X 0x90
+C 0xBEC7 a la VRAM
+C 0xBED3 cada 4 cuadros
+C 0xBED9 una vez mas
+C 0xBEE6 8 sprites con color 10
+C 0xBEFC dos imagenes
+C 0xBF14 48 cuadros
+C 0xBF16 la espera
+C 0xBF19 el paso siguiente
+C 0xBF1E 4 sprites, color 9
+C 0xBF42 Y + H
+C 0xBF49 X + L
+C 0xBF50 el dibujo
+C 0xBF56 el color
+C 0xBF61 la espera
+C 0xBF6C la imagen entera
+C 0xBF74 15 cuadros
+C 0xBF78 la espera
+C 0xBF82 parpadean cada 8 cuadros
+C 0xBF93 se acabo
+C 0xBF9E paso 1
+C 0xBFA9 los ojos
+C 0xBFB2 la imagen del piloto a 0xE500
+C 0xBFBB desde la fila 6
+C 0xBFCF el fondo
+C 0xBFD2 desde la fila 1
+C 0xBFD7 0: a la VRAM
+C 0xBFDB bit 7: repeticion
+C 0xBFE0 n bytes
+C 0xBFE8 un byte n veces
+C 0xA504 la luz 1
+C 0xA50A la 2
+C 0xA510 la 3
 
 # --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
 D 0xA007 0xA045 tabla_A007  31 destinos del despachador p00:4084 (call en p10:A004, el indice en A): A045, A088, A0B9, A0C5, A0FA, A124, A16B, A177, A1A8, A1B4, A1E8, A207, A2C5, A35D, A372, A386, A3C7, A3FF, A40B, A44C, A45A, A52E, A54C, A57A, A598, A377, A5AE, A5EF, A627, A37C, A633; lo leen p10:A004 (62 bytes)
@@ -75,204 +471,654 @@ F 0xBFF3 16
 # --- fin de los bloques de bloques.py ---
 
 # --- ANOTACIONES AUTOMATICAS (seccion que reescribe tools/anota.py; no editar a mano) ---
+L 0xA000 historia la historia de la demostracion: el paso 0xE1D7 (31, p10:A007), cada uno espera su cuadro (0xF0F7) o pinta una escena con su texto (ingles fuera de Japon, 0x002B)
+L 0xA045 historia_espera_1 hasta el cuadro 0x2DB el fundido; luego el paso siguiente
+L 0xA04E historia_fundido_y_paso p10:A056 y el paso siguiente
+L 0xA051 historia_siguiente el paso siguiente de la historia (0xE1D7 + 1)
+L 0xA056 funde_tres_tercios el fundido de tipo 3 de 0xFE caracteres desde 0x0008 en los tres tercios
+L 0xA061 funde_un_tercio el fundido de 0xFE caracteres desde 0x1008, un tercio
+L 0xA068 funde_a el fundido de tipo 3 de 0xFE caracteres desde 0x0008, un tercio
+L 0xA06D funde_d0 el fundido de tipo 3 de 0xD0 caracteres desde 0x0980, dos tercios
+L 0xA076 funde_tres el fundido de tipo 3 de 0xFE caracteres desde 0x0008, tres tercios
+L 0xA07D funde_texto el fundido de tipo 3 de 0xFE caracteres desde 0x1008 (el tercio del texto)
+L 0xA088 escena_1 la escena 1: la imagen p10:ACAB y DR.VENOM THE DIRECTOR GENERAL OF THE SPACE SCIENCE AGENCY ATTEMPTED A COUP D'ETAT
+L 0xA0B9 historia_espera_2 hasta el cuadro 0x4BB
+L 0xA0C5 escena_2 la escena 2: la imagen p10:ADBD y DR.VENOM FAILED IN A COUP D'ETAT... EXILED DR.VENOM TO PLANET SARD
+L 0xA0FA historia_espera_3 hasta el cuadro 0x6D7, y cada 8 cuadros cambia un trozo de la imagen (p10:B0AB/B0B1)
+L 0xA124 escena_3 la escena 3: tres imagenes y COSMIC YEAR ... DR.VENOM ESCAPED FROM PLANET SARD
+L 0xA16B historia_espera_4 hasta el cuadro 0x8B7
+L 0xA177 escena_4 la escena 4: la imagen p10:AFE6 y HE WAS NOT FOUND, DESPITE THE SEARCH OF IMPERIAL ARMADA
+L 0xA1A8 historia_espera_5 hasta el cuadro 0xA5B
+L 0xA1B4 escena_5 la escena 5: los caracteres de p10:AB29, la nave (p10:A432) y su texto (p10:AA50 / p10:B29E)
+L 0xA1E8 historia_espera_6 hasta el cuadro 0xBC3; parpadea la imagen p10:AFE3 cada 8 cuadros
+L 0xA207 escena_6 la escena 6: los caracteres de p10:AB02 y THE INVADER WAS DR.VENOM
+L 0xA242 caracteres_ab02 la lista de copias de caracteres p10:AB02 en los dibujos de los dos primeros tercios
+L 0xA245 copias_en_dibujos la lista DE en los dibujos (0x2800) de dos tercios, con colores 0xF0
+L 0xA24C copia_caracteres_lista la lista DE de pares [origen][destino] de caracteres: copia los dibujos (y con A bit 0 pone sus colores a 0xF0) en B tercios desde HL
+L 0xA29E caracter_a_vram HL = la direccion del caracter A desde la base 0xE49A
+L 0xA2AA copia_tercio_abajo 0x128 bytes de dibujos del tercio de abajo (0x3008) a los otros dos (0x2B08)
+L 0xA2C5 escena_7 espera al cuadro 0xC77 y descomprime la imagen p10:AEBD a la pantalla de RAM
+L 0xA2E4 pinta_imagen_paso el trozo 0xE496 de la imagen grande (p10:A352) en la tabla de nombres
+L 0xA2F6 copia_23_filas B filas de 23 caracteres de DE a la VRAM HL
+L 0xA2F8 copia_filas B filas de C caracteres de la pantalla de RAM DE a la VRAM HL (los ceros no se pintan)
+L 0xA319 sitio_del_trozo HL = 0x3805 + (A + 2) x 32 en la VRAM y DE = 0xED00 + A x 23 en la pantalla de RAM
+L 0xA334 por_32 HL = A x 32
+L 0xA33D por_16 HL = A x 16
+L 0xA342 por_23 HL = A x 23
+L 0xA35D escena_7_aparece cada 8 cuadros una fila mas de la imagen; a la sexta, el paso siguiente
+L 0xA372 historia_espera_8 hasta el cuadro 0xCEF
+L 0xA377 historia_espera_9 hasta el cuadro 0x1C2B
+L 0xA37C historia_espera_10 hasta el cuadro 0x1F37
+L 0xA37F historia_espera_hasta hasta el cuadro DE; luego el fundido y el paso siguiente
+L 0xA386 escena_7_sigue cada 16 cuadros otra fila (hasta la 10)
+L 0xA3A1 escena_7_trozo la fila 0xE496: su fundido (p10:B0B7, B0CB) y sus caracteres
+L 0xA3C7 escena_7_se_va cada 4 cuadros una fila menos; al acabar, DR.VENOM ATTEMPTED TO INVADE PLANET NEMESIS...
+L 0xA3FF historia_espera_11 hasta el cuadro 0xFBF
+L 0xA40B escena_8 la escena 8: la nave y COSMIC YEAR ... THE NEMESIS HIGHEST COUNCIL DECIDED TO DISPATCH METALION
+L 0xA432 la_nave_de_la_historia los caracteres de la nave (p00:5EA3) y su imagen (p00:A435)
+L 0xA435 imagen_de_la_nave borra 8 dibujos desde 0x0170 en dos tercios y pinta la imagen p10:AF6D
+L 0xA441 imagen_af6d la imagen p10:AF6D (23 columnas) en 0x3885
+L 0xA44C escena_8_espera al acabar el fundido, 0xE496 = 0 y el paso siguiente
+L 0xA45A escena_9 hasta el cuadro 0x128F, cada 8 cuadros un paso mas (12) de las luces de la nave
+L 0xA474 luces_de_la_nave el caracter del paso (p10:A4DF) y las tres luces parpadeando
+L 0xA485 luces_siguen cada 8 cuadros un paso mas (hasta 30) y las tres luces
+L 0xA488 tres_luces las tres luces de la nave segun la cuenta de cuadros
+L 0xA490 luces_paso cada 8 cuadros un paso mas de las luces (hasta 30)
+L 0xA4A2 luz_1 la luz de 0x3925: encendida (p10:B13B) o apagada (p10:B14E) segun 0xE1C3 bit 4
+L 0xA4AC luz_1_encendida la luz 1 encendida (p10:B13B) en DE
+L 0xA4B4 luz_2 la luz de 0x398A: encendida (p10:B142) o apagada
+L 0xA4BE luz_2_encendida la luz 2 encendida (p10:B142) en DE
+L 0xA4C3 luz_3 la luz de 0x38D8: encendida (p10:B148) o apagada
+L 0xA4D7 cuadro_entre_16 A = la cuenta de cuadros con las cifras cambiadas
+L 0xA4DF luz_del_paso el caracter del paso 0xE496 (p10:B0E1: [caracter][columna][fila]) en la tabla de nombres
+L 0xA504 luces_encendidas las tres luces encendidas
+L 0xA515 escena_9_texto en Japon, borra la fila del texto y escribe p10:AB72
+L 0xA52E escena_10 hasta el cuadro 0x14AB las luces; luego encendidas y, en Japon, p10:ABD1
+L 0xA54C historia_espera_12 hasta el cuadro 0x17F3
+L 0xA558 escena_piloto pantalla en blanco, caracteres, los del piloto (p10:BFC1) y su imagen (p10:B586)
+L 0xA561 imagen_del_piloto la imagen p10:B586 (20 columnas) en 0x3906 y su fundido
+L 0xA56F escena_piloto_b como p10:A558 con otros caracteres (p00:5E0C, p10:BFCA)
+L 0xA57A escena_11 la escena 11: el piloto y JAMES BURTON WAS CHOSEN TO FLY METALION
+L 0xA598 historia_espera_13 hasta el cuadro 0x1CA3
+L 0xA5A4 borra_filas_16_23 borra 256 nombres desde 0x3A00 (las filas 16-23)
+L 0xA5AE escena_12 la escena 12: la imagen p10:B06F en la pantalla de RAM y su aparicion por pasos
+L 0xA5CF escena_12_pasos los datos de la aparicion (0xF000-0xF008: p10:B0D5, B0DB...) y p10:B685
+L 0xA5EF escena_12_sigue cada 4 cuadros un paso; al segundo, MR.JAMES BURTON SPECIAL CAPTAIN OF I.S.F. EX-VIC VIPER PILOT
+L 0xA627 historia_espera_14 hasta el cuadro 0x1FEB
+L 0xA633 historia_acaba al acabar el fundido, pantalla en blanco y 0xE1D7 = 0
+L 0xA643 empieza_historia suena 0x3F, la cuenta de cuadros a cero; en Japon un texto primero (paso 1), fuera la escena 1 (paso 2)
+L 0xA671 borra_512_nombres borra 512 nombres desde 0x3800
+L 0xA67B pinta_imagen la imagen DE (comprimida: n caracteres, 0x80 + n repetidos, 0x80 serie) en la VRAM HL, filas de C; los ceros no se pintan
+L 0xA691 pinta_imagen_sigue los caracteres de la imagen hasta acabar la fila (0xF000 filas)
+L 0xA6B7 fila_siguiente_de_imagen HL a la fila siguiente (0xF001 + 32); 0xF000 - 1
+L 0xA6EB descomprime_a_ram DE a la RAM HL: n < 0x80 n bytes, 0x80 + n un byte n veces, 0x80 n c una serie desde c, 0 acaba
+L 0xA717 empieza_fundido un fundido de tipo A (0 borra, 1 y 3 aparece, 2 desaparece) de B caracteres desde HL en C tercios (0xE490-0xE4A0)
+L 0xA73B empieza_fundido_b el segundo fundido (0xE498): B caracteres desde HL, a 0xE800
+L 0xA74D fundido_borra lee los caracteres y los borra
+L 0xA757 rellena_a_cero rellena con 0 BC bytes de la VRAM HL en D tercios
+L 0xA75B fundido_b_borra lee los del segundo fundido y los borra
+L 0xA765 bytes_del_fundido BC = los caracteres del fundido x 8
+L 0xA771 bytes_del_fundido_b BC = los del segundo x 8
+L 0xA776 guarda_caracteres los caracteres del fundido a 0xE500
+L 0xA782 guarda_caracteres_b los del segundo a 0xE800
+L 0xA78E sin_nada nada
+L 0xA78F guarda_y_borra los guarda y los borra
+L 0xA794 guarda_y_borra_b los del segundo, igual
+L 0xA799 guarda_borra_y_al_7 los guarda, los borra y empieza por la fila 7
+L 0xA7A2 paso_de_fundido un paso del fundido en marcha (0xE490): su tipo (p10:A7AD)
+L 0xA7B5 fundido_tipo_0 borra la fila 0xE491 de cada caracter; a las 8, acabado
+L 0xA7E5 fundido_acabado 0xE490 = 0
+L 0xA7EA fundido_tipo_1 escribe la fila 0xE491 de cada caracter (de 0xE500); a las 8, acabado
+L 0xA81D fundido_tipo_2 escribe la fila 0xE491 hacia atras; al llegar a 0, acabado
+L 0xA838 fila_de_caracteres la fila A de B caracteres de DE a la VRAM HL en dos tercios
+L 0xA855 fila_a HL y DE + (A & 7), BC = 1
+L 0xA863 paso_de_fundido_b un paso del segundo fundido (0xE498), fila 0xE499
+L 0xA889 sprites_a_vram_b los 32 sprites de 0xE280 a la VRAM 0x3B00
+L 0xA895 borra_pantalla_ram la pantalla de RAM (0xED00-0xEFFF) a cero y copia sus 2 primeras filas a 0xEFC0; luego a la VRAM
+L 0xA8AD pantalla_ram_a_vram los 768 nombres de 0xED00 a la tabla de nombres
+L 0xB636 logo_del_titulo el logo (p10:B832 GRADIUS en Japon, p10:B7A1 NEMESIS fuera) en 0x3843, 26 columnas
+L 0xB641 imagen_del_logo HL = el logo: p10:B832 en Japon (0x002B), p10:B7A1 fuera
+L 0xB64F empieza_el_titulo paso 1, sin sprites, el logo descomprimido en la pantalla de RAM y su aparicion por pasos
+L 0xB668 logo_por_pasos los datos de la aparicion del logo (0xF000-0xF008: p10:B8E6, B8D7...)
+L 0xB685 aparicion_por_pasos el paso 0xE496: dos fundidos (p10:A73B, p10:A717) y las dos filas que tocan, de la pantalla de RAM a la VRAM
+L 0xB6D5 copia_una_fila una fila de 26 caracteres (16 con 0xF004) de DE a la VRAM HL
+L 0xB6E5 fila_x_ancho HL = C x 26 (o x 16 con 0xF004)
+L 0xB6F3 vram_de_la_fila DE = 0x3800 + HL + la columna 0xF008
+L 0xB700 paso_de_la_tabla B y HL de la ficha 0xE496 (3 bytes) de la tabla HL
+L 0xB710 ram_de_la_fila DE = 0xED00 + la fila 0xF005 x ancho
+L 0xB727 por_26 HL = A x 26
+L 0xB737 titulo_aparece los fundidos del logo paso a paso (5); luego el de los textos y los textos del titulo; al acabar, 0xE1D7 = 0
+L 0xB77C titulo_cada_cuadro sin sprites, los dos sprites de p10:B8FC y, cada 4 cuadros, una de las dos imagenes del logo (brillo)
+L 0xB993 final el final del juego, paso 0xE1E6 (14, p10:B99A): textos, la nave y los creditos
+L 0xB9B6 final_textos_1 cada 300 cuadros el texto siguiente de p14:9222; con el quinto, 60 cuadros y al paso siguiente
+L 0xB9CF texto_siguiente el texto 0xE496 de la lista HL; sin el (0), un cuadro y borra las filas de abajo
+L 0xB9F0 final_aviso suena 0x28 y el aviso (p14:94C4) parpadeando
+L 0xB9F4 aviso_parpadea suena 0x28, borra las filas de abajo y el aviso
+L 0xBA05 final_textos_2 el aviso parpadea y cada 300 cuadros (120 el quinto) el texto siguiente de p14:9281; al septimo, la escena de p14:9317
+L 0xBA3F final_luces las luces de la nave; al acabar, el texto p14:9361
+L 0xBA70 final_luces_encendidas las luces encendidas y, al acabar el fundido, pantalla en blanco
+L 0xBA7E aviso_cada_8 el aviso p14:94C4 cada 8 cuadros si, 8 no
+L 0xBA8C vuelve_ya DR.VENOM IS FAST APPROACHING NEMESIS, RETURN IMMEDIATELY! (p14:94D1) parpadeando
+L 0xBA9C final_vuelve mientras suena la musica, los avisos; al acabar, al paso 8
+L 0xBAB6 naves_al_centro la nave y sus dos opciones en Y 0x48, X 0x30
+L 0xBACD final_a_jugar pantalla en blanco y p10:BAD0
+L 0xBAD0 vuelve_a_jugar las naves al centro, el rastro, 0xE500-0xEFFF a cero, sin sprites y 0xE1E6 = 0
+L 0xBAE4 borra_e500 0xE500-0xEFFF a cero
+L 0xBAF2 final_textos_3 cada 480 cuadros el texto siguiente de p14:93B4 con su imagen; al septimo, 540 cuadros
+L 0xBB0E imagen_del_texto con los textos 2 y 5 la imagen de p10:BBE0; con 4 y 6 la de p10:BC02
+L 0xBB31 paso_en_e A = el paso guardado en E'
+L 0xBB35 final_creditos al acabar la espera, la escena del piloto con su texto
+L 0xBB3C final_luces_b las luces y luego el fundido
+L 0xBB3F final_fundido al acabar la espera, el fundido y al paso siguiente
+L 0xBB4B final_paz pantalla en blanco y el texto final (p10:BC85 en Japon, p10:BD1A fuera: COSMIC YEAR... NEMESIS IS COMPLETELY RESTORED)
+L 0xBB6F final_espera hasta el cuadro 0x1518; luego a jugar otra vez
+L 0xBB7B final_empieza la cuenta de cuadros a cero; con 0xE1D6 el final de verdad (p10:BBAC); si no, suena 0x40 y el aviso
+L 0xBB9D final_siguiente_texto 0xE496 = 0 y un cuadro de espera
+L 0xBBA4 final_siguiente la espera HL (0xE49E) y el paso siguiente (0xE1E6 + 1)
+L 0xBBAC final_de_verdad suena 0x41; fuera de Japon (paso 11) el piloto y OPERATIONS TO ERADICATE VENOM WERE ACHIEVED BY METALION...; en Japon (paso 9) la imagen
+L 0xBBE0 imagen_del_final_1 pantalla en blanco, caracteres (p12:A000) y la imagen p14:91A8 en 0x38A7
+L 0xBC02 imagen_del_final_2 pantalla en blanco, caracteres (p09:A143) y la imagen p10:B06F en 0x38E8
+L 0xBC19 espera_del_final 0xE49E - 1 (Z al acabar)
+L 0xBDFD escena_del_piloto la escena del piloto al empezar la partida, paso 0xE1D7 (p10:BE04)
+L 0xBE0E piloto_aparece cada 8 cuadros una fila mas de la imagen (de abajo arriba); al acabar, 60 cuadros
+L 0xBE2E fila_del_piloto la fila A de la imagen del piloto (0xE500) en la VRAM, 20 columnas
+L 0xBE49 ojos_parpadean cada 16 cuadros los dos caracteres de 0xE4A3 y 0xE4A4 cambian
+L 0xBE5B pon_ojos los caracteres de 0xE4A3 en 0x39C1 y 0x39C5, los de 0xE4A4 en 0x39DA y 0x39DE
+L 0xBE7E alterna (DE) XOR 1
+L 0xBE83 un_nombre (DE) en la VRAM HL
+L 0xBE8A piloto_espera 0xE496 = 0xFF y 60 cuadros
+L 0xBE94 piloto_sprites mientras dure la espera, los sprites de p10:B604/B60A cada dos cuadros
+L 0xBEA9 pon_dos_grupos dos grupos de B sprites (de DE) en 0xE280 y 0xE288 con el color C, y a la VRAM
+L 0xBECA sin_sprites_en_vram esconde los sprites y a la VRAM
+L 0xBED0 piloto_paso_3 cada 4 cuadros; la segunda vez, 8 sprites de color 10 y dos imagenes (p10:B610, p10:B621)
+L 0xBF16 piloto_siguiente la espera A y el paso siguiente
+L 0xBF1E sprites_del_piloto dos grupos de 4 sprites (p10:B5EC, B5F8) con color 9
+L 0xBF42 sprites_relativos B sprites de DE: Y + H, X + L, dibujo, color C, a HL'
+L 0xBF5E piloto_paso_4 al acabar la espera, la imagen entera, los ojos y los sprites; 15 cuadros
+L 0xBF78 piloto_paso_5 parpadean los sprites; al acabar, pantalla en blanco y 0xE1D7 = 0
+L 0xBF9E empieza_el_piloto paso 1: caracteres, pantalla de RAM a cero, los ojos en 0x3848, el fondo y la imagen del piloto (p10:B586) a 0xE500
+L 0xBFC1 caracteres_del_piloto p00:5D8E y sin sprites
+L 0xBFCA caracteres_del_piloto_b p00:5D94 y sin sprites
+L 0xBFCF fondo_del_piloto descomprime p10:B461 a la pantalla de RAM desde la fila 1 y la copia a la VRAM
 C 0xA004 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 C 0xA048 cuadros_desde: C si la cuenta de interrupciones 0xF0F7 no llega a DE
-C 0xA090 borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
-C 0xA093 caracteres_5e59: p00:5E64, p01:69F2, p00:5E20 y p01:69F2
+C 0xA04E funde_tres_tercios: el fundido de tipo 3 de 0xFE caracteres desde 0x0008 en los tres tercios
+C 0xA051 apunta a el paso de la historia o de la secuencia en marcha (0: ninguna)
 C 0xA096 caracteres_a16d: con el banco 9, la lista p09:A16D y sus copias (p09:A174 espejo, p09:A187 cabeza abajo); luego p01:69EF
+C 0xA0A1 pinta_imagen: la imagen DE (comprimida: n caracteres, 0x80 + n repetidos, 0x80 serie) en la VRAM HL, filas de C; los ceros no se pintan
 C 0xA0B4 escribe_texto: escribe a la VRAM la lista de textos de DE: [direccion][caracteres] con 0xFE = otra direccion y 0xFF = fin
 C 0xA0BC cuadros_desde: C si la cuenta de interrupciones 0xF0F7 no llega a DE
+C 0xA0BF historia_fundido_y_paso: p10:A056 y el paso siguiente
+C 0xA0C2 paso_de_fundido: un paso del fundido en marcha (0xE490): su tipo (p10:A7AD)
+C 0xA0C5 paso_de_fundido: un paso del fundido en marcha (0xE490): su tipo (p10:A7AD)
+C 0xA0C8 lee el fundido en marcha
+C 0xA0CD guarda el paso de la escena
 C 0xA0D0 borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
 C 0xA0D3 caracteres_5e59: p00:5E64, p01:69F2, p00:5E20 y p01:69F2
 C 0xA0D6 caracteres_a18b: con el banco 9, la lista p09:A18B y sus copias p09:A204; luego p01:69EF
+C 0xA0E1 pinta_imagen: la imagen DE (comprimida: n caracteres, 0x80 + n repetidos, 0x80 serie) en la VRAM HL, filas de C; los ceros no se pintan
+C 0xA0E4 funde_texto: el fundido de tipo 3 de 0xFE caracteres desde 0x1008 (el tercio del texto)
 C 0xA0F4 escribe_texto: escribe a la VRAM la lista de textos de DE: [direccion][caracteres] con 0xFE = otra direccion y 0xFF = fin
+C 0xA0F7 historia_siguiente: el paso siguiente de la historia (0xE1D7 + 1)
 C 0xA0FD cuadros_desde: C si la cuenta de interrupciones 0xF0F7 no llega a DE
-C 0xA106 lee la cuenta de cuadros
+C 0xA100 historia_fundido_y_paso: p10:A056 y el paso siguiente
+C 0xA103 paso_de_fundido: un paso del fundido en marcha (0xE490): su tipo (p10:A7AD)
+C 0xA111 guarda el paso de la escena
+C 0xA121 pinta_imagen: la imagen DE (comprimida: n caracteres, 0x80 + n repetidos, 0x80 serie) en la VRAM HL, filas de C; los ceros no se pintan
+C 0xA124 paso_de_fundido: un paso del fundido en marcha (0xE490): su tipo (p10:A7AD)
+C 0xA127 lee el fundido en marcha
 C 0xA12C borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
 C 0xA12F caracteres_5e59: p00:5E64, p01:69F2, p00:5E20 y p01:69F2
 C 0xA132 caracteres_b223: con el banco 12, la lista p12:B223; luego p01:69EF
+C 0xA13D pinta_imagen: la imagen DE (comprimida: n caracteres, 0x80 + n repetidos, 0x80 serie) en la VRAM HL, filas de C; los ceros no se pintan
+C 0xA148 pinta_imagen: la imagen DE (comprimida: n caracteres, 0x80 + n repetidos, 0x80 serie) en la VRAM HL, filas de C; los ceros no se pintan
+C 0xA153 pinta_imagen: la imagen DE (comprimida: n caracteres, 0x80 + n repetidos, 0x80 serie) en la VRAM HL, filas de C; los ceros no se pintan
+C 0xA156 funde_texto: el fundido de tipo 3 de 0xFE caracteres desde 0x1008 (el tercio del texto)
 C 0xA166 escribe_texto: escribe a la VRAM la lista de textos de DE: [direccion][caracteres] con 0xFE = otra direccion y 0xFF = fin
 C 0xA16E cuadros_desde: C si la cuenta de interrupciones 0xF0F7 no llega a DE
+C 0xA171 paso_de_fundido: un paso del fundido en marcha (0xE490): su tipo (p10:A7AD)
+C 0xA174 historia_fundido_y_paso: p10:A056 y el paso siguiente
+C 0xA177 paso_de_fundido: un paso del fundido en marcha (0xE490): su tipo (p10:A7AD)
+C 0xA17A lee el fundido en marcha
 C 0xA17F borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
 C 0xA182 caracteres_5e59: p00:5E64, p01:69F2, p00:5E20 y p01:69F2
 C 0xA185 caracteres_ac44: con el banco 12, la lista p12:AC44; luego p01:69EF
+C 0xA190 pinta_imagen: la imagen DE (comprimida: n caracteres, 0x80 + n repetidos, 0x80 serie) en la VRAM HL, filas de C; los ceros no se pintan
+C 0xA193 funde_texto: el fundido de tipo 3 de 0xFE caracteres desde 0x1008 (el tercio del texto)
 C 0xA1A3 escribe_texto: escribe a la VRAM la lista de textos de DE: [direccion][caracteres] con 0xFE = otra direccion y 0xFF = fin
 C 0xA1AB cuadros_desde: C si la cuenta de interrupciones 0xF0F7 no llega a DE
+C 0xA1AE historia_fundido_y_paso: p10:A056 y el paso siguiente
+C 0xA1B1 paso_de_fundido: un paso del fundido en marcha (0xE490): su tipo (p10:A7AD)
+C 0xA1B4 paso_de_fundido: un paso del fundido en marcha (0xE490): su tipo (p10:A7AD)
+C 0xA1B7 lee el fundido en marcha
 C 0xA1BC borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
 C 0xA1BF caracteres_5e59: p00:5E64, p01:69F2, p00:5E20 y p01:69F2
+C 0xA1C5 copias_en_dibujos: la lista DE en los dibujos (0x2800) de dos tercios, con colores 0xF0
+C 0xA1CD copia_tercio_abajo: 0x128 bytes de dibujos del tercio de abajo (0x3008) a los otros dos (0x2B08)
+C 0xA1D3 funde_d0: el fundido de tipo 3 de 0xD0 caracteres desde 0x0980, dos tercios
 C 0xA1E3 escribe_texto: escribe a la VRAM la lista de textos de DE: [direccion][caracteres] con 0xFE = otra direccion y 0xFF = fin
 C 0xA1EB cuadros_desde: C si la cuenta de interrupciones 0xF0F7 no llega a DE
-C 0xA1F4 lee la cuenta de cuadros
+C 0xA1EE historia_fundido_y_paso: p10:A056 y el paso siguiente
+C 0xA1F1 paso_de_fundido: un paso del fundido en marcha (0xE490): su tipo (p10:A7AD)
+C 0xA1F9 imagen_af6d: la imagen p10:AF6D (23 columnas) en 0x3885
+C 0xA204 pinta_imagen: la imagen DE (comprimida: n caracteres, 0x80 + n repetidos, 0x80 serie) en la VRAM HL, filas de C; los ceros no se pintan
+C 0xA207 paso_de_fundido: un paso del fundido en marcha (0xE490): su tipo (p10:A7AD)
+C 0xA20A lee el fundido en marcha
 C 0xA20F borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
 C 0xA212 caracteres_5e59: p00:5E64, p01:69F2, p00:5E20 y p01:69F2
+C 0xA21B caracteres_ab02: la lista de copias de caracteres p10:AB02 en los dibujos de los dos primeros tercios
+C 0xA21F copia_tercio_abajo: 0x128 bytes de dibujos del tercio de abajo (0x3008) a los otros dos (0x2B08)
 C 0xA222 caracteres_a18b: con el banco 9, la lista p09:A18B y sus copias p09:A204; luego p01:69EF
+C 0xA22D empieza_fundido: un fundido de tipo A (0 borra, 1 y 3 aparece, 2 desaparece) de B caracteres desde HL en C tercios (0xE490-0xE4A0)
 C 0xA23D escribe_texto: escribe a la VRAM la lista de textos de DE: [direccion][caracteres] con 0xFE = otra direccion y 0xFF = fin
-C 0xA25D apunta a las fichas de 16 bytes de los objetos de caracteres
+C 0xA253 guarda cuantos tercios (copia de caracteres)
+C 0xA26B caracter_a_vram: HL = la direccion del caracter A desde la base 0xE49A
 C 0xA26E apunta a las fichas de 16 bytes de los objetos de caracteres
-C 0xA279 copia_a_vram_b_veces: copia BC' bytes de DE' a la VRAM HL B veces, 0x800 mas adelante cada vez
+C 0xA275 lee cuantos tercios (copia de caracteres)
+C 0xA27E caracter_a_vram: HL = la direccion del caracter A desde la base 0xE49A
+C 0xA291 lee cuantos tercios (copia de caracteres)
 C 0xA297 rellena_vram_d_veces: rellena BC bytes de la VRAM HL con A, D veces, 0x800 mas adelante cada vez
 C 0xA2AD apunta a las fichas de 16 bytes de los objetos de caracteres
 C 0xA2B6 apunta a las fichas de 16 bytes de los objetos de caracteres
 C 0xA2C2 copia_a_vram_b_veces: copia BC' bytes de DE' a la VRAM HL B veces, 0x800 mas adelante cada vez
+C 0xA2C5 paso_de_fundido: un paso del fundido en marcha (0xE490): su tipo (p10:A7AD)
+C 0xA2C8 lee el fundido en marcha
 C 0xA2D0 cuadros_desde: C si la cuenta de interrupciones 0xF0F7 no llega a DE
-C 0xA2D8 apunta a la pantalla en RAM: la tabla de nombres de 22 filas de 32
+C 0xA2D5 guarda el paso de la escena
+C 0xA2DE descomprime_a_ram: DE a la RAM HL: n < 0x80 n bytes, 0x80 + n un byte n veces, 0x80 n c una serie desde c, 0 acaba
+C 0xA2E7 lee el paso de la escena
 C 0xA2ED de_mas_a: DE = DE + A
+C 0xA2F1 sitio_del_trozo: HL = 0x3805 + (A + 2) x 32 en la VRAM y DE = 0xED00 + A x 23 en la pantalla de RAM
+C 0xA2F9 guarda el ancho de las filas que se copian
 C 0xA301 guarda variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo) o un puntero
 C 0xA30E de_mas_a: DE = DE + A
 C 0xA313 hl_mas_a: HL = HL + A
-C 0xA32D apunta a la pantalla en RAM: la tabla de nombres de 22 filas de 32
-C 0xA35D lee la cuenta de cuadros
+C 0xA31C por_32: HL = A x 32
+C 0xA32A por_23: HL = A x 23
+C 0xA369 historia_siguiente: el paso siguiente de la historia (0xE1D7 + 1)
+C 0xA36C guarda el paso de la escena
+C 0xA36F pinta_imagen_paso: el trozo 0xE496 de la imagen grande (p10:A352) en la tabla de nombres
 C 0xA37F cuadros_desde: C si la cuenta de interrupciones 0xF0F7 no llega a DE
-C 0xA386 lee la cuenta de cuadros
+C 0xA383 historia_fundido_y_paso: p10:A056 y el paso siguiente
+C 0xA38C lee el paso de la escena
+C 0xA394 guarda el paso de la escena
+C 0xA39B guarda el paso de la escena
+C 0xA39E historia_siguiente: el paso siguiente de la historia (0xE1D7 + 1)
 C 0xA3A7 palabra_a_de: DE = la palabra A de la tabla DE (HL apunta a su byte alto)
+C 0xA3AB lee el paso de la escena
 C 0xA3B1 de_mas_a: DE = DE + A
-C 0xA3C7 lee la cuenta de cuadros
+C 0xA3B9 empieza_fundido: un fundido de tipo A (0 borra, 1 y 3 aparece, 2 desaparece) de B caracteres desde HL en C tercios (0xE490-0xE4A0)
+C 0xA3BF sitio_del_trozo: HL = 0x3805 + (A + 2) x 32 en la VRAM y DE = 0xED00 + A x 23 en la pantalla de RAM
+C 0xA3C4 copia_23_filas: B filas de 23 caracteres de DE a la VRAM HL
+C 0xA3CD paso_de_fundido: un paso del fundido en marcha (0xE490): su tipo (p10:A7AD)
+C 0xA3D0 lee el fundido en marcha
+C 0xA3DC guarda el paso de la escena
+C 0xA3E9 empieza_fundido: un fundido de tipo A (0 borra, 1 y 3 aparece, 2 desaparece) de B caracteres desde HL en C tercios (0xE490-0xE4A0)
 C 0xA3F9 escribe_texto: escribe a la VRAM la lista de textos de DE: [direccion][caracteres] con 0xFE = otra direccion y 0xFF = fin
+C 0xA3FC historia_siguiente: el paso siguiente de la historia (0xE1D7 + 1)
 C 0xA402 cuadros_desde: C si la cuenta de interrupciones 0xF0F7 no llega a DE
+C 0xA405 historia_fundido_y_paso: p10:A056 y el paso siguiente
+C 0xA408 paso_de_fundido: un paso del fundido en marcha (0xE490): su tipo (p10:A7AD)
+C 0xA40B paso_de_fundido: un paso del fundido en marcha (0xE490): su tipo (p10:A7AD)
+C 0xA40E lee el fundido en marcha
 C 0xA413 borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
 C 0xA416 caracteres_5e59: p00:5E64, p01:69F2, p00:5E20 y p01:69F2
+C 0xA419 la_nave_de_la_historia: los caracteres de la nave (p00:5EA3) y su imagen (p00:A435)
+C 0xA41C funde_texto: el fundido de tipo 3 de 0xFE caracteres desde 0x1008 (el tercio del texto)
 C 0xA42C escribe_texto: escribe a la VRAM la lista de textos de DE: [direccion][caracteres] con 0xFE = otra direccion y 0xFF = fin
+C 0xA42F historia_siguiente: el paso siguiente de la historia (0xE1D7 + 1)
 C 0xA432 caracteres_a214: p00:5EA9 y p01:69EF
 C 0xA43E rellena_vram_d_veces: rellena BC bytes de la VRAM HL con A, D veces, 0x800 mas adelante cada vez
+C 0xA449 pinta_imagen: la imagen DE (comprimida: n caracteres, 0x80 + n repetidos, 0x80 serie) en la VRAM HL, filas de C; los ceros no se pintan
+C 0xA44C paso_de_fundido: un paso del fundido en marcha (0xE490): su tipo (p10:A7AD)
+C 0xA44F lee el fundido en marcha
+C 0xA455 guarda el paso de la escena
 C 0xA45D cuadros_desde: C si la cuenta de interrupciones 0xF0F7 no llega a DE
-C 0xA463 lee la cuenta de cuadros
-C 0xA490 lee la cuenta de cuadros
-C 0xA4D7 lee la cuenta de cuadros
+C 0xA460 escena_9_texto: en Japon, borra la fila del texto y escribe p10:AB72
+C 0xA469 luces_de_la_nave: el caracter del paso (p10:A4DF) y las tres luces parpadeando
+C 0xA470 guarda el paso de la escena
+C 0xA474 luz_del_paso: el caracter del paso 0xE496 (p10:B0E1: [caracter][columna][fila]) en la tabla de nombres
+C 0xA477 luz_1: la luz de 0x3925: encendida (p10:B13B) o apagada (p10:B14E) segun 0xE1C3 bit 4
+C 0xA47A lee el paso de la escena
+C 0xA480 luz_2: la luz de 0x398A: encendida (p10:B142) o apagada
+C 0xA485 luces_paso: cada 8 cuadros un paso mas de las luces (hasta 30)
+C 0xA488 luz_1: la luz de 0x3925: encendida (p10:B13B) o apagada (p10:B14E) segun 0xE1C3 bit 4
+C 0xA48B luz_2: la luz de 0x398A: encendida (p10:B142) o apagada
+C 0xA496 luz_del_paso: el caracter del paso 0xE496 (p10:B0E1: [caracter][columna][fila]) en la tabla de nombres
+C 0xA499 lee el paso de la escena
+C 0xA4A2 cuadro_entre_16: A = la cuenta de cuadros con las cifras cambiadas
+C 0xA4B1 pinta_imagen: la imagen DE (comprimida: n caracteres, 0x80 + n repetidos, 0x80 serie) en la VRAM HL, filas de C; los ceros no se pintan
+C 0xA4B4 cuadro_entre_16: A = la cuenta de cuadros con las cifras cambiadas
+C 0xA4C3 cuadro_entre_16: A = la cuenta de cuadros con las cifras cambiadas
 C 0xA4E8 de_mas_a: DE = DE + A
+C 0xA4F2 por_32: HL = A x 32
+C 0xA507 luz_1_encendida: la luz 1 encendida (p10:B13B) en DE
+C 0xA50D luz_2_encendida: la luz 2 encendida (p10:B142) en DE
+C 0xA51A historia_siguiente: el paso siguiente de la historia (0xE1D7 + 1)
+C 0xA520 borra_filas_16_23: borra 256 nombres desde 0x3A00 (las filas 16-23)
+C 0xA524 funde_texto: el fundido de tipo 3 de 0xFE caracteres desde 0x1008 (el tercio del texto)
 C 0xA528 escribe_texto: escribe a la VRAM la lista de textos de DE: [direccion][caracteres] con 0xFE = otra direccion y 0xFF = fin
+C 0xA52B historia_siguiente: el paso siguiente de la historia (0xE1D7 + 1)
 C 0xA531 cuadros_desde: C si la cuenta de interrupciones 0xF0F7 no llega a DE
+C 0xA536 paso_de_fundido: un paso del fundido en marcha (0xE490): su tipo (p10:A7AD)
+C 0xA539 luces_siguen: cada 8 cuadros un paso mas (hasta 30) y las tres luces
+C 0xA544 historia_siguiente: el paso siguiente de la historia (0xE1D7 + 1)
 C 0xA54F cuadros_desde: C si la cuenta de interrupciones 0xF0F7 no llega a DE
+C 0xA552 historia_fundido_y_paso: p10:A056 y el paso siguiente
+C 0xA555 paso_de_fundido: un paso del fundido en marcha (0xE490): su tipo (p10:A7AD)
 C 0xA558 borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
 C 0xA55B caracteres_5e59: p00:5E64, p01:69F2, p00:5E20 y p01:69F2
+C 0xA569 pinta_imagen: la imagen DE (comprimida: n caracteres, 0x80 + n repetidos, 0x80 serie) en la VRAM HL, filas de C; los ceros no se pintan
+C 0xA56C funde_texto: el fundido de tipo 3 de 0xFE caracteres desde 0x1008 (el tercio del texto)
 C 0xA56F borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
 C 0xA572 caracteres_5e5f: p00:5E64, p00:5E20 y p00:5D97
+C 0xA575 caracteres_del_piloto_b: p00:5D94 y sin sprites
+C 0xA57A paso_de_fundido: un paso del fundido en marcha (0xE490): su tipo (p10:A7AD)
+C 0xA57D lee el fundido en marcha
+C 0xA582 escena_piloto: pantalla en blanco, caracteres, los del piloto (p10:BFC1) y su imagen (p10:B586)
 C 0xA592 escribe_texto: escribe a la VRAM la lista de textos de DE: [direccion][caracteres] con 0xFE = otra direccion y 0xFF = fin
+C 0xA595 historia_siguiente: el paso siguiente de la historia (0xE1D7 + 1)
 C 0xA59B cuadros_desde: C si la cuenta de interrupciones 0xF0F7 no llega a DE
+C 0xA59E historia_fundido_y_paso: p10:A056 y el paso siguiente
+C 0xA5A1 paso_de_fundido: un paso del fundido en marcha (0xE490): su tipo (p10:A7AD)
+C 0xA5AE paso_de_fundido: un paso del fundido en marcha (0xE490): su tipo (p10:A7AD)
+C 0xA5B1 lee el fundido en marcha
 C 0xA5B6 borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
 C 0xA5B9 caracteres_5e59: p00:5E64, p01:69F2, p00:5E20 y p01:69F2
 C 0xA5BC caracteres_a143: p00:5EE1 y p01:69EF
-C 0xA5C6 apunta a la pantalla en RAM: la tabla de nombres de 22 filas de 32
+C 0xA5C0 guarda el paso de la escena
+C 0xA5C3 historia_siguiente: el paso siguiente de la historia (0xE1D7 + 1)
+C 0xA5CC descomprime_a_ram: DE a la RAM HL: n < 0x80 n bytes, 0x80 + n un byte n veces, 0x80 n c una serie desde c, 0 acaba
 C 0xA5D2 guarda variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo) o un puntero y el byte siguiente (16 bits)
 C 0xA5D8 guarda variable de paso: el puntero del mapa y el byte siguiente (16 bits)
 C 0xA5DE guarda variable de paso y el byte siguiente (16 bits)
-C 0xA5EF lee la cuenta de cuadros
+C 0xA5EC aparicion_por_pasos: el paso 0xE496: dos fundidos (p10:A73B, p10:A717) y las dos filas que tocan, de la pantalla de RAM a la VRAM
+C 0xA5F5 paso_de_fundido: un paso del fundido en marcha (0xE490): su tipo (p10:A7AD)
+C 0xA5FE apunta a el segundo fundido en marcha
+C 0xA603 lee el paso de la escena
+C 0xA60B guarda el paso de la escena
+C 0xA60E escena_12_pasos: los datos de la aparicion (0xF000-0xF008: p10:B0D5, B0DB...) y p10:B685
+C 0xA611 funde_texto: el fundido de tipo 3 de 0xFE caracteres desde 0x1008 (el tercio del texto)
 C 0xA621 escribe_texto: escribe a la VRAM la lista de textos de DE: [direccion][caracteres] con 0xFE = otra direccion y 0xFF = fin
+C 0xA624 historia_siguiente: el paso siguiente de la historia (0xE1D7 + 1)
 C 0xA62A cuadros_desde: C si la cuenta de interrupciones 0xF0F7 no llega a DE
+C 0xA62D paso_de_fundido: un paso del fundido en marcha (0xE490): su tipo (p10:A7AD)
+C 0xA630 historia_fundido_y_paso: p10:A056 y el paso siguiente
+C 0xA633 paso_de_fundido: un paso del fundido en marcha (0xE490): su tipo (p10:A7AD)
+C 0xA636 lee el fundido en marcha
 C 0xA63B borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
+C 0xA63F guarda el paso de la historia o de la secuencia en marcha (0: ninguna)
 C 0xA645 sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
 C 0xA64B guarda la cuenta de interrupciones (16 bits)
+C 0xA657 guarda el paso de la historia o de la secuencia en marcha (0: ninguna)
 C 0xA65A borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
 C 0xA65D caracteres_5e59: p00:5E64, p01:69F2, p00:5E20 y p01:69F2
+C 0xA660 funde_tres: el fundido de tipo 3 de 0xFE caracteres desde 0x0008, tres tercios
 C 0xA666 escribe_texto: escribe a la VRAM la lista de textos de DE: [direccion][caracteres] con 0xFE = otra direccion y 0xFF = fin
+C 0xA66B guarda el paso de la historia o de la secuencia en marcha (0: ninguna)
 C 0xA67C guarda variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo) o un puntero
 C 0xA680 guarda variable de paso: cuantos bytes y el byte siguiente (16 bits)
+C 0xA699 fila_siguiente_de_imagen: HL a la fila siguiente (0xF001 + 32); 0xF000 - 1
 C 0xA69C lee variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo) o un puntero
-C 0xA6B8 lee variable de paso: cuantos bytes y el byte siguiente (16 bits)
+C 0xA6AF fila_siguiente_de_imagen: HL a la fila siguiente (0xF001 + 32); 0xF000 - 1
 C 0xA6BD hl_mas_a: HL = HL + A
 C 0xA6C0 guarda variable de paso: cuantos bytes y el byte siguiente (16 bits)
-C 0xA6C3 lee variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo) o un puntero
-C 0xA6CD apunta a variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo) o un puntero
+C 0xA6DF fila_siguiente_de_imagen: HL a la fila siguiente (0xF001 + 32); 0xF000 - 1
+C 0xA71B guarda cuantos caracteres funde
+C 0xA71F guarda cuantos tercios funde
+C 0xA726 guarda la fila del fundido
+C 0xA72A guarda el fundido en marcha
 C 0xA730 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
+C 0xA73C guarda cuantos caracteres funde el segundo
+C 0xA743 guarda la fila del segundo fundido
+C 0xA747 guarda el segundo fundido en marcha
+C 0xA74A guarda_y_borra_b: los del segundo, igual
+C 0xA750 lee la VRAM del fundido y el byte siguiente (16 bits)
 C 0xA758 rellena_vram_d_veces: rellena BC bytes de la VRAM HL con A, D veces, 0x800 mas adelante cada vez
-C 0xA77C apunta a las fichas de 16 bytes de los objetos de caracteres
-C 0xA788 apunta a el bufer de colores al cargar caracteres
+C 0xA75B bytes_del_fundido_b: BC = los del segundo x 8
+C 0xA75E lee la VRAM del segundo fundido y el byte siguiente (16 bits)
+C 0xA765 lee cuantos caracteres funde
+C 0xA771 lee cuantos caracteres funde el segundo
+C 0xA776 bytes_del_fundido: BC = los caracteres del fundido x 8
+C 0xA779 lee la VRAM del fundido y el byte siguiente (16 bits)
+C 0xA782 bytes_del_fundido_b: BC = los del segundo x 8
+C 0xA785 lee la VRAM del segundo fundido y el byte siguiente (16 bits)
+C 0xA78F guarda_caracteres: los caracteres del fundido a 0xE500
+C 0xA794 guarda_caracteres_b: los del segundo a 0xE800
+C 0xA799 guarda_y_borra: los guarda y los borra
+C 0xA79E guarda la fila del fundido
 C 0xA7AA despacha: salta a la palabra A de la tabla que va pegada detras del `call`
+C 0xA7B5 lee la VRAM del fundido y el byte siguiente (16 bits)
+C 0xA7B8 lee cuantos caracteres funde
 C 0xA7C3 hl_mas_a: HL = HL + A
 C 0xA7CE rellena_vram_d_veces: rellena BC bytes de la VRAM HL con A, D veces, 0x800 mas adelante cada vez
-C 0xA7F1 apunta a las fichas de 16 bytes de los objetos de caracteres
+C 0xA7E1 guarda la fila del fundido
+C 0xA7EA lee la VRAM del fundido y el byte siguiente (16 bits)
+C 0xA7ED lee cuantos caracteres funde
+C 0xA7FA fila_a: HL y DE + (A & 7), BC = 1
 C 0xA802 copia_a_vram_b_veces: copia BC' bytes de DE' a la VRAM HL B veces, 0x800 mas adelante cada vez
+C 0xA819 guarda la fila del fundido
+C 0xA81D lee la VRAM del fundido y el byte siguiente (16 bits)
+C 0xA820 lee cuantos caracteres funde
 C 0xA824 apunta a las fichas de 16 bytes de los objetos de caracteres
+C 0xA827 lee la fila del fundido
+C 0xA831 fundido_acabado: 0xE490 = 0
+C 0xA834 guarda la fila del fundido
 C 0xA842 copia_a_vram_b_veces: copia BC' bytes de DE' a la VRAM HL B veces, 0x800 mas adelante cada vez
+C 0xA851 lee la fila del fundido
 C 0xA858 hl_mas_a: HL = HL + A
 C 0xA85C de_mas_a: DE = DE + A
-C 0xA86F apunta a el bufer de colores al cargar caracteres
+C 0xA868 lee la VRAM del segundo fundido y el byte siguiente (16 bits)
+C 0xA86B lee cuantos caracteres funde el segundo
+C 0xA872 lee la fila del segundo fundido
+C 0xA880 guarda la fila del segundo fundido
+C 0xA885 guarda el segundo fundido en marcha
 C 0xA88C apunta a los atributos de los 32 sprites (Y, X, dibujo, color)
-C 0xA895 apunta a la pantalla en RAM: la tabla de nombres de 22 filas de 32
-C 0xA8A2 apunta a la pantalla en RAM: la tabla de nombres de 22 filas de 32
 C 0xA8B3 apunta a la pantalla en RAM: la tabla de nombres de 22 filas de 32
 C 0xA8B6 copia_a_vram: copia BC bytes de DE a la VRAM HL (LDIRVM)
+C 0xB639 imagen_del_logo: HL = el logo: p10:B832 en Japon (0x002B), p10:B7A1 fuera
+C 0xB63E pinta_imagen: la imagen DE (comprimida: n caracteres, 0x80 + n repetidos, 0x80 serie) en la VRAM HL, filas de C; los ceros no se pintan
+C 0xB655 guarda el paso de la escena
 C 0xB658 esconde_sprites: los 32 sprites de 0xE280 con Y = 0xE0 (fuera de la pantalla)
+C 0xB65B sprites_a_vram_b: los 32 sprites de 0xE280 a la VRAM 0x3B00
+C 0xB65E imagen_del_logo: HL = el logo: p10:B832 en Japon (0x002B), p10:B7A1 fuera
 C 0xB662 apunta a la pantalla en RAM: la tabla de nombres de 22 filas de 32
 C 0xB66B guarda variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo) o un puntero y el byte siguiente (16 bits)
 C 0xB671 guarda variable de paso: el puntero del mapa y el byte siguiente (16 bits)
 C 0xB677 guarda variable de paso y el byte siguiente (16 bits)
-C 0xB685 lee variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo) o un puntero y el byte siguiente (16 bits)
+C 0xB688 paso_de_la_tabla: B y HL de la ficha 0xE496 (3 bytes) de la tabla HL
 C 0xB692 apunta a variable de paso: el puntero del mapa
+C 0xB696 por_32: HL = A x 32
+C 0xB699 vram_de_la_fila: DE = 0x3800 + HL + la columna 0xF008
+C 0xB69D fila_x_ancho: HL = C x 26 (o x 16 con 0xF004)
+C 0xB6A0 ram_de_la_fila: DE = 0xED00 + la fila 0xF005 x ancho
+C 0xB6A5 copia_una_fila: una fila de 26 caracteres (16 con 0xF004) de DE a la VRAM HL
+C 0xB6AB paso_de_la_tabla: B y HL de la ficha 0xE496 (3 bytes) de la tabla HL
 C 0xB6B8 lee variable de paso: el puntero de la ficha
 C 0xB6BE apunta a variable de paso: el puntero de la ficha
 C 0xB6C1 lee variable de paso: el puntero del mapa
+C 0xB6C6 por_32: HL = A x 32
+C 0xB6C9 vram_de_la_fila: DE = 0x3800 + HL + la columna 0xF008
+C 0xB6CD fila_x_ancho: HL = C x 26 (o x 16 con 0xF004)
 C 0xB6D0 apunta a la pantalla en RAM: la tabla de nombres de 22 filas de 32
 C 0xB6DA lee variable de paso
+C 0xB6E2 copia_filas: B filas de C caracteres de la pantalla de RAM DE a la VRAM HL (los ceros no se pintan)
 C 0xB6E5 lee variable de paso
+C 0xB6EB por_26: HL = A x 26
+C 0xB6EF por_16: HL = A x 16
+C 0xB700 lee el paso de la escena
 C 0xB706 hl_mas_a: HL = HL + A
 C 0xB711 lee variable de paso
 C 0xB715 lee variable de paso: el puntero de la ficha
+C 0xB719 por_26: HL = A x 26
+C 0xB71D por_16: HL = A x 16
 C 0xB720 apunta a la pantalla en RAM: la tabla de nombres de 22 filas de 32
-C 0xB767 textos_del_titulo: KONAMI 1987, PLAY SELECT y 1PLAYER (estados 0-1), o KONAMI PRESENTS THE GRADIUS/NEMESIS SAGA CONTINUES...
+C 0xB742 paso_de_fundido_b: un paso del segundo fundido (0xE498), fila 0xE499
+C 0xB748 apunta a el segundo fundido en marcha
+C 0xB74D lee el paso de la escena
+C 0xB755 guarda el paso de la escena
+C 0xB758 logo_por_pasos: los datos de la aparicion del logo (0xF000-0xF008: p10:B8E6, B8D7...)
+C 0xB764 empieza_fundido: un fundido de tipo A (0 borra, 1 y 3 aparece, 2 desaparece) de B caracteres desde HL en C tercios (0xE490-0xE4A0)
+C 0xB772 lee el fundido en marcha
+C 0xB778 guarda el paso de la historia o de la secuencia en marcha (0: ninguna)
 C 0xB77C esconde_sprites: los 32 sprites de 0xE280 con Y = 0xE0 (fuera de la pantalla)
-C 0xB78E lee la cuenta de cuadros
-C 0xB993 lee la marca del final (estado 10)
+C 0xB77F sprites_a_vram_b: los 32 sprites de 0xE280 a la VRAM 0x3B00
+C 0xB793 logo_del_titulo: el logo (p10:B832 GRADIUS en Japon, p10:B7A1 NEMESIS fuera) en 0x3843, 26 columnas
+C 0xB79E pinta_imagen: la imagen DE (comprimida: n caracteres, 0x80 + n repetidos, 0x80 serie) en la VRAM HL, filas de C; los ceros no se pintan
 C 0xB997 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
+C 0xB9B6 espera_del_final: 0xE49E - 1 (Z al acabar)
+C 0xB9BD guarda la espera del paso del final (16 bits)
+C 0xB9C3 texto_siguiente: el texto 0xE496 de la lista HL; sin el (0), un cuadro y borra las filas de abajo
+C 0xB9CB final_siguiente: la espera HL (0xE49E) y el paso siguiente (0xE1E6 + 1)
 C 0xB9D2 palabra_a: DE = la palabra A de la tabla HL (HL apunta a su byte alto)
 C 0xB9DA escribe_texto: escribe a la VRAM la lista de textos de DE: [direccion][caracteres] con 0xFE = otra direccion y 0xFF = fin
+C 0xB9E1 guarda el paso de la escena
+C 0xB9E8 guarda la espera del paso del final (16 bits)
+C 0xB9EB borra_filas_16_23: borra 256 nombres desde 0x3A00 (las filas 16-23)
+C 0xB9F0 espera_del_final: 0xE49E - 1 (Z al acabar)
 C 0xB9F6 sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
+C 0xB9F9 borra_filas_16_23: borra 256 nombres desde 0x3A00 (las filas 16-23)
 C 0xB9FF escribe_texto: escribe a la VRAM la lista de textos de DE: [direccion][caracteres] con 0xFE = otra direccion y 0xFF = fin
+C 0xBA02 final_siguiente_texto: 0xE496 = 0 y un cuadro de espera
+C 0xBA05 aviso_cada_8: el aviso p14:94C4 cada 8 cuadros si, 8 no
+C 0xBA08 espera_del_final: 0xE49E - 1 (Z al acabar)
+C 0xBA0F lee el paso de la escena
+C 0xBA19 guarda la espera del paso del final (16 bits)
+C 0xBA1F texto_siguiente: el texto 0xE496 de la lista HL; sin el (0), un cuadro y borra las filas de abajo
 C 0xBA25 borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
-C 0xBA28 caracteres_a214_y_borra: p00:5EA9, p00:5D97 y p10:A435
+C 0xBA2B funde_texto: el fundido de tipo 3 de 0xFE caracteres desde 0x1008 (el tercio del texto)
 C 0xBA31 escribe_texto: escribe a la VRAM la lista de textos de DE: [direccion][caracteres] con 0xFE = otra direccion y 0xFF = fin
-C 0xBA4A lee la cuenta de cuadros
+C 0xBA36 guarda el paso de la escena
+C 0xBA3C final_siguiente: la espera HL (0xE49E) y el paso siguiente (0xE1E6 + 1)
+C 0xBA3F espera_del_final: 0xE49E - 1 (Z al acabar)
+C 0xBA50 luz_del_paso: el caracter del paso 0xE496 (p10:B0E1: [caracter][columna][fila]) en la tabla de nombres
+C 0xBA5A guarda el paso de la escena
+C 0xBA61 funde_texto: el fundido de tipo 3 de 0xFE caracteres desde 0x1008 (el tercio del texto)
 C 0xBA67 escribe_texto: escribe a la VRAM la lista de textos de DE: [direccion][caracteres] con 0xFE = otra direccion y 0xFF = fin
+C 0xBA6D final_siguiente: la espera HL (0xE49E) y el paso siguiente (0xE1E6 + 1)
+C 0xBA70 paso_de_fundido: un paso del fundido en marcha (0xE490): su tipo (p10:A7AD)
+C 0xBA73 luces_encendidas: las tres luces encendidas
+C 0xBA76 lee el fundido en marcha
 C 0xBA86 escribe_texto: escribe a la VRAM la lista de textos de DE: [direccion][caracteres] con 0xFE = otra direccion y 0xFF = fin
 C 0xBA89 borra_texto: lo mismo que escribe_texto pero con ceros: borra los textos de la lista DE
-C 0xBA8F lee la cuenta de cuadros
 C 0xBA96 escribe_texto: escribe a la VRAM la lista de textos de DE: [direccion][caracteres] con 0xFE = otra direccion y 0xFF = fin
 C 0xBA99 borra_texto: lo mismo que escribe_texto pero con ceros: borra los textos de la lista DE
-C 0xBA9C lee la musica que suena
+C 0xBAA2 apunta a la espera del paso del final (16 bits)
+C 0xBAA6 aviso_cada_8: el aviso p14:94C4 cada 8 cuadros si, 8 no
 C 0xBAAD guarda la marca del final (estado 10)
 C 0xBAB0 borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
+C 0xBAB3 final_siguiente: la espera HL (0xE49E) y el paso siguiente (0xE1E6 + 1)
 C 0xBAB8 guarda la Y de la nave
 C 0xBABB guarda la Y de la primera opcion
 C 0xBABE guarda la Y de la segunda opcion
 C 0xBAC3 guarda la X de la nave
 C 0xBACD borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
-C 0xBAD3 aa2f_con_bancos: con los bancos 1-2-3, p03:AA2F, y el banco 10
+C 0xBAD0 naves_al_centro: la nave y sus dos opciones en Y 0x48, X 0x30
 C 0xBAD9 esconde_sprites: los 32 sprites de 0xE280 con Y = 0xE0 (fuera de la pantalla)
+C 0xBADC sprites_a_vram_b: los 32 sprites de 0xE280 a la VRAM 0x3B00
 C 0xBAE0 guarda la marca del final (estado 10)
-C 0xBAE4 apunta a las fichas de 16 bytes de los objetos de caracteres
-C 0xBB53 borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
+C 0xBAF2 espera_del_final: 0xE49E - 1 (Z al acabar)
+C 0xBAF9 guarda la espera del paso del final (16 bits)
+C 0xBB02 texto_siguiente: el texto 0xE496 de la lista HL; sin el (0), un cuadro y borra las filas de abajo
+C 0xBB0A final_siguiente: la espera HL (0xE49E) y el paso siguiente (0xE1E6 + 1)
+C 0xBB0E lee el paso de la escena
+C 0xBB16 imagen_del_final_1: pantalla en blanco, caracteres (p12:A000) y la imagen p14:91A8 en 0x38A7
+C 0xBB19 paso_en_e: A = el paso guardado en E'
+C 0xBB1E imagen_del_final_2: pantalla en blanco, caracteres (p09:A143) y la imagen p10:B06F en 0x38E8
+C 0xBB21 paso_en_e: A = el paso guardado en E'
+C 0xBB26 imagen_del_final_1: pantalla en blanco, caracteres (p12:A000) y la imagen p14:91A8 en 0x38A7
+C 0xBB29 paso_en_e: A = el paso guardado en E'
+C 0xBB2E imagen_del_final_2: pantalla en blanco, caracteres (p09:A143) y la imagen p10:B06F en 0x38E8
+C 0xBB35 espera_del_final: 0xE49E - 1 (Z al acabar)
+C 0xBB3C tres_luces: las tres luces de la nave segun la cuenta de cuadros
+C 0xBB3F espera_del_final: 0xE49E - 1 (Z al acabar)
+C 0xBB42 paso_de_fundido: un paso del fundido en marcha (0xE490): su tipo (p10:A7AD)
+C 0xBB48 final_siguiente: la espera HL (0xE49E) y el paso siguiente (0xE1E6 + 1)
+C 0xBB4B paso_de_fundido: un paso del fundido en marcha (0xE490): su tipo (p10:A7AD)
+C 0xBB4E lee el fundido en marcha
 C 0xBB56 caracteres_5e5f: p00:5E64, p00:5E20 y p00:5D97
 C 0xBB69 escribe_texto: escribe a la VRAM la lista de textos de DE: [direccion][caracteres] con 0xFE = otra direccion y 0xFF = fin
+C 0xBB6C final_siguiente: la espera HL (0xE49E) y el paso siguiente (0xE1E6 + 1)
 C 0xBB72 cuadros_desde: C si la cuenta de interrupciones 0xF0F7 no llega a DE
+C 0xBB75 paso_de_fundido: un paso del fundido en marcha (0xE490): su tipo (p10:A7AD)
 C 0xBB7E guarda la cuenta de interrupciones (16 bits)
 C 0xBB81 borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
-C 0xBB84 lee la marca del final con textos
 C 0xBB8C sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
-C 0xBBA7 apunta a la marca del final (estado 10)
+C 0xBB9A final_siguiente: la espera HL (0xE49E) y el paso siguiente (0xE1E6 + 1)
+C 0xBB9E guarda el paso de la escena
 C 0xBBAE sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
 C 0xBBBA guarda la marca del final (estado 10)
 C 0xBBCD escribe_texto: escribe a la VRAM la lista de textos de DE: [direccion][caracteres] con 0xFE = otra direccion y 0xFF = fin
+C 0xBBD3 final_siguiente: la espera HL (0xE49E) y el paso siguiente (0xE1E6 + 1)
 C 0xBBD8 guarda la marca del final (estado 10)
+C 0xBBDB imagen_del_final_2: pantalla en blanco, caracteres (p09:A143) y la imagen p10:B06F en 0x38E8
 C 0xBBE0 borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
 C 0xBBE3 esconde_sprites: los 32 sprites de 0xE280 con Y = 0xE0 (fuera de la pantalla)
-C 0xBBE6 caracteres_5e5f: p00:5E64, p00:5E20 y p00:5D97
 C 0xBBE9 caracteres_a000: copia caracteres de un tercio a los otros dos y la lista p12:A000 (copias p12:A00D)
+C 0xBBFF pinta_imagen: la imagen DE (comprimida: n caracteres, 0x80 + n repetidos, 0x80 serie) en la VRAM HL, filas de C; los ceros no se pintan
 C 0xBC02 borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
 C 0xBC05 esconde_sprites: los 32 sprites de 0xE280 con Y = 0xE0 (fuera de la pantalla)
 C 0xBC08 caracteres_5e5f: p00:5E64, p00:5E20 y p00:5D97
 C 0xBC0B caracteres_a143_y_borra: p00:5EE1 y p00:5D97
+C 0xBC16 pinta_imagen: la imagen DE (comprimida: n caracteres, 0x80 + n repetidos, 0x80 serie) en la VRAM HL, filas de C; los ceros no se pintan
+C 0xBC1D guarda la espera del paso del final (16 bits)
 C 0xBE01 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
-C 0xBE11 lee la cuenta de cuadros
-C 0xBE3C apunta a las fichas de 16 bytes de los objetos de caracteres
-C 0xBE49 lee la cuenta de cuadros
-C 0xBE9E lee la cuenta de cuadros
+C 0xBE1A pon_ojos: los caracteres de 0xE4A3 en 0x39C1 y 0x39C5, los de 0xE4A4 en 0x39DA y 0x39DE
+C 0xBE20 fila_del_piloto: la fila A de la imagen del piloto (0xE500) en la VRAM, 20 columnas
+C 0xBE27 piloto_espera: 0xE496 = 0xFF y 60 cuadros
+C 0xBE2A guarda el paso de la escena
+C 0xBE31 por_32: HL = A x 32
+C 0xBE46 copia_filas: B filas de C caracteres de la pantalla de RAM DE a la VRAM HL (los ceros no se pintan)
+C 0xBE4F apunta a el caracter de los ojos de arriba
+C 0xBE52 alterna: (DE) XOR 1
+C 0xBE55 apunta a el caracter de los ojos de abajo
+C 0xBE58 alterna: (DE) XOR 1
+C 0xBE5E apunta a el caracter de los ojos de arriba
+C 0xBE61 un_nombre: (DE) en la VRAM HL
+C 0xBE67 apunta a el caracter de los ojos de arriba
+C 0xBE6A un_nombre: (DE) en la VRAM HL
+C 0xBE70 apunta a el caracter de los ojos de abajo
+C 0xBE73 un_nombre: (DE) en la VRAM HL
+C 0xBE79 apunta a el caracter de los ojos de abajo
+C 0xBE8C guarda el paso de la escena
+C 0xBE91 piloto_siguiente: la espera A y el paso siguiente
+C 0xBE98 piloto_siguiente: la espera A y el paso siguiente
+C 0xBE9B ojos_parpadean: cada 16 cuadros los dos caracteres de 0xE4A3 y 0xE4A4 cambian
+C 0xBEA3 sin_sprites_en_vram: esconde los sprites y a la VRAM
 C 0xBEB0 apunta a los atributos de los 32 sprites (Y, X, dibujo, color)
+C 0xBEB5 sprites_relativos: B sprites de DE: Y + H, X + L, dibujo, color C, a HL'
+C 0xBEC4 sprites_relativos: B sprites de DE: Y + H, X + L, dibujo, color C, a HL'
 C 0xBECA esconde_sprites: los 32 sprites de 0xE280 con Y = 0xE0 (fuera de la pantalla)
-C 0xBED3 lee la cuenta de cuadros
+C 0xBECD sprites_a_vram_b: los 32 sprites de 0xE280 a la VRAM 0x3B00
+C 0xBED0 ojos_parpadean: cada 16 cuadros los dos caracteres de 0xE4A3 y 0xE4A4 cambian
+C 0xBEDD guarda el paso de la escena
+C 0xBF05 pinta_imagen: la imagen DE (comprimida: n caracteres, 0x80 + n repetidos, 0x80 serie) en la VRAM HL, filas de C; los ceros no se pintan
+C 0xBF11 pinta_imagen: la imagen DE (comprimida: n caracteres, 0x80 + n repetidos, 0x80 serie) en la VRAM HL, filas de C; los ceros no se pintan
 C 0xBF28 apunta a los atributos de los 32 sprites (Y, X, dibujo, color)
+C 0xBF2D sprites_relativos: B sprites de DE: Y + H, X + L, dibujo, color C, a HL'
+C 0xBF3C sprites_relativos: B sprites de DE: Y + H, X + L, dibujo, color C, a HL'
+C 0xBF3F sprites_a_vram_b: los 32 sprites de 0xE280 a la VRAM 0x3B00
+C 0xBF5E ojos_parpadean: cada 16 cuadros los dos caracteres de 0xE4A3 y 0xE4A4 cambian
+C 0xBF66 fondo_del_piloto: descomprime p10:B461 a la pantalla de RAM desde la fila 1 y la copia a la VRAM
+C 0xBF69 pon_ojos: los caracteres de 0xE4A3 en 0x39C1 y 0x39C5, los de 0xE4A4 en 0x39DA y 0x39DE
+C 0xBF6E fila_del_piloto: la fila A de la imagen del piloto (0xE500) en la VRAM, 20 columnas
+C 0xBF71 sprites_del_piloto: dos grupos de 4 sprites (p10:B5EC, B5F8) con color 9
+C 0xBF7F ojos_parpadean: cada 16 cuadros los dos caracteres de 0xE4A3 y 0xE4A4 cambian
+C 0xBF87 sprites_del_piloto: dos grupos de 4 sprites (p10:B5EC, B5F8) con color 9
 C 0xBF8A esconde_sprites: los 32 sprites de 0xE280 con Y = 0xE0 (fuera de la pantalla)
-C 0xBF93 borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
-C 0xBFB2 apunta a las fichas de 16 bytes de los objetos de caracteres
+C 0xBF90 pon_dos_grupos: dos grupos de B sprites (de DE) en 0xE280 y 0xE288 con el color C, y a la VRAM
+C 0xBF96 borra_pantalla_ram: la pantalla de RAM (0xED00-0xEFFF) a cero y copia sus 2 primeras filas a 0xEFC0; luego a la VRAM
+C 0xBF9A guarda el paso de la historia o de la secuencia en marcha (0: ninguna)
+C 0xBFA0 guarda el paso de la historia o de la secuencia en marcha (0: ninguna)
+C 0xBFA3 caracteres_del_piloto: p00:5D8E y sin sprites
+C 0xBFA6 borra_pantalla_ram: la pantalla de RAM (0xED00-0xEFFF) a cero y copia sus 2 primeras filas a 0xEFC0; luego a la VRAM
+C 0xBFAC guarda el caracter de los ojos de arriba y el byte siguiente (16 bits)
+C 0xBFAF fondo_del_piloto: descomprime p10:B461 a la pantalla de RAM desde la fila 1 y la copia a la VRAM
+C 0xBFB8 descomprime_a_ram: DE a la RAM HL: n < 0x80 n bytes, 0x80 + n un byte n veces, 0x80 n c una serie desde c, 0 acaba
+C 0xBFBD guarda el paso de la escena
 C 0xBFC1 caracteres_b3d0: p00:5DA0 y p01:69EF
 C 0xBFC4 esconde_sprites: los 32 sprites de 0xE280 con Y = 0xE0 (fuera de la pantalla)
+C 0xBFC7 sprites_a_vram_b: los 32 sprites de 0xE280 a la VRAM 0x3B00
 C 0xBFCA caracteres_b3d0_y_borra: p00:5DA0 y p00:5D97
+C 0xBFD8 pantalla_ram_a_vram: los 768 nombres de 0xED00 a la tabla de nombres
 # --- fin de las anotaciones de anota.py ---

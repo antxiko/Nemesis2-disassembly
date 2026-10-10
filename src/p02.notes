@@ -1489,17 +1489,22 @@ C 0x87AE aparicion_de_objeto: la siguiente ficha de objetos de la fase (p02:8879
 C 0x87BC crea_objeto_de_ficha: el objeto de la ficha: Y de B, X 0xF004, clase C & 0x1F y C bits 5-6; con el bit 7 solo con 0xE20A
 C 0x87C5 lee la vuelta (bit 0: las fases bajan)
 C 0x87FB lee variable de paso: la lista
-C 0x8803 lee la velocidad Y calculada (16 bits) y el byte siguiente (16 bits)
+C 0x8803 lee la velocidad Y calculada (16 bits)
 C 0x8829 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 C 0x884C banco_11: pone el banco 11 en 0xA000 (y 0xF0F3)
+C 0x884F clase_14_empieza: la clase 14: la forma 0x2F, 4 golpes, 2 x 2, 48 cuadros y sin caja
 C 0x8852 bancos_2_3: pone los bancos 2 y 3 en 0x8000 y 0xA000 (y 0xF0F2-0xF0F3)
 C 0x8855 banco_11: pone el banco 11 en 0xA000 (y 0xF0F3)
+C 0x8858 clase_16_empieza: la clase 16: la forma 0x3A (+ 7 con IX+0B bit 0), 6 golpes, 4 x 3, 48 cuadros y sin caja
 C 0x885B bancos_2_3: pone los bancos 2 y 3 en 0x8000 y 0xA000 (y 0xF0F2-0xF0F3)
 C 0x885E banco_11: pone el banco 11 en 0xA000 (y 0xF0F3)
+C 0x8861 clase_11_empieza: la clase 11: sin caja, 11 pasos (14 con IX+0B bit 1)
 C 0x8864 bancos_2_3: pone los bancos 2 y 3 en 0x8000 y 0xA000 (y 0xF0F2-0xF0F3)
 C 0x8867 banco_11: pone el banco 11 en 0xA000 (y 0xF0F3)
+C 0x886A clase_12_empieza: la clase 12: sin caja, 11 pasos, uno cada 6 cuadros
 C 0x886D bancos_2_3: pone los bancos 2 y 3 en 0x8000 y 0xA000 (y 0xF0F2-0xF0F3)
 C 0x8870 banco_11: pone el banco 11 en 0xA000 (y 0xF0F3)
+C 0x8873 clase_13_empieza: la clase 13: sin caja, 1 cuadro, y la X a la que se abre de p11:A82A
 C 0x8876 bancos_2_3: pone los bancos 2 y 3 en 0x8000 y 0xA000 (y 0xF0F2-0xF0F3)
 C 0x887C lee la fase (0-11)
 C 0x8882 palabra_a: DE = la palabra A de la tabla HL (HL apunta a su byte alto)
@@ -1629,14 +1634,14 @@ C 0x92BD guarda la marca de jefe vencido: al interior
 C 0x92C8 lee la cuenta de cuadros
 C 0x92DB bala_especial: la bala 0x82: al acabar IX+02, pasa a ser normal (choca con el mapa)
 C 0x933F guarda la rapidez del disparo
-C 0x934B lee la velocidad Y calculada (16 bits) y el byte siguiente (16 bits)
+C 0x934B lee la velocidad Y calculada (16 bits)
 C 0x934F pon_vy: IX+07/IX+08 = DE
-C 0x9352 lee la velocidad X calculada (16 bits) y el byte siguiente (16 bits)
+C 0x9352 lee la velocidad X calculada (16 bits)
 C 0x9356 pon_vx: IX+09/IX+0A = DE
 C 0x9359 toca_mapa_delante: C si hay mapa en el sitio del enemigo (8 pixeles mas alla si va a la derecha) o debajo
 C 0x936F sitio_en_pantalla: HL = 0xED00 + el caracter de la pantalla de RAM bajo L (Y) y H (X)
 C 0x937A es_mapa_hl_b: C si el caracter de HL es mapa (de 1 a 0xE305)
-C 0x9381 guarda la velocidad X calculada (16 bits) y el byte siguiente (16 bits)
+C 0x9381 guarda la velocidad X calculada (16 bits)
 C 0x939F guarda la rapidez del disparo
 C 0x93C3 guarda la marca de disparo en este cuadro (uno solo)
 C 0x93E9 guarda la rapidez del disparo
@@ -1664,6 +1669,7 @@ C 0x970F caracter_en_rejilla: IX+32 = A y la Y a la rejilla de 8
 C 0x9722 caracter_por_y: IX+32 = C + (Y / 2) & 3
 C 0x9757 fila_se_va: un caracter menos y con el scroll; sin ninguno, se va
 C 0x9770 byte_a: A = el byte A de la tabla HL
+C 0x9773 lee la Y del jefe (16 bits)
 C 0x977C quita_enemigo: quita el enemigo IX: uno menos (0xE352), devuelve sus sprites (0xE355), 0xE36D si es 0x2A, y descuenta su grupo (IX+16, IX+17, p02:89A8)
 C 0x97D7 quita_enemigo: quita el enemigo IX: uno menos (0xE352), devuelve sus sprites (0xE355), 0xE36D si es 0x2A, y descuenta su grupo (IX+16, IX+17, p02:89A8)
 C 0x97DD quita_enemigo: quita el enemigo IX: uno menos (0xE352), devuelve sus sprites (0xE355), 0xE36D si es 0x2A, y descuenta su grupo (IX+16, IX+17, p02:89A8)
