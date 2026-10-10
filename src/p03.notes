@@ -81,7 +81,7 @@ D 0xBD55 0xBD67 firmas_del_vecino  lo que p03:BCF0 busca en la otra ranura (RDSL
 F 0xBD55 6
 D 0xBDD2 0xBDD8 tabla_BDD2  3 destinos del despachador p00:4084 (call en p03:BDCF, el indice en A): BDD8, BE87, BE90; lo leen p03:BDCF (6 bytes)
 F 0xBDD2 w3
-D 0xBE07 0xBE87 inicio_por_vuelta  8 filas de 16 bytes, una por vuelta (0xE20F): p03:BDD8 copia 9 a 0xE334 y 7 a 0xE430; lo leen p03:BDE2 (128 bytes)
+D 0xBE07 0xBE87 inicio_por_capturas  8 filas de 16 bytes, una por cada cuenta de armas capturadas (0xE20F): p03:BDD8 copia 9 a 0xE334 y 7 a 0xE430; lo leen p03:BDE2 (128 bytes)
 F 0xBE07 16
 D 0xBEAA 0xBEB0 palabras_clave  3 punteros (C en p03:BDB9, con L_4B67) a las palabras que se comparan con lo tecleado en 0xE3E8; lo leen p03:BDBD (6 bytes)
 F 0xBEAA w3

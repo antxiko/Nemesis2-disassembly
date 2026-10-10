@@ -5,13 +5,13 @@
 # --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
 D 0x8000 0x8002 partida_8000  el operando (0xE20F) de `ld a,(nn)`, la instruccion que empieza en p01:7FFF; el codigo sigue en 0x8002; lo leen p01:7FFF (2 bytes)
 F 0x8000 2
-D 0x806D 0x8074 tabla_806D  8 bytes, uno por vuelta (0xE20F), que p02:8060 pone en 0xE331; el octavo es el primero de 0x8074; lo leen p02:8066 (7 bytes)
+D 0x806D 0x8074 tabla_806D  8 bytes, uno por cada cuenta de armas capturadas (0xE20F), que p02:8060 pone en 0xE331; el octavo es el primero de 0x8074; lo leen p02:8066 (7 bytes)
 F 0x806D 7
-D 0x8074 0x80BC tabla_8074  8 filas de 9 bytes, una por vuelta: p02:804A lee 0x8074 + 9 x 0xE20F + 0xE33D; lo leen p02:805D (72 bytes)
+D 0x8074 0x80BC tabla_8074  8 filas de 9 bytes, una por cada cuenta de armas capturadas: p02:804A lee 0x8074 + 9 x 0xE20F + 0xE33D; lo leen p02:805D (72 bytes)
 F 0x8074 9
 D 0x80BC 0x80BD tabla_8074_cola  el byte de detras de las 8 filas de 0x8074: la casilla 9 de la fila 7, si 0xE33D llegara a 9; lo leen p02:805D (1 bytes)
 F 0x80BC 1
-D 0x8148 0x8156 listas_por_vuelta  7 punteros (vueltas 1 a 7: p02:80E5 lee 0x8146 + 2 x 0xE20F con L_4B67, y la 0 caeria en el `ret` de delante) a listas [casilla][valor]; lo leen p02:80EB (14 bytes)
+D 0x8148 0x8156 listas_por_capturas  7 punteros (de 1 a 7 armas capturadas: p02:80E5 lee 0x8146 + 2 x 0xE20F con L_4B67, y la 0 caeria en el `ret` de delante) a listas [casilla][valor]; lo leen p02:80EB (14 bytes)
 F 0x8148 w7
 D 0x8156 0x8196 listas_8156  las listas de p02:80EF: pares [casilla de 0xE333][valor] hasta un 0 (0x8156, 0x8163, 0x8172, 0x8174 y 0x8185, que comparten finales); lo leen p02:80EF (64 bytes)
 F 0x8156 16

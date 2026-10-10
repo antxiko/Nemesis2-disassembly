@@ -2767,9 +2767,10 @@ L_5458:
 	ret			;5461
 
 ; ----------------------------------------------------------------------
-; DATOS tablas_5462: 8 punteros, uno por vuelta (0xE20F), a tablas de punteros
-;   (indice B en p00:53E7) a tiras de bytes que acaban en 0x54AE-0x54C6; las
-;   lee p00:53DC con L_4B67 dos veces; lo leen p00:53E2 (101 bytes)
+; DATOS tablas_5462: 8 punteros, uno por cada cuenta de armas capturadas
+;   (0xE20F), a tablas de punteros (indice B en p00:53E7) a tiras de bytes que
+;   acaban en 0x54AE-0x54C6; las lee p00:53DC con L_4B67 dos veces; lo leen
+;   p00:53E2 (101 bytes)
 ;   0x5462..0x54c7  (101 bytes)
 DATA_tablas_5462:
 	defb 070h,054h,07ch,054h,08ah,054h,08ah,054h,08ah,054h,08ah,054h,09ah,054h,09ah,054h	; 5462  pT|T.T.T.T.T.T.T
@@ -2859,8 +2860,8 @@ L_553E:
 	jp L_53A3		;554c
 
 ; ----------------------------------------------------------------------
-; DATOS tabla_554F: 8 bytes, uno por vuelta (0xE20F): la casilla 0xE3xx que
-;   p00:553E pone a cero; lo leen p00:5544 (8 bytes)
+; DATOS tabla_554F: 8 bytes, uno por cada cuenta de armas capturadas (0xE20F):
+;   la casilla 0xE3xx que p00:553E pone a cero; lo leen p00:5544 (8 bytes)
 ;   0x554f..0x5557  (8 bytes)
 DATA_tabla_554F:
 	defb 039h,03ah,03bh,03bh,03bh,03bh,03ch,03ch	; 554f  9:....<<

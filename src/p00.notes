@@ -31,9 +31,9 @@ D 0x4F4C 0x5113 fichas_de_tipo  65 fichas de 7 bytes, una por tipo de enemigo (0
 F 0x4F4C 7
 D 0x5265 0x526A tabla_5265  5 bytes que p00:5219 lee con C (L_5CA6); lo leen p00:521D (5 bytes)
 F 0x5265 5
-D 0x5462 0x54C7 tablas_5462  8 punteros, uno por vuelta (0xE20F), a tablas de punteros (indice B en p00:53E7) a tiras de bytes que acaban en 0x54AE-0x54C6; las lee p00:53DC con L_4B67 dos veces; lo leen p00:53E2 (101 bytes)
+D 0x5462 0x54C7 tablas_5462  8 punteros, uno por cada cuenta de armas capturadas (0xE20F), a tablas de punteros (indice B en p00:53E7) a tiras de bytes que acaban en 0x54AE-0x54C6; las lee p00:53DC con L_4B67 dos veces; lo leen p00:53E2 (101 bytes)
 F 0x5462 16
-D 0x554F 0x5557 tabla_554F  8 bytes, uno por vuelta (0xE20F): la casilla 0xE3xx que p00:553E pone a cero; lo leen p00:5544 (8 bytes)
+D 0x554F 0x5557 tabla_554F  8 bytes, uno por cada cuenta de armas capturadas (0xE20F): la casilla 0xE3xx que p00:553E pone a cero; lo leen p00:5544 (8 bytes)
 F 0x554F 8
 D 0x5557 0x556F metabloques_por_fase  12 punteros (uno por fase, 0xE201) a los metabloques del banco 13; p00:48C3 los lee con L_4B67; lo leen p00:48C6 (24 bytes)
 F 0x5557 w6

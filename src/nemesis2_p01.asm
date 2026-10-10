@@ -3443,15 +3443,15 @@ DATA_tabla_7758:
 	defb 0a3h,0aeh,0afh,0b0h,048h,0bah,0bah,058h	; 77a0  ....H..X
 
 ; ----------------------------------------------------------------------
-; DATOS tabla_77A8: 6 bytes que p01:769A lee con la vuelta (0xE20F); lo leen
-;   p01:76A0 (6 bytes)
+; DATOS tabla_77A8: 6 bytes que p01:769A lee con las armas capturadas
+;   (0xE20F); lo leen p01:76A0 (6 bytes)
 ;   0x77a8..0x77ae  (6 bytes)
 DATA_tabla_77A8:
 	defb 00ah,00ch,005h,008h,010h,006h	; 77a8
 
 ; ----------------------------------------------------------------------
-; DATOS tabla_77AE: 8 bytes, uno por vuelta (0xE20F), que p01:76CF lee; lo
-;   leen p01:76D5 (8 bytes)
+; DATOS tabla_77AE: 8 bytes, uno por cada cuenta de armas capturadas (0xE20F),
+;   que p01:76CF lee; lo leen p01:76D5 (8 bytes)
 ;   0x77ae..0x77b6  (8 bytes)
 DATA_tabla_77AE:
 	defb 009h,004h,005h,002h,003h,006h,003h,004h	; 77ae  ........
@@ -4382,11 +4382,11 @@ L_7D4F:
 	jp 04ae4h		;7d8a
 
 ; ----------------------------------------------------------------------
-; DATOS saltos_por_vuelta: 8 punteros, uno por vuelta (0xE20F), a las tablas
-;   de destinos de p01:7D85 (L_4085: HL = tabla, A = 0xE33D); lo leen p01:7D7E
-;   (16 bytes)
+; DATOS saltos_por_capturas: 8 punteros, uno por cada cuenta de armas
+;   capturadas (0xE20F), a las tablas de destinos de p01:7D85 (L_4085: HL =
+;   tabla, A = 0xE33D); lo leen p01:7D7E (16 bytes)
 ;   0x7d8d..0x7d9d  (16 bytes)
-DATA_saltos_por_vuelta:
+DATA_saltos_por_capturas:
 	defw 07d9bh,07da7h,07db5h,07db5h,07db5h,07db5h,07dc5h,07dc5h	; 7d8d
 
 ; ----------------------------------------------------------------------

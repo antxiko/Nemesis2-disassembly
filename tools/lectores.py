@@ -552,10 +552,10 @@ TABLAS = [
      "o IX+00), del 1 al 65: p00:4D42 y p01:6514 las leen en 0x4F45 + 7 x tipo (la del 0 caeria "
      "en el codigo de delante)", "p00:4D51", 7),
     (0, 0x5265, 0x526A, "tabla_5265", "5 bytes que p00:5219 lee con C (L_5CA6)", "p00:521D", 5),
-    (0, 0x5462, 0x54C7, "tablas_5462", "8 punteros, uno por vuelta (0xE20F), a tablas de "
+    (0, 0x5462, 0x54C7, "tablas_5462", "8 punteros, uno por cada cuenta de armas capturadas (0xE20F), a tablas de "
      "punteros (indice B en p00:53E7) a tiras de bytes que acaban en 0x54AE-0x54C6; las lee "
      "p00:53DC con L_4B67 dos veces", "p00:53E2", 16),
-    (0, 0x554F, 0x5557, "tabla_554F", "8 bytes, uno por vuelta (0xE20F): la casilla 0xE3xx que "
+    (0, 0x554F, 0x5557, "tabla_554F", "8 bytes, uno por cada cuenta de armas capturadas (0xE20F): la casilla 0xE3xx que "
      "p00:553E pone a cero", "p00:5544", 8),
     (0, 0x5AD8, 0x5ADA, "inicio_E200", "2 bytes que p00:5AB1 copia a 0xE200-0xE201 (la fase de "
      "arranque)", "p00:5AB1", 2),
@@ -623,13 +623,13 @@ TABLAS += [
      "p01:74F2", 8),
     (1, 0x7758, 0x77A8, "tabla_7758", "10 fichas de 8 bytes que p01:751D copia a 0xEE10",
      "p01:7523", 8),
-    (1, 0x77A8, 0x77AE, "tabla_77A8", "6 bytes que p01:769A lee con la vuelta (0xE20F)",
+    (1, 0x77A8, 0x77AE, "tabla_77A8", "6 bytes que p01:769A lee con las armas capturadas (0xE20F)",
      "p01:76A0", 6),
-    (1, 0x77AE, 0x77B6, "tabla_77AE", "8 bytes, uno por vuelta (0xE20F), que p01:76CF lee",
+    (1, 0x77AE, 0x77B6, "tabla_77AE", "8 bytes, uno por cada cuenta de armas capturadas (0xE20F), que p01:76CF lee",
      "p01:76D5", 8),
     (1, 0x786A, 0x7872, "tabla_786A", "8 bytes que p01:7853 copia de dos en dos a la tabla de "
      "nombres de la RAM", "p01:7853", 8),
-    (1, 0x7D8D, 0x7D9D, "saltos_por_vuelta", "8 punteros, uno por vuelta (0xE20F), a las tablas "
+    (1, 0x7D8D, 0x7D9D, "saltos_por_capturas", "8 punteros, uno por cada cuenta de armas capturadas (0xE20F), a las tablas "
      "de destinos de p01:7D85 (L_4085: HL = tabla, A = 0xE33D)", "p01:7D7E", "w8"),
     (1, 0x7D9D, 0x7DD9, "destinos_7D9B", "las tablas de destinos de p01:7D85: 0x7D9B (6, su "
      "primera palabra es la ultima de 0x7D8D), 0x7DA7 (7), 0x7DB5 (8) y 0x7DC5 (10)", "p01:7D85",
@@ -648,11 +648,11 @@ TABLAS += [
      "p02:9FFE", 2),
     (3, 0xA000, 0xA001, "partida_A000", "el desplazamiento (0x30) de `ld (ix+0x30),a`, la "
      "instruccion que empieza en p02:9FFE; detras, p03:A001 es su `ret`", "p02:9FFE", 1),
-    (2, 0x806D, 0x8074, "tabla_806D", "8 bytes, uno por vuelta (0xE20F), que p02:8060 pone en "
+    (2, 0x806D, 0x8074, "tabla_806D", "8 bytes, uno por cada cuenta de armas capturadas (0xE20F), que p02:8060 pone en "
      "0xE331; el octavo es el primero de 0x8074", "p02:8066", 7),
-    (2, 0x8074, 0x80BC, "tabla_8074", "8 filas de 9 bytes, una por vuelta: p02:804A lee 0x8074 + "
+    (2, 0x8074, 0x80BC, "tabla_8074", "8 filas de 9 bytes, una por cada cuenta de armas capturadas: p02:804A lee 0x8074 + "
      "9 x 0xE20F + 0xE33D", "p02:805D", 9),
-    (2, 0x8148, 0x8156, "listas_por_vuelta", "7 punteros (vueltas 1 a 7: p02:80E5 lee 0x8146 + 2 x "
+    (2, 0x8148, 0x8156, "listas_por_capturas", "7 punteros (de 1 a 7 armas capturadas: p02:80E5 lee 0x8146 + 2 x "
      "0xE20F con L_4B67, y la 0 caeria en el `ret` de delante) a listas [casilla][valor]",
      "p02:80EB", "w7"),
     (2, 0x8156, 0x8196, "listas_8156", "las listas de p02:80EF: pares [casilla de 0xE333][valor] "
@@ -749,7 +749,7 @@ TABLAS += [
      "0xBB7C en la fase 5 y 0xBB80 en la 3", "p03:BB66", 4),
     (3, 0xBB84, 0xBB90, "tabla_BB84", "12 bytes que p03:BB24 lee con IX+19", "p03:BB2A", 12),
     (3, 0xBC5D, 0xBC63, "tabla_BC5D", "3 pares que p03:BC3D recorre", "p03:BC44", 2),
-    (3, 0xBE07, 0xBE87, "inicio_por_vuelta", "8 filas de 16 bytes, una por vuelta (0xE20F): "
+    (3, 0xBE07, 0xBE87, "inicio_por_capturas", "8 filas de 16 bytes, una por cada cuenta de armas capturadas (0xE20F): "
      "p03:BDD8 copia 9 a 0xE334 y 7 a 0xE430", "p03:BDE2", 16),
     (3, 0xBEAA, 0xBEB0, "palabras_clave", "3 punteros (C en p03:BDB9, con L_4B67) a las palabras "
      "que se comparan con lo tecleado en 0xE3E8", "p03:BDBD", "w3"),

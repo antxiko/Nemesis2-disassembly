@@ -96,15 +96,17 @@ L_8060:
 	ret			;806c
 
 ; ----------------------------------------------------------------------
-; DATOS tabla_806D: 8 bytes, uno por vuelta (0xE20F), que p02:8060 pone en
-;   0xE331; el octavo es el primero de 0x8074; lo leen p02:8066 (7 bytes)
+; DATOS tabla_806D: 8 bytes, uno por cada cuenta de armas capturadas (0xE20F),
+;   que p02:8060 pone en 0xE331; el octavo es el primero de 0x8074; lo leen
+;   p02:8066 (7 bytes)
 ;   0x806d..0x8074  (7 bytes)
 DATA_tabla_806D:
 	defb 007h,008h,009h,009h,009h,009h,00ah	; 806d
 
 ; ----------------------------------------------------------------------
-; DATOS tabla_8074: 8 filas de 9 bytes, una por vuelta: p02:804A lee 0x8074 +
-;   9 x 0xE20F + 0xE33D; lo leen p02:805D (72 bytes)
+; DATOS tabla_8074: 8 filas de 9 bytes, una por cada cuenta de armas
+;   capturadas: p02:804A lee 0x8074 + 9 x 0xE20F + 0xE33D; lo leen p02:805D
+;   (72 bytes)
 ;   0x8074..0x80bc  (72 bytes)
 DATA_tabla_8074:
 	defb 00ah,007h,002h,001h,002h,002h,001h,000h,000h	; 8074  .........
@@ -217,11 +219,11 @@ L_813F:
 	ret			;8147
 
 ; ----------------------------------------------------------------------
-; DATOS listas_por_vuelta: 7 punteros (vueltas 1 a 7: p02:80E5 lee 0x8146 + 2
-;   x 0xE20F con L_4B67, y la 0 caeria en el `ret` de delante) a listas
-;   [casilla][valor]; lo leen p02:80EB (14 bytes)
+; DATOS listas_por_capturas: 7 punteros (de 1 a 7 armas capturadas: p02:80E5
+;   lee 0x8146 + 2 x 0xE20F con L_4B67, y la 0 caeria en el `ret` de delante)
+;   a listas [casilla][valor]; lo leen p02:80EB (14 bytes)
 ;   0x8148..0x8156  (14 bytes)
-DATA_listas_por_vuelta:
+DATA_listas_por_capturas:
 	defw 08156h,08163h,08174h,08174h,08174h,08185h,08172h	; 8148
 
 ; ----------------------------------------------------------------------

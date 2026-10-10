@@ -4236,10 +4236,11 @@ L_BDD8:
 	jp 04482h		;be04
 
 ; ----------------------------------------------------------------------
-; DATOS inicio_por_vuelta: 8 filas de 16 bytes, una por vuelta (0xE20F):
-;   p03:BDD8 copia 9 a 0xE334 y 7 a 0xE430; lo leen p03:BDE2 (128 bytes)
+; DATOS inicio_por_capturas: 8 filas de 16 bytes, una por cada cuenta de armas
+;   capturadas (0xE20F): p03:BDD8 copia 9 a 0xE334 y 7 a 0xE430; lo leen
+;   p03:BDE2 (128 bytes)
 ;   0xbe07..0xbe87  (128 bytes)
-DATA_inicio_por_vuelta:
+DATA_inicio_por_capturas:
 	defb 002h,0ffh,000h,0ffh,0ffh,0ffh,000h,000h,000h,000h,000h,002h,002h,000h,000h,000h	; be07  ................
 	defb 002h,0ffh,000h,0ffh,0ffh,0ffh,0ffh,000h,000h,000h,000h,002h,002h,002h,000h,000h	; be17  ................
 	defb 002h,000h,000h,000h,0ffh,0ffh,0ffh,0ffh,000h,000h,000h,002h,000h,000h,002h,000h	; be27  ................
