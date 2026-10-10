@@ -769,9 +769,9 @@ C 0x7E63 la casilla 3 gastada
 C 0x7E6B el tope
 C 0x7E6E la casilla + 1
 C 0x7E7D 1: vuelve al disparo
-C 0x7E80 2: el escudo
+C 0x7E80 2: el arma 5
 C 0x7E83 si no, 0xE432 = 6
-C 0x7E8D los dibujos del escudo
+C 0x7E8D los dibujos del arma 5
 C 0x7E9F el nivel sube 0x80
 C 0x7EB9 lo que suelta y los dibujos de las opciones
 C 0x7EC8 9 fichas de 16 bytes
@@ -1145,12 +1145,12 @@ L 0x7DD9 casilla_velocidad con 0xE20B, recupera lo guardado en 0xE210 (medidor, 
 L 0x7E13 dos_opciones 0xE40B = 2 opciones, con p03:AA43 para cada una
 L 0x7E32 casilla_misil el misil + 1 (hasta el tope de p02:804A; luego gastada) y el nivel sube
 L 0x7E4F vuelve_al_disparo 0xE430 = 1 y 0xE436 = 1, las demas armas a cero
-L 0x7E6B casilla_varia la casilla 0xE33D + 1: con 1 vuelve al disparo, con 2 el escudo (0xE432 = 5), si no 0xE432 = 6
+L 0x7E6B casilla_varia la casilla 0xE33D + 1: con 1 vuelve al disparo, con 2 el arma 5 (0xE432 = 5, con sus dibujos), si no la 6
 L 0x7EC2 quita_tipo_0e libera las fichas de 0xE470 con 0x0E
 L 0x7EC6 quita_tipo_03 libera las fichas de 0xE470 con 3
 L 0x7EC8 quita_tipo_a libera las 9 fichas de 16 bytes de 0xE470 que tienen A
-L 0x7ED9 casilla_doble 0xE434 = la casilla + 1 (gastada al tope) y el nivel sube
-L 0x7F0B casilla_laser 0xE435 = la casilla + 1 (gastada al tope), p02:8028 y el nivel sube
+L 0x7ED9 casilla_arriba el disparo hacia arriba: 0xE434 = la casilla + 1 (gastada al tope) y el nivel sube
+L 0x7F0B casilla_abajo el disparo hacia abajo: 0xE435 = la casilla + 1 (gastada al tope), p02:8028 y el nivel sube
 L 0x7F3F casilla_arma 0xE432 = la casilla + 1 (gastada al tope), p02:8041 y el nivel sube poco
 L 0x7F66 casilla_opcion 0xE40B = las opciones (hasta 2; luego gastada) y p03:AA43
 L 0x7F81 marca_e445 0xE445 = 1
@@ -1179,6 +1179,10 @@ C 0x60DA guarda la columna del scroll (16 bits) y el byte siguiente (16 bits)
 C 0x60DD borra_la_fase: 0xE22C, 0xE300, 0xEAA8-0xEAB7, 0xE340-0xE3FF y 0xE500-0xECFF a cero; luego p01:68E4
 C 0x60E0 pinta_la_pantalla: las 32 columnas de la pantalla de una vez (0xE203 - 32 en adelante), con el cuadro entero de enemigos por cada una
 C 0x60E9 guarda la marca de nave en su sitio al volver
+C 0x60EF guarda la Y de la nave (16 bits) y el byte siguiente (16 bits)
+C 0x60F4 guarda la X de la nave (16 bits) y el byte siguiente (16 bits)
+C 0x60F7 rastro_a_la_nave: las 16 posiciones del rastro (0xE450) en la nave y 0xE40E = 0
+C 0x60FA opciones_al_rastro: la primera opcion a 8 pasos del rastro y la segunda a 16
 C 0x6114 lee la fase (0-11)
 C 0x611F guarda la fase (0-11)
 C 0x6125 guarda la columna del scroll (16 bits) y el byte siguiente (16 bits)
@@ -1294,11 +1298,13 @@ C 0x685C lee variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo
 C 0x688B apunta a la forma de la nave (1 normal, 2 con escudo, 3 R.DRILL)
 C 0x6896 apunta a el disparo normal
 C 0x689E lee la fase (0-11)
+C 0x68A6 guarda la X de la nave
 C 0x68B5 guarda el nivel de dificultad
 C 0x68BA guarda la marca de volver a la fase de p01:7C59
 C 0x68BD guarda la marca de 0xE300
 C 0x68CF apunta a el estado del jefe
 C 0x68E5 guarda la marca de la cuenta atras (1: un segundo menos, 2: se acabo)
+C 0x68EC guarda la cuenta de la fila del tipo 7
 C 0x68FE byte_a: A = el byte A de la tabla HL
 C 0x6901 guarda dato de la fase de p01:697A
 C 0x6905 guarda la marca de fin del scroll
@@ -1435,7 +1441,9 @@ C 0x70CE apunta a la espera del generador 11
 C 0x70DF azar_rapido: A = R rotado XOR la cuenta de cuadros
 C 0x70E8 byte_a: A = el byte A de la tabla HL
 C 0x7103 crea_enemigo: busca ficha libre en 0xE600 y pone el enemigo de tipo A en D (X), E (Y), con B y C; A = 0 si no hay sitio o sprites (0xE355, maximo 12)
+C 0x7115 lee la Y de la nave
 C 0x7129 palabra_a: DE = la palabra A de la tabla HL (HL apunta a su byte alto)
+C 0x7131 lee la X de la nave
 C 0x713A crea_enemigo: busca ficha libre en 0xE600 y pone el enemigo de tipo A en D (X), E (Y), con B y C; A = 0 si no hay sitio o sprites (0xE355, maximo 12)
 C 0x7172 lee la cuenta del generador 4
 C 0x717E crea_enemigo: busca ficha libre en 0xE600 y pone el enemigo de tipo A en D (X), E (Y), con B y C; A = 0 si no hay sitio o sprites (0xE355, maximo 12)
@@ -1640,6 +1648,7 @@ C 0x7B2D lee el paso del guion de la fase
 C 0x7B37 jefe_vencido: con el jefe vencido (0xE342), al interior
 C 0x7B3A lee la marca de fin del scroll
 C 0x7B40 guarda la marca de fin del suceso
+C 0x7B43 suceso_de_fase_5: el suceso del final del scroll de la fase 5 (0xE388 = 1): 600 cuadros (900 con 0xE20A) de compuertas (clase 7) que salen y sueltan enemigos
 C 0x7B53 alarga_el_scroll: el final del scroll (0xE325) + DE
 C 0x7B5F sale_el_jefe: el jefe L: 0xE340 = L, la pelea a cero, 0xE34D = 1, 0xE343 = 8 y 0xE305 = 0x70
 C 0x7B62 apunta a el paso del guion de la fase
@@ -1663,7 +1672,7 @@ C 0x7BE3 lee la marca de jefe vencido
 C 0x7BEA lee la marca de jefe vencido
 C 0x7BF5 guarda la marca del final con textos
 C 0x7BF9 guarda la marca del final (estado 10)
-C 0x7BFD lee la velocidad del scroll (1 parado, 2 cada cuadro, si no uno de cada dos)
+C 0x7BFD lee la fase secreta: 1 entrando (scroll parado), 2 yendo (scroll cada cuadro)
 C 0x7C03 lee la marca de fin del scroll
 C 0x7C0C lee la marca de fin del scroll
 C 0x7C18 guarda la marca del estado 8
@@ -1700,54 +1709,56 @@ C 0x7E02 guarda la forma de la nave (1 normal, 2 con escudo, 3 R.DRILL)
 C 0x7E07 guarda la velocidad de la nave
 C 0x7E0C guarda las opciones
 C 0x7E15 guarda las opciones
+C 0x7E18 pon_opcion: enciende la opcion nueva (0xE410 la primera, 0xE420 la segunda) y la pone en el rastro
 C 0x7E1D guarda las opciones
+C 0x7E20 pon_opcion: enciende la opcion nueva (0xE410 la primera, 0xE420 la segunda) y la pone en el rastro
 C 0x7E2E guarda la velocidad de la nave
-C 0x7E33 guarda el laser
+C 0x7E33 guarda el disparo hacia abajo (1, o 2 largo)
 C 0x7E46 suelta_por_capturas: con 2-5 armas capturadas 0xE338 = 0, con 6 o mas 0xE339 = 0
 C 0x7E4C sube_el_nivel: el nivel (0xE227-0xE228) + DE, como mucho 0x0FFF
-C 0x7E50 guarda arma 0xE431
-C 0x7E53 guarda el arma elegida en el medidor
-C 0x7E56 guarda el disparo doble
-C 0x7E59 guarda el laser
-C 0x7E5D guarda arma 0xE436
+C 0x7E50 guarda el disparo en diagonal hacia arriba
+C 0x7E53 guarda el arma de 0xE432 (1-2 tipo 7, 3 tipo 8, 5 tipo 14, 6 tipo 15)
+C 0x7E56 guarda el disparo hacia arriba (1, o 2 largo)
+C 0x7E59 guarda el disparo hacia abajo (1, o 2 largo)
+C 0x7E5D guarda el disparo hacia atras
 C 0x7E60 guarda el disparo normal
 C 0x7E65 guarda la casilla 3 del medidor
 C 0x7E68 e33a_a_e337_a_cero: 0xE33A, 0xE339, 0xE338 y 0xE337 a cero
 C 0x7E71 apunta a la tabla de rotulos de las casillas (desde 0xE334)
 C 0x7E8A quita_tipo_03: libera las fichas de 0xE470 con 3
 C 0x7E90 suelta_con_capturas: con las armas capturadas (cruza a p02:8002): 4 o 5, p02:7FC2; 6 o mas, p01:7FFA
-C 0x7E95 guarda el arma elegida en el medidor
+C 0x7E95 guarda el arma de 0xE432 (1-2 tipo 7, 3 tipo 8, 5 tipo 14, 6 tipo 15)
 C 0x7E99 guarda el disparo normal
-C 0x7E9C guarda arma 0xE431
+C 0x7E9C guarda el disparo en diagonal hacia arriba
 C 0x7EA2 sube_el_nivel: el nivel (0xE227-0xE228) + DE, como mucho 0x0FFF
-C 0x7EA6 guarda el arma elegida en el medidor
-C 0x7EA9 guarda el disparo doble
-C 0x7EAC guarda el laser
-C 0x7EAF guarda arma 0xE436
+C 0x7EA6 guarda el arma de 0xE432 (1-2 tipo 7, 3 tipo 8, 5 tipo 14, 6 tipo 15)
+C 0x7EA9 guarda el disparo hacia arriba (1, o 2 largo)
+C 0x7EAC guarda el disparo hacia abajo (1, o 2 largo)
+C 0x7EAF guarda el disparo hacia atras
 C 0x7EB3 guarda el disparo normal
-C 0x7EB6 guarda arma 0xE431
+C 0x7EB6 guarda el disparo en diagonal hacia arriba
 C 0x7EBC quita_tipo_0e: libera las fichas de 0xE470 con 0x0E
 C 0x7EBF sprites_opcion: con los bancos 7-8-9, p08:93C0 a 0x18C0
-C 0x7EE4 guarda arma 0xE431
-C 0x7EE7 guarda el laser
-C 0x7EEA guarda arma 0xE436
+C 0x7EE4 guarda el disparo en diagonal hacia arriba
+C 0x7EE7 guarda el disparo hacia abajo (1, o 2 largo)
+C 0x7EEA guarda el disparo hacia atras
 C 0x7EF0 tope_de_casilla: C = el tope de la casilla 0xE33D con estas armas capturadas (p02:8074, 9 por cuenta)
 C 0x7EF6 apunta a la tabla de rotulos de las casillas (desde 0xE334)
-C 0x7EFD guarda el disparo doble
+C 0x7EFD guarda el disparo hacia arriba (1, o 2 largo)
 C 0x7F08 sube_el_nivel: el nivel (0xE227-0xE228) + DE, como mucho 0x0FFF
-C 0x7F16 guarda el misil
-C 0x7F19 guarda arma 0xE431
-C 0x7F1C guarda el disparo doble
-C 0x7F1F guarda arma 0xE436
+C 0x7F16 guarda el misil (1-3)
+C 0x7F19 guarda el disparo en diagonal hacia arriba
+C 0x7F1C guarda el disparo hacia arriba (1, o 2 largo)
+C 0x7F1F guarda el disparo hacia atras
 C 0x7F25 lee la casilla que se usa
 C 0x7F28 apunta a la tabla de rotulos de las casillas (desde 0xE334)
-C 0x7F2F guarda el laser
+C 0x7F2F guarda el disparo hacia abajo (1, o 2 largo)
 C 0x7F40 guarda el disparo normal
-C 0x7F43 guarda arma 0xE431
-C 0x7F46 guarda arma 0xE436
+C 0x7F43 guarda el disparo en diagonal hacia arriba
+C 0x7F46 guarda el disparo hacia atras
 C 0x7F4C lee la casilla que se usa
 C 0x7F4F apunta a la tabla de rotulos de las casillas (desde 0xE334)
-C 0x7F56 guarda el arma elegida en el medidor
+C 0x7F56 guarda el arma de 0xE432 (1-2 tipo 7, 3 tipo 8, 5 tipo 14, 6 tipo 15)
 C 0x7F69 apunta a la tabla de rotulos de las casillas (desde 0xE334)
 C 0x7F70 guarda las opciones
 C 0x7F83 guarda la marca de p01:7F98 al acabar la capsula

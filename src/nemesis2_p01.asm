@@ -138,11 +138,11 @@ vuelve_a_la_fase:		; los graficos, el marcador y la pantalla desde la columna 0;
 	xor a			;60e8
 	ld (0e1dbh),a		;60e9   ; guarda la marca de nave en su sitio al volver
 	ld hl,04a00h		;60ec   ; Y 0x4A
-	ld (0e403h),hl		;60ef
+	ld (0e403h),hl		;60ef   ; guarda la Y de la nave (16 bits) y el byte siguiente (16 bits)
 	ld h,050h		;60f2   ; X 0x50
-	ld (0e405h),hl		;60f4
-	call 0aa2fh		;60f7
-	jp 0aaech		;60fa
+	ld (0e405h),hl		;60f4   ; guarda la X de la nave (16 bits) y el byte siguiente (16 bits)
+	call 0aa2fh		;60f7   ; rastro_a_la_nave: las 16 posiciones del rastro (0xE450) en la nave y 0xE40E = 0
+	jp 0aaech		;60fa   ; opciones_al_rastro: la primera opcion a 8 pasos del rastro y la segunda a 16
 empieza_la_fase:		; la fase de la vida (la mas alta en 0xE206; con 0xE22C la de p01:7C59; de la 8 en adelante, 0xE22A), sus graficos, 0xE300-0xEFFF a cero y la primera pantalla
 	ld a,(0e201h)		;60fd   ; en las fases 0-7
 	cp 008h		;6100
@@ -1212,7 +1212,7 @@ nave_de_salida:		; 0xE400-0xE40E de p01:6962 y 0xE430-0xE438 de p01:6971; en la 
 	cp 008h		;68a1
 	ret nz			;68a3
 	ld a,050h		;68a4   ; en el interior, X = 0x50
-	ld (0e406h),a		;68a6
+	ld (0e406h),a		;68a6   ; guarda la X de la nave
 	ret			;68a9
 nivel_de_la_fase:		; el nivel (0xE228) = la fase mas alta / 2, como mucho 15
 	ld a,(0e206h)		;68aa   ; la fase mas alta / 2
@@ -1247,7 +1247,7 @@ datos_de_la_fase:		; las cuentas de aparicion, 0xE305 (p01:697A), los limites de
 	ld (0e1d5h),a		;68e5   ; guarda la marca de la cuenta atras (1: un segundo menos, 2: se acabo)
 	ld (0e369h),a		;68e8   ; las apariciones de piezas desde la primera
 	inc a			;68eb   ; las demas cuentas desde 1
-	ld (0e35ch),a		;68ec
+	ld (0e35ch),a		;68ec   ; guarda la cuenta de la fila del tipo 7
 	ld (0e376h),a		;68ef
 	ld (0e36eh),a		;68f2
 	ld (0e365h),a		;68f5
@@ -2505,7 +2505,7 @@ generador_7:		; cada 0x60-0x9F cuadros, si la nave esta en medio, 8 enemigos 0x1
 	sub 030h		;7110
 	cp 090h		;7112
 	ret nc			;7114
-	ld a,(0e404h)		;7115
+	ld a,(0e404h)		;7115   ; lee la Y de la nave
 	cp 0a0h		;7118
 	ret z			;711a
 	ld a,r		;711b   ; la proxima, al azar
@@ -2521,7 +2521,7 @@ L_7124:
 	ld a,(0e404h)		;712c   ; sumado a la nave
 	add a,e			;712f
 	ld e,a			;7130
-	ld a,(0e406h)		;7131
+	ld a,(0e406h)		;7131   ; lee la X de la nave
 	add a,d			;7134
 	ld d,a			;7135
 	ld c,000h		;7136
@@ -3982,7 +3982,7 @@ guion_fase_5:		; al acabar el scroll p03:A017; con 0xE348 el scroll sigue 32 col
 	ret z			;7b3e
 	xor a			;7b3f   ; paso 0: al acabar el scroll, p03:A017
 	ld (0e348h),a		;7b40   ; guarda la marca de fin del suceso
-	call 0a017h		;7b43
+	call 0a017h		;7b43   ; suceso_de_fase_5: el suceso del final del scroll de la fase 5 (0xE388 = 1): 600 cuadros (900 con 0xE20A) de compuertas (clase 7) que salen y sueltan enemigos
 	jr guion_siguiente		;7b46
 L_7B48:
 	ld hl,0e348h		;7b48   ; paso 1: con 0xE348, 32 columnas mas
@@ -4097,7 +4097,7 @@ final_del_juego:		; con el jefe vencido y la nave viva, 0xE1E6 = 1 y 0xE1D6 = 0
 	ld (0e1e6h),a		;7bf9   ; guarda la marca del final (estado 10)
 	ret			;7bfc
 guion_fase_10:		; con 0xE3D0, al acabar el scroll la fase 11; si no, a la siguiente
-	ld a,(0e3d0h)		;7bfd   ; lee la velocidad del scroll (1 parado, 2 cada cuadro, si no uno de cada dos)
+	ld a,(0e3d0h)		;7bfd   ; lee la fase secreta: 1 entrando (scroll parado), 2 yendo (scroll cada cuadro)
 	and a			;7c00
 	jr z,guion_fase_9_11		;7c01
 	ld a,(0e327h)		;7c03   ; lee la marca de fin del scroll
@@ -4439,11 +4439,11 @@ L_7E05:
 dos_opciones:		; 0xE40B = 2 opciones, con p03:AA43 para cada una
 	ld a,001h		;7e13
 	ld (0e40bh),a		;7e15   ; guarda las opciones
-	call 0aa43h		;7e18
+	call 0aa43h		;7e18   ; pon_opcion: enciende la opcion nueva (0xE410 la primera, 0xE420 la segunda) y la pone en el rastro
 	ld a,002h		;7e1b
 	ld (0e40bh),a		;7e1d   ; guarda las opciones
 L_7E20:
-	jp 0aa43h		;7e20
+	jp 0aa43h		;7e20   ; pon_opcion: enciende la opcion nueva (0xE410 la primera, 0xE420 la segunda) y la pone en el rastro
 L_7E23:
 	ld hl,0e334h		;7e23   ; la velocidad + 1
 	inc (hl)			;7e26
@@ -4456,7 +4456,7 @@ L_7E2E:
 	ret			;7e31
 casilla_misil:		; el misil + 1 (hasta el tope de p02:804A; luego gastada) y el nivel sube
 	xor a			;7e32   ; sin laser
-	ld (0e435h),a		;7e33   ; guarda el laser
+	ld (0e435h),a		;7e33   ; guarda el disparo hacia abajo (1, o 2 largo)
 	call 0804ah		;7e36   ; C = el tope (p02:804A)
 	ld hl,0e335h		;7e39   ; la casilla 2 + 1
 	inc (hl)			;7e3c
@@ -4471,17 +4471,17 @@ L_7E43:
 	jp sube_el_nivel		;7e4c   ; sube_el_nivel: el nivel (0xE227-0xE228) + DE, como mucho 0x0FFF
 vuelve_al_disparo:		; 0xE430 = 1 y 0xE436 = 1, las demas armas a cero
 	xor a			;7e4f   ; las armas a cero
-	ld (0e431h),a		;7e50   ; guarda arma 0xE431
-	ld (0e432h),a		;7e53   ; guarda el arma elegida en el medidor
-	ld (0e434h),a		;7e56   ; guarda el disparo doble
-	ld (0e435h),a		;7e59   ; guarda el laser
+	ld (0e431h),a		;7e50   ; guarda el disparo en diagonal hacia arriba
+	ld (0e432h),a		;7e53   ; guarda el arma de 0xE432 (1-2 tipo 7, 3 tipo 8, 5 tipo 14, 6 tipo 15)
+	ld (0e434h),a		;7e56   ; guarda el disparo hacia arriba (1, o 2 largo)
+	ld (0e435h),a		;7e59   ; guarda el disparo hacia abajo (1, o 2 largo)
 	inc a			;7e5c   ; el disparo normal
-	ld (0e436h),a		;7e5d   ; guarda arma 0xE436
+	ld (0e436h),a		;7e5d   ; guarda el disparo hacia atras
 	ld (0e430h),a		;7e60   ; guarda el disparo normal
 	ld a,0ffh		;7e63   ; la casilla 3 gastada
 	ld (0e336h),a		;7e65   ; guarda la casilla 3 del medidor
 	jp e33a_a_e337_a_cero		;7e68   ; e33a_a_e337_a_cero: 0xE33A, 0xE339, 0xE338 y 0xE337 a cero
-casilla_varia:		; la casilla 0xE33D + 1: con 1 vuelve al disparo, con 2 el escudo (0xE432 = 5), si no 0xE432 = 6
+casilla_varia:		; la casilla 0xE33D + 1: con 1 vuelve al disparo, con 2 el arma 5 (0xE432 = 5, con sus dibujos), si no la 6
 	call 0804ah		;7e6b   ; el tope
 	ld a,(0e33dh)		;7e6e   ; la casilla + 1
 	ld hl,0e333h		;7e71   ; apunta a la tabla de rotulos de las casillas (desde 0xE334)
@@ -4495,32 +4495,32 @@ casilla_varia:		; la casilla 0xE33D + 1: con 1 vuelve al disparo, con 2 el escud
 L_7E7D:
 	dec a			;7e7d   ; 1: vuelve al disparo
 	jr z,L_7EA5		;7e7e
-	dec a			;7e80   ; 2: el escudo
+	dec a			;7e80   ; 2: el arma 5
 	jr z,L_7E8A		;7e81
 	call e33a_a_cero_con_7		;7e83   ; si no, 0xE432 = 6
 	ld a,006h		;7e86
 	jr L_7E95		;7e88
 L_7E8A:
 	call quita_tipo_03		;7e8a   ; quita_tipo_03: libera las fichas de 0xE470 con 3
-	call 04482h		;7e8d   ; los dibujos del escudo
+	call 04482h		;7e8d   ; los dibujos del arma 5
 	call suelta_con_capturas		;7e90   ; suelta_con_capturas: con las armas capturadas (cruza a p02:8002): 4 o 5, p02:7FC2; 6 o mas, p01:7FFA
 	ld a,005h		;7e93
 L_7E95:
-	ld (0e432h),a		;7e95   ; guarda el arma elegida en el medidor
+	ld (0e432h),a		;7e95   ; guarda el arma de 0xE432 (1-2 tipo 7, 3 tipo 8, 5 tipo 14, 6 tipo 15)
 	xor a			;7e98
 	ld (0e430h),a		;7e99   ; guarda el disparo normal
-	ld (0e431h),a		;7e9c   ; guarda arma 0xE431
+	ld (0e431h),a		;7e9c   ; guarda el disparo en diagonal hacia arriba
 	ld de,00080h		;7e9f   ; el nivel sube 0x80
 	jp sube_el_nivel		;7ea2   ; sube_el_nivel: el nivel (0xE227-0xE228) + DE, como mucho 0x0FFF
 L_7EA5:
 	xor a			;7ea5
-	ld (0e432h),a		;7ea6   ; guarda el arma elegida en el medidor
-	ld (0e434h),a		;7ea9   ; guarda el disparo doble
-	ld (0e435h),a		;7eac   ; guarda el laser
-	ld (0e436h),a		;7eaf   ; guarda arma 0xE436
+	ld (0e432h),a		;7ea6   ; guarda el arma de 0xE432 (1-2 tipo 7, 3 tipo 8, 5 tipo 14, 6 tipo 15)
+	ld (0e434h),a		;7ea9   ; guarda el disparo hacia arriba (1, o 2 largo)
+	ld (0e435h),a		;7eac   ; guarda el disparo hacia abajo (1, o 2 largo)
+	ld (0e436h),a		;7eaf   ; guarda el disparo hacia atras
 	inc a			;7eb2
 	ld (0e430h),a		;7eb3   ; guarda el disparo normal
-	ld (0e431h),a		;7eb6   ; guarda arma 0xE431
+	ld (0e431h),a		;7eb6   ; guarda el disparo en diagonal hacia arriba
 	call suelta_segun_capturas		;7eb9   ; lo que suelta y los dibujos de las opciones
 	call quita_tipo_0e		;7ebc   ; quita_tipo_0e: libera las fichas de 0xE470 con 0x0E
 	jp 0448eh		;7ebf   ; sprites_opcion: con los bancos 7-8-9, p08:93C0 a 0x18C0
@@ -4541,7 +4541,7 @@ L_7ED5:
 	add hl,de			;7ed5
 	djnz L_7ED0		;7ed6
 	ret			;7ed8
-casilla_doble:		; 0xE434 = la casilla + 1 (gastada al tope) y el nivel sube
+casilla_arriba:		; el disparo hacia arriba: 0xE434 = la casilla + 1 (gastada al tope) y el nivel sube
 	ld hl,0e430h		;7ed9   ; el disparo 2 vuelve a ser 1
 	ld a,(hl)			;7edc
 	cp 002h		;7edd
@@ -4549,9 +4549,9 @@ casilla_doble:		; 0xE434 = la casilla + 1 (gastada al tope) y el nivel sube
 	ld (hl),001h		;7ee1
 L_7EE3:
 	xor a			;7ee3
-	ld (0e431h),a		;7ee4   ; guarda arma 0xE431
-	ld (0e435h),a		;7ee7   ; guarda el laser
-	ld (0e436h),a		;7eea   ; guarda arma 0xE436
+	ld (0e431h),a		;7ee4   ; guarda el disparo en diagonal hacia arriba
+	ld (0e435h),a		;7ee7   ; guarda el disparo hacia abajo (1, o 2 largo)
+	ld (0e436h),a		;7eea   ; guarda el disparo hacia atras
 	call 0800bh		;7eed   ; p02:800B
 	call 0804ah		;7ef0   ; tope_de_casilla: C = el tope de la casilla 0xE33D con estas armas capturadas (p02:8074, 9 por cuenta)
 	ld a,(0e33dh)		;7ef3   ; la casilla + 1
@@ -4560,14 +4560,14 @@ L_7EE3:
 	ld l,a			;7efa
 	inc (hl)			;7efb
 	ld a,(hl)			;7efc
-	ld (0e434h),a		;7efd   ; guarda el disparo doble
+	ld (0e434h),a		;7efd   ; guarda el disparo hacia arriba (1, o 2 largo)
 	cp c			;7f00   ; al tope, gastada
 	jr c,L_7F05		;7f01
 	ld (hl),0ffh		;7f03
 L_7F05:
 	ld de,00080h		;7f05
 	jp sube_el_nivel		;7f08   ; sube_el_nivel: el nivel (0xE227-0xE228) + DE, como mucho 0x0FFF
-casilla_laser:		; 0xE435 = la casilla + 1 (gastada al tope), p02:8028 y el nivel sube
+casilla_abajo:		; el disparo hacia abajo: 0xE435 = la casilla + 1 (gastada al tope), p02:8028 y el nivel sube
 	ld hl,0e430h		;7f0b   ; el disparo 2 vuelve a ser 1
 	ld a,(hl)			;7f0e
 	cp 002h		;7f0f
@@ -4575,10 +4575,10 @@ casilla_laser:		; 0xE435 = la casilla + 1 (gastada al tope), p02:8028 y el nivel
 	ld (hl),001h		;7f13
 L_7F15:
 	xor a			;7f15
-	ld (0e433h),a		;7f16   ; guarda el misil
-	ld (0e431h),a		;7f19   ; guarda arma 0xE431
-	ld (0e434h),a		;7f1c   ; guarda el disparo doble
-	ld (0e436h),a		;7f1f   ; guarda arma 0xE436
+	ld (0e433h),a		;7f16   ; guarda el misil (1-3)
+	ld (0e431h),a		;7f19   ; guarda el disparo en diagonal hacia arriba
+	ld (0e434h),a		;7f1c   ; guarda el disparo hacia arriba (1, o 2 largo)
+	ld (0e436h),a		;7f1f   ; guarda el disparo hacia atras
 	call 0804ah		;7f22   ; la casilla + 1
 	ld a,(0e33dh)		;7f25   ; lee la casilla que se usa
 	ld hl,0e333h		;7f28   ; apunta a la tabla de rotulos de las casillas (desde 0xE334)
@@ -4586,7 +4586,7 @@ L_7F15:
 	ld l,a			;7f2c
 	inc (hl)			;7f2d
 	ld a,(hl)			;7f2e
-	ld (0e435h),a		;7f2f   ; guarda el laser
+	ld (0e435h),a		;7f2f   ; guarda el disparo hacia abajo (1, o 2 largo)
 	cp c			;7f32
 	jr c,L_7F37		;7f33
 	ld (hl),0ffh		;7f35
@@ -4597,8 +4597,8 @@ L_7F37:
 casilla_arma:		; 0xE432 = la casilla + 1 (gastada al tope), p02:8041 y el nivel sube poco
 	xor a			;7f3f
 	ld (0e430h),a		;7f40   ; guarda el disparo normal
-	ld (0e431h),a		;7f43   ; guarda arma 0xE431
-	ld (0e436h),a		;7f46   ; guarda arma 0xE436
+	ld (0e431h),a		;7f43   ; guarda el disparo en diagonal hacia arriba
+	ld (0e436h),a		;7f46   ; guarda el disparo hacia atras
 	call 0804ah		;7f49   ; la casilla + 1
 	ld a,(0e33dh)		;7f4c   ; lee la casilla que se usa
 	ld hl,0e333h		;7f4f   ; apunta a la tabla de rotulos de las casillas (desde 0xE334)
@@ -4606,7 +4606,7 @@ casilla_arma:		; 0xE432 = la casilla + 1 (gastada al tope), p02:8041 y el nivel 
 	ld l,a			;7f53
 	inc (hl)			;7f54
 	ld a,(hl)			;7f55
-	ld (0e432h),a		;7f56   ; guarda el arma elegida en el medidor
+	ld (0e432h),a		;7f56   ; guarda el arma de 0xE432 (1-2 tipo 7, 3 tipo 8, 5 tipo 14, 6 tipo 15)
 	cp c			;7f59
 	jr c,L_7F5E		;7f5a
 	ld (hl),0ffh		;7f5c

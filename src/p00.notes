@@ -102,12 +102,12 @@ C 0x444F y la derecha
 C 0x4463 el destino: IX+03 x 8 + 0x1810 (empieza por la mitad derecha)
 C 0x4470 el origen: IX+02 x 8 + 0x1800
 C 0x447C IX+01 sprites
-C 0x4485 el escudo, desde el sprite 24
+C 0x4485 los dibujos del arma 5, desde el sprite 24
 C 0x4497 las opciones, desde el sprite 24
 C 0x44A0 la nave
 C 0x44AC con el R.DRILL, sus dibujos en lugar de la nave
-C 0x44B4 el arma 5 del medidor
-C 0x44B8 cambia las opciones por el escudo
+C 0x44B4 con el arma 5 de 0xE432
+C 0x44B8 sus dibujos en lugar de los de las opciones
 C 0x44BE y desde el sprite 68, p08:94B8
 C 0x44CA la lista de la fase
 C 0x44D1 [sprite][dibujos], el sprite 0 acaba
@@ -832,11 +832,11 @@ L 0x43EE sprites_cabeza_abajo copia IX+01 dibujos de sprite de IX+02 a IX+03 cab
 L 0x4444 da_la_vuelta_e600 copia 0xE600-0xE61F a 0xE620-0xE63F con las filas al reves (las dos mitades del sprite)
 L 0x4457 copia_al_reves copia B bytes de HL hacia delante a DE hacia atras
 L 0x445E sprites_espejo copia IX+01 dibujos de sprite de IX+02 a IX+03 de izquierda a derecha
-L 0x4482 sprites_escudo con los bancos 7-8-9, p08:93EE a 0x18C0
+L 0x4482 sprites_arma_5 con los bancos 7-8-9, los dibujos del arma 5 de 0xE432 (p08:93EE) desde el sprite 24, en lugar de las opciones
 L 0x448E sprites_opcion con los bancos 7-8-9, p08:93C0 a 0x18C0
 L 0x4497 sprites_opcion_sin_bancos p08:93C0 (las opciones) desde el sprite 24 (0x18C0)
 L 0x449A sprites_desde_el_24 descomprime DE desde el sprite 24 (0x18C0)
-L 0x44A0 sprites_de_armas la nave, las opciones (p08:93C0), el R.DRILL si esta (0xE400 = 3), el escudo si 0xE432 = 5 y p08:94B8 a 0x1A20
+L 0x44A0 sprites_de_armas la nave, las opciones (p08:93C0), el R.DRILL si esta (0xE400 = 3), los del arma 5 (p08:93EE) si 0xE432 = 5 y p08:94B8 a 0x1A20
 L 0x44C7 sprites_de_la_fase los dibujos de sprite de la fase 0xE201 (lista p08:92B3: [sprite][origen], 0 acaba)
 L 0x44F7 caracteres_de_fase los caracteres de la fase 0xE201 (listas de p07:6000, p07:6018 y p07:6030); la 8 la deja para p00:46C4
 L 0x4545 copias_de_la_fase las copias de caracteres de la fase de la tabla HL (una lista por fase)
@@ -1052,7 +1052,13 @@ C 0x4192 lee la marca del estado 8
 C 0x419D bancos_13_14_15: pone los bancos 13, 14 y 15 (y sus copias en 0xF0F1-0xF0F3)
 C 0x41A3 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xF0F1-0xF0F3)
 C 0x41A9 lee la marca de la nave ida
+C 0x41AE cuenta_intocable: cada 32 cuadros 0xE447 - 1; al acabar, 0xE446 = 0
+C 0x41B1 cuadro_de_la_nave: la nave: los mandos, se mueve, sus limites y su dibujo; al caer, la explosion; entrando al jefe o saliendo del interior, sin mandos
 C 0x41B4 usa_el_medidor: con el otro boton recien pulsado y una casilla encendida que no este gastada, la usa (p01:7D8D por armas capturadas) y suena 6
+C 0x41BA rastro_de_la_nave: si la nave se mueve, su posicion entra en el rastro (16, 0xE450) y las opciones la siguen 8 y 16 pasos atras
+C 0x41BD opciones_giran: con la capsula 3, las opciones giran alrededor de la nave (16 posiciones de p03:AB72)
+C 0x41C0 dispara_la_nave: con el disparo recien pulsado, o cada 15 cuadros si se mantiene, disparan la nave y sus opciones (p03:AC30)
+C 0x41C3 mueve_disparos_de_la_nave: los 9 disparos de 0xE470: lo de su tipo (p03:ABC2); los 7, 8 y 10-13 ademas su largo en pixeles
 C 0x41C6 nucleo_con_el_scroll: el nucleo del interior se corre 8 pixeles con el scroll; al salir, desaparece
 C 0x41C9 aparece_el_nucleo: en el interior, en la columna 0x7F: el nucleo (0xEA90) en Y 0x40, X 0xE0, con 24 golpes
 C 0x41CC disparos_al_nucleo: cada disparo de la nave contra el nucleo del interior (p02:85C6)
@@ -1072,6 +1078,7 @@ C 0x41FC mueve_piezas: sin jefe con partes, en las fases 3 y 9-11, las 16 piezas
 C 0x41FF apariciones_de_piezas_scroll: si el scroll avanzo (0xE320), lo de la columna nueva (X = 0xF8)
 C 0x4202 banco_11: pone el banco 11 en 0xA000 (y 0xF0F3)
 C 0x420B bancos_2_3: pone los bancos 2 y 3 en 0x8000 y 0xA000 (y 0xF0F2-0xF0F3)
+C 0x420E cuadro_suceso_fase_5: cuenta los cuadros del suceso (0xE349); al acabar, 0xE348 = 1; paso 1: salen compuertas; paso 2: espera
 C 0x4211 suceso_e34b: el paso del suceso 0xE34B (4, p01:72DF): las dos piezas de 0xEA70, sus rocas, los puntos, 0xE3AA y p11:A2A2
 C 0x4214 final_de_fase_0: el paso 0xEA98 del final de la fase 0 (p01:7827)
 C 0x4217 disparos_al_nucleo_de_fase_0: con el final de la fase 0 en marcha, su nucleo (0xEA99) contra los disparos
@@ -1161,7 +1168,7 @@ C 0x43A2 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xF0F1-0xF0F3)
 C 0x43A5 caracteres_de_fase: los caracteres de la fase 0xE201 (listas de p07:6000, p07:6018 y p07:6030); la 8 la deja para p00:46C4
 C 0x43A8 caracteres_de_la_nave: pinta los caracteres de la nave: p00:4358 (con los bancos 7-8-9), o p11:BFBF si al lado esta Penguin Adventure (0xF0F5 bit 2)
 C 0x43AB bancos_7_8_9: pone los bancos 7, 8 y 9 (y sus copias en 0xF0F1-0xF0F3)
-C 0x43AE sprites_de_armas: la nave, las opciones (p08:93C0), el R.DRILL si esta (0xE400 = 3), el escudo si 0xE432 = 5 y p08:94B8 a 0x1A20
+C 0x43AE sprites_de_armas: la nave, las opciones (p08:93C0), el R.DRILL si esta (0xE400 = 3), los del arma 5 (p08:93EE) si 0xE432 = 5 y p08:94B8 a 0x1A20
 C 0x43B1 sprites_volteados: las copias de sprite de p00:44EA, los sprites de la fase (p00:44C7) y las copias de la fase (p08:9348)
 C 0x43B4 lee lo que hay en la otra ranura (bit 3 Galious, 2 Penguin Adventure, 1 los 6 bytes de 0x7FFA, 0 Q*bert)
 C 0x43BA banco_11: pone el banco 11 en 0xA000 (y 0xF0F3)
@@ -1196,7 +1203,7 @@ C 0x44A3 bancos_7_8_9: pone los bancos 7, 8 y 9 (y sus copias en 0xF0F1-0xF0F3)
 C 0x44A6 sprites_opcion_sin_bancos: p08:93C0 (las opciones) desde el sprite 24 (0x18C0)
 C 0x44A9 lee la forma de la nave (1 normal, 2 con escudo, 3 R.DRILL)
 C 0x44AE sprites_r_drill_sin_bancos: p08:9D17 y p08:9D68 a 0x1800 y 0x1960: la nave R.DRILL
-C 0x44B1 lee el arma elegida en el medidor
+C 0x44B1 lee el arma de 0xE432 (1-2 tipo 7, 3 tipo 8, 5 tipo 14, 6 tipo 15)
 C 0x44BB sprites_desde_el_24: descomprime DE desde el sprite 24 (0x18C0)
 C 0x44C4 descomprime_a_vram: descomprime DE a la VRAM HL: n < 0x80 repite el byte siguiente n veces, 0x80 + n copia n bytes, 0x80 cambia de direccion, 0 acaba
 C 0x44C7 lee la fase (0-11)
@@ -1509,6 +1516,7 @@ C 0x57E4 al_estado_a: estado A, paso 0, 0xE1C4 = 32 cuadros
 C 0x57EB siguiente_estado: 0xE1C4 = 32 y el estado siguiente, paso 0
 C 0x57F4 al_estado_a: estado A, paso 0, 0xE1C4 = 32 cuadros
 C 0x580C sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
+C 0x580F borra_lo_tecleado: lo tecleado a cero (0xE3E0, 0xE3E8-0xE3EF)
 C 0x5814 al_estado_a: estado A, paso 0, 0xE1C4 = 32 cuadros
 C 0x5826 apunta a la copia de 0xE200-0xE23F del otro jugador
 C 0x582B intercambia: intercambia B bytes entre HL y DE
@@ -1540,6 +1548,7 @@ C 0x58F2 guarda la marca de la cuenta atras (1: un segundo menos, 2: se acabo)
 C 0x58F5 sprites_de_la_nave: con los bancos 7-8-9, los dibujos de sprite de la nave (p00:4368)
 C 0x58FA al_estado_a: estado A, paso 0, 0xE1C4 = 32 cuadros
 C 0x5909 sprites_a_vram: los 32 sprites de 0xE280 a la VRAM (0x3B00): sin nave en orden, si no rotando el orden cada cuadro (0xE304)
+C 0x590F anima_opciones: cada 2 cuadros (4 con el pinguino) el dibujo siguiente de las opciones (p03:AA93)
 C 0x5912 banco_11: pone el banco 11 en 0xA000 (y 0xF0F3)
 C 0x5918 bancos_2_3: pone los bancos 2 y 3 en 0x8000 y 0xA000 (y 0xF0F2-0xF0F3)
 C 0x5920 sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
@@ -1570,6 +1579,8 @@ C 0x59BC borra_texto: lo mismo que escribe_texto pero con ceros: borra los texto
 C 0x59C2 escribe_texto: escribe a la VRAM la lista de textos de DE: [direccion][caracteres] con 0xFE = otra direccion y 0xFF = fin
 C 0x59C6 guarda la espera del paso, en cuadros
 C 0x59D0 apunta a la espera del paso, en cuadros
+C 0x59D7 guarda la Y de la nave
+C 0x59DC guarda la X de la nave
 C 0x59E2 esconde_sprites: los 32 sprites de 0xE280 con Y = 0xE0 (fuera de la pantalla)
 C 0x59E5 borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
 C 0x59EA al_estado_a: estado A, paso 0, 0xE1C4 = 32 cuadros

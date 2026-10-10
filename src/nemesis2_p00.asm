@@ -274,14 +274,14 @@ L_417F:
 	ld a,(0e3c1h)		;41a9   ; lee la marca de la nave ida
 	or a			;41ac
 	ret nz			;41ad   ; si esta en marcha, no hay mas cuadro
-	call 0be97h		;41ae
-	call 0a765h		;41b1
+	call 0be97h		;41ae   ; cuenta_intocable: cada 32 cuadros 0xE447 - 1; al acabar, 0xE446 = 0
+	call 0a765h		;41b1   ; cuadro_de_la_nave: la nave: los mandos, se mueve, sus limites y su dibujo; al caer, la explosion; entrando al jefe o saliendo del interior, sin mandos
 	call 07d4fh		;41b4   ; usa_el_medidor: con el otro boton recien pulsado y una casilla encendida que no este gastada, la usa (p01:7D8D por armas capturadas) y suena 6
 	call 0aa53h		;41b7
-	call 0aa9bh		;41ba
-	call 0ab15h		;41bd
-	call 0abe5h		;41c0
-	call 0ab92h		;41c3
+	call 0aa9bh		;41ba   ; rastro_de_la_nave: si la nave se mueve, su posicion entra en el rastro (16, 0xE450) y las opciones la siguen 8 y 16 pasos atras
+	call 0ab15h		;41bd   ; opciones_giran: con la capsula 3, las opciones giran alrededor de la nave (16 posiciones de p03:AB72)
+	call 0abe5h		;41c0   ; dispara_la_nave: con el disparo recien pulsado, o cada 15 cuadros si se mantiene, disparan la nave y sus opciones (p03:AC30)
+	call 0ab92h		;41c3   ; mueve_disparos_de_la_nave: los 9 disparos de 0xE470: lo de su tipo (p03:ABC2); los 7, 8 y 10-13 ademas su largo en pixeles
 	call 08592h		;41c6   ; nucleo_con_el_scroll: el nucleo del interior se corre 8 pixeles con el scroll; al salir, desaparece
 	call 08570h		;41c9   ; aparece_el_nucleo: en el interior, en la columna 0x7F: el nucleo (0xEA90) en Y 0x40, X 0xE0, con 24 golpes
 	call 085a9h		;41cc   ; disparos_al_nucleo: cada disparo de la nave contra el nucleo del interior (p02:85C6)
@@ -310,7 +310,7 @@ L_41FC:
 	call 0b4aah		;4205
 	call 0b422h		;4208
 	call bancos_2_3		;420b   ; bancos_2_3: pone los bancos 2 y 3 en 0x8000 y 0xA000 (y 0xF0F2-0xF0F3)
-	call 0a04dh		;420e
+	call 0a04dh		;420e   ; cuadro_suceso_fase_5: cuenta los cuadros del suceso (0xE349); al acabar, 0xE348 = 1; paso 1: salen compuertas; paso 2: espera
 	call 072d6h		;4211   ; suceso_e34b: el paso del suceso 0xE34B (4, p01:72DF): las dos piezas de 0xEA70, sus rocas, los puntos, 0xE3AA y p11:A2A2
 	call 0781ch		;4214   ; final_de_fase_0: el paso 0xEA98 del final de la fase 0 (p01:7827)
 	call 0927ah		;4217   ; disparos_al_nucleo_de_fase_0: con el final de la fase 0 en marcha, su nucleo (0xEA99) contra los disparos
@@ -488,7 +488,7 @@ caracteres_y_sprites:		; los caracteres de la fase (p00:44F7), los de la nave, s
 	call caracteres_de_fase		;43a5   ; caracteres_de_fase: los caracteres de la fase 0xE201 (listas de p07:6000, p07:6018 y p07:6030); la 8 la deja para p00:46C4
 	call caracteres_de_la_nave		;43a8   ; caracteres_de_la_nave: pinta los caracteres de la nave: p00:4358 (con los bancos 7-8-9), o p11:BFBF si al lado esta Penguin Adventure (0xF0F5 bit 2)
 	call bancos_7_8_9		;43ab   ; bancos_7_8_9: pone los bancos 7, 8 y 9 (y sus copias en 0xF0F1-0xF0F3)
-	call sprites_de_armas		;43ae   ; sprites_de_armas: la nave, las opciones (p08:93C0), el R.DRILL si esta (0xE400 = 3), el escudo si 0xE432 = 5 y p08:94B8 a 0x1A20
+	call sprites_de_armas		;43ae   ; sprites_de_armas: la nave, las opciones (p08:93C0), el R.DRILL si esta (0xE400 = 3), los del arma 5 (p08:93EE) si 0xE432 = 5 y p08:94B8 a 0x1A20
 	call sprites_volteados		;43b1   ; sprites_volteados: las copias de sprite de p00:44EA, los sprites de la fase (p00:44C7) y las copias de la fase (p08:9348)
 caracteres_del_pinguino:		; con Penguin Adventure al lado (0xF0F5 bit 2), los caracteres de p11:BF63
 	ld a,(0f0f5h)		;43b4   ; lee lo que hay en la otra ranura (bit 3 Galious, 2 Penguin Adventure, 1 los 6 bytes de 0x7FFA, 0 Q*bert)
@@ -594,9 +594,9 @@ sprites_espejo:		; copia IX+01 dibujos de sprite de IX+02 a IX+03 de izquierda a
 	add hl,bc			;447b
 	ld c,(ix+001h)		;447c   ; IX+01 sprites
 	jp espejo_de_sprites		;447f   ; espejo_de_sprites: copia C dibujos de sprite de 16x16 de la VRAM HL a la DE dados la vuelta de izquierda a derecha
-sprites_escudo:		; con los bancos 7-8-9, p08:93EE a 0x18C0
+sprites_arma_5:		; con los bancos 7-8-9, los dibujos del arma 5 de 0xE432 (p08:93EE) desde el sprite 24, en lugar de las opciones
 	call bancos_7_8_9		;4482   ; bancos_7_8_9: pone los bancos 7, 8 y 9 (y sus copias en 0xF0F1-0xF0F3)
-	ld de,093eeh		;4485   ; el escudo, desde el sprite 24
+	ld de,093eeh		;4485   ; los dibujos del arma 5, desde el sprite 24
 	call sprites_desde_el_24		;4488   ; sprites_desde_el_24: descomprime DE desde el sprite 24 (0x18C0)
 	jp bancos_1_2_3		;448b   ; bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xF0F1-0xF0F3)
 sprites_opcion:		; con los bancos 7-8-9, p08:93C0 a 0x18C0
@@ -608,17 +608,17 @@ sprites_opcion_sin_bancos:		; p08:93C0 (las opciones) desde el sprite 24 (0x18C0
 sprites_desde_el_24:		; descomprime DE desde el sprite 24 (0x18C0)
 	ld hl,018c0h		;449a
 	jp descomprime_a_vram		;449d   ; descomprime_a_vram: descomprime DE a la VRAM HL: n < 0x80 repite el byte siguiente n veces, 0x80 + n copia n bytes, 0x80 cambia de direccion, 0 acaba
-sprites_de_armas:		; la nave, las opciones (p08:93C0), el R.DRILL si esta (0xE400 = 3), el escudo si 0xE432 = 5 y p08:94B8 a 0x1A20
+sprites_de_armas:		; la nave, las opciones (p08:93C0), el R.DRILL si esta (0xE400 = 3), los del arma 5 (p08:93EE) si 0xE432 = 5 y p08:94B8 a 0x1A20
 	call sprites_de_la_nave_sin_bancos		;44a0   ; la nave
 	call bancos_7_8_9		;44a3   ; bancos_7_8_9: pone los bancos 7, 8 y 9 (y sus copias en 0xF0F1-0xF0F3)
 	call sprites_opcion_sin_bancos		;44a6   ; sprites_opcion_sin_bancos: p08:93C0 (las opciones) desde el sprite 24 (0x18C0)
 	ld a,(0e400h)		;44a9   ; lee la forma de la nave (1 normal, 2 con escudo, 3 R.DRILL)
 	cp 003h		;44ac   ; con el R.DRILL, sus dibujos en lugar de la nave
 	call z,sprites_r_drill_sin_bancos		;44ae   ; sprites_r_drill_sin_bancos: p08:9D17 y p08:9D68 a 0x1800 y 0x1960: la nave R.DRILL
-	ld a,(0e432h)		;44b1   ; lee el arma elegida en el medidor
-	cp 005h		;44b4   ; el arma 5 del medidor
+	ld a,(0e432h)		;44b1   ; lee el arma de 0xE432 (1-2 tipo 7, 3 tipo 8, 5 tipo 14, 6 tipo 15)
+	cp 005h		;44b4   ; con el arma 5 de 0xE432
 	jr nz,L_44BE		;44b6
-	ld de,093eeh		;44b8   ; cambia las opciones por el escudo
+	ld de,093eeh		;44b8   ; sus dibujos en lugar de los de las opciones
 	call sprites_desde_el_24		;44bb   ; sprites_desde_el_24: descomprime DE desde el sprite 24 (0x18C0)
 L_44BE:
 	ld hl,01a20h		;44be   ; y desde el sprite 68, p08:94B8
@@ -3195,7 +3195,7 @@ estado_5_juego:		; la partida: un cuadro de juego; F1 pausa (estado 9); sin nave
 	ret nc			;5809
 	ld a,0f3h		;580a
 	call sonido		;580c   ; sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
-	call 0bd67h		;580f
+	call 0bd67h		;580f   ; borra_lo_tecleado: lo tecleado a cero (0xE3E0, 0xE3E8-0xE3EF)
 	ld a,009h		;5812
 	jp al_estado_a		;5814   ; al_estado_a: estado A, paso 0, 0xE1C4 = 32 cuadros
 estado_6_muerte:		; con vidas, cambia de jugador si hay dos y vuelve al 4; sin ellas, suena 0x42 y al 7
@@ -3328,7 +3328,7 @@ estado_9_pausa:		; la pausa: con F1 suena 0xF2 y vuelve al 5; mientras, p11:BD7C
 	and a			;5908
 	jp m,077b6h		;5909   ; sprites_a_vram: los 32 sprites de 0xE280 a la VRAM (0x3B00): sin nave en orden, si no rotando el orden cada cuadro (0xE304)
 	call 0a78ch		;590c   ; p03:A78C y p03:AA53
-	call 0aa53h		;590f
+	call 0aa53h		;590f   ; anima_opciones: cada 2 cuadros (4 con el pinguino) el dibujo siguiente de las opciones (p03:AA93)
 	call banco_11		;5912   ; banco_11: pone el banco 11 en 0xA000 (y 0xF0F3)
 	call 0a000h		;5915   ; p11:A000
 	call bancos_2_3		;5918   ; bancos_2_3: pone los bancos 2 y 3 en 0x8000 y 0xA000 (y 0xF0F2-0xF0F3)
@@ -3424,9 +3424,9 @@ L_59CE:
 	dec (hl)			;59d3
 	ret nz			;59d4
 	ld a,04ah		;59d5   ; la nave en Y 0x4A y X 0x50
-	ld (0e404h),a		;59d7
+	ld (0e404h),a		;59d7   ; guarda la Y de la nave
 	ld a,050h		;59da
-	ld (0e406h),a		;59dc
+	ld (0e406h),a		;59dc   ; guarda la X de la nave
 	call 0aa2fh		;59df   ; p03:AA2F
 	call esconde_sprites		;59e2   ; esconde_sprites: los 32 sprites de 0xE280 con Y = 0xE0 (fuera de la pantalla)
 	call borra_nombres		;59e5   ; borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA

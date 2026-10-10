@@ -390,7 +390,7 @@ L_82A0:
 	inc b			;82a3
 	sub b			;82a4
 	jp c,0ae02h		;82a5   ; nada: se quita (p03:AE02)
-	jp z,0ae02h		;82a8
+	jp z,0ae02h		;82a8   ; quita_disparo: el disparo IY desaparece
 	ld (iy+00ah),a		;82ab   ; recortado
 	ld a,(iy+000h)		;82ae   ; IY+01 = 1 el tipo 15, 2 los demas
 	cp 00fh		;82b1
@@ -437,9 +437,9 @@ L_82E8:
 	jr nc,L_82FA		;82eb
 	ld a,(0e340h)		;82ed   ; con jefe, se quita
 	or a			;82f0
-	jp nz,0ae02h		;82f1
+	jp nz,0ae02h		;82f1   ; quita_disparo: el disparo IY desaparece
 	call rompe_mapa		;82f4   ; si no, golpea el objeto
-	jp nc,0ae02h		;82f7
+	jp nc,0ae02h		;82f7   ; quita_disparo: el disparo IY desaparece
 L_82FA:
 	inc de			;82fa   ; el caracter siguiente
 	djnz L_82E8		;82fb
@@ -466,9 +466,9 @@ L_831C:
 	jr nc,L_832E		;831f
 	ld a,(0e340h)		;8321   ; lee el tipo de jefe (1-5; 0 sin jefe)
 	or a			;8324
-	jp nz,0ae02h		;8325
+	jp nz,0ae02h		;8325   ; quita_disparo: el disparo IY desaparece
 	call rompe_mapa		;8328   ; rompe_mapa: C si el caracter de DE se puede romper y lo rompe: fase 2 los 0xAF-0xB2, fase 6 los 0x67-0x6A, fase 7 los 0x1F-0x7A (por p02:84CA), fases 9-11 el 0xA0
-	jp nc,0ae02h		;832b
+	jp nc,0ae02h		;832b   ; quita_disparo: el disparo IY desaparece
 L_832E:
 	ld a,020h		;832e   ; la fila de abajo
 	call 0407fh		;8330   ; de_mas_a: DE = DE + A
@@ -484,9 +484,9 @@ L_8343:
 	jr nc,L_8355		;8346
 	ld a,(0e340h)		;8348   ; lee el tipo de jefe (1-5; 0 sin jefe)
 	or a			;834b
-	jp nz,0ae02h		;834c
+	jp nz,0ae02h		;834c   ; quita_disparo: el disparo IY desaparece
 	call rompe_mapa		;834f   ; rompe_mapa: C si el caracter de DE se puede romper y lo rompe: fase 2 los 0xAF-0xB2, fase 6 los 0x67-0x6A, fase 7 los 0x1F-0x7A (por p02:84CA), fases 9-11 el 0xA0
-	jp nc,0ae02h		;8352
+	jp nc,0ae02h		;8352   ; quita_disparo: el disparo IY desaparece
 L_8355:
 	ld a,020h		;8355
 	call 0407fh		;8357   ; de_mas_a: DE = DE + A
@@ -509,9 +509,9 @@ L_8372:
 	jr nc,L_8384		;8375
 	ld a,(0e340h)		;8377   ; lee el tipo de jefe (1-5; 0 sin jefe)
 	or a			;837a
-	jp nz,0ae02h		;837b
+	jp nz,0ae02h		;837b   ; quita_disparo: el disparo IY desaparece
 	call rompe_mapa		;837e   ; rompe_mapa: C si el caracter de DE se puede romper y lo rompe: fase 2 los 0xAF-0xB2, fase 6 los 0x67-0x6A, fase 7 los 0x1F-0x7A (por p02:84CA), fases 9-11 el 0xA0
-	jp nc,0ae02h		;8381
+	jp nc,0ae02h		;8381   ; quita_disparo: el disparo IY desaparece
 L_8384:
 	inc de			;8384
 	djnz L_8372		;8385
@@ -637,7 +637,7 @@ nave_contra_el_mapa:		; si la nave toca el mapa cae (p02:8E7C); el R.DRILL rompe
 	ld a,(0e404h)		;8435   ; y tambien los dos caracteres siguientes
 	add a,008h		;8438
 	ld l,a			;843a
-	ld a,(0e406h)		;843b
+	ld a,(0e406h)		;843b   ; lee la X de la nave
 	ld h,a			;843e
 	call 05c92h		;843f   ; sitio_en_pantalla: HL = 0xED00 + el caracter de la pantalla de RAM bajo L (Y) y H (X)
 	ex de,hl			;8442
@@ -648,7 +648,7 @@ nave_toca_mapa:		; C si en el sitio de la nave (Y + 8) o en el caracter de la de
 	ld a,(0e404h)		;844a   ; la Y de la nave + 8
 	add a,008h		;844d
 	ld l,a			;844f
-	ld a,(0e406h)		;8450
+	ld a,(0e406h)		;8450   ; lee la X de la nave
 	ld h,a			;8453   ; su X
 	and 007h		;8454   ; en la mitad derecha del caracter, solo el siguiente
 	cp 004h		;8456
@@ -934,7 +934,7 @@ nave_pasa_el_nucleo:		; al pasar la nave la X del nucleo, empieza el final del i
 	ret nz			;8661
 	ld a,(0ea92h)		;8662   ; la nave ha pasado la X del nucleo?
 	ld b,a			;8665
-	ld a,(0e406h)		;8666
+	ld a,(0e406h)		;8666   ; lee la X de la nave
 	cp b			;8669
 	ret c			;866a
 	ld a,001h		;866b   ; el final del interior
@@ -1975,12 +1975,12 @@ escudo_contra_balas:		; con escudo, las balas que llegan por delante se quedan e
 	ld a,(0e400h)		;8db4   ; solo con escudo
 	cp 002h		;8db7
 	ret nz			;8db9
-	ld a,(0e3d0h)		;8dba   ; lee la velocidad del scroll (1 parado, 2 cada cuadro, si no uno de cada dos)
+	ld a,(0e3d0h)		;8dba   ; lee la fase secreta: 1 entrando (scroll parado), 2 yendo (scroll cada cuadro)
 	or a			;8dbd
 	ret nz			;8dbe
 	ld a,(0e404h)		;8dbf   ; el escudo va 12 pixeles por delante
 	ld l,a			;8dc2
-	ld a,(0e406h)		;8dc3
+	ld a,(0e406h)		;8dc3   ; lee la X de la nave
 	add a,00ch		;8dc6
 	ld h,a			;8dc8
 	ld ix,0e900h		;8dc9   ; 10 balas
@@ -2011,12 +2011,12 @@ escudo_contra_enemigos:		; con escudo, el enemigo que lo toca cae y le quita un 
 	ld a,(0e400h)		;8df9   ; solo con escudo
 	cp 002h		;8dfc
 	ret nz			;8dfe
-	ld a,(0e3d0h)		;8dff   ; lee la velocidad del scroll (1 parado, 2 cada cuadro, si no uno de cada dos)
+	ld a,(0e3d0h)		;8dff   ; lee la fase secreta: 1 entrando (scroll parado), 2 yendo (scroll cada cuadro)
 	or a			;8e02
 	ret nz			;8e03
 	ld a,(0e404h)		;8e04   ; 12 pixeles por delante de la nave
 	ld e,a			;8e07
-	ld a,(0e406h)		;8e08
+	ld a,(0e406h)		;8e08   ; lee la X de la nave
 	add a,00ch		;8e0b
 	ld d,a			;8e0d
 	ld hl,00c10h		;8e0e   ; caja de 16 x 12
@@ -2058,7 +2058,7 @@ nave_contra_enemigos:		; el enemigo que toca a la nave: los 0x29-0x2E se recogen
 	ld a,(0e404h)		;8e4d   ; la caja de la nave: Y + 4, X + 2, de 8 x 6
 	add a,004h		;8e50
 	ld e,a			;8e52
-	ld a,(0e406h)		;8e53
+	ld a,(0e406h)		;8e53   ; lee la X de la nave
 	add a,002h		;8e56
 	ld d,a			;8e58
 	ld hl,00806h		;8e59
@@ -2352,7 +2352,7 @@ recoge_capsula_especial:		; la nave coge la capsula especial del mapa (clase 3 o
 	ld a,(0e404h)		;9044   ; la caja de la nave
 	add a,004h		;9047   ; la Y de la nave + 4
 	ld e,a			;9049
-	ld a,(0e406h)		;904a
+	ld a,(0e406h)		;904a   ; lee la X de la nave
 	inc a			;904d   ; la X de la nave + 1
 	ld d,a			;904e
 	ld a,(0ea61h)		;904f   ; la Y de la capsula
@@ -2710,7 +2710,7 @@ L_92D3:
 	and a			;92d6
 	jr z,L_92EE		;92d7
 	cp 082h		;92d9   ; el tipo 0x82, p11:B70B
-	call z,0b70bh		;92db
+	call z,0b70bh		;92db   ; bala_especial: la bala 0x82: al acabar IX+02, pasa a ser normal (choca con el mapa)
 	call 064e1h		;92de   ; suma su velocidad
 	jr nc,L_92EA		;92e1
 	ld a,(ix+006h)		;92e3   ; fuera por la derecha
@@ -2938,7 +2938,7 @@ L_9425:
 angulo_a_la_nave:		; el angulo desde D (X), E (Y) hasta la nave (0xF017 y los signos en 0xF010-0xF011)
 	ld a,(0e404h)		;945b   ; la nave como destino
 	ld (0f000h),a		;945e   ; guarda variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo) o un puntero
-	ld a,(0e406h)		;9461
+	ld a,(0e406h)		;9461   ; lee la X de la nave
 	ld (0f001h),a		;9464   ; guarda variable de paso: cuantos bytes
 angulo_a_f000:		; el angulo desde D/E hasta 0xF000 (Y), 0xF001 (X)
 	ld hl,0f010h		;9467   ; 0xF010: el signo de la Y
@@ -3939,7 +3939,7 @@ dispara_por_nivel:		; del nivel 6 en adelante, al acabar IX+15 dispara (p11:BB44
 	dec (ix+015h)		;9c46
 	ret nz			;9c49
 	call 04e93h		;9c4a   ; la espera, al azar
-	jp 0bb44h		;9c4d
+	jp 0bb44h		;9c4d   ; dispara_desde_ix: una bala desde el enemigo IX (X + 8) hacia la nave
 tipo_14_empieza:		; el tipo 0x14: 32 cuadros sin tocar a la nave, ya con su velocidad hacia ella
 	ld (ix+025h),020h		;9c50   ; 32 cuadros
 	ld (ix+010h),002h		;9c54   ; todavia no toca a la nave
@@ -4087,7 +4087,7 @@ tipo_11_dispara:		; al acabar IX+2C, dispara (p11:BB44) y la espera de nuevo
 	dec (ix+02ch)		;9d59   ; la espera de disparo
 	ret nz			;9d5c
 	call espera_de_disparo_11		;9d5d   ; dispara
-	jp 0bb44h		;9d60
+	jp 0bb44h		;9d60   ; dispara_desde_ix: una bala desde el enemigo IX (X + 8) hacia la nave
 
 ; ----------------------------------------------------------------------
 ; DATOS tablas_9D63: dos tablas de 4 bytes (0x9D63, y 0x9D67 en la fase 5) que
@@ -4264,12 +4264,12 @@ tipo_05_dispara:		; al acabar IX+15, su dibujo y, si la nave esta de su lado y e
 	call tipo_05_mira		;9ec3   ; tipo_05_mira: el dibujo mirando a la nave (0x94/0x88 arriba, 0xA0/0x7C abajo)
 	bit 0,(ix+027h)		;9ec6   ; la nave de su lado?
 	jr z,L_9ED5		;9eca
-	ld a,(0e404h)		;9ecc
+	ld a,(0e404h)		;9ecc   ; lee la Y de la nave
 	cp (ix+004h)		;9ecf
 	ret nc			;9ed2
 	jr L_9EDC		;9ed3
 L_9ED5:
-	ld a,(0e404h)		;9ed5
+	ld a,(0e404h)		;9ed5   ; lee la Y de la nave
 	cp (ix+004h)		;9ed8
 	ret c			;9edb
 L_9EDC:
@@ -4324,7 +4324,7 @@ tipo_05_mira:		; el dibujo mirando a la nave (0x94/0x88 arriba, 0xA0/0x7C abajo)
 	bit 0,(ix+027h)		;9f20   ; en el techo: 0x94 o 0x88
 	jr z,L_9F36		;9f24
 	ld b,094h		;9f26
-	ld a,(0e406h)		;9f28
+	ld a,(0e406h)		;9f28   ; lee la X de la nave
 	cp (ix+006h)		;9f2b
 	jr nc,L_9F32		;9f2e
 	ld b,088h		;9f30
@@ -4333,7 +4333,7 @@ L_9F32:
 	ret			;9f35
 L_9F36:
 	ld b,0a0h		;9f36   ; en el suelo: 0xA0 o 0x7C
-	ld a,(0e406h)		;9f38
+	ld a,(0e406h)		;9f38   ; lee la X de la nave
 	cp (ix+006h)		;9f3b
 	jr nc,L_9F42		;9f3e
 	ld b,07ch		;9f40

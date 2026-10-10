@@ -30,13 +30,13 @@ L_A000:
 	bit 1,a		;a01a
 	jr z,L_A071		;a01c
 L_A01E:
-	ld hl,0e404h		;a01e
+	ld hl,0e404h		;a01e   ; apunta a la Y de la nave
 	ldi		;a021
 	inc l			;a023
 	ldi		;a024
 	ldi		;a026
 	ldi		;a028
-	ld hl,0e404h		;a02a
+	ld hl,0e404h		;a02a   ; apunta a la Y de la nave
 	ld a,(0e400h)		;a02d   ; lee la forma de la nave (1 normal, 2 con escudo, 3 R.DRILL)
 	dec a			;a030
 	jr z,L_A04B		;a031
@@ -65,9 +65,9 @@ L_A050:
 	inc l			;a051
 	ldi		;a052
 	ldi		;a054
-	ld hl,0e410h		;a056
+	ld hl,0e410h		;a056   ; apunta a la primera opcion (16 bytes)
 	call L_A05F		;a059
-	ld hl,0e420h		;a05c
+	ld hl,0e420h		;a05c   ; apunta a la segunda opcion (16 bytes)
 L_A05F:
 	ld a,(hl)			;a05f
 	or a			;a060
@@ -954,7 +954,7 @@ L_A6FA:
 	jr z,L_A733		;a701
 	ld bc,00500h		;a703
 	ld hl,0a73ah		;a706
-	ld a,(0e404h)		;a709
+	ld a,(0e404h)		;a709   ; lee la Y de la nave
 	sub (ix+004h)		;a70c
 	jr c,L_A716		;a70f
 	ld de,00005h		;a711
@@ -1466,7 +1466,7 @@ L_AA92:
 	dec a			;aa9d
 	jr L_AACB		;aa9e
 L_AAA0:
-	ld a,(0e406h)		;aaa0
+	ld a,(0e406h)		;aaa0   ; lee la X de la nave
 	cp 080h		;aaa3
 	jr c,L_AAB0		;aaa5
 	ld a,(ix+005h)		;aaa7
@@ -1482,7 +1482,7 @@ L_AAB0:
 	ld a,(ix+003h)		;aabb
 	add a,c			;aabe
 	jr c,L_AAC9		;aabf
-	ld hl,0e404h		;aac1
+	ld hl,0e404h		;aac1   ; apunta a la Y de la nave
 	cp (hl)			;aac4
 	ld a,002h		;aac5
 	jr c,L_AACB		;aac7
@@ -1506,7 +1506,7 @@ L_AADA:
 	ld (ix+017h),a		;aae8
 	ret			;aaeb
 L_AAEC:
-	ld a,(0e406h)		;aaec
+	ld a,(0e406h)		;aaec   ; lee la X de la nave
 	cp (ix+005h)		;aaef
 	ld a,003h		;aaf2
 	jr c,L_AACB		;aaf4
@@ -2140,7 +2140,7 @@ L_AEFF:
 L_AF0E:
 	ld a,(ix+003h)		;af0e
 	add a,020h		;af11
-	ld hl,0e404h		;af13
+	ld hl,0e404h		;af13   ; apunta a la Y de la nave
 	cp (hl)			;af16
 	ld a,002h		;af17
 	jp c,L_AACB		;af19
@@ -2330,7 +2330,7 @@ L_B03A:
 	ret			;b058
 L_B059:
 	ld c,001h		;b059
-	ld a,(0e404h)		;b05b
+	ld a,(0e404h)		;b05b   ; lee la Y de la nave
 	sub 018h		;b05e
 	jr c,L_B068		;b060
 	cp (ix+003h)		;b062
@@ -2615,7 +2615,7 @@ L_B236:
 	ld hl,0b2a8h		;b236
 	call 05ca6h		;b239   ; byte_a: A = el byte A de la tabla HL
 	ld (ix+007h),a		;b23c
-	ld hl,0e406h		;b23f
+	ld hl,0e406h		;b23f   ; apunta a la X de la nave
 	ld a,(ix+005h)		;b242
 	and a			;b245
 	jr z,L_B262		;b246
@@ -2666,12 +2666,12 @@ L_B290:
 	ld a,(0e228h)		;b290   ; lee el nivel de dificultad
 	cp 005h		;b293
 	ret nc			;b295
-	ld a,(0e406h)		;b296
+	ld a,(0e406h)		;b296   ; lee la X de la nave
 	sub d			;b299
 	add a,020h		;b29a
 	cp 040h		;b29c
 	ret nc			;b29e
-	ld a,(0e404h)		;b29f
+	ld a,(0e404h)		;b29f   ; lee la Y de la nave
 	sub e			;b2a2
 	add a,020h		;b2a3
 	cp 040h		;b2a5
@@ -3626,7 +3626,7 @@ L_BB1E:
 	dec (ix+002h)		;bb1e
 	ret nz			;bb21
 	inc (ix+002h)		;bb22
-	ld a,(0e406h)		;bb25
+	ld a,(0e406h)		;bb25   ; lee la X de la nave
 	sub (ix+006h)		;bb28
 	add a,020h		;bb2b
 	cp 040h		;bb2d
@@ -4172,7 +4172,7 @@ L_BF2D:
 	ret nz			;bf30
 L_BF31:
 	ld de,00280h		;bf31
-	ld a,(0e406h)		;bf34
+	ld a,(0e406h)		;bf34   ; lee la X de la nave
 	sub (ix+006h)		;bf37
 	call c,05cadh		;bf3a   ; menos_de: DE = - DE
 	ld hl,00000h		;bf3d

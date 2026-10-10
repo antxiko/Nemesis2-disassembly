@@ -2105,11 +2105,11 @@ L_BAB0:
 	jp L_BBA4		;bab3
 L_BAB6:
 	ld a,048h		;bab6
-	ld (0e404h),a		;bab8
-	ld (0e414h),a		;babb
-	ld (0e424h),a		;babe
+	ld (0e404h),a		;bab8   ; guarda la Y de la nave
+	ld (0e414h),a		;babb   ; guarda la Y de la primera opcion
+	ld (0e424h),a		;babe   ; guarda la Y de la segunda opcion
 	ld a,030h		;bac1
-	ld (0e406h),a		;bac3
+	ld (0e406h),a		;bac3   ; guarda la X de la nave
 	ld (0e416h),a		;bac6
 	ld (0e426h),a		;bac9
 	ret			;bacc

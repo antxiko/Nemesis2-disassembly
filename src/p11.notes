@@ -124,8 +124,12 @@ C 0xA000 apunta a los atributos de los 32 sprites (Y, X, dibujo, color)
 C 0xA003 lee la forma de la nave (1 normal, 2 con escudo, 3 R.DRILL)
 C 0xA00C lee la marca de nave intocable y el byte siguiente (16 bits)
 C 0xA017 lee la cuenta de cuadros
+C 0xA01E apunta a la Y de la nave
+C 0xA02A apunta a la Y de la nave
 C 0xA02D lee la forma de la nave (1 normal, 2 con escudo, 3 R.DRILL)
 C 0xA039 lee lo que hay en la otra ranura (bit 3 Galious, 2 Penguin Adventure, 1 los 6 bytes de 0x7FFA, 0 Q*bert)
+C 0xA056 apunta a la primera opcion (16 bytes)
+C 0xA05C apunta a la segunda opcion (16 bytes)
 C 0xA08B apunta a los 9 disparos de la nave (16 bytes: tipo, Y, X, largo...)
 C 0xA0D6 apunta a los 9 disparos de la nave (16 bytes: tipo, Y, X, largo...)
 C 0xA0F1 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
@@ -166,6 +170,7 @@ C 0xA658 despacha: salta a la palabra A de la tabla que va pegada detras del `ca
 C 0xA694 sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
 C 0xA6C7 quita_enemigo: quita el enemigo IX: uno menos (0xE352), devuelve sus sprites (0xE355), 0xE36D si es 0x2A, y descuenta su grupo (IX+16, IX+17, p02:89A8)
 C 0xA6EC de_mas_a: DE = DE + A
+C 0xA709 lee la Y de la nave
 C 0xA725 byte_a: A = el byte A de la tabla HL
 C 0xA733 azar_rapido: A = R rotado XOR la cuenta de cuadros
 C 0xA74F byte_a: A = el byte A de la tabla HL
@@ -212,9 +217,12 @@ C 0xA9F0 sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los 
 C 0xAA3B lee la vuelta (bit 0: las fases bajan)
 C 0xAA5D lee el nivel de dificultad
 C 0xAA7C lee la vuelta (bit 0: las fases bajan)
+C 0xAAA0 lee la X de la nave
 C 0xAAB0 lee el tipo de jefe (1-5; 0 sin jefe)
 C 0xAAB7 hl_mas_a: HL = HL + A
+C 0xAAC1 apunta a la Y de la nave
 C 0xAAE2 lee el nivel de dificultad
+C 0xAAEC lee la X de la nave
 C 0xAB4A lee el tipo de jefe (1-5; 0 sin jefe)
 C 0xAB62 lee el tipo de jefe (1-5; 0 sin jefe)
 C 0xABAA crea_enemigo_ix: crea_enemigo conservando IX
@@ -248,6 +256,7 @@ C 0xAE45 caracteres_de_jefe: con los bancos 13-14-15, los caracteres de los jefe
 C 0xAE53 apunta a el estado del jefe
 C 0xAECB crea_enemigo_ix: crea_enemigo conservando IX
 C 0xAED0 sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
+C 0xAF13 apunta a la Y de la nave
 C 0xAF36 lee la marca de nucleo destruido
 C 0xAF3A quita_enemigo: quita el enemigo IX: uno menos (0xE352), devuelve sus sprites (0xE355), 0xE36D si es 0x2A, y descuenta su grupo (IX+16, IX+17, p02:89A8)
 C 0xAF6F quita_enemigo: quita el enemigo IX: uno menos (0xE352), devuelve sus sprites (0xE355), 0xE36D si es 0x2A, y descuenta su grupo (IX+16, IX+17, p02:89A8)
@@ -268,6 +277,7 @@ C 0xAFC3 apunta a la ficha del jefe
 C 0xB008 apunta a la ficha del jefe
 C 0xB00F apunta a la segunda ficha del jefe (el 5)
 C 0xB031 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
+C 0xB05B lee la Y de la nave
 C 0xB070 lee el nivel de dificultad
 C 0xB078 hl_mas_a: HL = HL + A
 C 0xB0DD suma_puntos: jugando, suma DE (BCD) a los puntos del jugador en turno; vida extra al pasar 0xE207 y record (0xE1F1) si no esta la ranura de 0xF0F5 bit 1
@@ -283,9 +293,12 @@ C 0xB1B6 lee la marca de scroll hecho en este cuadro
 C 0xB219 hl_mas_a: HL = HL + A
 C 0xB225 lee el nivel de dificultad
 C 0xB239 byte_a: A = el byte A de la tabla HL
+C 0xB23F apunta a la X de la nave
 C 0xB288 crea_enemigo_ix: crea_enemigo conservando IX
 C 0xB28D sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
 C 0xB290 lee el nivel de dificultad
+C 0xB296 lee la X de la nave
+C 0xB29F lee la Y de la nave
 C 0xB2CE apunta a la segunda ficha del jefe (el 5)
 C 0xB2EB palabra_a_de: DE = la palabra A de la tabla DE (HL apunta a su byte alto)
 C 0xB2F4 de_mas_a: DE = DE + A
@@ -352,6 +365,7 @@ C 0xBAA4 velocidad_en_direccion: para la direccion A (0-15) y la rapidez B: HL =
 C 0xBAB3 dispara_bala_con: una bala desde D/E + 8 con la velocidad BC (Y) y HL (X), si no esta 0xF00E
 C 0xBACB lee la fase (0-11)
 C 0xBB09 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
+C 0xBB25 lee la X de la nave
 C 0xBB3F lee la columna del scroll (16 bits)
 C 0xBBB1 lee la marca de scroll hecho en este cuadro
 C 0xBBC4 crea_enemigo_ix: crea_enemigo conservando IX
@@ -383,6 +397,7 @@ C 0xBF08 pon_vx_y_vy: IX+09/IX+0A = DE y IX+07/IX+08 = HL
 C 0xBF13 dispara_al_acabar: IX+15 - 1 y, al llegar a 0, p01:6774
 C 0xBF1A hacia_la_y_de_la_nave: la velocidad Y + o - 0x16 hacia la Y de la nave
 C 0xBF24 lee la marca de fin del scroll
+C 0xBF34 lee la X de la nave
 C 0xBF3A menos_de: DE = - DE
 C 0xBF40 pon_vx_y_vy: IX+09/IX+0A = DE y IX+07/IX+08 = HL
 # --- fin de las anotaciones de anota.py ---

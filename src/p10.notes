@@ -230,6 +230,10 @@ C 0xBA99 borra_texto: lo mismo que escribe_texto pero con ceros: borra los texto
 C 0xBA9C lee la musica que suena
 C 0xBAAD guarda la marca del final (estado 10)
 C 0xBAB0 borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
+C 0xBAB8 guarda la Y de la nave
+C 0xBABB guarda la Y de la primera opcion
+C 0xBABE guarda la Y de la segunda opcion
+C 0xBAC3 guarda la X de la nave
 C 0xBACD borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
 C 0xBAD3 aa2f_con_bancos: con los bancos 1-2-3, p03:AA2F, y el banco 10
 C 0xBAD9 esconde_sprites: los 32 sprites de 0xE280 con Y = 0xE0 (fuera de la pantalla)
