@@ -19,7 +19,8 @@ rutinas del cartucho, cada una con su formato:
             de dibujo y de color)
   p00:44F7  los caracteres de una fase: la lista comun 0x6048, la de la fase
             (0x6000[fase]) y sus copias en espejo (0x6018[fase]) y cabeza abajo
-            (0x6030[fase]), con los bancos 7-8-9; en la fase 8 solo la comun
+            (0x6030[fase]), con los bancos 7-8-9 (en la fase 8, las mismas
+            listas, pintadas poco a poco por p00:46C4)
 
 Uso como modulo: v = vram.de_la_fase(fase) -> bytearray de 16 KB.
 """
@@ -114,8 +115,10 @@ def de_la_fase(fase):
     vram = bytearray(0x4000)
     v = B.Ventana((7, 8, 9))
     lista_caracteres(vram, v, 0x6048)
-    if fase == 8:
-        return vram
+    # En la fase 8, p00:44F7 no las carga: deja en 0xE1E0, 0xE1E2 y 0xE1E4 las
+    # mismas tres listas (0x61DD, 0x6281 y 0x64A7, las entradas 8 de las tablas)
+    # y p00:46C4 las pinta en tres pasos, con unas mascaras que van girando
+    # hasta 0xFF: la VRAM acaba igual que en las demas fases.
     lista_caracteres(vram, v, v.w(0x6000 + 2 * fase))
     copias(vram, v, v.w(0x6018 + 2 * fase), False)
     copias(vram, v, v.w(0x6030 + 2 * fase), True)
