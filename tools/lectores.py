@@ -1062,12 +1062,15 @@ def banco10():
     B.declara(v, 0xA981, 0xACAB, "listas_A981", "11 listas a la VRAM (p00:4A6B) seguidas, de "
               "0xA981 a 0xACAB: la primera la pinta p10:A0EC %s (en los demas, 0xB1AA), y "
               "p10:A1C5 pasa 0xAB29, de dentro de una de ellas, a L_A245" % jp, "p10:A0F4", F=16)
-    B.declara(v, 0xB92B, lista_vram(v, 0xB92B), "lista_2players", "lista a la VRAM sin lector a "
-              "la vista: el texto 2PLAYERS en 0x3A6D, la fila de debajo del 1PLAYER de la lista "
-              "de 0xB904. El juego es de un jugador y no lo pinta nadie", "nadie")
-    for a in (0xB904, 0xB936):
-        B.declara(v, a, lista_vram(v, a), "lista_%04X" % a, "lista a la VRAM (p00:4A6B) que pinta "
-                  "p01:61C1 (0xB904 con 0xE1C0 < 2; si no, 0xB936)", "p01:61CE")
+    B.declara(v, 0xB92B, lista_vram(v, 0xB92B), "lista_2players", "lista a la VRAM con el texto "
+              "2PLAYERS en 0x3A6D: nadie la apunta, la pinta p01:61E4 con el DE que deja la de "
+              "0xB904 al acabar (p01:61E7 la pinta y salta a 61E4 sin cargar DE)", "p01:61E4")
+    B.declara(v, 0xB904, lista_vram(v, 0xB904), "lista_B904", "lista a la VRAM (p00:4A6B) del "
+              "titulo: KONAMI 1987, PLAY SELECT y 1PLAYER; p01:61C1 la pinta con 0xE1C0 < 2, y "
+              "detras la de 0xB92B", "p01:61E7")
+    B.declara(v, 0xB936, lista_vram(v, 0xB936), "lista_B936", "lista a la VRAM (p00:4A6B) de la "
+              "presentacion: KONAMI PRESENTS y THE; p01:61C1 la pinta con 0xE1C0 >= 2, y detras el "
+              "nombre (0xB94F o 0x622D) y 0xB959", "p01:61CE")
 
 
 def piezas_de_enemigos():

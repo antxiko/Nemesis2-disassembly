@@ -58,8 +58,8 @@ D 0xB8D7 0xB8F5 tabla_B8D7  fichas de 3 bytes por paso (0xE496 x 3), [cuantos][p
 F 0xB8D7 16
 D 0xB8F5 0xB904 tabla_B8F5  la lista que p01:61B9 pasa a p10:A24C (DE = 0xB8F5): bytes hasta un 0; lo leen p10:A256 (15 bytes)
 F 0xB8F5 16
-D 0xB904 0xB92B lista_B904  lista a la VRAM (p00:4A6B) que pinta p01:61C1 (0xB904 con 0xE1C0 < 2; si no, 0xB936); lo leen p01:61CE (39 bytes)
-D 0xB92B 0xB936 lista_2players  lista a la VRAM sin lector a la vista: el texto 2PLAYERS en 0x3A6D, la fila de debajo del 1PLAYER de la lista de 0xB904. El juego es de un jugador y no lo pinta nadie; lo leen nadie (11 bytes)
+D 0xB904 0xB92B lista_B904  lista a la VRAM (p00:4A6B) del titulo: KONAMI 1987, PLAY SELECT y 1PLAYER; p01:61C1 la pinta con 0xE1C0 < 2, y detras la de 0xB92B; lo leen p01:61E7 (39 bytes)
+D 0xB92B 0xB936 lista_2players  lista a la VRAM con el texto 2PLAYERS en 0x3A6D: nadie la apunta, la pinta p01:61E4 con el DE que deja la de 0xB904 al acabar (p01:61E7 la pinta y salta a 61E4 sin cargar DE); lo leen p01:61E4 (11 bytes)
 D 0xB936 0xB94F lista_B936  lista a la VRAM (p00:4A6B: [destino] y bytes; 0xFE otro destino; 0xFF acaba); lo leen p01:61CE (25 bytes)
 D 0xB94F 0xB959 lista_B94F  lista a la VRAM (p00:4A6B) que p01:61DE pinta en un MSX japones (0x002B & 0x0F = 0); en los demas, la de 0x622D; lo leen p01:61DE (10 bytes)
 D 0xB959 0xB993 lista_B959  lista a la VRAM (p00:4A6B: [destino] y bytes; 0xFE otro destino; 0xFF acaba); lo leen p01:61E4 (58 bytes)

@@ -1917,8 +1917,9 @@ DATA_tabla_B8F5:
 	defb 0b5h,0bah,0b8h,0b5h,0b7h,0adh,000h,02fh,057h,000h,004h,02fh,091h,004h,004h	; b8f5  ......./W../...
 
 ; ----------------------------------------------------------------------
-; DATOS lista_B904: lista a la VRAM (p00:4A6B) que pinta p01:61C1 (0xB904 con
-;   0xE1C0 < 2; si no, 0xB936); lo leen p01:61CE (39 bytes)
+; DATOS lista_B904: lista a la VRAM (p00:4A6B) del titulo: KONAMI 1987, PLAY
+;   SELECT y 1PLAYER; p01:61C1 la pinta con 0xE1C0 < 2, y detras la de 0xB92B;
+;   lo leen p01:61E7 (39 bytes)
 ;   0xb904..0xb92b  (39 bytes)
 DATA_lista_B904:
 	defb 00ah,038h,01ah,02bh,02fh,02eh,021h,02dh,029h,000h,011h,019h,018h,017h,0feh,0cbh	; b904  .8.+/.!-).......
@@ -1926,9 +1927,10 @@ DATA_lista_B904:
 	defb 030h,02ch,021h,039h,025h,032h,0ffh	; b924
 
 ; ----------------------------------------------------------------------
-; DATOS lista_2players: lista a la VRAM sin lector a la vista: el texto
-;   2PLAYERS en 0x3A6D, la fila de debajo del 1PLAYER de la lista de 0xB904.
-;   El juego es de un jugador y no lo pinta nadie; lo leen nadie (11 bytes)
+; DATOS lista_2players: lista a la VRAM con el texto 2PLAYERS en 0x3A6D: nadie
+;   la apunta, la pinta p01:61E4 con el DE que deja la de 0xB904 al acabar
+;   (p01:61E7 la pinta y salta a 61E4 sin cargar DE); lo leen p01:61E4 (11
+;   bytes)
 ;   0xb92b..0xb936  (11 bytes)
 DATA_lista_2players:
 	defb 06dh,03ah,012h,030h,02ch,021h,039h,025h,032h,033h,0ffh	; b92b  m:.0,!9%23.
