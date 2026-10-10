@@ -130,17 +130,20 @@ def pantalla(premio, capturadas=0):
     return filas, vram
 
 
-def rotulos(escala=1):
-    """Los rotulos de las siete capturas (0xE20F de 0 a 6), uno por fila."""
+def rotulos(escala=1, numeros=None):
+    """Los rotulos de las siete capturas (0xE20F de 0 a 6), uno por fila; o
+    los de `numeros` (de 1 a 25: los 25 punteros de 0x9BD3)."""
     vram = V.de_la_fase(FASE)
+    if numeros is None:
+        numeros = [arma(k) for k in range(7)]
     filas = []
-    for k in range(7):
-        rotulo(vram, arma(k), 0x8B)
+    for n in numeros:
+        rotulo(vram, n, 0x8B)
         # en una fila del tercer tercio (la 16), que es donde estan
         im = D.pinta([[None] * 8] * 16 + [list(range(0x8B, 0x93))], vram)
         filas.append(im.crop((0, 128, 64, 136)))
     from PIL import Image
-    img = Image.new("RGB", (64, 7 * 12))
+    img = Image.new("RGB", (64, len(filas) * 12))
     for k, im in enumerate(filas):
         img.paste(im, (0, 12 * k + 2))
     if escala != 1:
@@ -156,6 +159,7 @@ def main(argv):
             filas, vram = pantalla(premio)
             D.pinta(filas, vram, esc).save(os.path.join(argv[2], "final_%s.png" % nombre))
         rotulos(esc).save(os.path.join(argv[2], "rotulos.png"))
+        rotulos(esc, range(1, 26)).save(os.path.join(argv[2], "rotulos_todos.png"))
     else:
         sys.exit(__doc__)
     return 0

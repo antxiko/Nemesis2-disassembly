@@ -160,14 +160,25 @@ def copias_de_sprites(vram, v, ix):
         ix += 4
 
 
-def sprites_de_la_fase(fase, vram=None):
-    """La VRAM con los dibujos de sprite que deja L_43A5 en la fase."""
+def sprites_de_la_fase(fase, vram=None, vecino=False, drill=False):
+    """La VRAM con los dibujos de sprite que deja L_43A5 en la fase. vecino:
+    Penguin Adventure en la otra ranura (bit 2 de 0xF0F5: p00:4381 con el
+    banco 12 en vez de p00:436F); drill: 0xE400 = 3 (p00:42FE)."""
     if vram is None:
         vram = de_la_fase(fase)
     v = B.Ventana((7, 8, 9))
-    for origen, destino in ((0x936F, 0x1800), (0x942B, 0x1960), (0x93C0, 0x18C0),
-                            (0x94B8, 0x1A20)):
-        rachas(vram, v, origen, destino)
+    if vecino:
+        v12 = B.Ventana((7, 8, 12))
+        rachas(vram, v12, 0xBF19, 0x1800)
+        rachas(vram, v12, 0xBF82, 0x19E0)
+    else:
+        rachas(vram, v, 0x936F, 0x1800)
+        rachas(vram, v, 0x942B, 0x1960)
+    rachas(vram, v, 0x93C0, 0x18C0)
+    if drill:
+        rachas(vram, v, 0x9D17, 0x1800)
+        rachas(vram, v, 0x9D68, 0x1960)
+    rachas(vram, v, 0x94B8, 0x1A20)
     copias_de_sprites(vram, B.ventana_de(0), 0x44EA)
     a = v.w(0x92B3 + 2 * fase)
     while v(a):
