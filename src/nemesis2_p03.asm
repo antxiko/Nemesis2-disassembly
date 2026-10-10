@@ -4083,7 +4083,7 @@ L_BD16:
 	set 2,(hl)		;bd26
 	ret			;bd28
 L_BD29:
-	ld de,0bd63h		;bd29   ; Q*bert
+	ld de,0bd63h		;bd29   ; Q*bert en el otro slot
 	ld hl,04010h		;bd2c
 	ld b,004h		;bd2f
 	call compara_en_slot		;bd31   ; compara_en_slot: C si los B bytes de HL del slot C son los de DE (RDSLT)

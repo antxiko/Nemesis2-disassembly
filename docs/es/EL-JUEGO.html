@@ -1,0 +1,116 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>El juego — Nemesis 2 (Konami, 1987)</title>
+<style>
+:root{--tinta:#cfd0d4;--suave:#83868f;--fondo:#000;--panel:#0c0e13;--linea:#23262e;
+  --rojo:#ff897d;--cyan:#65dbef;--verde:#3eb849;--oro:#ded087}
+@media (prefers-color-scheme:light){:root{--tinta:#191a1e;--suave:#5a5d66;--fondo:#e9e7e1;
+  --panel:#f7f6f2;--linea:#d0cdc5;--rojo:#b23f34;--cyan:#1c6b7c;--verde:#2b7734;--oro:#8a7420}}
+:root[data-theme="dark"]{--tinta:#cfd0d4;--suave:#83868f;--fondo:#000;--panel:#0c0e13;
+  --linea:#23262e;--rojo:#ff897d;--cyan:#65dbef;--verde:#3eb849;--oro:#ded087}
+:root[data-theme="light"]{--tinta:#191a1e;--suave:#5a5d66;--fondo:#e9e7e1;--panel:#f7f6f2;
+  --linea:#d0cdc5;--rojo:#b23f34;--cyan:#1c6b7c;--verde:#2b7734;--oro:#8a7420}
+*{box-sizing:border-box}
+body{margin:0;background:var(--fondo);color:var(--tinta);padding:0 1.25rem 6rem;
+  font:15px/1.7 ui-monospace,"SF Mono",Menlo,Consolas,monospace}
+.w{max-width:1120px;margin:0 auto}
+.n{max-width:68ch}
+h1,h2,h3,h4{font-weight:400;text-wrap:balance}
+a{color:var(--cyan)}
+img{image-rendering:pixelated;max-width:100%;height:auto;display:block}
+header.top{display:flex;flex-direction:column;align-items:center;gap:1.5rem;
+  padding:4rem 0 2rem;text-align:center}
+header.top img{width:min(100%,642px)}
+.claim{max-width:60ch;color:var(--suave);font-size:1.05rem}
+.claim b{color:var(--tinta);font-weight:400}
+.ficha{display:flex;flex-wrap:wrap;justify-content:center;gap:0 1.5rem;width:100%;
+  font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--suave);
+  border-top:1px solid var(--linea);border-bottom:1px solid var(--linea);padding:.85rem 0}
+.ficha b{color:var(--rojo);font-weight:400}
+nav{display:flex;flex-wrap:wrap;gap:1.25rem;justify-content:center;padding:1.25rem 0;
+  font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+nav a{color:var(--suave);text-decoration:none;border-bottom:1px solid transparent}
+nav a:hover,nav a:focus{color:var(--tinta);border-bottom-color:var(--rojo)}
+nav.docs{border-top:1px solid var(--linea);border-bottom:1px solid var(--linea);
+  margin-bottom:1rem}
+section{margin-top:4.5rem;scroll-margin-top:1rem}
+section>h2{font-size:1rem;letter-spacing:.1em;text-transform:uppercase;
+  border-left:3px solid var(--rojo);padding-left:.9rem;margin:0 0 1.5rem}
+.cifras{display:grid;gap:1px;background:var(--linea);border:1px solid var(--linea);
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
+.cifra{background:var(--panel);padding:1.1rem}
+.cifra b{display:block;font-size:1.7rem;color:var(--oro);font-weight:400;
+  font-variant-numeric:tabular-nums;line-height:1.2}
+.cifra span{font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--suave)}
+.hall{border-top:1px solid var(--linea);padding-top:1.75rem;margin-top:2.5rem}
+.hall:first-of-type{border-top:0;padding-top:0;margin-top:0}
+.hall h3{margin:0 0 .75rem;font-size:1.15rem;color:var(--rojo)}
+.hall h4{color:var(--oro);margin:1.5rem 0 .5rem;font-size:.95rem}
+.hall p{margin:0 0 1rem}
+pre.asm{background:var(--panel);border-left:2px solid var(--verde);margin:1.25rem 0;
+  padding:1rem 1.1rem;overflow-x:auto;font-size:13px;line-height:1.6;color:var(--tinta)}
+.par{display:grid;gap:1.25rem;grid-template-columns:1fr}
+@media(min-width:820px){.par{grid-template-columns:1fr 1fr}}
+.par figure{margin:0}
+table{border-collapse:collapse;width:100%;margin:1.25rem 0;font-size:13px;display:block;
+  overflow-x:auto}
+th,td{text-align:left;padding:.5rem .75rem;border-bottom:1px solid var(--linea)}
+th{color:var(--suave);font-weight:400;font-size:11px;letter-spacing:.07em;text-transform:uppercase}
+td.num{font-variant-numeric:tabular-nums;color:var(--oro)}
+.nivel{margin-top:2rem}
+.nivel h3{margin:0 0 .9rem;font-size:.95rem;letter-spacing:.06em;text-transform:uppercase}
+.nivel em{color:var(--cyan);font-style:normal}
+.sep{color:var(--suave);margin:0 .6rem}
+.rejilla{display:grid;gap:.9rem;grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+.rejilla figure{margin:0;background:var(--panel);box-shadow:0 0 0 1px var(--linea)}
+.rejilla figcaption{display:flex;justify-content:space-between;padding:.45rem .65rem;
+  font-size:11px;color:var(--suave);border-top:1px solid var(--linea)}
+.dir{font-variant-numeric:tabular-nums;color:var(--verde)}
+footer{margin-top:5rem;padding-top:1.5rem;border-top:1px solid var(--linea);
+  color:var(--suave);font-size:12px}
+
+/* Aviso de trabajo en curso: tiene que verse antes que las cifras, porque un
+   100% mal leido hace mas dano que no ponerlo. */
+.aviso{background:#3a2a10;border-left:3px solid var(--oro);margin:1.5rem auto;
+  padding:1rem 1.2rem;max-width:900px;border-radius:4px}
+.aviso p{margin:0;color:var(--tinta);font-size:15px;line-height:1.65}
+.galeria{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:1.5rem;margin:1.5rem 0}
+.galeria figure{margin:0}
+.galeria img{width:100%;height:auto;image-rendering:pixelated;
+  border:1px solid var(--linea);border-radius:3px}
+.galeria figcaption{color:var(--suave);font-size:13px;margin-top:.5rem}
+audio{display:block;width:100%;max-width:640px;margin:.75rem 0 1.5rem}
+</style>
+<div class="w"><nav class="top"><a href="index.html">Portada</a><a href="EMPEZAR.html">Empezar</a><a href="EL-JUEGO.html" style=color:var(--tinta)>El juego</a><a href="EL-CARTUCHO.html">El cartucho</a><a href="EL-CODIGO.html">El código</a><a href="HALLAZGOS.html">Hallazgos</a><a href="PREGUNTAS-ABIERTAS.html">Preguntas abiertas</a><a href="../THE-GAME.html" style="margin-left:auto;color:var(--oro)">English</a></nav>
+<h1 id="el-juego">El juego</h1>
+<p>Un matamarcianos de scroll horizontal: la nave Metalion contra el Dr. Venom, planeta a planeta. Todo lo de esta página está leído en el código y las imágenes están dibujadas desde la ROM.</p>
+<p><img src="../imagenes/titulo.png" alt="El título"></p>
+<p>El título lo monta <code>p01:615B</code> y sus textos <code>p01:61C1</code>. En un MSX japonés (el byte 0x002B de la BIOS) el logotipo dice GRADIUS, y los textos de la historia y del final salen en japonés.</p>
+<h2 id="las-fases">Las fases</h2>
+<p>El mapa tiene doce fases (<code>0xE201</code>). La partida empieza en la 1 con 3 vidas (<code>p00:5AD8</code>). La que sigue la decide <code>p01:7C59</code>: se sube de la 1 a la 7, y después se baja de la 6 a la 0 con <code>0xE20A</code> impar, que en muchos sitios trae más enemigos y más disparos. La 0 es la fortaleza del final, la 8 el interior de cada jefe y la 9, la 10 y la 11 son secretas. Cada fase tiene un punto de control (<code>p01:694A</code>) desde el que se sigue al perder una vida.</p>
+<p>Los mapas se montan desde sus metabloques (<code>p13:7900</code>, <code>p00:4889</code>):</p>
+<p><img src="../imagenes/fase_00.png" alt="Fase 0"> <img src="../imagenes/fase_01.png" alt="Fase 1"> <img src="../imagenes/fase_02.png" alt="Fase 2"> <img src="../imagenes/fase_03.png" alt="Fase 3"> <img src="../imagenes/fase_04.png" alt="Fase 4"> <img src="../imagenes/fase_05.png" alt="Fase 5"> <img src="../imagenes/fase_06.png" alt="Fase 6"> <img src="../imagenes/fase_07.png" alt="Fase 7"> <img src="../imagenes/fase_08.png" alt="Fase 8, el interior"> <img src="../imagenes/fase_09.png" alt="Fase 9"> <img src="../imagenes/fase_10.png" alt="Fase 10"> <img src="../imagenes/fase_11.png" alt="Fase 11"></p>
+<p>Lo que cierra cada fase lo dice su guion (<code>p01:7A34</code>):</p>
+<table><tr><th>Fase</th><th>Al acabar el scroll</th></tr><tr><td>1</td><td>el jefe 1</td></tr><tr><td>2 y 3</td><td>el jefe 4</td></tr><tr><td>4</td><td>600 cuadros más, el jefe 5 y luego el 2</td></tr><tr><td>5</td><td>un pasillo de compuertas de 600 cuadros y luego el jefe 2</td></tr><tr><td>6</td><td>dos piezas que lanzan rocas, sin jefe</td></tr><tr><td>7</td><td>el jefe 3</td></tr><tr><td>0</td><td>un núcleo de 100 golpes</td></tr></table>
+<h2 id="los-enemigos">Los enemigos</h2>
+<p>Hay 65 tipos de enemigo, cada uno con su ficha de 7 bytes (<code>p00:4F4C</code>). En cada fase salen los de su lista, sus generadores, su oleada y los que sueltan los objetos y los jefes. Aquí van con el dibujo de su ficha y los dibujos de sprite de la fase; el número es el tipo.</p>
+<p><img src="../imagenes/enemigos_f00.png" alt="Enemigos de la fase 0"> <img src="../imagenes/enemigos_f01.png" alt="Enemigos de la fase 1"> <img src="../imagenes/enemigos_f02.png" alt="Enemigos de la fase 2"> <img src="../imagenes/enemigos_f03.png" alt="Enemigos de la fase 3"> <img src="../imagenes/enemigos_f04.png" alt="Enemigos de la fase 4"> <img src="../imagenes/enemigos_f05.png" alt="Enemigos de la fase 5"> <img src="../imagenes/enemigos_f06.png" alt="Enemigos de la fase 6"> <img src="../imagenes/enemigos_f07.png" alt="Enemigos de la fase 7"> <img src="../imagenes/enemigos_f08.png" alt="Enemigos del interior"></p>
+<p>Los objetos de caracteres son parte del mapa: compuertas, cabezas que giran, torres que sueltan enemigos. Cada clase tiene sus formas (<code>p15:B661</code>):</p>
+<p><img src="../imagenes/objeto_c09_f01.png" alt="Clase 9, fase 1"> <img src="../imagenes/objeto_c01_f02.png" alt="Clase 1, fase 2"> <img src="../imagenes/objeto_c07_f05.png" alt="Clase 7, fase 5"> <img src="../imagenes/objeto_c16_f04.png" alt="Clase 16, fase 4"></p>
+<h2 id="los-jefes">Los jefes</h2>
+<p>Son cinco (<code>0xE340</code>), cada uno con su ficha de 10 bytes (<code>p09:BB01</code>), su caja y su núcleo. El 1 dispara seis balas en abanico. El 2 embiste y suelta enemigos de cuatro sprites. El 3 lanza lenguas que crecen. El 4 suelta rayos. El 5 son diez piezas que salen de dos en dos.</p>
+<p><img src="../imagenes/jefe_1.png" alt="El jefe 1"> <img src="../imagenes/jefe_2.png" alt="El jefe 2"> <img src="../imagenes/jefe_3.png" alt="El jefe 3"> <img src="../imagenes/jefe_4.png" alt="El jefe 4"> <img src="../imagenes/jefe_5.png" alt="El jefe 5"></p>
+<p>Al vencer a uno, su boca queda abierta 300 cuadros (<code>p11:A93F</code>). Si la nave entra, va al interior; si no, el jefe estalla y no hay interior.</p>
+<h2 id="el-interior">El interior</h2>
+<p>Tiene un núcleo de 24 golpes (<code>p02:8570</code>). Al pasar la nave por su X empieza el final de 13 pasos (<code>p01:74A2</code>), con YOU CAPTURED. El premio depende de los cuadros que duró la pelea con el jefe (<code>p02:9218</code>): con menos de 300, dos armas; con menos de 900, una; si no, NOTHING.</p>
+<p><img src="../imagenes/final_dos.png" alt="Dos armas"> <img src="../imagenes/final_una.png" alt="Una arma"> <img src="../imagenes/final_nada.png" alt="Ninguna"></p>
+<h2 id="la-nave-y-el-medidor">La nave y el medidor</h2>
+<p>Las cápsulas rojas mueven la casilla encendida del medidor, y el otro botón la usa (<code>p01:7D4F</code>). El medidor tiene más o menos casillas según las armas capturadas (<code>p02:8060</code>). Las siete que se capturan, en orden, son UP LASER, DOWN LASER, NAPALM MISSILE, REFLEX RING, EXTEND LASER, BACK BEAM y FIRE BLASTER. El escudo aguanta 10 golpes, y la cápsula azul hace caer a todos los enemigos de la pantalla.</p>
+<p><img src="../imagenes/nave.png" alt="La nave"></p>
+<p>Los 25 rótulos del medidor (<code>p14:9BD3</code>):</p>
+<p><img src="../imagenes/rotulos.png" alt="Los rótulos"></p>
+<p>Las cápsulas especiales salen en el mapa y duran 15 segundos (<code>p02:9034</code>). Con D.VARRIOR las opciones giran alrededor de la nave; R.DRILL convierte la nave en una broca que rompe paredes; E.SLOW hace que los enemigos se muevan cuadro sí, cuadro no; VECTOR cambia el disparo.</p>
+<p><img src="../imagenes/recogidas.png" alt="Las cápsulas"></p>
+<p>De izquierda a derecha: la del medidor (0x29), la que hace caer a todos (0x2A), la vida (0x2B), las dos de puntos (0x2C y 0x2D), y D.VARRIOR, R.DRILL, E.SLOW y VECTOR.</p>
+<footer><p><em>Nemesis 2</em> lo public&oacute; Konami para MSX en 1987; su n&uacute;mero de cat&aacute;logo es RC-751 y son 128 KB. Todos los derechos sobre el juego siguen siendo de sus titulares. Este trabajo es de preservaci&oacute;n, estudio y documentaci&oacute;n, y la imagen del cartucho no se distribuye.</p></footer></div>

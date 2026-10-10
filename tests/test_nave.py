@@ -37,8 +37,8 @@ class Nave(unittest.TestCase):
             self.assertEqual(V.rachas(vram, ventana, a, 0x1800), b, "%04X" % a)
 
     def test_cada_caso_cambia_los_dibujos_de_la_nave(self):
-        """R.DRILL y Penguin Adventure dejan otros dibujos en 0x1800 (los de
-        la nave, 0x00-0x17)."""
+        """R.DRILL y Penguin Adventure en el otro slot (0xF0F5 bit 2) dejan
+        otros dibujos en 0x1800 (los de la nave, 0x00-0x17)."""
         normal = N.vram_normal()[V.SPRITES:V.SPRITES + 0xC0]
         self.assertNotEqual(normal, N.vram_drill()[V.SPRITES:V.SPRITES + 0xC0])
         self.assertNotEqual(normal, N.vram_vecino()[V.SPRITES:V.SPRITES + 0xC0])

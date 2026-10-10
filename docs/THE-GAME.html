@@ -1,0 +1,116 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The game — Nemesis 2 (Konami, 1987)</title>
+<style>
+:root{--tinta:#cfd0d4;--suave:#83868f;--fondo:#000;--panel:#0c0e13;--linea:#23262e;
+  --rojo:#ff897d;--cyan:#65dbef;--verde:#3eb849;--oro:#ded087}
+@media (prefers-color-scheme:light){:root{--tinta:#191a1e;--suave:#5a5d66;--fondo:#e9e7e1;
+  --panel:#f7f6f2;--linea:#d0cdc5;--rojo:#b23f34;--cyan:#1c6b7c;--verde:#2b7734;--oro:#8a7420}}
+:root[data-theme="dark"]{--tinta:#cfd0d4;--suave:#83868f;--fondo:#000;--panel:#0c0e13;
+  --linea:#23262e;--rojo:#ff897d;--cyan:#65dbef;--verde:#3eb849;--oro:#ded087}
+:root[data-theme="light"]{--tinta:#191a1e;--suave:#5a5d66;--fondo:#e9e7e1;--panel:#f7f6f2;
+  --linea:#d0cdc5;--rojo:#b23f34;--cyan:#1c6b7c;--verde:#2b7734;--oro:#8a7420}
+*{box-sizing:border-box}
+body{margin:0;background:var(--fondo);color:var(--tinta);padding:0 1.25rem 6rem;
+  font:15px/1.7 ui-monospace,"SF Mono",Menlo,Consolas,monospace}
+.w{max-width:1120px;margin:0 auto}
+.n{max-width:68ch}
+h1,h2,h3,h4{font-weight:400;text-wrap:balance}
+a{color:var(--cyan)}
+img{image-rendering:pixelated;max-width:100%;height:auto;display:block}
+header.top{display:flex;flex-direction:column;align-items:center;gap:1.5rem;
+  padding:4rem 0 2rem;text-align:center}
+header.top img{width:min(100%,642px)}
+.claim{max-width:60ch;color:var(--suave);font-size:1.05rem}
+.claim b{color:var(--tinta);font-weight:400}
+.ficha{display:flex;flex-wrap:wrap;justify-content:center;gap:0 1.5rem;width:100%;
+  font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--suave);
+  border-top:1px solid var(--linea);border-bottom:1px solid var(--linea);padding:.85rem 0}
+.ficha b{color:var(--rojo);font-weight:400}
+nav{display:flex;flex-wrap:wrap;gap:1.25rem;justify-content:center;padding:1.25rem 0;
+  font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+nav a{color:var(--suave);text-decoration:none;border-bottom:1px solid transparent}
+nav a:hover,nav a:focus{color:var(--tinta);border-bottom-color:var(--rojo)}
+nav.docs{border-top:1px solid var(--linea);border-bottom:1px solid var(--linea);
+  margin-bottom:1rem}
+section{margin-top:4.5rem;scroll-margin-top:1rem}
+section>h2{font-size:1rem;letter-spacing:.1em;text-transform:uppercase;
+  border-left:3px solid var(--rojo);padding-left:.9rem;margin:0 0 1.5rem}
+.cifras{display:grid;gap:1px;background:var(--linea);border:1px solid var(--linea);
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
+.cifra{background:var(--panel);padding:1.1rem}
+.cifra b{display:block;font-size:1.7rem;color:var(--oro);font-weight:400;
+  font-variant-numeric:tabular-nums;line-height:1.2}
+.cifra span{font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--suave)}
+.hall{border-top:1px solid var(--linea);padding-top:1.75rem;margin-top:2.5rem}
+.hall:first-of-type{border-top:0;padding-top:0;margin-top:0}
+.hall h3{margin:0 0 .75rem;font-size:1.15rem;color:var(--rojo)}
+.hall h4{color:var(--oro);margin:1.5rem 0 .5rem;font-size:.95rem}
+.hall p{margin:0 0 1rem}
+pre.asm{background:var(--panel);border-left:2px solid var(--verde);margin:1.25rem 0;
+  padding:1rem 1.1rem;overflow-x:auto;font-size:13px;line-height:1.6;color:var(--tinta)}
+.par{display:grid;gap:1.25rem;grid-template-columns:1fr}
+@media(min-width:820px){.par{grid-template-columns:1fr 1fr}}
+.par figure{margin:0}
+table{border-collapse:collapse;width:100%;margin:1.25rem 0;font-size:13px;display:block;
+  overflow-x:auto}
+th,td{text-align:left;padding:.5rem .75rem;border-bottom:1px solid var(--linea)}
+th{color:var(--suave);font-weight:400;font-size:11px;letter-spacing:.07em;text-transform:uppercase}
+td.num{font-variant-numeric:tabular-nums;color:var(--oro)}
+.nivel{margin-top:2rem}
+.nivel h3{margin:0 0 .9rem;font-size:.95rem;letter-spacing:.06em;text-transform:uppercase}
+.nivel em{color:var(--cyan);font-style:normal}
+.sep{color:var(--suave);margin:0 .6rem}
+.rejilla{display:grid;gap:.9rem;grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+.rejilla figure{margin:0;background:var(--panel);box-shadow:0 0 0 1px var(--linea)}
+.rejilla figcaption{display:flex;justify-content:space-between;padding:.45rem .65rem;
+  font-size:11px;color:var(--suave);border-top:1px solid var(--linea)}
+.dir{font-variant-numeric:tabular-nums;color:var(--verde)}
+footer{margin-top:5rem;padding-top:1.5rem;border-top:1px solid var(--linea);
+  color:var(--suave);font-size:12px}
+
+/* Aviso de trabajo en curso: tiene que verse antes que las cifras, porque un
+   100% mal leido hace mas dano que no ponerlo. */
+.aviso{background:#3a2a10;border-left:3px solid var(--oro);margin:1.5rem auto;
+  padding:1rem 1.2rem;max-width:900px;border-radius:4px}
+.aviso p{margin:0;color:var(--tinta);font-size:15px;line-height:1.65}
+.galeria{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:1.5rem;margin:1.5rem 0}
+.galeria figure{margin:0}
+.galeria img{width:100%;height:auto;image-rendering:pixelated;
+  border:1px solid var(--linea);border-radius:3px}
+.galeria figcaption{color:var(--suave);font-size:13px;margin-top:.5rem}
+audio{display:block;width:100%;max-width:640px;margin:.75rem 0 1.5rem}
+</style>
+<div class="w"><nav class="top"><a href="index.html">Home</a><a href="GETTING-STARTED.html">Start</a><a href="THE-GAME.html" style=color:var(--tinta)>The game</a><a href="THE-CARTRIDGE.html">The cartridge</a><a href="THE-CODE.html">The code</a><a href="FINDINGS.html">Findings</a><a href="OPEN-QUESTIONS.html">Open questions</a><a href="es/EL-JUEGO.html" style="margin-left:auto;color:var(--oro)">Castellano</a></nav>
+<h1 id="the-game">The game</h1>
+<p>A horizontal scrolling shooter: the Metalion ship against Dr. Venom, planet by planet. Everything on this page is read in the code and the pictures are drawn from the ROM.</p>
+<p><img src="imagenes/titulo.png" alt="The title"></p>
+<p>The title is built by <code>p01:615B</code> and its texts by <code>p01:61C1</code>. On a Japanese MSX (BIOS byte 0x002B) the logo reads GRADIUS, and the story and ending texts come out in Japanese.</p>
+<h2 id="the-stages">The stages</h2>
+<p>The map has twelve stages (<code>0xE201</code>). The game starts at stage 1 with 3 lives (<code>p00:5AD8</code>). The next one is decided by <code>p01:7C59</code>: it goes up from 1 to 7, and then down from 6 to 0 with <code>0xE20A</code> odd, which in many places brings more enemies and more shots. Stage 0 is the final fortress, 8 is the interior of each boss and 9, 10 and 11 are secret. Each stage has a checkpoint (<code>p01:694A</code>) from which play resumes after losing a life.</p>
+<p>The maps are built from their metablocks (<code>p13:7900</code>, <code>p00:4889</code>):</p>
+<p><img src="imagenes/fase_00.png" alt="Stage 0"> <img src="imagenes/fase_01.png" alt="Stage 1"> <img src="imagenes/fase_02.png" alt="Stage 2"> <img src="imagenes/fase_03.png" alt="Stage 3"> <img src="imagenes/fase_04.png" alt="Stage 4"> <img src="imagenes/fase_05.png" alt="Stage 5"> <img src="imagenes/fase_06.png" alt="Stage 6"> <img src="imagenes/fase_07.png" alt="Stage 7"> <img src="imagenes/fase_08.png" alt="Stage 8, the interior"> <img src="imagenes/fase_09.png" alt="Stage 9"> <img src="imagenes/fase_10.png" alt="Stage 10"> <img src="imagenes/fase_11.png" alt="Stage 11"></p>
+<p>What closes each stage is in its script (<code>p01:7A34</code>):</p>
+<table><tr><th>Stage</th><th>When the scroll ends</th></tr><tr><td>1</td><td>boss 1</td></tr><tr><td>2 and 3</td><td>boss 4</td></tr><tr><td>4</td><td>600 more frames, boss 5 and then boss 2</td></tr><tr><td>5</td><td>a 600-frame corridor of hatches and then boss 2</td></tr><tr><td>6</td><td>two pieces that throw rocks, no boss</td></tr><tr><td>7</td><td>boss 3</td></tr><tr><td>0</td><td>a core of 100 hits</td></tr></table>
+<h2 id="the-enemies">The enemies</h2>
+<p>There are 65 enemy types, each with its 7-byte record (<code>p00:4F4C</code>). Each stage brings those of its list, its generators, its wave and those dropped by the objects and bosses. Here they are with the drawing from their record and the stage&#x27;s sprite patterns; the number is the type.</p>
+<p><img src="imagenes/enemigos_f00.png" alt="Stage 0 enemies"> <img src="imagenes/enemigos_f01.png" alt="Stage 1 enemies"> <img src="imagenes/enemigos_f02.png" alt="Stage 2 enemies"> <img src="imagenes/enemigos_f03.png" alt="Stage 3 enemies"> <img src="imagenes/enemigos_f04.png" alt="Stage 4 enemies"> <img src="imagenes/enemigos_f05.png" alt="Stage 5 enemies"> <img src="imagenes/enemigos_f06.png" alt="Stage 6 enemies"> <img src="imagenes/enemigos_f07.png" alt="Stage 7 enemies"> <img src="imagenes/enemigos_f08.png" alt="Interior enemies"></p>
+<p>The character objects are part of the map: hatches, turning heads, towers that release enemies. Each class has its shapes (<code>p15:B661</code>):</p>
+<p><img src="imagenes/objeto_c09_f01.png" alt="Class 9, stage 1"> <img src="imagenes/objeto_c01_f02.png" alt="Class 1, stage 2"> <img src="imagenes/objeto_c07_f05.png" alt="Class 7, stage 5"> <img src="imagenes/objeto_c16_f04.png" alt="Class 16, stage 4"></p>
+<h2 id="the-bosses">The bosses</h2>
+<p>There are five (<code>0xE340</code>), each with its 10-byte record (<code>p09:BB01</code>), its box and its core. Boss 1 fires six bullets in a fan. Boss 2 charges and releases four-sprite enemies. Boss 3 throws growing tongues. Boss 4 releases beams. Boss 5 is ten pieces that come out two at a time.</p>
+<p><img src="imagenes/jefe_1.png" alt="Boss 1"> <img src="imagenes/jefe_2.png" alt="Boss 2"> <img src="imagenes/jefe_3.png" alt="Boss 3"> <img src="imagenes/jefe_4.png" alt="Boss 4"> <img src="imagenes/jefe_5.png" alt="Boss 5"></p>
+<p>When one is beaten, its mouth stays open for 300 frames (<code>p11:A93F</code>). If the ship goes in, it reaches the interior; if not, the boss blows up and there is no interior.</p>
+<h2 id="the-interior">The interior</h2>
+<p>It has a core of 24 hits (<code>p02:8570</code>). When the ship passes its X the 13-step ending starts (<code>p01:74A2</code>), with YOU CAPTURED. The prize depends on how many frames the boss fight lasted (<code>p02:9218</code>): under 300, two weapons; under 900, one; otherwise, NOTHING.</p>
+<p><img src="imagenes/final_dos.png" alt="Two weapons"> <img src="imagenes/final_una.png" alt="One weapon"> <img src="imagenes/final_nada.png" alt="None"></p>
+<h2 id="the-ship-and-the-power-meter">The ship and the power meter</h2>
+<p>The red capsules move the lit box of the power meter, and the other button uses it (<code>p01:7D4F</code>). The meter has more or fewer boxes depending on the captured weapons (<code>p02:8060</code>). The seven that can be captured, in order, are UP LASER, DOWN LASER, NAPALM MISSILE, REFLEX RING, EXTEND LASER, BACK BEAM and FIRE BLASTER. The shield takes 10 hits, and the blue capsule destroys every enemy on the screen.</p>
+<p><img src="imagenes/nave.png" alt="The ship"></p>
+<p>The 25 power meter labels (<code>p14:9BD3</code>):</p>
+<p><img src="imagenes/rotulos.png" alt="The labels"></p>
+<p>The special capsules appear on the map and last 15 seconds (<code>p02:9034</code>). With D.VARRIOR the options circle the ship; R.DRILL turns the ship into a drill that breaks walls; E.SLOW makes the enemies move every other frame; VECTOR changes the shot.</p>
+<p><img src="imagenes/recogidas.png" alt="The capsules"></p>
+<p>From left to right: the power meter one (0x29), the one that destroys everything (0x2A), the extra life (0x2B), the two point ones (0x2C and 0x2D), and D.VARRIOR, R.DRILL, E.SLOW and VECTOR.</p>
+<footer><p><em>Nemesis 2</em> was published by Konami for the MSX in 1987; its catalogue number is RC-751 and it is 128 KB. All rights in the game remain with their holders. This is preservation, study and documentation work, and the cartridge image is not distributed.</p></footer></div>

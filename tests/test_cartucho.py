@@ -100,8 +100,8 @@ class Cartucho(unittest.TestCase):
                          bytes([0x02, 0xE2, 0x0E, 0x7F, 0x07, 0x76, 0x03, 0xE4]))
 
     def test_firmas_del_vecino(self):
-        """p03:BD55: lo que se busca en la otra ranura (Galious, Penguin
-        Adventure y Q*bert por su cabecera de 0x4010)."""
+        """p03:BD55: lo que se busca en la otra ranura: Galious, Penguin
+        Adventure y Q*bert en el otro slot, por su cabecera de 0x4010."""
         self.assertEqual(b(self.rom, 3, 0xBD55, 18), bytes([
             0x00, 0x30, 0x31, 0x13, 0x35, 0xAA,
             0x43, 0x44, 0x07, 0x49, 0x43, 0x44, 0x07, 0x43, 0x43, 0x44, 0x07, 0x46]))

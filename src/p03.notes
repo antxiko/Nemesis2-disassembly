@@ -749,7 +749,7 @@ C 0xBD03 "CD 07 49": Maze of Galious
 C 0xBD10 bit 3
 C 0xBD16 "CD 07 43": Penguin Adventure
 C 0xBD23 bit 2
-C 0xBD29 Q*bert
+C 0xBD29 Q*bert en el otro slot
 C 0xBD35 bit 0
 C 0xBD42 RDSLT
 C 0xBD48 compara
