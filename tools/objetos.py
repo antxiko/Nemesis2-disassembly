@@ -84,6 +84,70 @@ def hoja(clase, fase, ancho, filas, formas, fila_pantalla, escala=3):
     return img.resize((w * escala, h * escala), Image.NEAREST)
 
 
+# ------------------------------------------------------------------ jefes
+#
+# Al acabar el scroll, p01:7A81 pone el tipo de jefe en 0xE340 (1-5) y
+# p01:6790 llama a su rutina (tabla 0x67AF, banco 11). Cada tipo arranca con
+# una ficha de 10 bytes copiada a 0xEA00: [tipo][..][..][y 16 bits][x 16 bits]
+# [cuerpo][barrera][nucleo]; los tres ultimos son numeros de ficha de 0xBB01
+# (banco 9), y cada ficha es [filas][columnas][caracteres] (p01:6816). p01:67CE
+# las pinta en ese orden con p00:5327 (la tabla de nombres de la RAM), cada
+# una donde la deja p11:A9F3: la barrera dy, dx mas abajo y a la derecha del
+# cuerpo, y el nucleo, dx2 a la derecha de la barrera. Los tipos 1 a 4 llaman
+# antes a p00:4B20, que carga los caracteres de 0x556F y 0x559A; el tipo 5 (dos
+# naves a la vez, 0xEA00 y 0xEA20, p11:AFBC) a p00:4C84, con 0xB3AF y 0xB3BC.
+# Los golpes: p02:91F2 resta uno a IX+12 y el jefe cae al pasar de 0 (+1).
+JEFES = [
+    # (tipo, ficha, fases, cuerpo, barrera, nucleo, dy, dx, dx2, IX+12, cita)
+    (1, 0xA900, [1], 0x10, 0x00, 0x14, 0x20, 0x10, 0x28, 0x11, "p11:A8D1, p11:AA20"),
+    (2, 0xAC49, [4, 5], 0x11, 0x09, 0x14, 0x28, 0x30, 0x20, 0x22, "p11:AC39, p11:AC88"),
+    (3, 0xAE58, [7], 0x12, 0x09, 0x14, 0x38, 0x18, 0x18, 0x37, "p11:AE48, p11:AE88"),
+    (4, 0xAD53, [2, 3], 0x13, 0x00, 0x14, 0x38, 0x18, 0x20, 0x1A, "p11:AD45, p11:AD88"),
+    (5, 0xAFFE, [4], 0x16, 0x17, 0x1E, 0x18, 0x10, 0x18, 0x17, "p11:AFD9, p11:B0E3"),
+]
+CARGAS = {5: (0xB3AF, 0xB3BC)}       # los demas, (0x556F, 0x559A)
+
+
+def ficha_de_jefe(n):
+    v = B.Ventana((7, 8, 9))
+    a = v.w(0xBB01 + 2 * n)
+    f, c = v(a), v(a + 1)
+    return [[v(a + 2 + c * r + k) for k in range(c)] for r in range(f)]
+
+
+def vram_de_jefe(fase, tipo):
+    """La VRAM de la fase con lo que anade p00:4B20 (o p00:4C84)."""
+    vram = V.de_la_fase(fase)
+    v = B.Ventana((13, 14, 15))
+    lista, copias = CARGAS.get(tipo, (0x556F, 0x559A))
+    V.lista_caracteres(vram, v, lista)
+    V.copias(vram, v, copias, True)
+    return vram
+
+
+def jefe(tipo, fase, escala=3):
+    """El jefe montado como lo deja p01:67CE en la tabla de nombres."""
+    from PIL import Image
+    t = [j for j in JEFES if j[0] == tipo][0]
+    _, ficha, _, cuerpo, barrera, nucleo, dy, dx, dx2 = t[:9]
+    v = B.Ventana((1, 2, 11))
+    assert (v(ficha + 7), v(ficha + 8), v(ficha + 9)) == (cuerpo, barrera, nucleo)
+    piezas = [(ficha_de_jefe(cuerpo), 0, 0),
+              (ficha_de_jefe(barrera), dy // 8, dx // 8),
+              (ficha_de_jefe(nucleo), dy // 8, (dx + dx2) // 8)]
+    filas = max(len(p) + r for p, r, _ in piezas)
+    cols = max(len(p[0]) + c for p, _, c in piezas)
+    tabla = [[0] * cols for _ in range(filas)]
+    for p, r, c in piezas:
+        for i, fila in enumerate(p):
+            tabla[r + i][c:c + len(fila)] = fila
+    sep = 4
+    img = Image.new("RGB", (cols * 8 + 2 * sep, filas * 8 + 2 * sep), (40, 40, 40))
+    # el cuerpo baja hasta y = 0x40 (p11:A90A): fila de pantalla 8
+    pinta_forma(img, sep, sep, tabla, 8, vram_de_jefe(fase, tipo))
+    return img.resize((img.width * escala, img.height * escala), Image.NEAREST)
+
+
 def main(argv):
     if len(argv) < 2:
         sys.exit(__doc__)
@@ -101,6 +165,11 @@ def main(argv):
             print("clase %2d fase %2d: %d x %d, %d formas, %d en la lista, filas %s  (%s)" % (
                 clase, fase, ancho, filas, len(list(formas)), len(pos),
                 sorted({p[1] // 8 for p in pos}), cita))
+    for t in JEFES:
+        for fase in t[2]:
+            jefe(t[0], fase).save(os.path.join(argv[1], "jefe_t%d_f%02d.png" % (t[0], fase)))
+        print("jefe %d fases %s: cuerpo %d, barrera %d, nucleo %d, %d golpes  (%s)" % (
+            t[0], t[2], t[3], t[4], t[5], t[9] + 1, t[10]))
     for clase in sorted(usos):
         if clase not in [f[0] for f in FAMILIAS]:
             print("clase %2d fases %s: se pinta sola" % (clase, sorted(usos[clase])))
