@@ -73,3 +73,202 @@ F 0xBE04 w5
 D 0xBFF3 0xC000 tabla_BFF3  13 bytes a 0xFF hasta el final del banco: relleno; lo leen nadie (13 bytes)
 F 0xBFF3 16
 # --- fin de los bloques de bloques.py ---
+
+# --- ANOTACIONES AUTOMATICAS (seccion que reescribe tools/anota.py; no editar a mano) ---
+C 0xA004 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
+C 0xA048 cuadros_desde: C si la cuenta de interrupciones 0xF0F7 no llega a DE
+C 0xA090 borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
+C 0xA093 caracteres_5e59: p00:5E64, p01:69F2, p00:5E20 y p01:69F2
+C 0xA096 caracteres_a16d: con el banco 9, la lista p09:A16D y sus copias (p09:A174 espejo, p09:A187 cabeza abajo); luego p01:69EF
+C 0xA0B4 escribe_texto: escribe a la VRAM la lista de textos de DE: [direccion][caracteres] con 0xFE = otra direccion y 0xFF = fin
+C 0xA0BC cuadros_desde: C si la cuenta de interrupciones 0xF0F7 no llega a DE
+C 0xA0D0 borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
+C 0xA0D3 caracteres_5e59: p00:5E64, p01:69F2, p00:5E20 y p01:69F2
+C 0xA0D6 caracteres_a18b: con el banco 9, la lista p09:A18B y sus copias p09:A204; luego p01:69EF
+C 0xA0F4 escribe_texto: escribe a la VRAM la lista de textos de DE: [direccion][caracteres] con 0xFE = otra direccion y 0xFF = fin
+C 0xA0FD cuadros_desde: C si la cuenta de interrupciones 0xF0F7 no llega a DE
+C 0xA106 lee la cuenta de cuadros
+C 0xA12C borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
+C 0xA12F caracteres_5e59: p00:5E64, p01:69F2, p00:5E20 y p01:69F2
+C 0xA132 caracteres_b223: con el banco 12, la lista p12:B223; luego p01:69EF
+C 0xA166 escribe_texto: escribe a la VRAM la lista de textos de DE: [direccion][caracteres] con 0xFE = otra direccion y 0xFF = fin
+C 0xA16E cuadros_desde: C si la cuenta de interrupciones 0xF0F7 no llega a DE
+C 0xA17F borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
+C 0xA182 caracteres_5e59: p00:5E64, p01:69F2, p00:5E20 y p01:69F2
+C 0xA185 caracteres_ac44: con el banco 12, la lista p12:AC44; luego p01:69EF
+C 0xA1A3 escribe_texto: escribe a la VRAM la lista de textos de DE: [direccion][caracteres] con 0xFE = otra direccion y 0xFF = fin
+C 0xA1AB cuadros_desde: C si la cuenta de interrupciones 0xF0F7 no llega a DE
+C 0xA1BC borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
+C 0xA1BF caracteres_5e59: p00:5E64, p01:69F2, p00:5E20 y p01:69F2
+C 0xA1E3 escribe_texto: escribe a la VRAM la lista de textos de DE: [direccion][caracteres] con 0xFE = otra direccion y 0xFF = fin
+C 0xA1EB cuadros_desde: C si la cuenta de interrupciones 0xF0F7 no llega a DE
+C 0xA1F4 lee la cuenta de cuadros
+C 0xA20F borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
+C 0xA212 caracteres_5e59: p00:5E64, p01:69F2, p00:5E20 y p01:69F2
+C 0xA222 caracteres_a18b: con el banco 9, la lista p09:A18B y sus copias p09:A204; luego p01:69EF
+C 0xA23D escribe_texto: escribe a la VRAM la lista de textos de DE: [direccion][caracteres] con 0xFE = otra direccion y 0xFF = fin
+C 0xA25D apunta a las fichas de 16 bytes de los objetos de caracteres
+C 0xA26E apunta a las fichas de 16 bytes de los objetos de caracteres
+C 0xA279 copia_a_vram_b_veces: copia BC' bytes de DE' a la VRAM HL B veces, 0x800 mas adelante cada vez
+C 0xA297 rellena_vram_d_veces: rellena BC bytes de la VRAM HL con A, D veces, 0x800 mas adelante cada vez
+C 0xA2AD apunta a las fichas de 16 bytes de los objetos de caracteres
+C 0xA2B6 apunta a las fichas de 16 bytes de los objetos de caracteres
+C 0xA2C2 copia_a_vram_b_veces: copia BC' bytes de DE' a la VRAM HL B veces, 0x800 mas adelante cada vez
+C 0xA2D0 cuadros_desde: C si la cuenta de interrupciones 0xF0F7 no llega a DE
+C 0xA2D8 apunta a la pantalla en RAM: la tabla de nombres de 22 filas de 32
+C 0xA2ED de_mas_a: DE = DE + A
+C 0xA301 guarda variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo) o un puntero
+C 0xA30E de_mas_a: DE = DE + A
+C 0xA313 hl_mas_a: HL = HL + A
+C 0xA32D apunta a la pantalla en RAM: la tabla de nombres de 22 filas de 32
+C 0xA35D lee la cuenta de cuadros
+C 0xA37F cuadros_desde: C si la cuenta de interrupciones 0xF0F7 no llega a DE
+C 0xA386 lee la cuenta de cuadros
+C 0xA3A7 palabra_a_de: DE = la palabra A de la tabla DE (HL apunta a su byte alto)
+C 0xA3B1 de_mas_a: DE = DE + A
+C 0xA3C7 lee la cuenta de cuadros
+C 0xA3F9 escribe_texto: escribe a la VRAM la lista de textos de DE: [direccion][caracteres] con 0xFE = otra direccion y 0xFF = fin
+C 0xA402 cuadros_desde: C si la cuenta de interrupciones 0xF0F7 no llega a DE
+C 0xA413 borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
+C 0xA416 caracteres_5e59: p00:5E64, p01:69F2, p00:5E20 y p01:69F2
+C 0xA42C escribe_texto: escribe a la VRAM la lista de textos de DE: [direccion][caracteres] con 0xFE = otra direccion y 0xFF = fin
+C 0xA432 caracteres_a214: p00:5EA9 y p01:69EF
+C 0xA43E rellena_vram_d_veces: rellena BC bytes de la VRAM HL con A, D veces, 0x800 mas adelante cada vez
+C 0xA45D cuadros_desde: C si la cuenta de interrupciones 0xF0F7 no llega a DE
+C 0xA463 lee la cuenta de cuadros
+C 0xA490 lee la cuenta de cuadros
+C 0xA4D7 lee la cuenta de cuadros
+C 0xA4E8 de_mas_a: DE = DE + A
+C 0xA528 escribe_texto: escribe a la VRAM la lista de textos de DE: [direccion][caracteres] con 0xFE = otra direccion y 0xFF = fin
+C 0xA531 cuadros_desde: C si la cuenta de interrupciones 0xF0F7 no llega a DE
+C 0xA54F cuadros_desde: C si la cuenta de interrupciones 0xF0F7 no llega a DE
+C 0xA558 borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
+C 0xA55B caracteres_5e59: p00:5E64, p01:69F2, p00:5E20 y p01:69F2
+C 0xA56F borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
+C 0xA572 caracteres_5e5f: p00:5E64, p00:5E20 y p00:5D97
+C 0xA592 escribe_texto: escribe a la VRAM la lista de textos de DE: [direccion][caracteres] con 0xFE = otra direccion y 0xFF = fin
+C 0xA59B cuadros_desde: C si la cuenta de interrupciones 0xF0F7 no llega a DE
+C 0xA5B6 borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
+C 0xA5B9 caracteres_5e59: p00:5E64, p01:69F2, p00:5E20 y p01:69F2
+C 0xA5BC caracteres_a143: p00:5EE1 y p01:69EF
+C 0xA5C6 apunta a la pantalla en RAM: la tabla de nombres de 22 filas de 32
+C 0xA5D2 guarda variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo) o un puntero y el byte siguiente (16 bits)
+C 0xA5D8 guarda variable de paso: el puntero del mapa y el byte siguiente (16 bits)
+C 0xA5DE guarda variable de paso y el byte siguiente (16 bits)
+C 0xA5EF lee la cuenta de cuadros
+C 0xA621 escribe_texto: escribe a la VRAM la lista de textos de DE: [direccion][caracteres] con 0xFE = otra direccion y 0xFF = fin
+C 0xA62A cuadros_desde: C si la cuenta de interrupciones 0xF0F7 no llega a DE
+C 0xA63B borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
+C 0xA645 sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
+C 0xA64B guarda la cuenta de interrupciones (16 bits)
+C 0xA65A borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
+C 0xA65D caracteres_5e59: p00:5E64, p01:69F2, p00:5E20 y p01:69F2
+C 0xA666 escribe_texto: escribe a la VRAM la lista de textos de DE: [direccion][caracteres] con 0xFE = otra direccion y 0xFF = fin
+C 0xA67C guarda variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo) o un puntero
+C 0xA680 guarda variable de paso: cuantos bytes y el byte siguiente (16 bits)
+C 0xA69C lee variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo) o un puntero
+C 0xA6B8 lee variable de paso: cuantos bytes y el byte siguiente (16 bits)
+C 0xA6BD hl_mas_a: HL = HL + A
+C 0xA6C0 guarda variable de paso: cuantos bytes y el byte siguiente (16 bits)
+C 0xA6C3 lee variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo) o un puntero
+C 0xA6CD apunta a variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo) o un puntero
+C 0xA730 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
+C 0xA758 rellena_vram_d_veces: rellena BC bytes de la VRAM HL con A, D veces, 0x800 mas adelante cada vez
+C 0xA77C apunta a las fichas de 16 bytes de los objetos de caracteres
+C 0xA788 apunta a el bufer de colores al cargar caracteres
+C 0xA7AA despacha: salta a la palabra A de la tabla que va pegada detras del `call`
+C 0xA7C3 hl_mas_a: HL = HL + A
+C 0xA7CE rellena_vram_d_veces: rellena BC bytes de la VRAM HL con A, D veces, 0x800 mas adelante cada vez
+C 0xA7F1 apunta a las fichas de 16 bytes de los objetos de caracteres
+C 0xA802 copia_a_vram_b_veces: copia BC' bytes de DE' a la VRAM HL B veces, 0x800 mas adelante cada vez
+C 0xA824 apunta a las fichas de 16 bytes de los objetos de caracteres
+C 0xA842 copia_a_vram_b_veces: copia BC' bytes de DE' a la VRAM HL B veces, 0x800 mas adelante cada vez
+C 0xA858 hl_mas_a: HL = HL + A
+C 0xA85C de_mas_a: DE = DE + A
+C 0xA86F apunta a el bufer de colores al cargar caracteres
+C 0xA88C apunta a los atributos de los 32 sprites (Y, X, dibujo, color)
+C 0xA895 apunta a la pantalla en RAM: la tabla de nombres de 22 filas de 32
+C 0xA8A2 apunta a la pantalla en RAM: la tabla de nombres de 22 filas de 32
+C 0xA8B3 apunta a la pantalla en RAM: la tabla de nombres de 22 filas de 32
+C 0xA8B6 copia_a_vram: copia BC bytes de DE a la VRAM HL (LDIRVM)
+C 0xB658 esconde_sprites: los 32 sprites de 0xE280 con Y = 0xE0 (fuera de la pantalla)
+C 0xB662 apunta a la pantalla en RAM: la tabla de nombres de 22 filas de 32
+C 0xB66B guarda variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo) o un puntero y el byte siguiente (16 bits)
+C 0xB671 guarda variable de paso: el puntero del mapa y el byte siguiente (16 bits)
+C 0xB677 guarda variable de paso y el byte siguiente (16 bits)
+C 0xB685 lee variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo) o un puntero y el byte siguiente (16 bits)
+C 0xB692 apunta a variable de paso: el puntero del mapa
+C 0xB6B8 lee variable de paso: el puntero de la ficha
+C 0xB6BE apunta a variable de paso: el puntero de la ficha
+C 0xB6C1 lee variable de paso: el puntero del mapa
+C 0xB6D0 apunta a la pantalla en RAM: la tabla de nombres de 22 filas de 32
+C 0xB6DA lee variable de paso
+C 0xB6E5 lee variable de paso
+C 0xB706 hl_mas_a: HL = HL + A
+C 0xB711 lee variable de paso
+C 0xB715 lee variable de paso: el puntero de la ficha
+C 0xB720 apunta a la pantalla en RAM: la tabla de nombres de 22 filas de 32
+C 0xB767 textos_del_titulo: KONAMI 1987, PLAY SELECT y 1PLAYER (estados 0-1), o KONAMI PRESENTS THE GRADIUS/NEMESIS SAGA CONTINUES...
+C 0xB77C esconde_sprites: los 32 sprites de 0xE280 con Y = 0xE0 (fuera de la pantalla)
+C 0xB78E lee la cuenta de cuadros
+C 0xB993 lee la marca del final (estado 10)
+C 0xB997 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
+C 0xB9D2 palabra_a: DE = la palabra A de la tabla HL (HL apunta a su byte alto)
+C 0xB9DA escribe_texto: escribe a la VRAM la lista de textos de DE: [direccion][caracteres] con 0xFE = otra direccion y 0xFF = fin
+C 0xB9F6 sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
+C 0xB9FF escribe_texto: escribe a la VRAM la lista de textos de DE: [direccion][caracteres] con 0xFE = otra direccion y 0xFF = fin
+C 0xBA25 borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
+C 0xBA28 caracteres_a214_y_borra: p00:5EA9, p00:5D97 y p10:A435
+C 0xBA31 escribe_texto: escribe a la VRAM la lista de textos de DE: [direccion][caracteres] con 0xFE = otra direccion y 0xFF = fin
+C 0xBA4A lee la cuenta de cuadros
+C 0xBA67 escribe_texto: escribe a la VRAM la lista de textos de DE: [direccion][caracteres] con 0xFE = otra direccion y 0xFF = fin
+C 0xBA86 escribe_texto: escribe a la VRAM la lista de textos de DE: [direccion][caracteres] con 0xFE = otra direccion y 0xFF = fin
+C 0xBA89 borra_texto: lo mismo que escribe_texto pero con ceros: borra los textos de la lista DE
+C 0xBA8F lee la cuenta de cuadros
+C 0xBA96 escribe_texto: escribe a la VRAM la lista de textos de DE: [direccion][caracteres] con 0xFE = otra direccion y 0xFF = fin
+C 0xBA99 borra_texto: lo mismo que escribe_texto pero con ceros: borra los textos de la lista DE
+C 0xBA9C lee la musica que suena
+C 0xBAAD guarda la marca del final (estado 10)
+C 0xBAB0 borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
+C 0xBACD borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
+C 0xBAD3 aa2f_con_bancos: con los bancos 1-2-3, p03:AA2F, y el banco 10
+C 0xBAD9 esconde_sprites: los 32 sprites de 0xE280 con Y = 0xE0 (fuera de la pantalla)
+C 0xBAE0 guarda la marca del final (estado 10)
+C 0xBAE4 apunta a las fichas de 16 bytes de los objetos de caracteres
+C 0xBB53 borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
+C 0xBB56 caracteres_5e5f: p00:5E64, p00:5E20 y p00:5D97
+C 0xBB69 escribe_texto: escribe a la VRAM la lista de textos de DE: [direccion][caracteres] con 0xFE = otra direccion y 0xFF = fin
+C 0xBB72 cuadros_desde: C si la cuenta de interrupciones 0xF0F7 no llega a DE
+C 0xBB7E guarda la cuenta de interrupciones (16 bits)
+C 0xBB81 borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
+C 0xBB84 lee la marca del final con textos
+C 0xBB8C sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
+C 0xBBA7 apunta a la marca del final (estado 10)
+C 0xBBAE sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
+C 0xBBBA guarda la marca del final (estado 10)
+C 0xBBCD escribe_texto: escribe a la VRAM la lista de textos de DE: [direccion][caracteres] con 0xFE = otra direccion y 0xFF = fin
+C 0xBBD8 guarda la marca del final (estado 10)
+C 0xBBE0 borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
+C 0xBBE3 esconde_sprites: los 32 sprites de 0xE280 con Y = 0xE0 (fuera de la pantalla)
+C 0xBBE6 caracteres_5e5f: p00:5E64, p00:5E20 y p00:5D97
+C 0xBBE9 caracteres_a000: copia caracteres de un tercio a los otros dos y la lista p12:A000 (copias p12:A00D)
+C 0xBC02 borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
+C 0xBC05 esconde_sprites: los 32 sprites de 0xE280 con Y = 0xE0 (fuera de la pantalla)
+C 0xBC08 caracteres_5e5f: p00:5E64, p00:5E20 y p00:5D97
+C 0xBC0B caracteres_a143_y_borra: p00:5EE1 y p00:5D97
+C 0xBE01 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
+C 0xBE11 lee la cuenta de cuadros
+C 0xBE3C apunta a las fichas de 16 bytes de los objetos de caracteres
+C 0xBE49 lee la cuenta de cuadros
+C 0xBE9E lee la cuenta de cuadros
+C 0xBEB0 apunta a los atributos de los 32 sprites (Y, X, dibujo, color)
+C 0xBECA esconde_sprites: los 32 sprites de 0xE280 con Y = 0xE0 (fuera de la pantalla)
+C 0xBED3 lee la cuenta de cuadros
+C 0xBF28 apunta a los atributos de los 32 sprites (Y, X, dibujo, color)
+C 0xBF8A esconde_sprites: los 32 sprites de 0xE280 con Y = 0xE0 (fuera de la pantalla)
+C 0xBF93 borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
+C 0xBFB2 apunta a las fichas de 16 bytes de los objetos de caracteres
+C 0xBFC1 caracteres_b3d0: p00:5DA0 y p01:69EF
+C 0xBFC4 esconde_sprites: los 32 sprites de 0xE280 con Y = 0xE0 (fuera de la pantalla)
+C 0xBFCA caracteres_b3d0_y_borra: p00:5DA0 y p00:5D97
+# --- fin de las anotaciones de anota.py ---

@@ -41,11 +41,15 @@ sys.path.insert(0, AQUI)
 from paginas import ORG                                    # noqa: E402
 from anotaciones import (BANCOS, CAMBIOS_DE_BANCO, FICHAS,  # noqa: E402
                          RAM, RAM16, RUTINAS, trio)
+try:
+    # el mapper de cada juego: registro -> ventana que cambia
+    from anotaciones import REGISTROS_MAPPER                  # noqa: E402
+except ImportError:
+    REGISTROS_MAPPER = {0x6000: "0x6000", 0x8000: "0x8000", 0xA000: "0xA000"}
 
 INI = "# --- ANOTACIONES AUTOMATICAS (seccion que reescribe tools/anota.py; no editar a mano) ---"
 FIN = "# --- fin de las anotaciones de anota.py ---"
 
-REGISTROS_MAPPER = {0x6000: "0x6000", 0x8000: "0x8000", 0xA000: "0xA000"}
 RAM_DESDE = 0xC000
 
 
@@ -197,8 +201,8 @@ def comentario(b, filas, k, fichas, ventanas=None, medido=None):
                             "adc": "le suma ", "sbc": "le resta ", "and": "AND con ", "or": "OR con ",
                             "xor": "XOR con "}[op] + que
     # cambios de banco
-    m = re.match(r"ld \(0(6000|8000|a000)h\),a$", t)
-    if m:
+    m = re.match(r"ld \(0([0-9a-f]{4})h\),a$", t)
+    if m and int(m.group(1), 16) in REGISTROS_MAPPER:
         return "el mapper: pone en %s el banco de A" % REGISTROS_MAPPER[int(m.group(1), 16)]
     # RAM
     m16 = re.match(r"ld (?:(hl|de|bc|ix|iy|sp),\(0([c-f][0-9a-f]{3})h\)|\(0([c-f][0-9a-f]{3})h\),(hl|de|bc|ix|iy))$", t)

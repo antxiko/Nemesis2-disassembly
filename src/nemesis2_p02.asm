@@ -36,12 +36,12 @@ L_8002:
 	jr c,$-74		;8007
 	jr $-15		;8009
 L_800B:
-	ld a,(0e20fh)		;800b
+	ld a,(0e20fh)		;800b   ; lee las armas capturadas (0-7)
 	cp 001h		;800e
 	jr z,L_801D		;8010
 	cp 006h		;8012
 	jr c,L_8022		;8014
-	call 07fbdh		;8016
+	call 07fbdh		;8016   ; e339_a_cero: 0xE339 = 0
 L_8019:
 	xor a			;8019
 	ld (0e337h),a		;801a
@@ -54,7 +54,7 @@ L_8022:
 	ld (0e338h),a		;8023
 	jr L_801D		;8026
 L_8028:
-	ld a,(0e20fh)		;8028
+	ld a,(0e20fh)		;8028   ; lee las armas capturadas (0-7)
 	cp 002h		;802b
 	ret c			;802d
 	cp 006h		;802e
@@ -68,19 +68,19 @@ L_8036:
 	ld (0e335h),a		;803d
 	ret			;8040
 L_8041:
-	ld a,(0e20fh)		;8041
+	ld a,(0e20fh)		;8041   ; lee las armas capturadas (0-7)
 	cp 006h		;8044
 	jr c,L_801D		;8046
 	jr L_8019		;8048
 L_804A:
-	ld a,(0e20fh)		;804a
+	ld a,(0e20fh)		;804a   ; lee las armas capturadas (0-7)
 	ld c,a			;804d
 	add a,a			;804e
 	add a,a			;804f
 	add a,a			;8050
 	add a,c			;8051
 	ld c,a			;8052
-	ld a,(0e33dh)		;8053
+	ld a,(0e33dh)		;8053   ; lee la casilla que se usa
 	add a,c			;8056
 	ld c,a			;8057
 	ld b,000h		;8058
@@ -90,9 +90,9 @@ L_804A:
 	ret			;805f
 L_8060:
 	ld hl,0806dh		;8060
-	ld a,(0e20fh)		;8063
-	call 05ca6h		;8066
-	ld (0e331h),a		;8069
+	ld a,(0e20fh)		;8063   ; lee las armas capturadas (0-7)
+	call 05ca6h		;8066   ; byte_a: A = el byte A de la tabla HL
+	ld (0e331h),a		;8069   ; guarda cuantas casillas tiene el medidor
 	ret			;806c
 
 ; ----------------------------------------------------------------------
@@ -133,11 +133,11 @@ DATA_tabla_8074_cola:
 L_80BD:
 	call L_80C6		;80bd
 	call L_8060		;80c0
-	jp 05387h		;80c3
+	jp 05387h		;80c3   ; pinta_el_medidor: el recuadro del rotulo (caracteres 0x15-0x1C), las casillas del medidor y el rotulo
 L_80C6:
 	ld b,a			;80c6
 L_80C7:
-	ld hl,0e20fh		;80c7
+	ld hl,0e20fh		;80c7   ; apunta a las armas capturadas (0-7)
 	ld a,(hl)			;80ca
 	inc a			;80cb
 	cp 008h		;80cc
@@ -149,14 +149,14 @@ L_80C7:
 	djnz L_80C7		;80d5
 	ret			;80d7
 L_80D8:
-	ld hl,0f010h		;80d8
+	ld hl,0f010h		;80d8   ; apunta a variable de paso: la lista
 	ld de,0f011h		;80db
 	ld bc,00008h		;80de
 	ld (hl),000h		;80e1
 	ldir		;80e3
-	ld a,(0e20fh)		;80e5
+	ld a,(0e20fh)		;80e5   ; lee las armas capturadas (0-7)
 	ld hl,08146h		;80e8
-	call 04b67h		;80eb
+	call 04b67h		;80eb   ; palabra_a: DE = la palabra A de la tabla HL (HL apunta a su byte alto)
 	ex de,hl			;80ee
 L_80EF:
 	ld a,(hl)			;80ef
@@ -166,7 +166,7 @@ L_80EF:
 	ld c,(hl)			;80f4
 	inc hl			;80f5
 	push hl			;80f6
-	ld hl,0e333h		;80f7
+	ld hl,0e333h		;80f7   ; apunta a la tabla de rotulos de las casillas (desde 0xE334)
 	add a,l			;80fa
 	ld l,a			;80fb
 	ld de,0f00fh		;80fc
@@ -177,11 +177,11 @@ L_80EF:
 	pop hl			;8104
 	jr L_80EF		;8105
 L_8107:
-	ld hl,0f010h		;8107
-	ld de,0e334h		;810a
+	ld hl,0f010h		;8107   ; apunta a variable de paso: la lista
+	ld de,0e334h		;810a   ; apunta a las 9 casillas del medidor
 	ld bc,00009h		;810d
 	ldir		;8110
-	ld a,(0e20fh)		;8112
+	ld a,(0e20fh)		;8112   ; lee las armas capturadas (0-7)
 	cp 003h		;8115
 	jr z,L_813F		;8117
 	cp 004h		;8119
@@ -244,28 +244,28 @@ DATA_listas_8156:
 
 L_8196:
 	ld a,007h		;8196
-	ld (0e20fh),a		;8198
+	ld (0e20fh),a		;8198   ; guarda las armas capturadas (0-7)
 	ld a,00ah		;819b
-	ld (0e331h),a		;819d
+	ld (0e331h),a		;819d   ; guarda cuantas casillas tiene el medidor
 	ld hl,081cah		;81a0
-	ld de,0e334h		;81a3
+	ld de,0e334h		;81a3   ; apunta a las 9 casillas del medidor
 	ld bc,00009h		;81a6
 	ldir		;81a9
-	ld de,0e430h		;81ab
+	ld de,0e430h		;81ab   ; apunta a el disparo normal
 	ld bc,00007h		;81ae
 	ldir		;81b1
 	ld c,07fh		;81b3
 L_81B5:
-	ld hl,0e400h		;81b5
+	ld hl,0e400h		;81b5   ; apunta a la forma de la nave (1 normal, 2 con escudo, 3 R.DRILL)
 	ld (hl),002h		;81b8
 	inc l			;81ba
 	ld (hl),c			;81bb
 	inc l			;81bc
 	ld (hl),002h		;81bd
 	ld a,002h		;81bf
-	ld (0e40bh),a		;81c1
-	call 07e13h		;81c4
-	jp 053a3h		;81c7
+	ld (0e40bh),a		;81c1   ; guarda las opciones
+	call 07e13h		;81c4   ; dos_opciones: 0xE40B = 2 opciones, con p03:AA43 para cada una
+	jp 053a3h		;81c7   ; casillas_del_medidor: las 9 casillas del medidor (0xE334) en la fila 22 y el rotulo de la casilla 0xE330
 
 ; ----------------------------------------------------------------------
 ; DATOS inicio_E334: 9 bytes que p02:81A0 copia a 0xE334 y 7 a 0xE430; lo leen
@@ -281,10 +281,10 @@ DATA_inicio_E334:
 
 L_81DA:
 	exx			;81da
-	ld a,(0e305h)		;81db
+	ld a,(0e305h)		;81db   ; lee dato de la fase de p01:697A
 	ld c,a			;81de
 	exx			;81df
-	ld iy,0e470h		;81e0
+	ld iy,0e470h		;81e0   ; apunta a las 9 fichas de 16 bytes de 0xE470
 	ld b,009h		;81e4
 L_81E6:
 	push bc			;81e6
@@ -299,7 +299,7 @@ L_81F3:
 	ld a,(iy+000h)		;81f3
 	dec a			;81f6
 	ret m			;81f7
-	call 04084h		;81f8
+	call 04084h		;81f8   ; despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_81FB: 15 destinos del despachador p00:4084 (call en p02:81F8, el
@@ -330,7 +330,7 @@ L_822A:
 	call L_8388		;822d
 	ret nc			;8230
 	ld (iy+000h),000h		;8231
-	ld a,(0e340h)		;8235
+	ld a,(0e340h)		;8235   ; lee el tipo de jefe (1-5; 0 sin jefe)
 	or a			;8238
 	jp z,L_8481		;8239
 L_823C:
@@ -340,23 +340,23 @@ L_823C:
 	inc a			;8241
 	ld (0e309h),a		;8242
 	ld a,005h		;8245
-	jp 04ae4h		;8247
+	jp 04ae4h		;8247   ; sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
 L_824A:
 	ld h,(iy+005h)		;824a
 	ld l,(iy+003h)		;824d
 	call L_8388		;8250
 	jr nc,L_826B		;8253
 	ld (iy+000h),000h		;8255
-	ld a,(0e340h)		;8259
+	ld a,(0e340h)		;8259   ; lee el tipo de jefe (1-5; 0 sin jefe)
 	or a			;825c
 	jp nz,L_823C		;825d
-	ld a,(0e201h)		;8260
+	ld a,(0e201h)		;8260   ; lee la fase (0-11)
 	cp 005h		;8263
 	ret nz			;8265
 	ld a,012h		;8266
-	jp 04ae4h		;8268
+	jp 04ae4h		;8268   ; sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
 L_826B:
-	ld a,(0e340h)		;826b
+	ld a,(0e340h)		;826b   ; lee el tipo de jefe (1-5; 0 sin jefe)
 	or a			;826e
 	ret nz			;826f
 	ld h,(iy+005h)		;8270
@@ -367,7 +367,7 @@ L_826B:
 L_827C:
 	ld h,(iy+005h)		;827c
 	ld l,(iy+003h)		;827f
-	call 05c92h		;8282
+	call 05c92h		;8282   ; sitio_en_pantalla: HL = 0xED00 + el caracter de la pantalla de RAM bajo L (Y) y H (X)
 	ex de,hl			;8285
 	ld a,(iy+00ah)		;8286
 	or a			;8289
@@ -376,7 +376,7 @@ L_827C:
 L_828C:
 	call L_82BC		;828c
 	jr nc,L_829C		;828f
-	ld a,(0e340h)		;8291
+	ld a,(0e340h)		;8291   ; lee el tipo de jefe (1-5; 0 sin jefe)
 	or a			;8294
 	jr nz,L_82A0		;8295
 	call L_8481		;8297
@@ -401,7 +401,7 @@ L_82B8:
 	ld (iy+001h),a		;82b8
 	ret			;82bb
 L_82BC:
-	ld a,(0e201h)		;82bc
+	ld a,(0e201h)		;82bc   ; lee la fase (0-11)
 	or a			;82bf
 	jr z,L_82CF		;82c0
 	sub 007h		;82c2
@@ -426,7 +426,7 @@ L_82CF:
 L_82D8:
 	ld h,(iy+005h)		;82d8
 	ld l,(iy+003h)		;82db
-	call 05c92h		;82de
+	call 05c92h		;82de   ; sitio_en_pantalla: HL = 0xED00 + el caracter de la pantalla de RAM bajo L (Y) y H (X)
 	ex de,hl			;82e1
 	ld a,(iy+00ah)		;82e2
 	or a			;82e5
@@ -435,7 +435,7 @@ L_82D8:
 L_82E8:
 	call L_82BC		;82e8
 	jr nc,L_82FA		;82eb
-	ld a,(0e340h)		;82ed
+	ld a,(0e340h)		;82ed   ; lee el tipo de jefe (1-5; 0 sin jefe)
 	or a			;82f0
 	jp nz,0ae02h		;82f1
 	call L_8481		;82f4
@@ -454,8 +454,8 @@ L_82FE:
 L_8308:
 	ld h,(iy+005h)		;8308
 	ld l,(iy+003h)		;830b
-	call 05c92h		;830e
-	ld (0f000h),hl		;8311
+	call 05c92h		;830e   ; sitio_en_pantalla: HL = 0xED00 + el caracter de la pantalla de RAM bajo L (Y) y H (X)
+	ld (0f000h),hl		;8311   ; guarda variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo) o un puntero y el byte siguiente (16 bits)
 	ex de,hl			;8314
 	ld a,(iy+00ah)		;8315
 	or a			;8318
@@ -464,32 +464,32 @@ L_8308:
 L_831C:
 	call L_82BC		;831c
 	jr nc,L_832E		;831f
-	ld a,(0e340h)		;8321
+	ld a,(0e340h)		;8321   ; lee el tipo de jefe (1-5; 0 sin jefe)
 	or a			;8324
 	jp nz,0ae02h		;8325
 	call L_8481		;8328
 	jp nc,0ae02h		;832b
 L_832E:
 	ld a,020h		;832e
-	call 0407fh		;8330
+	call 0407fh		;8330   ; de_mas_a: DE = DE + A
 	djnz L_831C		;8333
-	ld a,(0e320h)		;8335
+	ld a,(0e320h)		;8335   ; lee la marca de scroll hecho en este cuadro
 	or a			;8338
 	jr z,L_835C		;8339
-	ld de,(0f000h)		;833b
+	ld de,(0f000h)		;833b   ; lee variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo) o un puntero y el byte siguiente (16 bits)
 	dec de			;833f
 	ld b,(iy+00ah)		;8340
 L_8343:
 	call L_82BC		;8343
 	jr nc,L_8355		;8346
-	ld a,(0e340h)		;8348
+	ld a,(0e340h)		;8348   ; lee el tipo de jefe (1-5; 0 sin jefe)
 	or a			;834b
 	jp nz,0ae02h		;834c
 	call L_8481		;834f
 	jp nc,0ae02h		;8352
 L_8355:
 	ld a,020h		;8355
-	call 0407fh		;8357
+	call 0407fh		;8357   ; de_mas_a: DE = DE + A
 	djnz L_8343		;835a
 L_835C:
 	ld a,(iy+00ah)		;835c
@@ -501,13 +501,13 @@ L_835C:
 L_8366:
 	ld h,(iy+005h)		;8366
 	ld l,(iy+003h)		;8369
-	call 05c92h		;836c
+	call 05c92h		;836c   ; sitio_en_pantalla: HL = 0xED00 + el caracter de la pantalla de RAM bajo L (Y) y H (X)
 	ex de,hl			;836f
 	ld b,002h		;8370
 L_8372:
 	call L_82BC		;8372
 	jr nc,L_8384		;8375
-	ld a,(0e340h)		;8377
+	ld a,(0e340h)		;8377   ; lee el tipo de jefe (1-5; 0 sin jefe)
 	or a			;837a
 	jp nz,0ae02h		;837b
 	call L_8481		;837e
@@ -517,7 +517,7 @@ L_8384:
 	djnz L_8372		;8385
 	ret			;8387
 L_8388:
-	call 05c92h		;8388
+	call 05c92h		;8388   ; sitio_en_pantalla: HL = 0xED00 + el caracter de la pantalla de RAM bajo L (Y) y H (X)
 	ex de,hl			;838b
 	call L_8395		;838c
 	ret c			;838f
@@ -526,7 +526,7 @@ L_8388:
 	and 01fh		;8392
 	ret z			;8394
 L_8395:
-	ld a,(0e201h)		;8395
+	ld a,(0e201h)		;8395   ; lee la fase (0-11)
 	or a			;8398
 	jr z,L_83A8		;8399
 	sub 007h		;839b
@@ -554,8 +554,8 @@ L_83B1:
 	ld l,a			;83b6
 L_83B7:
 	ld h,(ix+006h)		;83b7
-	call 05c92h		;83ba
-	ld a,(0e305h)		;83bd
+	call 05c92h		;83ba   ; sitio_en_pantalla: HL = 0xED00 + el caracter de la pantalla de RAM bajo L (Y) y H (X)
+	ld a,(0e305h)		;83bd   ; lee dato de la fase de p01:697A
 	ld c,a			;83c0
 	ld b,006h		;83c1
 L_83C3:
@@ -577,18 +577,18 @@ L_83CD:
 	ld l,a			;83d6
 	jr L_83B7		;83d7
 L_83D9:
-	call 05c92h		;83d9
+	call 05c92h		;83d9   ; sitio_en_pantalla: HL = 0xED00 + el caracter de la pantalla de RAM bajo L (Y) y H (X)
 	ld c,08ah		;83dc
-	ld a,(0e201h)		;83de
+	ld a,(0e201h)		;83de   ; lee la fase (0-11)
 	dec a			;83e1
 	jr z,L_83F2		;83e2
 	ld c,067h		;83e4
 	jr L_83F2		;83e6
 L_83E8:
-	call 05c92h		;83e8
+	call 05c92h		;83e8   ; sitio_en_pantalla: HL = 0xED00 + el caracter de la pantalla de RAM bajo L (Y) y H (X)
 	ld (0e3bch),hl		;83eb
 L_83EE:
-	ld a,(0e305h)		;83ee
+	ld a,(0e305h)		;83ee   ; lee dato de la fase de p01:697A
 	ld c,a			;83f1
 L_83F2:
 	call L_83FB		;83f2
@@ -598,7 +598,7 @@ L_83F2:
 	and 01fh		;83f8
 	ret z			;83fa
 L_83FB:
-	ld a,(0e201h)		;83fb
+	ld a,(0e201h)		;83fb   ; lee la fase (0-11)
 	or a			;83fe
 	jr z,L_840C		;83ff
 	sub 007h		;8401
@@ -617,19 +617,19 @@ L_840C:
 	cp c			;8411
 	ret			;8412
 L_8413:
-	ld a,(0e400h)		;8413
+	ld a,(0e400h)		;8413   ; lee la forma de la nave (1 normal, 2 con escudo, 3 R.DRILL)
 	dec a			;8416
 	ret m			;8417
-	ld a,(0e3d0h)		;8418
+	ld a,(0e3d0h)		;8418   ; lee la velocidad del scroll (1 parado, 2 cada cuadro, si no uno de cada dos)
 	or a			;841b
 	ret nz			;841c
 	exx			;841d
-	ld a,(0e305h)		;841e
+	ld a,(0e305h)		;841e   ; lee dato de la fase de p01:697A
 	ld c,a			;8421
 	exx			;8422
 	call L_844A		;8423
 	ret nc			;8426
-	ld a,(0e400h)		;8427
+	ld a,(0e400h)		;8427   ; lee la forma de la nave (1 normal, 2 con escudo, 3 R.DRILL)
 	cp 003h		;842a
 	jp nz,L_8E7C		;842c
 	call L_8481		;842f
@@ -639,7 +639,7 @@ L_8413:
 	ld l,a			;843a
 	ld a,(0e406h)		;843b
 	ld h,a			;843e
-	call 05c92h		;843f
+	call 05c92h		;843f   ; sitio_en_pantalla: HL = 0xED00 + el caracter de la pantalla de RAM bajo L (Y) y H (X)
 	ex de,hl			;8442
 	call L_8481		;8443
 	inc de			;8446
@@ -653,7 +653,7 @@ L_844A:
 	and 007h		;8454
 	cp 004h		;8456
 	push af			;8458
-	call 05c92h		;8459
+	call 05c92h		;8459   ; sitio_en_pantalla: HL = 0xED00 + el caracter de la pantalla de RAM bajo L (Y) y H (X)
 	ex de,hl			;845c
 	pop af			;845d
 	jr nc,L_8464		;845e
@@ -662,7 +662,7 @@ L_844A:
 L_8464:
 	inc de			;8464
 L_8465:
-	ld a,(0e201h)		;8465
+	ld a,(0e201h)		;8465   ; lee la fase (0-11)
 	or a			;8468
 	jr z,L_8478		;8469
 	sub 007h		;846b
@@ -686,7 +686,7 @@ L_8478:
 	ret			;8480
 L_8481:
 	ld hl,0af04h		;8481
-	ld a,(0e201h)		;8484
+	ld a,(0e201h)		;8484   ; lee la fase (0-11)
 	sub 002h		;8487
 	jr z,L_849F		;8489
 	ld h,067h		;848b
@@ -716,7 +716,7 @@ L_84AA:
 	cp 05ch		;84ad
 	ret nc			;84af
 	ld hl,084cah		;84b0
-	call 05ca6h		;84b3
+	call 05ca6h		;84b3   ; byte_a: A = el byte A de la tabla HL
 	ld (de),a			;84b6
 	call L_84BC		;84b7
 	scf			;84ba
@@ -728,7 +728,7 @@ L_84BC:
 	inc a			;84c1
 	ld (0e308h),a		;84c2
 	ld a,004h		;84c5
-	jp 04ae4h		;84c7
+	jp 04ae4h		;84c7   ; sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_84CA: 92 bytes que p02:84AA lee con (DE) - 0x1F < 0x5C (L_5CA6);
@@ -748,10 +748,10 @@ DATA_tabla_84CA:
 
 
 L_8526:
-	ld a,(0ea60h)		;8526
+	ld a,(0ea60h)		;8526   ; lee la capsula especial del mapa: [clase][Y][X]
 	or a			;8529
 	ret z			;852a
-	ld a,(0e320h)		;852b
+	ld a,(0e320h)		;852b   ; lee la marca de scroll hecho en este cuadro
 	or a			;852e
 	ret z			;852f
 	ld a,(0ea62h)		;8530
@@ -759,22 +759,22 @@ L_8526:
 	ld (0ea62h),a		;8535
 	ret nc			;8538
 	xor a			;8539
-	ld (0ea60h),a		;853a
+	ld (0ea60h),a		;853a   ; guarda la capsula especial del mapa: [clase][Y][X]
 	ret			;853d
 L_853E:
-	ld a,(0ea60h)		;853e
+	ld a,(0ea60h)		;853e   ; lee la capsula especial del mapa: [clase][Y][X]
 	or a			;8541
 	ret z			;8542
 	ld hl,(0ea61h)		;8543
 	ld a,h			;8546
 	cp 0f8h		;8547
 	ret nc			;8549
-	call 05c92h		;854a
+	call 05c92h		;854a   ; sitio_en_pantalla: HL = 0xED00 + el caracter de la pantalla de RAM bajo L (Y) y H (X)
 	ld (0ea63h),hl		;854d
 	ld c,0e9h		;8550
-	jp 05227h		;8552
+	jp 05227h		;8552   ; bloque_2x2: 2x2 caracteres desde C en HL; en las fases 3, 9, 10 y 11 sin tapar los del mapa (0x1F-0x66)
 L_8555:
-	ld a,(0ea60h)		;8555
+	ld a,(0ea60h)		;8555   ; lee la capsula especial del mapa: [clase][Y][X]
 	or a			;8558
 	ret z			;8559
 	ld hl,(0ea61h)		;855a
@@ -793,13 +793,13 @@ L_8555:
 	ld (hl),a			;856e
 	ret			;856f
 L_8570:
-	ld a,(0e201h)		;8570
+	ld a,(0e201h)		;8570   ; lee la fase (0-11)
 	cp 008h		;8573
 	ret nz			;8575
-	ld a,(0e320h)		;8576
+	ld a,(0e320h)		;8576   ; lee la marca de scroll hecho en este cuadro
 	or a			;8579
 	ret z			;857a
-	ld hl,(0e203h)		;857b
+	ld hl,(0e203h)		;857b   ; lee la columna del scroll (16 bits) y el byte siguiente (16 bits)
 	ld de,0007fh		;857e
 	rst 20h			;8581
 	ret nz			;8582
@@ -817,7 +817,7 @@ L_8592:
 	ld a,(hl)			;8595
 	or a			;8596
 	ret z			;8597
-	ld a,(0e320h)		;8598
+	ld a,(0e320h)		;8598   ; lee la marca de scroll hecho en este cuadro
 	or a			;859b
 	ret z			;859c
 	inc l			;859d
@@ -833,7 +833,7 @@ L_85A9:
 	ld a,(0ea90h)		;85a9
 	dec a			;85ac
 	ret nz			;85ad
-	ld iy,0e470h		;85ae
+	ld iy,0e470h		;85ae   ; apunta a las 9 fichas de 16 bytes de 0xE470
 	ld b,009h		;85b2
 L_85B4:
 	push bc			;85b4
@@ -896,14 +896,14 @@ L_8609:
 	ld d,a			;8619
 	ld a,033h		;861a
 	ld c,000h		;861c
-	call 04d1eh		;861e
+	call 04d1eh		;861e   ; crea_enemigo: busca ficha libre en 0xE600 y pone el enemigo de tipo A en D (X), E (Y), con B y C; A = 0 si no hay sitio o sprites (0xE355, maximo 12)
 	ld a,005h		;8621
-	jp 04ae4h		;8623
+	jp 04ae4h		;8623   ; sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
 L_8626:
 	ld a,002h		;8626
 	ld (0ea90h),a		;8628
 	ld hl,(0ea91h)		;862b
-	call 05c92h		;862e
+	call 05c92h		;862e   ; sitio_en_pantalla: HL = 0xED00 + el caracter de la pantalla de RAM bajo L (Y) y H (X)
 	xor a			;8631
 	ld de,0001ch		;8632
 	ld c,004h		;8635
@@ -919,17 +919,17 @@ L_8639:
 	ld de,(0ea91h)		;8641
 	call L_8BA1		;8645
 	ld a,009h		;8648
-	call 04ae4h		;864a
+	call 04ae4h		;864a   ; sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
 	ld de,00050h		;864d
-	jp 05b04h		;8650
+	jp 05b04h		;8650   ; suma_puntos: jugando, suma DE (BCD) a los puntos del jugador en turno; vida extra al pasar 0xE207 y record (0xE1F1) si no esta la ranura de 0xF0F5 bit 1
 L_8653:
 	ld a,(0ea90h)		;8653
 	or a			;8656
 	ret z			;8657
-	ld a,(0e400h)		;8658
+	ld a,(0e400h)		;8658   ; lee la forma de la nave (1 normal, 2 con escudo, 3 R.DRILL)
 	dec a			;865b
 	ret m			;865c
-	ld a,(0e3c0h)		;865d
+	ld a,(0e3c0h)		;865d   ; lee el paso del final del interior (0 nada)
 	or a			;8660
 	ret nz			;8661
 	ld a,(0ea92h)		;8662
@@ -938,10 +938,10 @@ L_8653:
 	cp b			;8669
 	ret c			;866a
 	ld a,001h		;866b
-	ld (0e3c0h),a		;866d
-	call 07918h		;8670
+	ld (0e3c0h),a		;866d   ; guarda el paso del final del interior (0 nada)
+	call 07918h		;8670   ; borra_enemigos: 0xE600-0xE99F a cero y las cuentas de enemigos y sprites
 	ld a,0f1h		;8673
-	jp 04ae4h		;8675
+	jp 04ae4h		;8675   ; sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
 L_8678:
 	ld ix,0ea40h		;8678
 	ld de,00008h		;867c
@@ -955,7 +955,7 @@ L_8681:
 	ret			;868c
 L_868D:
 	call L_86A0		;868d
-	ld a,(0e320h)		;8690
+	ld a,(0e320h)		;8690   ; lee la marca de scroll hecho en este cuadro
 	and a			;8693
 	ret z			;8694
 	ld a,(ix+003h)		;8695
@@ -992,7 +992,7 @@ L_86CC:
 	ret z			;86d0
 	ld l,(ix+002h)		;86d1
 	ld h,(ix+003h)		;86d4
-	call 05c92h		;86d7
+	call 05c92h		;86d7   ; sitio_en_pantalla: HL = 0xED00 + el caracter de la pantalla de RAM bajo L (Y) y H (X)
 	ld (ix+004h),l		;86da
 	ld (ix+005h),h		;86dd
 	push iy		;86e0
@@ -1056,7 +1056,7 @@ L_873D:
 	ret z			;8741
 	ld a,(ix+006h)		;8742
 	ld hl,08762h		;8745
-	call 04b67h		;8748
+	call 04b67h		;8748   ; palabra_a: DE = la palabra A de la tabla HL (HL apunta a su byte alto)
 	ex de,hl			;874b
 	ld e,(ix+004h)		;874c
 	ld d,(ix+005h)		;874f
@@ -1101,11 +1101,11 @@ L_8798:
 	inc (hl)			;87a1
 	jr L_8798		;87a2
 L_87A4:
-	ld a,(0e320h)		;87a4
+	ld a,(0e320h)		;87a4   ; lee la marca de scroll hecho en este cuadro
 	and a			;87a7
 	ret z			;87a8
 	ld a,0f8h		;87a9
-	ld (0f004h),a		;87ab
+	ld (0f004h),a		;87ab   ; guarda variable de paso
 L_87AE:
 	call L_87B4		;87ae
 	jr z,L_87AE		;87b1
@@ -1121,14 +1121,14 @@ L_87B4:
 L_87C1:
 	bit 7,c		;87c1
 	jr z,L_87CA		;87c3
-	ld a,(0e20ah)		;87c5
+	ld a,(0e20ah)		;87c5   ; lee la vuelta (bit 0: las fases bajan)
 	or a			;87c8
 	ret z			;87c9
 L_87CA:
 	ld a,b			;87ca
 	and 0f8h		;87cb
 	ld e,a			;87cd
-	ld a,(0f004h)		;87ce
+	ld a,(0f004h)		;87ce   ; lee variable de paso
 	ld d,a			;87d1
 	ld a,c			;87d2
 	rlca			;87d3
@@ -1139,11 +1139,11 @@ L_87CA:
 	ld a,c			;87d9
 	and 01fh		;87da
 L_87DC:
-	ld (0f010h),a		;87dc
+	ld (0f010h),a		;87dc   ; guarda variable de paso: la lista
 	ld a,b			;87df
 	ld (0f011h),a		;87e0
-	ld (0f012h),de		;87e3
-	ld hl,0e500h		;87e7
+	ld (0f012h),de		;87e3   ; guarda variable de paso: la VRAM de origen y el byte siguiente (16 bits)
+	ld hl,0e500h		;87e7   ; apunta a las fichas de 16 bytes de los objetos de caracteres
 	ld de,00010h		;87ea
 	xor a			;87ed
 	ld b,008h		;87ee
@@ -1157,12 +1157,12 @@ L_87F0:
 L_87F8:
 	push hl			;87f8
 	pop ix		;87f9
-	ld a,(0f010h)		;87fb
+	ld a,(0f010h)		;87fb   ; lee variable de paso: la lista
 	ld (hl),a			;87fe
 	push af			;87ff
 	inc l			;8800
 	ld (hl),000h		;8801
-	ld de,(0f012h)		;8803
+	ld de,(0f012h)		;8803   ; lee variable de paso: la VRAM de origen y el byte siguiente (16 bits)
 	inc l			;8807
 	ld a,d			;8808
 	cp 0f8h		;8809
@@ -1192,7 +1192,7 @@ L_8827:
 	ret			;8827
 L_8828:
 	dec a			;8828
-	call 04084h		;8829
+	call 04084h		;8829   ; despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_882C: 16 destinos del despachador p00:4084 (call en p02:8829, el
@@ -1209,35 +1209,35 @@ DATA_tabla_882C:
 
 
 L_884C:
-	call 04137h		;884c
+	call 04137h		;884c   ; banco_11: pone el banco 11 en 0xA000 (y 0xF0F3)
 	call 0be49h		;884f
-	jp 04157h		;8852
+	jp 04157h		;8852   ; bancos_2_3: pone los bancos 2 y 3 en 0x8000 y 0xA000 (y 0xF0F2-0xF0F3)
 L_8855:
-	call 04137h		;8855
+	call 04137h		;8855   ; banco_11: pone el banco 11 en 0xA000 (y 0xF0F3)
 	call 0badch		;8858
-	jp 04157h		;885b
+	jp 04157h		;885b   ; bancos_2_3: pone los bancos 2 y 3 en 0x8000 y 0xA000 (y 0xF0F2-0xF0F3)
 L_885E:
-	call 04137h		;885e
+	call 04137h		;885e   ; banco_11: pone el banco 11 en 0xA000 (y 0xF0F3)
 	call 0a3abh		;8861
-	jp 04157h		;8864
+	jp 04157h		;8864   ; bancos_2_3: pone los bancos 2 y 3 en 0x8000 y 0xA000 (y 0xF0F2-0xF0F3)
 L_8867:
-	call 04137h		;8867
+	call 04137h		;8867   ; banco_11: pone el banco 11 en 0xA000 (y 0xF0F3)
 	call 0a4d1h		;886a
-	jp 04157h		;886d
+	jp 04157h		;886d   ; bancos_2_3: pone los bancos 2 y 3 en 0x8000 y 0xA000 (y 0xF0F2-0xF0F3)
 L_8870:
-	call 04137h		;8870
+	call 04137h		;8870   ; banco_11: pone el banco 11 en 0xA000 (y 0xF0F3)
 	call 0a811h		;8873
-	jp 04157h		;8876
+	jp 04157h		;8876   ; bancos_2_3: pone los bancos 2 y 3 en 0x8000 y 0xA000 (y 0xF0F2-0xF0F3)
 L_8879:
-	call 0413bh		;8879
-	ld a,(0e201h)		;887c
+	call 0413bh		;8879   ; banco_12: pone el banco 12 en 0xA000 (y 0xF0F3)
+	ld a,(0e201h)		;887c   ; lee la fase (0-11)
 	ld hl,0ba12h		;887f
-	call 04b67h		;8882
+	call 04b67h		;8882   ; palabra_a: DE = la palabra A de la tabla HL (HL apunta a su byte alto)
 	ld a,(0e359h)		;8885
 	ld b,a			;8888
 	add a,a			;8889
 	add a,b			;888a
-	call 0407fh		;888b
+	call 0407fh		;888b   ; de_mas_a: DE = DE + A
 	ex de,hl			;888e
 	ld e,(hl)			;888f
 	inc hl			;8890
@@ -1247,20 +1247,20 @@ L_8879:
 	ld d,a			;8895
 	inc hl			;8896
 	ld c,(hl)			;8897
-	ld hl,(0e203h)		;8898
+	ld hl,(0e203h)		;8898   ; lee la columna del scroll (16 bits) y el byte siguiente (16 bits)
 	rst 20h			;889b
 	push af			;889c
-	call 04157h		;889d
+	call 04157h		;889d   ; bancos_2_3: pone los bancos 2 y 3 en 0x8000 y 0xA000 (y 0xF0F2-0xF0F3)
 	pop af			;88a0
 	ret			;88a1
 L_88A2:
-	ld ix,0e600h		;88a2
+	ld ix,0e600h		;88a2   ; apunta a las fichas de 64 bytes (0xE600-0xE8FF), y tambien el bufer de graficos al cargar
 	ld b,00ch		;88a6
 L_88A8:
 	push bc			;88a8
 	bit 1,(ix+010h)		;88a9
 	jr z,L_88C5		;88ad
-	ld iy,0e470h		;88af
+	ld iy,0e470h		;88af   ; apunta a las 9 fichas de 16 bytes de 0xE470
 	ld de,00010h		;88b3
 	ld b,009h		;88b6
 L_88B8:
@@ -1328,7 +1328,7 @@ L_8928:
 	cp 032h		;8930
 	jr z,L_893A		;8932
 	ld de,00001h		;8934
-	call 05b04h		;8937
+	call 05b04h		;8937   ; suma_puntos: jugando, suma DE (BCD) a los puntos del jugador en turno; vida extra al pasar 0xE207 y record (0xE1F1) si no esta la ranura de 0xF0F5 bit 1
 L_893A:
 	ld a,(ix+000h)		;893a
 	ld b,012h		;893d
@@ -1346,12 +1346,12 @@ L_893A:
 	ld b,007h		;8955
 L_8957:
 	ld a,b			;8957
-	call 04ae4h		;8958
+	call 04ae4h		;8958   ; sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
 	call L_8988		;895b
 	ld a,(ix+000h)		;895e
 	push af			;8961
 	push bc			;8962
-	call 06514h		;8963
+	call 06514h		;8963   ; quita_enemigo: quita el enemigo IX: uno menos (0xE352), devuelve sus sprites (0xE355), 0xE36D si es 0x2A, y descuenta su grupo (IX+16, IX+17, p02:89A8)
 	pop bc			;8966
 	pop af			;8967
 	sub 01dh		;8968
@@ -1367,10 +1367,10 @@ L_8957:
 	ld a,026h		;8978
 	ld e,(ix+004h)		;897a
 	ld d,(ix+006h)		;897d
-	jp 04d16h		;8980
+	jp 04d16h		;8980   ; crea_enemigo_ix: crea_enemigo conservando IX
 L_8983:
 	ld a,009h		;8983
-	jp 04ae4h		;8985
+	jp 04ae4h		;8985   ; sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
 L_8988:
 	ld c,(ix+00ch)		;8988
 	ld a,(ix+016h)		;898b
@@ -1429,27 +1429,27 @@ L_89D9:
 	ld a,03bh		;89db
 	add a,b			;89dd
 	ld b,00ch		;89de
-	call 04d16h		;89e0
+	call 04d16h		;89e0   ; crea_enemigo_ix: crea_enemigo conservando IX
 	ld a,020h		;89e3
-	jp 04ae4h		;89e5
+	jp 04ae4h		;89e5   ; sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
 L_89E8:
 	ld a,(ix+00ch)		;89e8
 	push af			;89eb
-	call 06514h		;89ec
+	call 06514h		;89ec   ; quita_enemigo: quita el enemigo IX: uno menos (0xE352), devuelve sus sprites (0xE355), 0xE36D si es 0x2A, y descuenta su grupo (IX+16, IX+17, p02:89A8)
 	pop af			;89ef
 	add a,028h		;89f0
 	ld e,(ix+004h)		;89f2
 	ld d,(ix+006h)		;89f5
-	jp 04d16h		;89f8
+	jp 04d16h		;89f8   ; crea_enemigo_ix: crea_enemigo conservando IX
 L_89FB:
 	ld (iy+000h),000h		;89fb
 	ld a,(ix+000h)		;89ff
 	cp 019h		;8a02
 	jp nz,L_823C		;8a04
 	ld a,014h		;8a07
-	jp 04ae4h		;8a09
+	jp 04ae4h		;8a09   ; sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
 L_8A0C:
-	ld a,(0e201h)		;8a0c
+	ld a,(0e201h)		;8a0c   ; lee la fase (0-11)
 	cp 005h		;8a0f
 	jr nz,L_8A18		;8a11
 	ld (iy+000h),000h		;8a13
@@ -1486,20 +1486,20 @@ L_8A2C:
 	ld (hl),018h		;8a40
 	ret			;8a42
 L_8A43:
-	ld a,(0e340h)		;8a43
+	ld a,(0e340h)		;8a43   ; lee el tipo de jefe (1-5; 0 sin jefe)
 	or a			;8a46
 	ret nz			;8a47
-	ld a,(0e3b2h)		;8a48
+	ld a,(0e3b2h)		;8a48   ; lee cuantas fichas de objetos de caracteres hay (0xE500)
 	and a			;8a4b
 	ret z			;8a4c
 	ld b,a			;8a4d
-	ld ix,0e500h		;8a4e
+	ld ix,0e500h		;8a4e   ; apunta a las fichas de 16 bytes de los objetos de caracteres
 L_8A52:
 	push bc			;8a52
 	ld a,(ix+000h)		;8a53
 	and a			;8a56
 	jr z,L_8A6F		;8a57
-	ld iy,0e470h		;8a59
+	ld iy,0e470h		;8a59   ; apunta a las 9 fichas de 16 bytes de 0xE470
 	ld de,00010h		;8a5d
 	ld b,009h		;8a60
 L_8A62:
@@ -1532,8 +1532,8 @@ L_8A87:
 	add a,a			;8a8e
 	add a,a			;8a8f
 	ld hl,0b2f9h		;8a90
-	call 0407ah		;8a93
-	ld (0f000h),hl		;8a96
+	call 0407ah		;8a93   ; hl_mas_a: HL = HL + A
+	ld (0f000h),hl		;8a96   ; guarda variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo) o un puntero y el byte siguiente (16 bits)
 	ld a,(ix+004h)		;8a99
 	add a,(hl)			;8a9c
 	sub (iy+003h)		;8a9d
@@ -1549,7 +1549,7 @@ L_8AAD:
 	cp (iy+00dh)		;8aad
 	ret nc			;8ab0
 L_8AB1:
-	ld hl,(0f000h)		;8ab1
+	ld hl,(0f000h)		;8ab1   ; lee variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo) o un puntero y el byte siguiente (16 bits)
 	inc hl			;8ab4
 	ld a,(ix+006h)		;8ab5
 	add a,(hl)			;8ab8
@@ -1611,7 +1611,7 @@ L_8B0F:
 L_8B20:
 	ld (iy+000h),000h		;8b20
 L_8B24:
-	call 06070h		;8b24
+	call 06070h		;8b24   ; objeto_tocado: un objeto de caracteres tocado: suena 5 (0x14 la clase 15); la clase 9 pasa a IX+01 = 4 con el dibujo 0x1B o 0x1C
 	dec (ix+008h)		;8b27
 	ret nz			;8b2a
 	ld a,(ix+000h)		;8b2b
@@ -1623,13 +1623,13 @@ L_8B24:
 	jr nz,L_8B45		;8b39
 L_8B3B:
 	ld a,001h		;8b3b
-	ld (0e38dh),a		;8b3d
+	ld (0e38dh),a		;8b3d   ; guarda la marca de fin de la fase 7
 	ld de,00050h		;8b40
 	jr L_8B48		;8b43
 L_8B45:
 	ld de,00010h		;8b45
 L_8B48:
-	call 05b04h		;8b48
+	call 05b04h		;8b48   ; suma_puntos: jugando, suma DE (BCD) a los puntos del jugador en turno; vida extra al pasar 0xE207 y record (0xE1F1) si no esta la ranura de 0xF0F5 bit 1
 	ld c,03bh		;8b4b
 	ld a,(ix+000h)		;8b4d
 	cp 00fh		;8b50
@@ -1641,8 +1641,8 @@ L_8B48:
 	ld c,013h		;8b5c
 L_8B5E:
 	ld a,c			;8b5e
-	call 04ae4h		;8b5f
-	call 0609eh		;8b62
+	call 04ae4h		;8b5f   ; sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
+	call 0609eh		;8b62   ; objeto_destruido: con el banco 15, p01:60A7
 	ld e,(ix+004h)		;8b65
 	ld d,(ix+006h)		;8b68
 	ld hl,0f8f8h		;8b6b
@@ -1657,7 +1657,7 @@ L_8B5E:
 	add a,01fh		;8b7f
 L_8B81:
 	ld hl,0b375h		;8b81
-	call 0407ah		;8b84
+	call 0407ah		;8b84   ; hl_mas_a: HL = HL + A
 	ld d,000h		;8b87
 	ld e,(hl)			;8b89
 	ex de,hl			;8b8a
@@ -1717,28 +1717,28 @@ L_8BCC:
 	ld (ix+00dh),0ffh		;8bd0
 	ld (ix+002h),001h		;8bd4
 	ld de,00010h		;8bd8
-	call 05b04h		;8bdb
+	call 05b04h		;8bdb   ; suma_puntos: jugando, suma DE (BCD) a los puntos del jugador en turno; vida extra al pasar 0xE207 y record (0xE1F1) si no esta la ranura de 0xF0F5 bit 1
 	ld a,013h		;8bde
-	jp 04ae4h		;8be0
+	jp 04ae4h		;8be0   ; sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
 L_8BE3:
-	ld a,(0e340h)		;8be3
+	ld a,(0e340h)		;8be3   ; lee el tipo de jefe (1-5; 0 sin jefe)
 	or a			;8be6
 	ret nz			;8be7
-	ld a,(0e201h)		;8be8
+	ld a,(0e201h)		;8be8   ; lee la fase (0-11)
 	cp 003h		;8beb
 	jr z,L_8BF4		;8bed
 	sub 009h		;8bef
 	cp 003h		;8bf1
 	ret nc			;8bf3
 L_8BF4:
-	ld ix,0e580h		;8bf4
+	ld ix,0e580h		;8bf4   ; apunta a las 16 piezas de 8 bytes de las fases 3 y 9-11
 	ld b,010h		;8bf8
 L_8BFA:
 	push bc			;8bfa
 	ld a,(ix+000h)		;8bfb
 	cp 005h		;8bfe
 	jr c,L_8C20		;8c00
-	ld iy,0e470h		;8c02
+	ld iy,0e470h		;8c02   ; apunta a las 9 fichas de 16 bytes de 0xE470
 	ld de,00010h		;8c06
 	ld b,009h		;8c09
 L_8C0B:
@@ -1804,24 +1804,24 @@ L_8C6C:
 L_8C77:
 	dec (ix+006h)		;8c77
 	jp nz,L_823C		;8c7a
-	call 06d26h		;8c7d
+	call 06d26h		;8c7d   ; pieza_rota: la pieza IX deja de estar: explosion (p02:8BA1), suena 0x13 y se borra de la pantalla de RAM
 	ld de,00010h		;8c80
-	jp 05b04h		;8c83
+	jp 05b04h		;8c83   ; suma_puntos: jugando, suma DE (BCD) a los puntos del jugador en turno; vida extra al pasar 0xE207 y record (0xE1F1) si no esta la ranura de 0xF0F5 bit 1
 L_8C86:
-	ld a,(0e340h)		;8c86
+	ld a,(0e340h)		;8c86   ; lee el tipo de jefe (1-5; 0 sin jefe)
 	or a			;8c89
 	ret nz			;8c8a
-	ld a,(0e201h)		;8c8b
+	ld a,(0e201h)		;8c8b   ; lee la fase (0-11)
 	cp 005h		;8c8e
 	ret nz			;8c90
-	ld ix,0e580h		;8c91
+	ld ix,0e580h		;8c91   ; apunta a las 16 piezas de 8 bytes de las fases 3 y 9-11
 	call L_8C9C		;8c95
 	ld ix,0e590h		;8c98
 L_8C9C:
 	ld a,(ix+000h)		;8c9c
 	or a			;8c9f
 	ret z			;8ca0
-	ld iy,0e470h		;8ca1
+	ld iy,0e470h		;8ca1   ; apunta a las 9 fichas de 16 bytes de 0xE470
 	ld de,00010h		;8ca5
 	ld b,009h		;8ca8
 L_8CAA:
@@ -1897,12 +1897,12 @@ L_8D2E:
 	cp 004h		;8d31
 	ret nc			;8d33
 	ld a,012h		;8d34
-	jp 04ae4h		;8d36
+	jp 04ae4h		;8d36   ; sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
 L_8D39:
 	ld a,(ix+006h)		;8d39
 	cp 004h		;8d3c
 	ret nc			;8d3e
-	call 04c24h		;8d3f
+	call 04c24h		;8d3f   ; azar: 0xE306 = 0xE306 + 3 x R: el azar del juego
 	and 00fh		;8d42
 	ret nz			;8d44
 	ld a,(ix+003h)		;8d45
@@ -1916,15 +1916,15 @@ L_8D39:
 	ld e,a			;8d55
 	ld bc,00000h		;8d56
 	ld a,030h		;8d59
-	jp 04d16h		;8d5b
+	jp 04d16h		;8d5b   ; crea_enemigo_ix: crea_enemigo conservando IX
 L_8D5E:
-	ld a,(0e400h)		;8d5e
+	ld a,(0e400h)		;8d5e   ; lee la forma de la nave (1 normal, 2 con escudo, 3 R.DRILL)
 	dec a			;8d61
 	ret m			;8d62
-	ld a,(0e3d0h)		;8d63
+	ld a,(0e3d0h)		;8d63   ; lee la velocidad del scroll (1 parado, 2 cada cuadro, si no uno de cada dos)
 	or a			;8d66
 	ret nz			;8d67
-	ld ix,0e900h		;8d68
+	ld ix,0e900h		;8d68   ; apunta a las 10 fichas de 16 bytes (0xE900-0xE99F)
 	ld l,00ah		;8d6c
 	ld bc,00202h		;8d6e
 	call L_8D7C		;8d71
@@ -1972,10 +1972,10 @@ L_8DAB:
 	xor a			;8db2
 	ret			;8db3
 L_8DB4:
-	ld a,(0e400h)		;8db4
+	ld a,(0e400h)		;8db4   ; lee la forma de la nave (1 normal, 2 con escudo, 3 R.DRILL)
 	cp 002h		;8db7
 	ret nz			;8db9
-	ld a,(0e3d0h)		;8dba
+	ld a,(0e3d0h)		;8dba   ; lee la velocidad del scroll (1 parado, 2 cada cuadro, si no uno de cada dos)
 	or a			;8dbd
 	ret nz			;8dbe
 	ld a,(0e404h)		;8dbf
@@ -1983,7 +1983,7 @@ L_8DB4:
 	ld a,(0e406h)		;8dc3
 	add a,00ch		;8dc6
 	ld h,a			;8dc8
-	ld ix,0e900h		;8dc9
+	ld ix,0e900h		;8dc9   ; apunta a las 10 fichas de 16 bytes (0xE900-0xE99F)
 	ld de,00010h		;8dcd
 	ld b,00ah		;8dd0
 L_8DD2:
@@ -2008,10 +2008,10 @@ L_8DF2:
 	ld (ix+000h),000h		;8df2
 	jp L_8E33		;8df6
 L_8DF9:
-	ld a,(0e400h)		;8df9
+	ld a,(0e400h)		;8df9   ; lee la forma de la nave (1 normal, 2 con escudo, 3 R.DRILL)
 	cp 002h		;8dfc
 	ret nz			;8dfe
-	ld a,(0e3d0h)		;8dff
+	ld a,(0e3d0h)		;8dff   ; lee la velocidad del scroll (1 parado, 2 cada cuadro, si no uno de cada dos)
 	or a			;8e02
 	ret nz			;8e03
 	ld a,(0e404h)		;8e04
@@ -2039,20 +2039,20 @@ L_8DF9:
 	cp 005h		;8e2f
 	jr c,L_8E38		;8e31
 L_8E33:
-	ld hl,0e401h		;8e33
+	ld hl,0e401h		;8e33   ; apunta a los golpes que le quedan al escudo
 	dec (hl)			;8e36
 	ret nz			;8e37
 L_8E38:
 	xor a			;8e38
-	ld (0e401h),a		;8e39
+	ld (0e401h),a		;8e39   ; guarda los golpes que le quedan al escudo
 	inc a			;8e3c
-	ld (0e400h),a		;8e3d
-	jp 0553eh		;8e40
+	ld (0e400h),a		;8e3d   ; guarda la forma de la nave (1 normal, 2 con escudo, 3 R.DRILL)
+	jp 0553eh		;8e40   ; vacia_casilla_de_arma: pone a cero la casilla de 0xE3xx del arma capturada 0xE20F (p00:554F) y repinta el medidor
 L_8E43:
-	ld a,(0e400h)		;8e43
+	ld a,(0e400h)		;8e43   ; lee la forma de la nave (1 normal, 2 con escudo, 3 R.DRILL)
 	inc a			;8e46
 	ret z			;8e47
-	ld a,(0e3d0h)		;8e48
+	ld a,(0e3d0h)		;8e48   ; lee la velocidad del scroll (1 parado, 2 cada cuadro, si no uno de cada dos)
 	or a			;8e4b
 	ret nz			;8e4c
 	ld a,(0e404h)		;8e4d
@@ -2072,26 +2072,26 @@ L_8E43:
 	jp c,L_8F67		;8e6b
 	call L_8928		;8e6e
 L_8E71:
-	ld a,(0e1c2h)		;8e71
+	ld a,(0e1c2h)		;8e71   ; lee el modo: bit 6 se juega, bit 5 dos jugadores, bit 7 juega el 2
 	bit 6,a		;8e74
 	ret z			;8e76
 	ld a,(0e446h)		;8e77
 	or a			;8e7a
 	ret nz			;8e7b
 L_8E7C:
-	ld a,(0e3c0h)		;8e7c
+	ld a,(0e3c0h)		;8e7c   ; lee el paso del final del interior (0 nada)
 	or a			;8e7f
 	ret nz			;8e80
 	xor a			;8e81
-	ld (0e20bh),a		;8e82
-	ld a,(0f0f5h)		;8e85
+	ld (0e20bh),a		;8e82   ; guarda una casilla del medidor puesta
+	ld a,(0f0f5h)		;8e85   ; lee lo que hay en la otra ranura (bit 3 Galious, 2 Penguin Adventure, 1 los 6 bytes de 0x7FFA, 0 Q*bert)
 	bit 3,a		;8e88
 	jr nz,L_8E94		;8e8a
-	ld a,(0e330h)		;8e8c
-	ld (0e20dh),a		;8e8f
+	ld a,(0e330h)		;8e8c   ; lee la casilla iluminada del medidor
+	ld (0e20dh),a		;8e8f   ; guarda una casilla del medidor puesta
 	jr L_8ECE		;8e92
 L_8E94:
-	ld hl,0e334h		;8e94
+	ld hl,0e334h		;8e94   ; apunta a las 9 casillas del medidor
 	ld b,009h		;8e97
 	xor a			;8e99
 L_8E9A:
@@ -2099,38 +2099,38 @@ L_8E9A:
 	jr nz,L_8EA8		;8e9b
 	inc hl			;8e9d
 	djnz L_8E9A		;8e9e
-	ld a,(0e330h)		;8ea0
-	ld (0e20dh),a		;8ea3
+	ld a,(0e330h)		;8ea0   ; lee la casilla iluminada del medidor
+	ld (0e20dh),a		;8ea3   ; guarda una casilla del medidor puesta
 	jr L_8ECE		;8ea6
 L_8EA8:
 	ld a,001h		;8ea8
-	ld (0e20bh),a		;8eaa
-	ld de,0e210h		;8ead
-	ld hl,0e330h		;8eb0
+	ld (0e20bh),a		;8eaa   ; guarda una casilla del medidor puesta
+	ld de,0e210h		;8ead   ; apunta a lo guardado del equipo (medidor y armas)
+	ld hl,0e330h		;8eb0   ; apunta a la casilla iluminada del medidor
 	ld bc,0000dh		;8eb3
 	ldir		;8eb6
-	ld hl,0e430h		;8eb8
+	ld hl,0e430h		;8eb8   ; apunta a el disparo normal
 	ld bc,00007h		;8ebb
 	ldir		;8ebe
-	ld a,(0e401h)		;8ec0
+	ld a,(0e401h)		;8ec0   ; lee los golpes que le quedan al escudo
 	ld (de),a			;8ec3
 	inc e			;8ec4
-	ld a,(0e402h)		;8ec5
+	ld a,(0e402h)		;8ec5   ; lee la velocidad de la nave
 	ld (de),a			;8ec8
 	inc e			;8ec9
-	ld a,(0e40bh)		;8eca
+	ld a,(0e40bh)		;8eca   ; lee las opciones
 	ld (de),a			;8ecd
 L_8ECE:
 	ld a,03dh		;8ece
-	call 04ae4h		;8ed0
+	call 04ae4h		;8ed0   ; sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
 	ld a,0f0h		;8ed3
-	call 04ae4h		;8ed5
+	call 04ae4h		;8ed5   ; sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
 	xor a			;8ed8
-	ld (0e439h),a		;8ed9
-	ld (0e1d5h),a		;8edc
+	ld (0e439h),a		;8ed9   ; guarda la capsula especial en marcha (con cuenta atras)
+	ld (0e1d5h),a		;8edc   ; guarda la marca de la cuenta atras (1: un segundo menos, 2: se acabo)
 	jp 0a993h		;8edf
 L_8EE2:
-	ld ix,0e600h		;8ee2
+	ld ix,0e600h		;8ee2   ; apunta a las fichas de 64 bytes (0xE600-0xE8FF), y tambien el bufer de graficos al cargar
 	ld b,00ch		;8ee6
 	exx			;8ee8
 	ld de,00040h		;8ee9
@@ -2223,9 +2223,9 @@ L_8F5D:
 L_8F67:
 	push af			;8f67
 	cp 002h		;8f68
-	call c,06514h		;8f6a
+	call c,06514h		;8f6a   ; quita_enemigo: quita el enemigo IX: uno menos (0xE352), devuelve sus sprites (0xE355), 0xE36D si es 0x2A, y descuenta su grupo (IX+16, IX+17, p02:89A8)
 	pop af			;8f6d
-	call 04084h		;8f6e
+	call 04084h		;8f6e   ; despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_8F71: 6 destinos del despachador p00:4084 (call en p02:8F6E, el
@@ -2242,8 +2242,8 @@ DATA_tabla_8F71:
 
 L_8F7D:
 	xor a			;8f7d
-	ld (0e20bh),a		;8f7e
-	ld hl,0e330h		;8f81
+	ld (0e20bh),a		;8f7e   ; guarda una casilla del medidor puesta
+	ld hl,0e330h		;8f81   ; apunta a la casilla iluminada del medidor
 	ld a,(hl)			;8f84
 	inc a			;8f85
 	inc l			;8f86
@@ -2254,13 +2254,13 @@ L_8F8C:
 	dec l			;8f8c
 	ld (hl),a			;8f8d
 	ld de,00005h		;8f8e
-	call 05b04h		;8f91
+	call 05b04h		;8f91   ; suma_puntos: jugando, suma DE (BCD) a los puntos del jugador en turno; vida extra al pasar 0xE207 y record (0xE1F1) si no esta la ranura de 0xF0F5 bit 1
 	ld a,00ah		;8f94
-	call 04ae4h		;8f96
-	jp 053a3h		;8f99
+	call 04ae4h		;8f96   ; sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
+	jp 053a3h		;8f99   ; casillas_del_medidor: las 9 casillas del medidor (0xE334) en la fila 22 y el rotulo de la casilla 0xE330
 L_8F9C:
 	ld de,00005h		;8f9c
-	call 05b04h		;8f9f
+	call 05b04h		;8f9f   ; suma_puntos: jugando, suma DE (BCD) a los puntos del jugador en turno; vida extra al pasar 0xE207 y record (0xE1F1) si no esta la ranura de 0xF0F5 bit 1
 L_8FA2:
 	ld ix,0e8c0h		;8fa2
 	ld b,00ch		;8fa6
@@ -2285,21 +2285,21 @@ L_8FC4:
 	pop bc			;8fc9
 	djnz L_8FA8		;8fca
 	ld a,00bh		;8fcc
-	jp 04ae4h		;8fce
+	jp 04ae4h		;8fce   ; sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
 L_8FD1:
 	call L_8FF0		;8fd1
 	call L_900D		;8fd4
-	ld a,(0e357h)		;8fd7
+	ld a,(0e357h)		;8fd7   ; lee la marca de los tipos 0x2C-0x2F
 	add a,a			;8fda
 	add a,a			;8fdb
 	add a,094h		;8fdc
 	ld (ix+030h),a		;8fde
 	ld a,023h		;8fe1
-	jp 04ae4h		;8fe3
+	jp 04ae4h		;8fe3   ; sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
 L_8FE6:
 	call L_8FF0		;8fe6
 	ld (ix+030h),094h		;8fe9
-	jp 05b92h		;8fed
+	jp 05b92h		;8fed   ; vida_extra: 0xE200 + 1 (BCD, sin pasar de 99), suena 0x0C y pinta las vidas
 L_8FF0:
 	ld a,(ix+000h)		;8ff0
 	ld (ix+028h),a		;8ff3
@@ -2313,10 +2313,10 @@ L_8FF0:
 L_900D:
 	call L_9019		;900d
 	ld hl,L_9024		;9010
-	call 04b67h		;9013
-	jp 05b04h		;9016
+	call 04b67h		;9013   ; palabra_a: DE = la palabra A de la tabla HL (HL apunta a su byte alto)
+	jp 05b04h		;9016   ; suma_puntos: jugando, suma DE (BCD) a los puntos del jugador en turno; vida extra al pasar 0xE207 y record (0xE1F1) si no esta la ranura de 0xF0F5 bit 1
 L_9019:
-	ld hl,0e357h		;9019
+	ld hl,0e357h		;9019   ; apunta a la marca de los tipos 0x2C-0x2F
 	ld a,(hl)			;901c
 	inc a			;901d
 	cp 008h		;901e
@@ -2340,13 +2340,13 @@ DATA_tabla_9026:
 
 
 L_9034:
-	ld a,(0e340h)		;9034
+	ld a,(0e340h)		;9034   ; lee el tipo de jefe (1-5; 0 sin jefe)
 	or a			;9037
 	ret nz			;9038
-	ld a,(0ea60h)		;9039
+	ld a,(0ea60h)		;9039   ; lee la capsula especial del mapa: [clase][Y][X]
 	sub 002h		;903c
 	ret c			;903e
-	ld a,(0e400h)		;903f
+	ld a,(0e400h)		;903f   ; lee la forma de la nave (1 normal, 2 con escudo, 3 R.DRILL)
 	dec a			;9042
 	ret m			;9043
 	ld a,(0e404h)		;9044
@@ -2370,10 +2370,10 @@ L_905A:
 	ret nc			;9064
 L_9065:
 	ld a,01fh		;9065
-	call 04ae4h		;9067
+	call 04ae4h		;9067   ; sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
 	ld de,00030h		;906a
-	call 05b04h		;906d
-	ld hl,0ea60h		;9070
+	call 05b04h		;906d   ; suma_puntos: jugando, suma DE (BCD) a los puntos del jugador en turno; vida extra al pasar 0xE207 y record (0xE1F1) si no esta la ranura de 0xF0F5 bit 1
+	ld hl,0ea60h		;9070   ; apunta a la capsula especial del mapa: [clase][Y][X]
 	ld a,(hl)			;9073
 	ld (hl),000h		;9074
 	sub 003h		;9076
@@ -2389,44 +2389,44 @@ L_9065:
 	jr L_9094		;9088
 L_908A:
 	ld a,00fh		;908a
-	call 04ae4h		;908c
+	call 04ae4h		;908c   ; sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
 	ld hl,01503h		;908f
 	ld b,019h		;9092
 L_9094:
 	di			;9094
-	ld (0e439h),hl		;9095
+	ld (0e439h),hl		;9095   ; guarda la capsula especial en marcha (con cuenta atras) y el byte siguiente (16 bits)
 	ld a,03ch		;9098
-	ld (0e43bh),a		;909a
+	ld (0e43bh),a		;909a   ; guarda los cuadros del segundo (de 60 a 0)
 	ei			;909d
-	jp 054c7h		;909e
+	jp 054c7h		;909e   ; rotulo_y_recuadro: el rotulo B, el recuadro con 0xA0 y la cuenta atras
 L_90A1:
 	ld a,003h		;90a1
-	ld (0e400h),a		;90a3
+	ld (0e400h),a		;90a3   ; guarda la forma de la nave (1 normal, 2 con escudo, 3 R.DRILL)
 	ld hl,00001h		;90a6
 	ld (0e440h),hl		;90a9
 	ld hl,01504h		;90ac
 	ld b,016h		;90af
 	call L_9094		;90b1
 	call 0a7f2h		;90b4
-	call 042f5h		;90b7
+	call 042f5h		;90b7   ; sprites_r_drill: con los bancos 7-8-9, los dibujos del R.DRILL (p00:42FE)
 	ld a,010h		;90ba
-	jp 04ae4h		;90bc
+	jp 04ae4h		;90bc   ; sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
 L_90BF:
 	ld hl,01505h		;90bf
 	ld b,018h		;90c2
 	jr L_9094		;90c4
 L_90C6:
-	ld a,(0e34bh)		;90c6
+	ld a,(0e34bh)		;90c6   ; lee el paso del suceso (0 nada)
 	or a			;90c9
 	ret z			;90ca
-	ld hl,0ea70h		;90cb
+	ld hl,0ea70h		;90cb   ; apunta a las dos piezas del suceso (8 bytes cada una)
 	call L_90D4		;90ce
 	ld hl,0ea78h		;90d1
 L_90D4:
 	ld a,(hl)			;90d4
 	or a			;90d5
 	ret z			;90d6
-	ld iy,0e470h		;90d7
+	ld iy,0e470h		;90d7   ; apunta a las 9 fichas de 16 bytes de 0xE470
 	ld de,00010h		;90db
 	ld bc,00910h		;90de
 L_90E1:
@@ -2491,7 +2491,7 @@ L_9121:
 	ld e,a			;913a
 	ld a,033h		;913b
 	ld c,000h		;913d
-	jp 04d1eh		;913f
+	jp 04d1eh		;913f   ; crea_enemigo: busca ficha libre en 0xE600 y pone el enemigo de tipo A en D (X), E (Y), con B y C; A = 0 si no hay sitio o sprites (0xE355, maximo 12)
 L_9142:
 	dec l			;9142
 	ld a,(hl)			;9143
@@ -2504,36 +2504,36 @@ L_9142:
 	dec l			;914c
 	ld (hl),000h		;914d
 	call L_8BA1		;914f
-	ld hl,0e34ch		;9152
+	ld hl,0e34ch		;9152   ; apunta a las piezas del suceso que quedan
 	dec (hl)			;9155
 	jr z,L_915D		;9156
 	ld a,009h		;9158
-	jp 04ae4h		;915a
+	jp 04ae4h		;915a   ; sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
 L_915D:
 	ld a,001h		;915d
-	ld (0e34fh),a		;915f
+	ld (0e34fh),a		;915f   ; guarda la marca de 0xE34F
 	ld a,03bh		;9162
-	jp 04ae4h		;9164
+	jp 04ae4h		;9164   ; sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
 L_9167:
-	ld a,(0e340h)		;9167
+	ld a,(0e340h)		;9167   ; lee el tipo de jefe (1-5; 0 sin jefe)
 	cp 005h		;916a
 	jr nz,L_917B		;916c
-	ld ix,0ea00h		;916e
+	ld ix,0ea00h		;916e   ; apunta a la ficha del jefe
 	call L_9188		;9172
-	ld ix,0ea20h		;9175
+	ld ix,0ea20h		;9175   ; apunta a la segunda ficha del jefe (el 5)
 	jr L_9188		;9179
 L_917B:
-	call 06878h		;917b
+	call 06878h		;917b   ; hay_jefe_con_partes: NZ si hay jefe con partes: el 5 siempre, los demas si 0xEA00 no es cero
 	ret z			;917e
-	ld a,(0e345h)		;917f
+	ld a,(0e345h)		;917f   ; lee la marca de nucleo destruido
 	and a			;9182
 	ret nz			;9183
-	ld ix,0ea00h		;9184
+	ld ix,0ea00h		;9184   ; apunta a la ficha del jefe
 L_9188:
 	ld a,(ix+000h)		;9188
 	and a			;918b
 	ret z			;918c
-	ld iy,0e470h		;918d
+	ld iy,0e470h		;918d   ; apunta a las 9 fichas de 16 bytes de 0xE470
 	ld b,009h		;9191
 L_9193:
 	push bc			;9193
@@ -2554,7 +2554,7 @@ L_91A4:
 L_91B3:
 	cp 006h		;91b3
 	ret z			;91b5
-	ld a,(0e345h)		;91b6
+	ld a,(0e345h)		;91b6   ; lee la marca de nucleo destruido
 	and a			;91b9
 	ret nz			;91ba
 	ld a,(hl)			;91bb
@@ -2591,11 +2591,11 @@ L_91EE:
 L_91F2:
 	dec (ix+012h)		;91f2
 	jp m,L_9218		;91f5
-	ld a,(0e34dh)		;91f8
+	ld a,(0e34dh)		;91f8   ; lee dato del jefe (1 al salir, 3 el nucleo)
 	cp 003h		;91fb
 	jr z,L_926F		;91fd
 	ld a,027h		;91ff
-	call 04ae4h		;9201
+	call 04ae4h		;9201   ; sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
 	ld e,(ix+013h)		;9204
 	ld a,(ix+014h)		;9207
 	add a,010h		;920a
@@ -2605,22 +2605,22 @@ L_9210:
 	ld d,a			;9210
 	ld a,026h		;9211
 	ld c,000h		;9213
-	jp 04d16h		;9215
+	jp 04d16h		;9215   ; crea_enemigo_ix: crea_enemigo conservando IX
 L_9218:
-	ld a,(0e340h)		;9218
+	ld a,(0e340h)		;9218   ; lee el tipo de jefe (1-5; 0 sin jefe)
 	cp 005h		;921b
 	jr nz,L_9224		;921d
 	ld (ix+01fh),001h		;921f
 	ret			;9223
 L_9224:
 	ld a,001h		;9224
-	ld (0e345h),a		;9226
-	ld a,(0e34dh)		;9229
+	ld (0e345h),a		;9226   ; guarda la marca de nucleo destruido
+	ld a,(0e34dh)		;9229   ; lee dato del jefe (1 al salir, 3 el nucleo)
 	cp 003h		;922c
 	ret z			;922e
 	ld a,001h		;922f
-	ld (0e22ch),a		;9231
-	ld hl,(0e346h)		;9234
+	ld (0e22ch),a		;9231   ; guarda la marca de volver a la fase de p01:7C59
+	ld hl,(0e346h)		;9234   ; lee los cuadros de pelea con el jefe (16 bits) y el byte siguiente (16 bits)
 	ld de,0012ch		;9237
 	rst 20h			;923a
 	ld b,002h		;923b
@@ -2632,7 +2632,7 @@ L_9224:
 	xor a			;9247
 	jr L_925C		;9248
 L_924A:
-	ld hl,0e20fh		;924a
+	ld hl,0e20fh		;924a   ; apunta a las armas capturadas (0-7)
 	ld a,(hl)			;924d
 	cp 007h		;924e
 	ld c,000h		;9250
@@ -2644,24 +2644,24 @@ L_924A:
 L_925B:
 	ld a,c			;925b
 L_925C:
-	ld (0e444h),a		;925c
+	ld (0e444h),a		;925c   ; guarda el premio del jefe: 1 o 2 armas, si no nada
 	ld a,03ah		;925f
-	call 04ae4h		;9261
+	call 04ae4h		;9261   ; sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
 	ld a,001h		;9264
-	ld (0e34fh),a		;9266
+	ld (0e34fh),a		;9266   ; guarda la marca de 0xE34F
 	ld de,00100h		;9269
-	jp 05b04h		;926c
+	jp 05b04h		;926c   ; suma_puntos: jugando, suma DE (BCD) a los puntos del jugador en turno; vida extra al pasar 0xE207 y record (0xE1F1) si no esta la ranura de 0xF0F5 bit 1
 L_926F:
 	ld de,(0ea99h)		;926f
 	ld c,000h		;9273
 	ld a,038h		;9275
-	jp 04d1eh		;9277
+	jp 04d1eh		;9277   ; crea_enemigo: busca ficha libre en 0xE600 y pone el enemigo de tipo A en D (X), E (Y), con B y C; A = 0 si no hay sitio o sprites (0xE355, maximo 12)
 L_927A:
-	ld hl,0ea98h		;927a
+	ld hl,0ea98h		;927a   ; apunta a el paso del final de la fase 0
 	ld a,(hl)			;927d
 	or a			;927e
 	ret z			;927f
-	ld iy,0e470h		;9280
+	ld iy,0e470h		;9280   ; apunta a las 9 fichas de 16 bytes de 0xE470
 	ld b,009h		;9284
 L_9286:
 	push bc			;9286
@@ -2674,7 +2674,7 @@ L_9286:
 	djnz L_9286		;9294
 	ret			;9296
 L_9297:
-	ld ix,0ea00h		;9297
+	ld ix,0ea00h		;9297   ; apunta a la ficha del jefe
 	ld hl,0ea99h		;929b
 	ld bc,01010h		;929e
 	jp L_91B3		;92a1
@@ -2693,17 +2693,17 @@ L_92A4:
 	cp 028h		;92b8
 	ret nc			;92ba
 	ld a,001h		;92bb
-	ld (0e22bh),a		;92bd
+	ld (0e22bh),a		;92bd   ; guarda la marca de jefe vencido: al interior
 	ret			;92c0
 L_92C1:
-	ld a,(0e439h)		;92c1
+	ld a,(0e439h)		;92c1   ; lee la capsula especial en marcha (con cuenta atras)
 	cp 005h		;92c4
 	jr nz,L_92CD		;92c6
-	ld a,(0e1c3h)		;92c8
+	ld a,(0e1c3h)		;92c8   ; lee la cuenta de cuadros
 	rra			;92cb
 	ret c			;92cc
 L_92CD:
-	ld ix,0e900h		;92cd
+	ld ix,0e900h		;92cd   ; apunta a las 10 fichas de 16 bytes (0xE900-0xE99F)
 	ld b,00ah		;92d1
 L_92D3:
 	ld a,(ix+000h)		;92d3
@@ -2711,7 +2711,7 @@ L_92D3:
 	jr z,L_92EE		;92d7
 	cp 082h		;92d9
 	call z,0b70bh		;92db
-	call 064e1h		;92de
+	call 064e1h		;92de   ; suma_velocidad: IX+03/IX+04 (Y) + IX+07/IX+08 e IX+05/IX+06 (X) + IX+09/IX+0A; luego p01:64F3
 	jr nc,L_92EA		;92e1
 	ld a,(ix+006h)		;92e3
 	cp 0f0h		;92e6
@@ -2724,7 +2724,7 @@ L_92EE:
 	djnz L_92D3		;92f3
 	ret			;92f5
 L_92F6:
-	ld ix,0e900h		;92f6
+	ld ix,0e900h		;92f6   ; apunta a las 10 fichas de 16 bytes (0xE900-0xE99F)
 	ld b,00ah		;92fa
 L_92FC:
 	ld a,(ix+000h)		;92fc
@@ -2743,8 +2743,8 @@ L_930F:
 L_9317:
 	ld l,(ix+004h)		;9317
 	ld h,(ix+006h)		;931a
-	call 05c92h		;931d
-	ld a,(0e201h)		;9320
+	call 05c92h		;931d   ; sitio_en_pantalla: HL = 0xED00 + el caracter de la pantalla de RAM bajo L (Y) y H (X)
+	ld a,(0e201h)		;9320   ; lee la fase (0-11)
 	or a			;9323
 	jr z,L_9335		;9324
 	sub 007h		;9326
@@ -2755,7 +2755,7 @@ L_932C:
 	and a			;932d
 	ret z			;932e
 L_932F:
-	ld a,(0e305h)		;932f
+	ld a,(0e305h)		;932f   ; lee dato de la fase de p01:697A
 	cp (hl)			;9332
 	ccf			;9333
 	ret			;9334
@@ -2771,14 +2771,14 @@ L_933D:
 	ld e,(ix+004h)		;9342
 	ld d,(ix+006h)		;9345
 	call L_93F8		;9348
-	ld de,(0f012h)		;934b
-	call 04efbh		;934f
-	ld de,(0f014h)		;9352
-	jp 04f02h		;9356
+	ld de,(0f012h)		;934b   ; lee variable de paso: la VRAM de origen y el byte siguiente (16 bits)
+	call 04efbh		;934f   ; pon_vy: IX+07/IX+08 = DE
+	ld de,(0f014h)		;9352   ; lee variable de paso: la VRAM de destino y el byte siguiente (16 bits)
+	jp 04f02h		;9356   ; pon_vx: IX+09/IX+0A = DE
 L_9359:
 	call L_9360		;9359
 	ret nc			;935c
-	jp 06514h		;935d
+	jp 06514h		;935d   ; quita_enemigo: quita el enemigo IX: uno menos (0xE352), devuelve sus sprites (0xE355), 0xE36D si es 0x2A, y descuenta su grupo (IX+16, IX+17, p02:89A8)
 L_9360:
 	ld l,(ix+004h)		;9360
 	ld a,(ix+006h)		;9363
@@ -2787,15 +2787,15 @@ L_9360:
 	add a,008h		;936c
 L_936E:
 	ld h,a			;936e
-	call 05c92h		;936f
+	call 05c92h		;936f   ; sitio_en_pantalla: HL = 0xED00 + el caracter de la pantalla de RAM bajo L (Y) y H (X)
 	call L_932C		;9372
 	ret c			;9375
 	ld de,00020h		;9376
 	add hl,de			;9379
 	jp L_932C		;937a
 L_937D:
-	ld (0f012h),bc		;937d
-	ld (0f014h),hl		;9381
+	ld (0f012h),bc		;937d   ; guarda variable de paso: la VRAM de origen y el byte siguiente (16 bits)
+	ld (0f014h),hl		;9381   ; guarda variable de paso: la VRAM de destino y el byte siguiente (16 bits)
 	ld a,e			;9384
 	add a,008h		;9385
 	ld e,a			;9387
@@ -2807,7 +2807,7 @@ L_938F:
 	ld a,e			;938f
 	add a,008h		;9390
 	ld e,a			;9392
-	ld a,(0e228h)		;9393
+	ld a,(0e228h)		;9393   ; lee el nivel de dificultad
 	add a,a			;9396
 	add a,050h		;9397
 	cp 060h		;9399
@@ -2821,11 +2821,11 @@ L_939F:
 	ld a,(0f00eh)		;93a7
 	and a			;93aa
 	ret nz			;93ab
-	ld a,(0e354h)		;93ac
+	ld a,(0e354h)		;93ac   ; lee 0x40 al empezar la fase
 	and a			;93af
 	ret nz			;93b0
 L_93B1:
-	ld hl,0e900h		;93b1
+	ld hl,0e900h		;93b1   ; apunta a las 10 fichas de 16 bytes (0xE900-0xE99F)
 	ld b,00ah		;93b4
 L_93B6:
 	ld a,(hl)			;93b6
@@ -2838,7 +2838,7 @@ L_93B6:
 	ret			;93c0
 L_93C1:
 	ld a,001h		;93c1
-	ld (0e307h),a		;93c3
+	ld (0e307h),a		;93c3   ; guarda la marca de disparo en este cuadro (uno solo)
 	ld (hl),a			;93c6
 	inc l			;93c7
 	inc l			;93c8
@@ -2852,11 +2852,11 @@ L_93C1:
 	inc l			;93d0
 	ld (hl),d			;93d1
 	inc l			;93d2
-	ld de,(0f012h)		;93d3
+	ld de,(0f012h)		;93d3   ; lee variable de paso: la VRAM de origen y el byte siguiente (16 bits)
 	ld (hl),e			;93d7
 	inc l			;93d8
 	ld (hl),d			;93d9
-	ld de,(0f014h)		;93da
+	ld de,(0f014h)		;93da   ; lee variable de paso: la VRAM de destino y el byte siguiente (16 bits)
 	inc l			;93de
 	ld (hl),e			;93df
 	inc l			;93e0
@@ -2882,7 +2882,7 @@ L_93FB:
 L_93FD:
 	ld a,(0f017h)		;93fd
 	ld e,a			;9400
-	ld a,(0e228h)		;9401
+	ld a,(0e228h)		;9401   ; lee el nivel de dificultad
 	cp 007h		;9404
 	jr c,L_9425		;9406
 	dec d			;9408
@@ -2923,27 +2923,27 @@ L_9425:
 	ld (0f016h),a		;9436
 	ld e,c			;9439
 	call L_94BB		;943a
-	ld a,(0f010h)		;943d
+	ld a,(0f010h)		;943d   ; lee variable de paso: la lista
 	and a			;9440
-	call nz,05cadh		;9441
-	ld (0f012h),de		;9444
+	call nz,05cadh		;9441   ; menos_de: DE = - DE
+	ld (0f012h),de		;9444   ; guarda variable de paso: la VRAM de origen y el byte siguiente (16 bits)
 	ld a,(0f016h)		;9448
 	ld e,a			;944b
 	call L_94BB		;944c
 	ld a,(0f011h)		;944f
 	and a			;9452
-	call nz,05cadh		;9453
-	ld (0f014h),de		;9456
+	call nz,05cadh		;9453   ; menos_de: DE = - DE
+	ld (0f014h),de		;9456   ; guarda variable de paso: la VRAM de destino y el byte siguiente (16 bits)
 	ret			;945a
 L_945B:
 	ld a,(0e404h)		;945b
-	ld (0f000h),a		;945e
+	ld (0f000h),a		;945e   ; guarda variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo) o un puntero
 	ld a,(0e406h)		;9461
-	ld (0f001h),a		;9464
+	ld (0f001h),a		;9464   ; guarda variable de paso: cuantos bytes
 L_9467:
-	ld hl,0f010h		;9467
+	ld hl,0f010h		;9467   ; apunta a variable de paso: la lista
 	ld (hl),000h		;946a
-	ld a,(0f000h)		;946c
+	ld a,(0f000h)		;946c   ; lee variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo) o un puntero
 	sub e			;946f
 	jr nc,L_9475		;9470
 	neg		;9472
@@ -2953,7 +2953,7 @@ L_9475:
 	ld (hl),000h		;9476
 	and 0f0h		;9478
 	ld e,a			;947a
-	ld a,(0f001h)		;947b
+	ld a,(0f001h)		;947b   ; lee variable de paso: cuantos bytes
 	sub d			;947e
 	jr nc,L_9484		;947f
 	neg		;9481
@@ -2976,11 +2976,11 @@ L_9492:
 	and 00fh		;9497
 	add a,e			;9499
 	ld hl,094d9h		;949a
-	call 0407ah		;949d
+	call 0407ah		;949d   ; hl_mas_a: HL = HL + A
 	ld a,(hl)			;94a0
 	ld (0f017h),a		;94a1
 	ld c,a			;94a4
-	ld hl,(0f010h)		;94a5
+	ld hl,(0f010h)		;94a5   ; lee variable de paso: la lista y el byte siguiente (16 bits)
 	ld a,h			;94a8
 	ld b,000h		;94a9
 	and a			;94ab
@@ -2993,7 +2993,7 @@ L_94B0:
 	neg		;94b4
 L_94B6:
 	add a,b			;94b6
-	ld (0f018h),a		;94b7
+	ld (0f018h),a		;94b7   ; guarda el angulo calculado
 	ret			;94ba
 L_94BB:
 	ld a,(0f00fh)		;94bb
@@ -3085,7 +3085,7 @@ L_9632:
 	ld a,(ix+002h)		;9632
 	inc a			;9635
 	cp 004h		;9636
-	jp nc,06514h		;9638
+	jp nc,06514h		;9638   ; quita_enemigo: quita el enemigo IX: uno menos (0xE352), devuelve sus sprites (0xE355), 0xE36D si es 0x2A, y descuenta su grupo (IX+16, IX+17, p02:89A8)
 	ld (ix+002h),a		;963b
 	add a,a			;963e
 	ld hl,09621h		;963f
@@ -3099,7 +3099,7 @@ L_9644:
 	and 006h		;964f
 	ld hl,09619h		;9651
 L_9654:
-	call 05ca6h		;9654
+	call 05ca6h		;9654   ; byte_a: A = el byte A de la tabla HL
 	ld (ix+030h),a		;9657
 	inc hl			;965a
 	ld a,(hl)			;965b
@@ -3110,7 +3110,7 @@ L_9660:
 	ld (ix+016h),a		;9661
 	ld a,(ix+00ch)		;9664
 	dec a			;9667
-	jp m,06514h		;9668
+	jp m,06514h		;9668   ; quita_enemigo: quita el enemigo IX: uno menos (0xE352), devuelve sus sprites (0xE355), 0xE36D si es 0x2A, y descuenta su grupo (IX+16, IX+17, p02:89A8)
 	ld bc,02901h		;966b
 	jr z,L_9672		;966e
 	inc b			;9670
@@ -3118,7 +3118,7 @@ L_9660:
 L_9672:
 	ld (ix+000h),b		;9672
 	ld (ix+032h),c		;9675
-	ld hl,0e355h		;9678
+	ld hl,0e355h		;9678   ; apunta a los sprites ocupados por enemigos (maximo 12)
 	dec (hl)			;967b
 	ld (ix+00bh),0c0h		;967c
 	call L_9694		;9680
@@ -3161,7 +3161,7 @@ L_96C1:
 	call L_9696		;96c6
 	ld l,(ix+004h)		;96c9
 	ld h,(ix+006h)		;96cc
-	call 05c92h		;96cf
+	call 05c92h		;96cf   ; sitio_en_pantalla: HL = 0xED00 + el caracter de la pantalla de RAM bajo L (Y) y H (X)
 	xor a			;96d2
 	ld (hl),a			;96d3
 	inc hl			;96d4
@@ -3182,9 +3182,9 @@ L_96E8:
 	ret nz			;96eb
 	ld a,(ix+028h)		;96ec
 	cp 02bh		;96ef
-	jp z,06514h		;96f1
+	jp z,06514h		;96f1   ; quita_enemigo: quita el enemigo IX: uno menos (0xE352), devuelve sus sprites (0xE355), 0xE36D si es 0x2A, y descuenta su grupo (IX+16, IX+17, p02:89A8)
 	dec (ix+02ah)		;96f4
-	jp z,06514h		;96f7
+	jp z,06514h		;96f7   ; quita_enemigo: quita el enemigo IX: uno menos (0xE352), devuelve sus sprites (0xE355), 0xE36D si es 0x2A, y descuenta su grupo (IX+16, IX+17, p02:89A8)
 	ld (ix+000h),02dh		;96fa
 	ld (ix+00bh),0c0h		;96fe
 	set 0,(ix+010h)		;9702
@@ -3236,17 +3236,17 @@ L_974E:
 	sub 008h		;975d
 	ld (ix+006h),a		;975f
 	jr z,$+107		;9762
-	ld a,(0e340h)		;9764
+	ld a,(0e340h)		;9764   ; lee el tipo de jefe (1-5; 0 sin jefe)
 	or a			;9767
 	jr z,L_978E		;9768
 	ld hl,l97b8h		;976a
 	ld a,(ix+002h)		;976d
-	call 05ca6h		;9770
+	call 05ca6h		;9770   ; byte_a: A = el byte A de la tabla HL
 	ld a,(0ea03h)		;9773
 	add a,(hl)			;9776
 	ld (ix+004h),a		;9777
 	cp 0b0h		;977a
-	jp nc,06514h		;977c
+	jp nc,06514h		;977c   ; quita_enemigo: quita el enemigo IX: uno menos (0xE352), devuelve sus sprites (0xE355), 0xE36D si es 0x2A, y descuenta su grupo (IX+16, IX+17, p02:89A8)
 	ld a,(ix+000h)		;977f
 	cp 039h		;9782
 	jr z,L_978E		;9784
@@ -3302,12 +3302,12 @@ L_97CD:
 L_97D2:
 	dec (ix+014h)		;97d2
 	jr nz,$-51		;97d5
-	jp 06514h		;97d7
+	jp 06514h		;97d7   ; quita_enemigo: quita el enemigo IX: uno menos (0xE352), devuelve sus sprites (0xE355), 0xE36D si es 0x2A, y descuenta su grupo (IX+16, IX+17, p02:89A8)
 L_97DA:
 	dec (ix+014h)		;97da
-	jp z,06514h		;97dd
+	jp z,06514h		;97dd   ; quita_enemigo: quita el enemigo IX: uno menos (0xE352), devuelve sus sprites (0xE355), 0xE36D si es 0x2A, y descuenta su grupo (IX+16, IX+17, p02:89A8)
 	call L_97A2		;97e0
-	ld a,(0e320h)		;97e3
+	ld a,(0e320h)		;97e3   ; lee la marca de scroll hecho en este cuadro
 	or a			;97e6
 	ret z			;97e7
 	ld a,(ix+006h)		;97e8
@@ -3316,16 +3316,16 @@ L_97DA:
 	ret nz			;97f0
 	jr L_97CD		;97f1
 L_97F3:
-	ld a,(0e340h)		;97f3
+	ld a,(0e340h)		;97f3   ; lee el tipo de jefe (1-5; 0 sin jefe)
 	or a			;97f6
 	ret nz			;97f7
 	ld l,(ix+004h)		;97f8
 	ld h,(ix+006h)		;97fb
-	call 05c92h		;97fe
+	call 05c92h		;97fe   ; sitio_en_pantalla: HL = 0xED00 + el caracter de la pantalla de RAM bajo L (Y) y H (X)
 	ld a,(hl)			;9801
 	or a			;9802
 	ret z			;9803
-	ld hl,0e305h		;9804
+	ld hl,0e305h		;9804   ; apunta a dato de la fase de p01:697A
 	cp (hl)			;9807
 	ret			;9808
 L_9809:
@@ -3370,7 +3370,7 @@ L_9852:
 	ld b,004h		;9852
 L_9854:
 	dec (ix+014h)		;9854
-	jp z,06514h		;9857
+	jp z,06514h		;9857   ; quita_enemigo: quita el enemigo IX: uno menos (0xE352), devuelve sus sprites (0xE355), 0xE36D si es 0x2A, y descuenta su grupo (IX+16, IX+17, p02:89A8)
 	djnz L_9854		;985a
 	jp L_97A2		;985c
 L_985F:
@@ -3381,9 +3381,9 @@ L_9867:
 	ld (ix+024h),006h		;9867
 	ld (ix+027h),000h		;986b
 	res 2,(ix+010h)		;986f
-	call 04f1ch		;9873
+	call 04f1ch		;9873   ; vy_cero: IX+07/IX+08 = 0
 	ld de,0fe80h		;9876
-	call 04f02h		;9879
+	call 04f02h		;9879   ; pon_vx: IX+09/IX+0A = DE
 	ld (ix+015h),008h		;987c
 	ld a,(ix+019h)		;9880
 	and a			;9883
@@ -3427,7 +3427,7 @@ L_98C3:
 	ret			;98cb
 L_98CC:
 	call L_995D		;98cc
-	call c,04f2ch		;98cf
+	call c,04f2ch		;98cf   ; invierte_vx: IX+09/IX+0A = - IX+09/IX+0A
 	call L_9929		;98d2
 	jr c,L_98F7		;98d5
 	inc (ix+001h)		;98d7
@@ -3442,7 +3442,7 @@ L_98CC:
 	ld h,004h		;98ef
 L_98F1:
 	ld de,00100h		;98f1
-	call 04f26h		;98f4
+	call 04f26h		;98f4   ; pon_vx_y_vy: IX+09/IX+0A = DE y IX+07/IX+08 = HL
 L_98F7:
 	dec (ix+015h)		;98f7
 	ret nz			;98fa
@@ -3454,16 +3454,16 @@ L_9904:
 	ret nc			;9907
 	ld e,(ix+026h)		;9908
 	ld d,(ix+025h)		;990b
-	call 04f02h		;990e
+	call 04f02h		;990e   ; pon_vx: IX+09/IX+0A = DE
 	ld (ix+001h),001h		;9911
-	jp 04f1ch		;9915
+	jp 04f1ch		;9915   ; vy_cero: IX+07/IX+08 = 0
 L_9918:
 	ld a,(ix+006h)		;9918
 	cp 0c0h		;991b
 	ret nz			;991d
 	ld (ix+001h),001h		;991e
 	ld (ix+010h),007h		;9922
-	jp 04f2ch		;9926
+	jp 04f2ch		;9926   ; invierte_vx: IX+09/IX+0A = - IX+09/IX+0A
 L_9929:
 	bit 0,(ix+019h)		;9929
 	ld a,010h		;992d
@@ -3483,7 +3483,7 @@ L_9933:
 	jr nc,L_9956		;9948
 L_994A:
 	ld de,00180h		;994a
-	call 04f02h		;994d
+	call 04f02h		;994d   ; pon_vx: IX+09/IX+0A = DE
 	scf			;9950
 	ret			;9951
 L_9952:
@@ -3568,33 +3568,33 @@ L_99D4:
 	ld (ix+026h),018h		;99d4
 	jr L_99EF		;99d8
 L_99DA:
-	call 0637bh		;99da
+	call 0637bh		;99da   ; azar_rapido: A = R rotado XOR la cuenta de cuadros
 	and 003h		;99dd
 	add a,(ix+02ah)		;99df
 	and 00fh		;99e2
 	jr L_99EB		;99e4
 L_99E6:
-	call 0637bh		;99e6
+	call 0637bh		;99e6   ; azar_rapido: A = R rotado XOR la cuenta de cuadros
 	and 00fh		;99e9
 L_99EB:
 	ld (ix+026h),010h		;99eb
 L_99EF:
 	ld (ix+025h),a		;99ef
 	ld c,a			;99f2
-	ld a,(0e228h)		;99f3
+	ld a,(0e228h)		;99f3   ; lee el nivel de dificultad
 	ld b,001h		;99f6
 	cp 006h		;99f8
 	jr c,L_99FD		;99fa
 	inc b			;99fc
 L_99FD:
 	ld a,c			;99fd
-	call 04cb7h		;99fe
-	jp 04f26h		;9a01
+	call 04cb7h		;99fe   ; velocidad_en_direccion: para la direccion A (0-15) y la rapidez B: HL = B x p00:4CF6[A] y DE = B x p00:4CD6[A]
+	jp 04f26h		;9a01   ; pon_vx_y_vy: IX+09/IX+0A = DE y IX+07/IX+08 = HL
 L_9A04:
 	ld (ix+027h),020h		;9a04
 	ld (ix+024h),004h		;9a08
 	ld (ix+028h),000h		;9a0c
-	jp 04f17h		;9a10
+	jp 04f17h		;9a10   ; vx_cero_y_vy: IX+09/IX+0A = 0 y luego IX+07/IX+08 = DE
 L_9A13:
 	ld a,(ix+031h)		;9a13
 	xor 005h		;9a16
@@ -3621,7 +3621,7 @@ L_9A42:
 	ld a,008h		;9a43
 	push de			;9a45
 	push bc			;9a46
-	call 04d16h		;9a47
+	call 04d16h		;9a47   ; crea_enemigo_ix: crea_enemigo conservando IX
 	pop bc			;9a4a
 	pop de			;9a4b
 	ld a,b			;9a4c
@@ -3633,7 +3633,7 @@ L_9A55:
 	ld b,a			;9a55
 	ld a,008h		;9a56
 	ld c,000h		;9a58
-	call 04d16h		;9a5a
+	call 04d16h		;9a5a   ; crea_enemigo_ix: crea_enemigo conservando IX
 	ld (ix+030h),0c4h		;9a5d
 	inc (ix+001h)		;9a61
 	ld (ix+019h),0ffh		;9a64
@@ -3659,13 +3659,13 @@ L_9A8A:
 	dec (ix+001h)		;9a8e
 	set 2,(ix+010h)		;9a91
 	ld (ix+026h),028h		;9a95
-	ld a,(0e228h)		;9a99
+	ld a,(0e228h)		;9a99   ; lee el nivel de dificultad
 	srl a		;9a9c
 	srl a		;9a9e
 	ld hl,09aaah		;9aa0
-	call 0407ah		;9aa3
+	call 0407ah		;9aa3   ; hl_mas_a: HL = HL + A
 	ld a,(hl)			;9aa6
-	jp 04ecah		;9aa7
+	jp 04ecah		;9aa7   ; rumbo_ix_93e9: IX+07-IX+0A con p02:93E9 desde IX+04/IX+06
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_9AAA: 4 bytes que p02:9A99 lee con 0xE228 / 4; lo leen p02:9AA3
@@ -3684,11 +3684,11 @@ L_9AAE:
 	ld a,(ix+004h)		;9ab2
 	jr z,L_9ABD		;9ab5
 	cp 008h		;9ab7
-	jp c,04f3ch		;9ab9
+	jp c,04f3ch		;9ab9   ; invierte_vy: IX+07/IX+08 = - IX+07/IX+08
 	ret			;9abc
 L_9ABD:
 	cp 0a0h		;9abd
-	jp nc,04f3ch		;9abf
+	jp nc,04f3ch		;9abf   ; invierte_vy: IX+07/IX+08 = - IX+07/IX+08
 	ret			;9ac2
 L_9AC3:
 	ld a,(ix+001h)		;9ac3
@@ -3709,7 +3709,7 @@ L_9AE0:
 	ld (ix+030h),b		;9ae0
 	ret			;9ae3
 L_9AE4:
-	ld a,(0e1c3h)		;9ae4
+	ld a,(0e1c3h)		;9ae4   ; lee la cuenta de cuadros
 	and 003h		;9ae7
 	ret nz			;9ae9
 	ld a,(ix+030h)		;9aea
@@ -3743,7 +3743,7 @@ L_9B1F:
 	dec (ix+026h)		;9b1f
 	ret nz			;9b22
 	ld (ix+026h),008h		;9b23
-	call 04f17h		;9b27
+	call 04f17h		;9b27   ; vx_cero_y_vy: IX+09/IX+0A = 0 y luego IX+07/IX+08 = DE
 	dec (ix+001h)		;9b2a
 	ret			;9b2d
 L_9B2E:
@@ -3760,7 +3760,7 @@ L_9B33:
 	rra			;9b3e
 L_9B3F:
 	and 003h		;9b3f
-	call 05ca6h		;9b41
+	call 05ca6h		;9b41   ; byte_a: A = el byte A de la tabla HL
 	ld (ix+030h),a		;9b44
 	ret			;9b47
 
@@ -3779,22 +3779,22 @@ DATA_tabla_9B48:
 L_9B4C:
 	ld (ix+02bh),008h		;9b4c
 	ld de,0fd00h		;9b50
-	call 04f02h		;9b53
-	jp 04f1ch		;9b56
+	call 04f02h		;9b53   ; pon_vx: IX+09/IX+0A = DE
+	jp 04f1ch		;9b56   ; vy_cero: IX+07/IX+08 = 0
 L_9B59:
 	call L_9B85		;9b59
-	call 06770h		;9b5c
+	call 06770h		;9b5c   ; dispara_al_acabar: IX+15 - 1 y, al llegar a 0, p01:6774
 	call L_9B77		;9b5f
 L_9B62:
 	ld a,(0e404h)		;9b62
 	ld de,00016h		;9b65
 	cp (ix+004h)		;9b68
-	call c,05cadh		;9b6b
+	call c,05cadh		;9b6b   ; menos_de: DE = - DE
 	ex de,hl			;9b6e
-	call 04f10h		;9b6f
+	call 04f10h		;9b6f   ; lee_vy: DE = IX+07/IX+08
 	add hl,de			;9b72
 	ex de,hl			;9b73
-	jp 04efbh		;9b74
+	jp 04efbh		;9b74   ; pon_vy: IX+07/IX+08 = DE
 L_9B77:
 	ld a,(0e406h)		;9b77
 	cp (ix+006h)		;9b7a
@@ -3804,13 +3804,13 @@ L_9B77:
 	jp 0bb44h		;9b82
 L_9B85:
 	ld hl,09b98h		;9b85
-	ld a,(0e201h)		;9b88
+	ld a,(0e201h)		;9b88   ; lee la fase (0-11)
 	cp 004h		;9b8b
 	jr nz,L_9B92		;9b8d
 	ld hl,09b9fh		;9b8f
 L_9B92:
 	ld bc,00307h		;9b92
-	jp 06361h		;9b95
+	jp 06361h		;9b95   ; anima: cada (0xE1C3 & B) = 0, IX+26 + 1 (de 0 a C - 1) y el dibujo IX+30 = IX+32 = HL[IX+26]
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_9B98: dos tablas de 7 bytes (0x9B98, y 0x9B9F en la fase 4) que
@@ -3826,17 +3826,17 @@ DATA_tabla_9B98:
 
 
 L_9BA6:
-	ld a,(0e201h)		;9ba6
+	ld a,(0e201h)		;9ba6   ; lee la fase (0-11)
 	cp 004h		;9ba9
 	jr nz,L_9BB1		;9bab
 	ld (ix+030h),084h		;9bad
 L_9BB1:
-	ld a,(0e228h)		;9bb1
+	ld a,(0e228h)		;9bb1   ; lee el nivel de dificultad
 	srl a		;9bb4
 	srl a		;9bb6
 	ld hl,09bc1h		;9bb8
-	call 05ca6h		;9bbb
-	jp 04ecah		;9bbe
+	call 05ca6h		;9bbb   ; byte_a: A = el byte A de la tabla HL
+	jp 04ecah		;9bbe   ; rumbo_ix_93e9: IX+07-IX+0A con p02:93E9 desde IX+04/IX+06
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_9BC1: 4 bytes que p02:9BB1 lee con 0xE228 / 4; lo leen p02:9BBB
@@ -3851,11 +3851,11 @@ DATA_tabla_9BC1:
 
 
 L_9BC5:
-	ld a,(0e1c3h)		;9bc5
+	ld a,(0e1c3h)		;9bc5   ; lee la cuenta de cuadros
 	and 003h		;9bc8
 	ret nz			;9bca
 	ld hl,09bebh		;9bcb
-	ld a,(0e201h)		;9bce
+	ld a,(0e201h)		;9bce   ; lee la fase (0-11)
 	cp 004h		;9bd1
 	jr nz,L_9BD8		;9bd3
 	ld hl,09bf1h		;9bd5
@@ -3867,7 +3867,7 @@ L_9BD8:
 	xor a			;9be0
 L_9BE1:
 	ld (ix+025h),a		;9be1
-	call 05ca6h		;9be4
+	call 05ca6h		;9be4   ; byte_a: A = el byte A de la tabla HL
 	ld (ix+030h),a		;9be7
 	ret			;9bea
 
@@ -3886,14 +3886,14 @@ DATA_tabla_9BEB:
 
 L_9BF7:
 	ld de,0fe80h		;9bf7
-	call 04f02h		;9bfa
+	call 04f02h		;9bfa   ; pon_vx: IX+09/IX+0A = DE
 	ld de,00800h		;9bfd
 	ld a,(ix+004h)		;9c00
 	cp 060h		;9c03
 	jr c,L_9C09		;9c05
 	ld d,0f8h		;9c07
 L_9C09:
-	jp 04efbh		;9c09
+	jp 04efbh		;9c09   ; pon_vy: IX+07/IX+08 = DE
 L_9C0C:
 	call L_9C40		;9c0c
 	call L_9C36		;9c0f
@@ -3910,12 +3910,12 @@ L_9C22:
 	ld a,048h		;9c25
 L_9C27:
 	cp (ix+004h)		;9c27
-	call c,05cadh		;9c2a
+	call c,05cadh		;9c2a   ; menos_de: DE = - DE
 	ex de,hl			;9c2d
-	call 04f10h		;9c2e
+	call 04f10h		;9c2e   ; lee_vy: DE = IX+07/IX+08
 	add hl,de			;9c31
 	ex de,hl			;9c32
-	jp 04efbh		;9c33
+	jp 04efbh		;9c33   ; pon_vy: IX+07/IX+08 = DE
 L_9C36:
 	ld hl,09c3ch		;9c36
 	jp L_9B31		;9c39
@@ -3933,12 +3933,12 @@ DATA_tabla_9C3C:
 
 
 L_9C40:
-	ld a,(0e228h)		;9c40
+	ld a,(0e228h)		;9c40   ; lee el nivel de dificultad
 	cp 006h		;9c43
 	ret c			;9c45
 	dec (ix+015h)		;9c46
 	ret nz			;9c49
-	call 04e93h		;9c4a
+	call 04e93h		;9c4a   ; azar_por_nivel: A = p00:4EA4[0xE228] + un azar de 0 a 7 (R)
 	jp 0bb44h		;9c4d
 L_9C50:
 	ld (ix+025h),020h		;9c50
@@ -3963,7 +3963,7 @@ L_9C71:
 	xor a			;9c7c
 L_9C7D:
 	ld (ix+027h),a		;9c7d
-	call 05ca6h		;9c80
+	call 05ca6h		;9c80   ; byte_a: A = el byte A de la tabla HL
 	ld (ix+031h),a		;9c83
 	ret			;9c86
 
@@ -3982,21 +3982,21 @@ DATA_tabla_9C87:
 L_9C8D:
 	ld (ix+024h),008h		;9c8d
 	ld (ix+02bh),000h		;9c91
-	ld a,(0e228h)		;9c95
+	ld a,(0e228h)		;9c95   ; lee el nivel de dificultad
 	cp 006h		;9c98
 	ld de,0fa00h		;9c9a
 	jr nc,L_9CA1		;9c9d
 	ld d,0fch		;9c9f
 L_9CA1:
 	ld (ix+02ah),d		;9ca1
-	call 04f02h		;9ca4
-	call 04f1ch		;9ca7
+	call 04f02h		;9ca4   ; pon_vx: IX+09/IX+0A = DE
+	call 04f1ch		;9ca7   ; vy_cero: IX+07/IX+08 = 0
 L_9CAA:
-	ld a,(0e228h)		;9caa
+	ld a,(0e228h)		;9caa   ; lee el nivel de dificultad
 	srl a		;9cad
 	srl a		;9caf
 	ld hl,09cbbh		;9cb1
-	call 05ca6h		;9cb4
+	call 05ca6h		;9cb4   ; byte_a: A = el byte A de la tabla HL
 	ld (ix+02ch),a		;9cb7
 	ret			;9cba
 
@@ -4015,10 +4015,10 @@ DATA_tabla_9CBB:
 L_9CBF:
 	ld a,(ix+006h)		;9cbf
 	cp 008h		;9cc2
-	jp c,06514h		;9cc4
+	jp c,06514h		;9cc4   ; quita_enemigo: quita el enemigo IX: uno menos (0xE352), devuelve sus sprites (0xE355), 0xE36D si es 0x2A, y descuenta su grupo (IX+16, IX+17, p02:89A8)
 	call L_9D59		;9cc7
 	ld hl,09d63h		;9cca
-	ld a,(0e201h)		;9ccd
+	ld a,(0e201h)		;9ccd   ; lee la fase (0-11)
 	cp 005h		;9cd0
 	jr nz,L_9CD7		;9cd2
 	ld hl,09d67h		;9cd4
@@ -4033,7 +4033,7 @@ L_9CD7:
 	ld hl,09d6bh		;9ce5
 	ld a,(ix+02bh)		;9ce8
 	ld c,a			;9ceb
-	call 05ca6h		;9cec
+	call 05ca6h		;9cec   ; byte_a: A = el byte A de la tabla HL
 	cp (ix+006h)		;9cef
 	ret c			;9cf2
 	inc c			;9cf3
@@ -4050,7 +4050,7 @@ L_9D05:
 	ld a,008h		;9d0c
 	ld b,004h		;9d0e
 	ld (ix+027h),a		;9d10
-	jp 04cb7h		;9d13
+	jp 04cb7h		;9d13   ; velocidad_en_direccion: para la direccion A (0-15) y la rapidez B: HL = B x p00:4CF6[A] y DE = B x p00:4CD6[A]
 L_9D16:
 	dec (ix+002h)		;9d16
 	ret nz			;9d19
@@ -4062,13 +4062,13 @@ L_9D16:
 	jr z,L_9D35		;9d28
 	ld (ix+027h),a		;9d2a
 	ld b,004h		;9d2d
-	call 04cb7h		;9d2f
-	jp 04f26h		;9d32
+	call 04cb7h		;9d2f   ; velocidad_en_direccion: para la direccion A (0-15) y la rapidez B: HL = B x p00:4CF6[A] y DE = B x p00:4CD6[A]
+	jp 04f26h		;9d32   ; pon_vx_y_vy: IX+09/IX+0A = DE y IX+07/IX+08 = HL
 L_9D35:
-	call 04f1ch		;9d35
+	call 04f1ch		;9d35   ; vy_cero: IX+07/IX+08 = 0
 	ld d,(ix+02ah)		;9d38
 	ld e,000h		;9d3b
-	call 04f02h		;9d3d
+	call 04f02h		;9d3d   ; pon_vx: IX+09/IX+0A = DE
 	ld (ix+001h),e		;9d40
 	ld a,(ix+02bh)		;9d43
 	dec a			;9d46
@@ -4079,10 +4079,10 @@ L_9D4D:
 	ld de,0ffc8h		;9d4d
 L_9D50:
 	ex de,hl			;9d50
-	call 04f09h		;9d51
+	call 04f09h		;9d51   ; lee_vx: DE = IX+09/IX+0A
 	add hl,de			;9d54
 	ex de,hl			;9d55
-	jp 04f02h		;9d56
+	jp 04f02h		;9d56   ; pon_vx: IX+09/IX+0A = DE
 L_9D59:
 	dec (ix+02ch)		;9d59
 	ret nz			;9d5c
@@ -4114,9 +4114,9 @@ L_9D7A:
 	ld (ix+027h),b		;9d7a
 	ld (ix+030h),c		;9d7d
 	ld (ix+025h),00ah		;9d80
-	call 04f1ch		;9d84
+	call 04f1ch		;9d84   ; vy_cero: IX+07/IX+08 = 0
 	ld de,00200h		;9d87
-	call 04f02h		;9d8a
+	call 04f02h		;9d8a   ; pon_vx: IX+09/IX+0A = DE
 L_9D8D:
 	ld a,r		;9d8d
 	and 01fh		;9d8f
@@ -4127,12 +4127,12 @@ L_9D97:
 	call L_9F46		;9d97
 	jp c,L_893A		;9d9a
 	call L_9F75		;9d9d
-	jp c,06514h		;9da0
+	jp c,06514h		;9da0   ; quita_enemigo: quita el enemigo IX: uno menos (0xE352), devuelve sus sprites (0xE355), 0xE36D si es 0x2A, y descuenta su grupo (IX+16, IX+17, p02:89A8)
 	ld a,(ix+001h)		;9da3
 	dec a			;9da6
 	jr z,L_9DE1		;9da7
 	jp p,L_9E12		;9da9
-	call 06311h		;9dac
+	call 06311h		;9dac   ; hora_de_irse: cada 32 cuadros IX+25 - 1 (C al acabar); si no, C pasado el final del mapa (en la fase 7, en ciertos tramos)
 	jr c,L_9DD3		;9daf
 	dec (ix+002h)		;9db1
 	jr z,L_9DBC		;9db4
@@ -4145,19 +4145,19 @@ L_9DBC:
 	call L_9E17		;9dc6
 	call L_9EB0		;9dc9
 	ld (ix+010h),00bh		;9dcc
-	jp 04f21h		;9dd0
+	jp 04f21h		;9dd0   ; vx_cero: IX+09/IX+0A = 0
 L_9DD3:
 	ld (ix+010h),007h		;9dd3
 	ld (ix+001h),002h		;9dd7
 	ld de,0fe00h		;9ddb
-	jp 04f02h		;9dde
+	jp 04f02h		;9dde   ; pon_vx: IX+09/IX+0A = DE
 L_9DE1:
-	call 06311h		;9de1
+	call 06311h		;9de1   ; hora_de_irse: cada 32 cuadros IX+25 - 1 (C al acabar); si no, C pasado el final del mapa (en la fase 7, en ciertos tramos)
 	jr c,L_9DD3		;9de4
 	dec (ix+002h)		;9de6
 	jr z,L_9DF6		;9de9
 	call L_9EBC		;9deb
-	ld a,(0e201h)		;9dee
+	ld a,(0e201h)		;9dee   ; lee la fase (0-11)
 	or a			;9df1
 	ret nz			;9df2
 	jp L_9E1B		;9df3
@@ -4168,7 +4168,7 @@ L_9DF6:
 	jr nc,L_9E04		;9dff
 	ld de,0fe00h		;9e01
 L_9E04:
-	call 04f02h		;9e04
+	call 04f02h		;9e04   ; pon_vx: IX+09/IX+0A = DE
 L_9E07:
 	ld (ix+010h),007h		;9e07
 	ld (ix+001h),000h		;9e0b
@@ -4207,7 +4207,7 @@ L_9E39:
 	cp 010h		;9e4f
 	jr nc,L_9E39		;9e51
 L_9E53:
-	call 062fbh		;9e53
+	call 062fbh		;9e53   ; invierte_vx_b: IX+09/IX+0A = - IX+09/IX+0A
 	ld (ix+025h),005h		;9e56
 	ld a,(ix+028h)		;9e5a
 	ld (ix+004h),a		;9e5d
@@ -4251,7 +4251,7 @@ L_9E8D:
 	jr nz,L_9E8D		;9ead
 	ret			;9eaf
 L_9EB0:
-	ld a,(0e228h)		;9eb0
+	ld a,(0e228h)		;9eb0   ; lee el nivel de dificultad
 	add a,a			;9eb3
 	sub 03ch		;9eb4
 	neg		;9eb6
@@ -4276,7 +4276,7 @@ L_9EDC:
 	ld e,(ix+004h)		;9edc
 	ld d,(ix+006h)		;9edf
 	call L_945B		;9ee2
-	ld a,(0f018h)		;9ee5
+	ld a,(0f018h)		;9ee5   ; lee el angulo calculado
 	cp 080h		;9ee8
 	jr c,L_9EEE		;9eea
 	neg		;9eec
@@ -4288,7 +4288,7 @@ L_9EF4:
 	sub 008h		;9ef4
 	cp 030h		;9ef6
 	ret nc			;9ef8
-	jp 06774h		;9ef9
+	jp 06774h		;9ef9   ; dispara_si_puede: si nadie ha disparado este cuadro (0xE307), una bala a la nave (p02:938F) y la espera de nuevo al azar
 L_9EFC:
 	ld a,(ix+00ah)		;9efc
 	or a			;9eff
@@ -4303,7 +4303,7 @@ L_9F08:
 	add hl,bc			;9f11
 L_9F12:
 	ld bc,00302h		;9f12
-	jp 06361h		;9f15
+	jp 06361h		;9f15   ; anima: cada (0xE1C3 & B) = 0, IX+26 + 1 (de 0 a C - 1) y el dibujo IX+30 = IX+32 = HL[IX+26]
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_9F18: 4 pares que p02:9EFC lee (0x9F18 o 0x9F1A segun IX+0A, y
@@ -4341,19 +4341,19 @@ L_9F42:
 	ld (ix+030h),b		;9f42
 	ret			;9f45
 L_9F46:
-	ld a,(0e201h)		;9f46
+	ld a,(0e201h)		;9f46   ; lee la fase (0-11)
 	or a			;9f49
 	ret nz			;9f4a
 	ld l,(ix+004h)		;9f4b
 	ld h,(ix+006h)		;9f4e
-	call 05c92h		;9f51
-	ld (0f000h),hl		;9f54
-	ld (0f002h),hl		;9f57
+	call 05c92h		;9f51   ; sitio_en_pantalla: HL = 0xED00 + el caracter de la pantalla de RAM bajo L (Y) y H (X)
+	ld (0f000h),hl		;9f54   ; guarda variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo) o un puntero y el byte siguiente (16 bits)
+	ld (0f002h),hl		;9f57   ; guarda variable de paso: el puntero del mapa y el byte siguiente (16 bits)
 	ld de,002c3h		;9f5a
 	ld bc,00020h		;9f5d
 	call L_9F6C		;9f60
 	ret c			;9f63
-	ld hl,(0f000h)		;9f64
+	ld hl,(0f000h)		;9f64   ; lee variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo) o un puntero y el byte siguiente (16 bits)
 	ld a,l			;9f67
 	and 01fh		;9f68
 	ret z			;9f6a
@@ -4369,15 +4369,15 @@ L_9F6C:
 	cp d			;9f73
 	ret			;9f74
 L_9F75:
-	ld a,(0e201h)		;9f75
+	ld a,(0e201h)		;9f75   ; lee la fase (0-11)
 	or a			;9f78
 	ret nz			;9f79
-	ld a,(0e320h)		;9f7a
+	ld a,(0e320h)		;9f7a   ; lee la marca de scroll hecho en este cuadro
 	or a			;9f7d
 	ret nz			;9f7e
-	ld a,(0e305h)		;9f7f
+	ld a,(0e305h)		;9f7f   ; lee dato de la fase de p01:697A
 	ld c,a			;9f82
-	ld hl,(0f002h)		;9f83
+	ld hl,(0f002h)		;9f83   ; lee variable de paso: el puntero del mapa y el byte siguiente (16 bits)
 	call L_9F98		;9f86
 	ret nc			;9f89
 	inc hl			;9f8a
@@ -4399,24 +4399,24 @@ L_9F9D:
 	and 007h		;9f9f
 	add a,a			;9fa1
 	ld hl,09fcdh		;9fa2
-	call 04b67h		;9fa5
+	call 04b67h		;9fa5   ; palabra_a: DE = la palabra A de la tabla HL (HL apunta a su byte alto)
 	ld a,(ix+004h)		;9fa8
 	or a			;9fab
-	call m,05cadh		;9fac
-	call 04efbh		;9faf
+	call m,05cadh		;9fac   ; menos_de: DE = - DE
+	call 04efbh		;9faf   ; pon_vy: IX+07/IX+08 = DE
 	inc hl			;9fb2
 	ld e,(hl)			;9fb3
 	inc hl			;9fb4
 	ld d,(hl)			;9fb5
 	ld a,r		;9fb6
 	and 001h		;9fb8
-	call nz,05cadh		;9fba
-	call 04f02h		;9fbd
+	call nz,05cadh		;9fba   ; menos_de: DE = - DE
+	call 04f02h		;9fbd   ; pon_vx: IX+09/IX+0A = DE
 	ld de,00088h		;9fc0
 	ld a,(ix+004h)		;9fc3
 	or a			;9fc6
-	call p,05cadh		;9fc7
-	jp 062a8h		;9fca
+	call p,05cadh		;9fc7   ; menos_de: DE = - DE
+	jp 062a8h		;9fca   ; pon_aceleracion: IX+20/IX+21 = DE
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_9FCD: 8 fichas de 4 bytes que p02:9F9D elige al azar (ld a,r &
@@ -4438,9 +4438,9 @@ DATA_tabla_9FCD:
 
 
 L_9FED:
-	call 062c2h		;9fed
+	call 062c2h		;9fed   ; acelera_vy: IX+07/IX+08 + IX+20/IX+21
 	call 0a002h		;9ff0
-	ld a,(0e1c3h)		;9ff3
+	ld a,(0e1c3h)		;9ff3   ; lee la cuenta de cuadros
 	and 003h		;9ff6
 	ret nz			;9ff8
 	ld a,(ix+030h)		;9ff9

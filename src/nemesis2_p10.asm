@@ -17,7 +17,7 @@
 L_A000:
 	ld a,(0e1d7h)		;a000
 	dec a			;a003
-	call 04084h		;a004
+	call 04084h		;a004   ; despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_A007: 31 destinos del despachador p00:4084 (call en p10:A004, el
@@ -39,7 +39,7 @@ DATA_tabla_A007:
 
 L_A045:
 	ld de,002dbh		;a045
-	call 05d89h		;a048
+	call 05d89h		;a048   ; cuadros_desde: C si la cuenta de interrupciones 0xF0F7 no llega a DE
 	jp c,L_A7A2		;a04b
 L_A04E:
 	call L_A056		;a04e
@@ -86,9 +86,9 @@ L_A088:
 	and a			;a08e
 	ret nz			;a08f
 L_A090:
-	call 04a10h		;a090
-	call 05e14h		;a093
-	call 069ceh		;a096
+	call 04a10h		;a090   ; borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
+	call 05e14h		;a093   ; caracteres_5e59: p00:5E64, p01:69F2, p00:5E20 y p01:69F2
+	call 069ceh		;a096   ; caracteres_a16d: con el banco 9, la lista p09:A16D y sus copias (p09:A174 espejo, p09:A187 cabeza abajo); luego p01:69EF
 	ld de,03843h		;a099
 	ld hl,0acabh		;a09c
 	ld c,01bh		;a09f
@@ -100,11 +100,11 @@ L_A090:
 	jr z,L_A0B4		;a0af
 	ld de,0b151h		;a0b1
 L_A0B4:
-	call 04a6bh		;a0b4
+	call 04a6bh		;a0b4   ; escribe_texto: escribe a la VRAM la lista de textos de DE: [direccion][caracteres] con 0xFE = otra direccion y 0xFF = fin
 	jr L_A051		;a0b7
 L_A0B9:
 	ld de,004bbh		;a0b9
-	call 05d89h		;a0bc
+	call 05d89h		;a0bc   ; cuadros_desde: C si la cuenta de interrupciones 0xF0F7 no llega a DE
 	jp nc,L_A04E		;a0bf
 	jp L_A7A2		;a0c2
 L_A0C5:
@@ -113,9 +113,9 @@ L_A0C5:
 	and a			;a0cb
 	ret nz			;a0cc
 	ld (0e496h),a		;a0cd
-	call 04a10h		;a0d0
-	call 05e14h		;a0d3
-	call 069f8h		;a0d6
+	call 04a10h		;a0d0   ; borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
+	call 05e14h		;a0d3   ; caracteres_5e59: p00:5E64, p01:69F2, p00:5E20 y p01:69F2
+	call 069f8h		;a0d6   ; caracteres_a18b: con el banco 9, la lista p09:A18B y sus copias p09:A204; luego p01:69EF
 	ld de,03866h		;a0d9
 	ld hl,0adbdh		;a0dc
 	ld c,015h		;a0df
@@ -127,15 +127,15 @@ L_A0C5:
 	jr z,L_A0F4		;a0ef
 	ld de,0b1aah		;a0f1
 L_A0F4:
-	call 04a6bh		;a0f4
+	call 04a6bh		;a0f4   ; escribe_texto: escribe a la VRAM la lista de textos de DE: [direccion][caracteres] con 0xFE = otra direccion y 0xFF = fin
 L_A0F7:
 	jp L_A051		;a0f7
 L_A0FA:
 	ld de,006d7h		;a0fa
-	call 05d89h		;a0fd
+	call 05d89h		;a0fd   ; cuadros_desde: C si la cuenta de interrupciones 0xF0F7 no llega a DE
 	jp nc,L_A04E		;a100
 	call L_A7A2		;a103
-	ld a,(0e1c3h)		;a106
+	ld a,(0e1c3h)		;a106   ; lee la cuenta de cuadros
 	and 007h		;a109
 	ret nz			;a10b
 	ld a,(0e496h)		;a10c
@@ -153,9 +153,9 @@ L_A124:
 	ld a,(0e490h)		;a127
 	and a			;a12a
 	ret nz			;a12b
-	call 04a10h		;a12c
-	call 05e14h		;a12f
-	call 06a0fh		;a132
+	call 04a10h		;a12c   ; borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
+	call 05e14h		;a12f   ; caracteres_5e59: p00:5E64, p01:69F2, p00:5E20 y p01:69F2
+	call 06a0fh		;a132   ; caracteres_b223: con el banco 12, la lista p12:B223; luego p01:69EF
 	ld de,0382eh		;a135
 	ld hl,0ae67h		;a138
 	ld c,00eh		;a13b
@@ -175,12 +175,12 @@ L_A124:
 	jr z,L_A166		;a161
 	ld de,0b214h		;a163
 L_A166:
-	call 04a6bh		;a166
+	call 04a6bh		;a166   ; escribe_texto: escribe a la VRAM la lista de textos de DE: [direccion][caracteres] con 0xFE = otra direccion y 0xFF = fin
 L_A169:
 	jr L_A0F7		;a169
 L_A16B:
 	ld de,008b7h		;a16b
-	call 05d89h		;a16e
+	call 05d89h		;a16e   ; cuadros_desde: C si la cuenta de interrupciones 0xF0F7 no llega a DE
 	jp c,L_A7A2		;a171
 	jp L_A04E		;a174
 L_A177:
@@ -188,9 +188,9 @@ L_A177:
 	ld a,(0e490h)		;a17a
 	and a			;a17d
 	ret nz			;a17e
-	call 04a10h		;a17f
-	call 05e14h		;a182
-	call 06a1bh		;a185
+	call 04a10h		;a17f   ; borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
+	call 05e14h		;a182   ; caracteres_5e59: p00:5E64, p01:69F2, p00:5E20 y p01:69F2
+	call 06a1bh		;a185   ; caracteres_ac44: con el banco 12, la lista p12:AC44; luego p01:69EF
 	ld de,03801h		;a188
 	ld hl,0afe6h		;a18b
 	ld c,01fh		;a18e
@@ -202,11 +202,11 @@ L_A177:
 	jr z,L_A1A3		;a19e
 	ld de,0b24eh		;a1a0
 L_A1A3:
-	call 04a6bh		;a1a3
+	call 04a6bh		;a1a3   ; escribe_texto: escribe a la VRAM la lista de textos de DE: [direccion][caracteres] con 0xFE = otra direccion y 0xFF = fin
 	jr L_A169		;a1a6
 L_A1A8:
 	ld de,00a5bh		;a1a8
-	call 05d89h		;a1ab
+	call 05d89h		;a1ab   ; cuadros_desde: C si la cuenta de interrupciones 0xF0F7 no llega a DE
 	jp nc,L_A04E		;a1ae
 	jp L_A7A2		;a1b1
 L_A1B4:
@@ -214,8 +214,8 @@ L_A1B4:
 	ld a,(0e490h)		;a1b7
 	and a			;a1ba
 	ret nz			;a1bb
-	call 04a10h		;a1bc
-	call 05e14h		;a1bf
+	call 04a10h		;a1bc   ; borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
+	call 05e14h		;a1bf   ; caracteres_5e59: p00:5E64, p01:69F2, p00:5E20 y p01:69F2
 	ld de,0ab29h		;a1c2
 	call L_A245		;a1c5
 	ld a,(0002bh)		;a1c8
@@ -229,15 +229,15 @@ L_A1B4:
 	jr z,L_A1E3		;a1de
 	ld de,0b29eh		;a1e0
 L_A1E3:
-	call 04a6bh		;a1e3
+	call 04a6bh		;a1e3   ; escribe_texto: escribe a la VRAM la lista de textos de DE: [direccion][caracteres] con 0xFE = otra direccion y 0xFF = fin
 L_A1E6:
 	jr L_A169		;a1e6
 L_A1E8:
 	ld de,00bc3h		;a1e8
-	call 05d89h		;a1eb
+	call 05d89h		;a1eb   ; cuadros_desde: C si la cuenta de interrupciones 0xF0F7 no llega a DE
 	jp nc,L_A04E		;a1ee
 	call L_A7A2		;a1f1
-	ld a,(0e1c3h)		;a1f4
+	ld a,(0e1c3h)		;a1f4   ; lee la cuenta de cuadros
 	bit 3,a		;a1f7
 	jp nz,L_A441		;a1f9
 	ld de,038ach		;a1fc
@@ -249,15 +249,15 @@ L_A207:
 	ld a,(0e490h)		;a20a
 	and a			;a20d
 	ret nz			;a20e
-	call 04a10h		;a20f
-	call 05e14h		;a212
+	call 04a10h		;a20f   ; borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
+	call 05e14h		;a212   ; caracteres_5e59: p00:5E64, p01:69F2, p00:5E20 y p01:69F2
 	ld a,(0002bh)		;a215
 	and 00fh		;a218
 	push af			;a21a
 	call z,L_A242		;a21b
 	pop af			;a21e
 	call nz,L_A2AA		;a21f
-	call 069f8h		;a222
+	call 069f8h		;a222   ; caracteres_a18b: con el banco 9, la lista p09:A18B y sus copias p09:A204; luego p01:69EF
 	ld a,001h		;a225
 	ld hl,01008h		;a227
 	ld b,05fh		;a22a
@@ -269,7 +269,7 @@ L_A207:
 	jr z,L_A23D		;a238
 	ld de,0b332h		;a23a
 L_A23D:
-	call 04a6bh		;a23d
+	call 04a6bh		;a23d   ; escribe_texto: escribe a la VRAM la lista de textos de DE: [direccion][caracteres] con 0xFE = otra direccion y 0xFF = fin
 L_A240:
 	jr L_A1E6		;a240
 L_A242:
@@ -289,7 +289,7 @@ L_A256:
 	ret z			;a258
 	push de			;a259
 	call L_A29E		;a25a
-	ld de,0e500h		;a25d
+	ld de,0e500h		;a25d   ; apunta a las fichas de 16 bytes de los objetos de caracteres
 	ld bc,00008h		;a260
 	call 00059h		;a263   ; BIOS LDIRMV - Block transfers to memory from VRAM
 	pop de			;a266
@@ -298,12 +298,12 @@ L_A256:
 	push de			;a269
 	push de			;a26a
 	call L_A29E		;a26b
-	ld de,0e500h		;a26e
+	ld de,0e500h		;a26e   ; apunta a las fichas de 16 bytes de los objetos de caracteres
 	ld bc,00008h		;a271
 	exx			;a274
 	ld a,(0e49dh)		;a275
 	ld b,a			;a278
-	call 04a3ah		;a279
+	call 04a3ah		;a279   ; copia_a_vram_b_veces: copia BC' bytes de DE' a la VRAM HL B veces, 0x800 mas adelante cada vez
 	pop de			;a27c
 	ld a,(de)			;a27d
 	call L_A29E		;a27e
@@ -317,7 +317,7 @@ L_A256:
 	ld a,(0e49dh)		;a291
 	ld d,a			;a294
 	ld a,0f0h		;a295
-	call 04a4ch		;a297
+	call 04a4ch		;a297   ; rellena_vram_d_veces: rellena BC bytes de la VRAM HL con A, D veces, 0x800 mas adelante cada vez
 L_A29A:
 	pop de			;a29a
 	inc de			;a29b
@@ -333,26 +333,26 @@ L_A29E:
 	ret			;a2a9
 L_A2AA:
 	ld hl,03008h		;a2aa
-	ld de,0e500h		;a2ad
+	ld de,0e500h		;a2ad   ; apunta a las fichas de 16 bytes de los objetos de caracteres
 	ld bc,00128h		;a2b0
 	call 00059h		;a2b3   ; BIOS LDIRMV - Block transfers to memory from VRAM
-	ld de,0e500h		;a2b6
+	ld de,0e500h		;a2b6   ; apunta a las fichas de 16 bytes de los objetos de caracteres
 	ld hl,02b08h		;a2b9
 	ld bc,00128h		;a2bc
 	exx			;a2bf
 	ld b,002h		;a2c0
-	jp 04a3ah		;a2c2
+	jp 04a3ah		;a2c2   ; copia_a_vram_b_veces: copia BC' bytes de DE' a la VRAM HL B veces, 0x800 mas adelante cada vez
 L_A2C5:
 	call L_A7A2		;a2c5
 	ld a,(0e490h)		;a2c8
 	and a			;a2cb
 	ret nz			;a2cc
 	ld de,00c77h		;a2cd
-	call 05d89h		;a2d0
+	call 05d89h		;a2d0   ; cuadros_desde: C si la cuenta de interrupciones 0xF0F7 no llega a DE
 	ret c			;a2d3
 	xor a			;a2d4
 	ld (0e496h),a		;a2d5
-	ld hl,0ed00h		;a2d8
+	ld hl,0ed00h		;a2d8   ; apunta a la pantalla en RAM: la tabla de nombres de 22 filas de 32
 	ld de,0aebdh		;a2db
 	call L_A6EB		;a2de
 	jp L_A240		;a2e1
@@ -360,7 +360,7 @@ L_A2E4:
 	call L_A671		;a2e4
 	ld a,(0e496h)		;a2e7
 	ld de,0a352h		;a2ea
-	call 0407fh		;a2ed
+	call 0407fh		;a2ed   ; de_mas_a: DE = DE + A
 	ld a,(de)			;a2f0
 	call L_A319		;a2f1
 	ld b,002h		;a2f4
@@ -373,7 +373,7 @@ L_A2FC:
 	ld a,(0e497h)		;a2fc
 	ld c,a			;a2ff
 	xor a			;a300
-	ld (0f000h),a		;a301
+	ld (0f000h),a		;a301   ; guarda variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo) o un puntero
 	push hl			;a304
 	push de			;a305
 	push bc			;a306
@@ -382,9 +382,9 @@ L_A2FC:
 	pop de			;a30b
 	pop hl			;a30c
 	ld a,c			;a30d
-	call 0407fh		;a30e
+	call 0407fh		;a30e   ; de_mas_a: DE = DE + A
 	ld a,020h		;a311
-	call 0407ah		;a313
+	call 0407ah		;a313   ; hl_mas_a: HL = HL + A
 	djnz L_A2FC		;a316
 	ret			;a318
 L_A319:
@@ -399,7 +399,7 @@ L_A319:
 	push de			;a328
 	ld a,c			;a329
 	call L_A342		;a32a
-	ld de,0ed00h		;a32d
+	ld de,0ed00h		;a32d   ; apunta a la pantalla en RAM: la tabla de nombres de 22 filas de 32
 	add hl,de			;a330
 	pop de			;a331
 	ex de,hl			;a332
@@ -447,7 +447,7 @@ DATA_tabla_A352:
 
 
 L_A35D:
-	ld a,(0e1c3h)		;a35d
+	ld a,(0e1c3h)		;a35d   ; lee la cuenta de cuadros
 	and 007h		;a360
 	ret nz			;a362
 	ld a,(0e496h)		;a363
@@ -466,11 +466,11 @@ L_A377:
 L_A37C:
 	ld de,01f37h		;a37c
 L_A37F:
-	call 05d89h		;a37f
+	call 05d89h		;a37f   ; cuadros_desde: C si la cuenta de interrupciones 0xF0F7 no llega a DE
 	ret c			;a382
 	jp L_A04E		;a383
 L_A386:
-	ld a,(0e1c3h)		;a386
+	ld a,(0e1c3h)		;a386   ; lee la cuenta de cuadros
 	and 00fh		;a389
 	ret nz			;a38b
 	ld a,(0e496h)		;a38c
@@ -486,11 +486,11 @@ L_A399:
 L_A3A1:
 	ld a,(0e496h)		;a3a1
 	ld de,0b0b7h		;a3a4
-	call 04b60h		;a3a7
+	call 04b60h		;a3a7   ; palabra_a_de: DE = la palabra A de la tabla DE (HL apunta a su byte alto)
 	ex de,hl			;a3aa
 	ld a,(0e496h)		;a3ab
 	ld de,0b0cbh		;a3ae
-	call 0407fh		;a3b1
+	call 0407fh		;a3b1   ; de_mas_a: DE = DE + A
 	ld a,(de)			;a3b4
 	ld b,a			;a3b5
 	ld a,002h		;a3b6
@@ -501,7 +501,7 @@ L_A3A1:
 	ld b,001h		;a3c2
 	jp L_A2F6		;a3c4
 L_A3C7:
-	ld a,(0e1c3h)		;a3c7
+	ld a,(0e1c3h)		;a3c7   ; lee la cuenta de cuadros
 	and 003h		;a3ca
 	ret nz			;a3cc
 	call L_A7A2		;a3cd
@@ -525,11 +525,11 @@ L_A3E1:
 	jr z,L_A3F9		;a3f4
 	ld de,0b34eh		;a3f6
 L_A3F9:
-	call 04a6bh		;a3f9
+	call 04a6bh		;a3f9   ; escribe_texto: escribe a la VRAM la lista de textos de DE: [direccion][caracteres] con 0xFE = otra direccion y 0xFF = fin
 	jp L_A051		;a3fc
 L_A3FF:
 	ld de,00fbfh		;a3ff
-	call 05d89h		;a402
+	call 05d89h		;a402   ; cuadros_desde: C si la cuenta de interrupciones 0xF0F7 no llega a DE
 	jp nc,L_A04E		;a405
 	jp L_A7A2		;a408
 L_A40B:
@@ -537,8 +537,8 @@ L_A40B:
 	ld a,(0e490h)		;a40e
 	and a			;a411
 	ret nz			;a412
-	call 04a10h		;a413
-	call 05e14h		;a416
+	call 04a10h		;a413   ; borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
+	call 05e14h		;a416   ; caracteres_5e59: p00:5E64, p01:69F2, p00:5E20 y p01:69F2
 	call L_A432		;a419
 	call L_A07D		;a41c
 	ld a,(0002bh)		;a41f
@@ -547,17 +547,17 @@ L_A40B:
 	jr z,L_A42C		;a427
 	ld de,0b39fh		;a429
 L_A42C:
-	call 04a6bh		;a42c
+	call 04a6bh		;a42c   ; escribe_texto: escribe a la VRAM la lista de textos de DE: [direccion][caracteres] con 0xFE = otra direccion y 0xFF = fin
 L_A42F:
 	jp L_A051		;a42f
 L_A432:
-	call 05ea3h		;a432
+	call 05ea3h		;a432   ; caracteres_a214: p00:5EA9 y p01:69EF
 L_A435:
 	ld hl,00170h		;a435
 	xor a			;a438
 	ld bc,00008h		;a439
 	ld d,002h		;a43c
-	call 04a4ch		;a43e
+	call 04a4ch		;a43e   ; rellena_vram_d_veces: rellena BC bytes de la VRAM HL con A, D veces, 0x800 mas adelante cada vez
 L_A441:
 	ld hl,0af6dh		;a441
 	ld de,03885h		;a444
@@ -573,9 +573,9 @@ L_A44C:
 	jr L_A42F		;a458
 L_A45A:
 	ld de,0128fh		;a45a
-	call 05d89h		;a45d
+	call 05d89h		;a45d   ; cuadros_desde: C si la cuenta de interrupciones 0xF0F7 no llega a DE
 	jp nc,L_A515		;a460
-	ld a,(0e1c3h)		;a463
+	ld a,(0e1c3h)		;a463   ; lee la cuenta de cuadros
 	and 007h		;a466
 	ret nz			;a468
 	call L_A474		;a469
@@ -601,7 +601,7 @@ L_A488:
 	call L_A4B4		;a48b
 	jr L_A4C3		;a48e
 L_A490:
-	ld a,(0e1c3h)		;a490
+	ld a,(0e1c3h)		;a490   ; lee la cuenta de cuadros
 	and 007h		;a493
 	ret nz			;a495
 	call L_A4DF		;a496
@@ -640,7 +640,7 @@ L_A4D2:
 	ld hl,0b14eh		;a4d2
 	jr L_A4AF		;a4d5
 L_A4D7:
-	ld a,(0e1c3h)		;a4d7
+	ld a,(0e1c3h)		;a4d7   ; lee la cuenta de cuadros
 	rrca			;a4da
 	rrca			;a4db
 	rrca			;a4dc
@@ -652,7 +652,7 @@ L_A4DF:
 	ld c,a			;a4e5
 	add a,a			;a4e6
 	add a,c			;a4e7
-	call 0407fh		;a4e8
+	call 0407fh		;a4e8   ; de_mas_a: DE = DE + A
 	ld a,(de)			;a4eb
 	ld b,a			;a4ec
 	inc de			;a4ed
@@ -686,11 +686,11 @@ L_A520:
 	push de			;a523
 	call L_A07D		;a524
 	pop de			;a527
-	call 04a6bh		;a528
+	call 04a6bh		;a528   ; escribe_texto: escribe a la VRAM la lista de textos de DE: [direccion][caracteres] con 0xFE = otra direccion y 0xFF = fin
 	jp L_A051		;a52b
 L_A52E:
 	ld de,014abh		;a52e
-	call 05d89h		;a531
+	call 05d89h		;a531   ; cuadros_desde: C si la cuenta de interrupciones 0xF0F7 no llega a DE
 	jr nc,L_A53C		;a534
 	call L_A7A2		;a536
 	jp L_A485		;a539
@@ -703,12 +703,12 @@ L_A53C:
 	jr L_A520		;a54a
 L_A54C:
 	ld de,017f3h		;a54c
-	call 05d89h		;a54f
+	call 05d89h		;a54f   ; cuadros_desde: C si la cuenta de interrupciones 0xF0F7 no llega a DE
 	jp nc,L_A04E		;a552
 	jp L_A7A2		;a555
 L_A558:
-	call 04a10h		;a558
-	call 05e14h		;a55b
+	call 04a10h		;a558   ; borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
+	call 05e14h		;a55b   ; caracteres_5e59: p00:5E64, p01:69F2, p00:5E20 y p01:69F2
 	call L_BFC1		;a55e
 L_A561:
 	ld hl,0b586h		;a561
@@ -717,8 +717,8 @@ L_A561:
 	call L_A67B		;a569
 	jp L_A07D		;a56c
 L_A56F:
-	call 04a10h		;a56f
-	call 05e0ch		;a572
+	call 04a10h		;a56f   ; borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
+	call 05e0ch		;a572   ; caracteres_5e5f: p00:5E64, p00:5E20 y p00:5D97
 	call L_BFCA		;a575
 	jr L_A561		;a578
 L_A57A:
@@ -733,11 +733,11 @@ L_A57A:
 	jr z,L_A592		;a58d
 	ld de,0b3f0h		;a58f
 L_A592:
-	call 04a6bh		;a592
+	call 04a6bh		;a592   ; escribe_texto: escribe a la VRAM la lista de textos de DE: [direccion][caracteres] con 0xFE = otra direccion y 0xFF = fin
 	jp L_A051		;a595
 L_A598:
 	ld de,01ca3h		;a598
-	call 05d89h		;a59b
+	call 05d89h		;a59b   ; cuadros_desde: C si la cuenta de interrupciones 0xF0F7 no llega a DE
 	jp nc,L_A04E		;a59e
 	jp L_A7A2		;a5a1
 L_A5A4:
@@ -750,29 +750,29 @@ L_A5AE:
 	ld a,(0e490h)		;a5b1
 	and a			;a5b4
 	ret nz			;a5b5
-	call 04a10h		;a5b6
-	call 05e14h		;a5b9
-	call 05ed7h		;a5bc
+	call 04a10h		;a5b6   ; borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
+	call 05e14h		;a5b9   ; caracteres_5e59: p00:5E64, p01:69F2, p00:5E20 y p01:69F2
+	call 05ed7h		;a5bc   ; caracteres_a143: p00:5EE1 y p01:69EF
 	xor a			;a5bf
 	ld (0e496h),a		;a5c0
 	call L_A051		;a5c3
-	ld hl,0ed00h		;a5c6
+	ld hl,0ed00h		;a5c6   ; apunta a la pantalla en RAM: la tabla de nombres de 22 filas de 32
 	ld de,0b06fh		;a5c9
 	call L_A6EB		;a5cc
 L_A5CF:
 	ld hl,0b0d5h		;a5cf
-	ld (0f000h),hl		;a5d2
+	ld (0f000h),hl		;a5d2   ; guarda variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo) o un puntero y el byte siguiente (16 bits)
 	ld hl,00809h		;a5d5
-	ld (0f002h),hl		;a5d8
+	ld (0f002h),hl		;a5d8   ; guarda variable de paso: el puntero del mapa y el byte siguiente (16 bits)
 	ld hl,00201h		;a5db
-	ld (0f004h),hl		;a5de
+	ld (0f004h),hl		;a5de   ; guarda variable de paso y el byte siguiente (16 bits)
 	ld hl,0b0dbh		;a5e1
 	ld (0f006h),hl		;a5e4
 	ld a,008h		;a5e7
 	ld (0f008h),a		;a5e9
 	jp L_B685		;a5ec
 L_A5EF:
-	ld a,(0e1c3h)		;a5ef
+	ld a,(0e1c3h)		;a5ef   ; lee la cuenta de cuadros
 	and 003h		;a5f2
 	ret nz			;a5f4
 	call L_A7A2		;a5f5
@@ -795,11 +795,11 @@ L_A611:
 	jr z,L_A621		;a61c
 	ld de,0b41dh		;a61e
 L_A621:
-	call 04a6bh		;a621
+	call 04a6bh		;a621   ; escribe_texto: escribe a la VRAM la lista de textos de DE: [direccion][caracteres] con 0xFE = otra direccion y 0xFF = fin
 	jp L_A051		;a624
 L_A627:
 	ld de,01febh		;a627
-	call 05d89h		;a62a
+	call 05d89h		;a62a   ; cuadros_desde: C si la cuenta de interrupciones 0xF0F7 no llega a DE
 	jp c,L_A7A2		;a62d
 	jp L_A04E		;a630
 L_A633:
@@ -807,25 +807,25 @@ L_A633:
 	ld a,(0e490h)		;a636
 	and a			;a639
 	ret nz			;a63a
-	call 04a10h		;a63b
+	call 04a10h		;a63b   ; borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
 	xor a			;a63e
 	ld (0e1d7h),a		;a63f
 	ret			;a642
 L_A643:
 	ld a,03fh		;a643
-	call 04ae4h		;a645
+	call 04ae4h		;a645   ; sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
 	ld hl,00000h		;a648
-	ld (0f0f7h),hl		;a64b
+	ld (0f0f7h),hl		;a64b   ; guarda la cuenta de interrupciones (16 bits)
 	ld a,(0002bh)		;a64e
 	and 00fh		;a651
 	jr nz,L_A669		;a653
 	ld a,001h		;a655
 	ld (0e1d7h),a		;a657
-	call 04a10h		;a65a
-	call 05e14h		;a65d
+	call 04a10h		;a65a   ; borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
+	call 05e14h		;a65d   ; caracteres_5e59: p00:5E64, p01:69F2, p00:5E20 y p01:69F2
 	call L_A076		;a660
 	ld de,0a8b9h		;a663
-	jp 04a6bh		;a666
+	jp 04a6bh		;a666   ; escribe_texto: escribe a la VRAM la lista de textos de DE: [direccion][caracteres] con 0xFE = otra direccion y 0xFF = fin
 L_A669:
 	ld a,002h		;a669
 	ld (0e1d7h),a		;a66b
@@ -837,9 +837,9 @@ L_A671:
 	jp 00056h		;a678   ; BIOS FILVRM - Fills VRAM with value
 L_A67B:
 	ld a,c			;a67b
-	ld (0f000h),a		;a67c
+	ld (0f000h),a		;a67c   ; guarda variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo) o un puntero
 	ex de,hl			;a67f
-	ld (0f001h),hl		;a680
+	ld (0f001h),hl		;a680   ; guarda variable de paso: cuantos bytes y el byte siguiente (16 bits)
 L_A683:
 	ld a,(de)			;a683
 	inc de			;a684
@@ -858,7 +858,7 @@ L_A691:
 	inc hl			;a697
 	dec c			;a698
 	call z,L_A6B7		;a699
-	ld a,(0f000h)		;a69c
+	ld a,(0f000h)		;a69c   ; lee variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo) o un puntero
 	and a			;a69f
 	jr z,L_A691		;a6a0
 	inc a			;a6a2
@@ -878,11 +878,11 @@ L_A6B4:
 	jr L_A683		;a6b5
 L_A6B7:
 	push af			;a6b7
-	ld hl,(0f001h)		;a6b8
+	ld hl,(0f001h)		;a6b8   ; lee variable de paso: cuantos bytes y el byte siguiente (16 bits)
 	ld a,020h		;a6bb
-	call 0407ah		;a6bd
-	ld (0f001h),hl		;a6c0
-	ld a,(0f000h)		;a6c3
+	call 0407ah		;a6bd   ; hl_mas_a: HL = HL + A
+	ld (0f001h),hl		;a6c0   ; guarda variable de paso: cuantos bytes y el byte siguiente (16 bits)
+	ld a,(0f000h)		;a6c3   ; lee variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo) o un puntero
 	and a			;a6c6
 	jr z,L_A6CC		;a6c7
 	ld c,a			;a6c9
@@ -890,7 +890,7 @@ L_A6B7:
 	ret			;a6cb
 L_A6CC:
 	pop af			;a6cc
-	ld hl,0f000h		;a6cd
+	ld hl,0f000h		;a6cd   ; apunta a variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo) o un puntero
 	dec (hl)			;a6d0
 	ret			;a6d1
 L_A6D2:
@@ -966,7 +966,7 @@ L_A717:
 	inc a			;a729
 	ld (0e490h),a		;a72a
 	ld a,(0e495h)		;a72d
-	call 04084h		;a730
+	call 04084h		;a730   ; despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_A733: 4 destinos del despachador p00:4084 (call en p10:A730, el
@@ -996,7 +996,7 @@ L_A74D:
 	ld d,a			;a756
 L_A757:
 	xor a			;a757
-	jp 04a4ch		;a758
+	jp 04a4ch		;a758   ; rellena_vram_d_veces: rellena BC bytes de la VRAM HL con A, D veces, 0x800 mas adelante cada vez
 L_A75B:
 	call L_A771		;a75b
 	ld hl,(0e49ah)		;a75e
@@ -1019,12 +1019,12 @@ L_A771:
 L_A776:
 	call L_A765		;a776
 	ld hl,(0e492h)		;a779
-	ld de,0e500h		;a77c
+	ld de,0e500h		;a77c   ; apunta a las fichas de 16 bytes de los objetos de caracteres
 	jp 00059h		;a77f   ; BIOS LDIRMV - Block transfers to memory from VRAM
 L_A782:
 	call L_A771		;a782
 	ld hl,(0e49ah)		;a785
-	ld de,0e800h		;a788
+	ld de,0e800h		;a788   ; apunta a el bufer de colores al cargar caracteres
 	jp 00059h		;a78b   ; BIOS LDIRMV - Block transfers to memory from VRAM
 L_A78E:
 	ret			;a78e
@@ -1044,7 +1044,7 @@ L_A7A2:
 	and a			;a7a5
 	ret z			;a7a6
 	ld a,(0e495h)		;a7a7
-	call 04084h		;a7aa
+	call 04084h		;a7aa   ; despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_A7AD: 4 destinos del despachador p00:4084 (call en p10:A7AA, el
@@ -1067,12 +1067,12 @@ L_A7BC:
 	push bc			;a7bd
 	ld a,(0e491h)		;a7be
 	and 007h		;a7c1
-	call 0407ah		;a7c3
+	call 0407ah		;a7c3   ; hl_mas_a: HL = HL + A
 	ld bc,00001h		;a7c6
 	ld a,(0e4a0h)		;a7c9
 	ld d,a			;a7cc
 	xor a			;a7cd
-	call 04a4ch		;a7ce
+	call 04a4ch		;a7ce   ; rellena_vram_d_veces: rellena BC bytes de la VRAM HL con A, D veces, 0x800 mas adelante cada vez
 	pop bc			;a7d1
 	ld de,00008h		;a7d2
 	pop hl			;a7d5
@@ -1092,7 +1092,7 @@ L_A7EA:
 	ld hl,(0e492h)		;a7ea
 	ld a,(0e494h)		;a7ed
 	ld b,a			;a7f0
-	ld de,0e500h		;a7f1
+	ld de,0e500h		;a7f1   ; apunta a las fichas de 16 bytes de los objetos de caracteres
 L_A7F4:
 	push bc			;a7f4
 	push de			;a7f5
@@ -1102,7 +1102,7 @@ L_A7F4:
 	exx			;a7fd
 	ld a,(0e4a0h)		;a7fe
 	ld b,a			;a801
-	call 04a3ah		;a802
+	call 04a3ah		;a802   ; copia_a_vram_b_veces: copia BC' bytes de DE' a la VRAM HL B veces, 0x800 mas adelante cada vez
 	ld bc,00008h		;a805
 	pop hl			;a808
 	add hl,bc			;a809
@@ -1122,7 +1122,7 @@ L_A81D:
 	ld hl,(0e492h)		;a81d
 	ld a,(0e494h)		;a820
 	ld b,a			;a823
-	ld de,0e500h		;a824
+	ld de,0e500h		;a824   ; apunta a las fichas de 16 bytes de los objetos de caracteres
 	ld a,(0e491h)		;a827
 	call L_A838		;a82a
 	ld a,(0e491h)		;a82d
@@ -1138,7 +1138,7 @@ L_A838:
 	call L_A855		;a83c
 	exx			;a83f
 	ld b,002h		;a840
-	call 04a3ah		;a842
+	call 04a3ah		;a842   ; copia_a_vram_b_veces: copia BC' bytes de DE' a la VRAM HL B veces, 0x800 mas adelante cada vez
 	ld bc,00008h		;a845
 	pop hl			;a848
 	add hl,bc			;a849
@@ -1153,9 +1153,9 @@ L_A838:
 L_A855:
 	and 007h		;a855
 	ld c,a			;a857
-	call 0407ah		;a858
+	call 0407ah		;a858   ; hl_mas_a: HL = HL + A
 	ld a,c			;a85b
-	call 0407fh		;a85c
+	call 0407fh		;a85c   ; de_mas_a: DE = DE + A
 	ld bc,00001h		;a85f
 	ret			;a862
 L_A863:
@@ -1165,7 +1165,7 @@ L_A863:
 	ld hl,(0e49ah)		;a868
 	ld a,(0e49ch)		;a86b
 	ld b,a			;a86e
-	ld de,0e800h		;a86f
+	ld de,0e800h		;a86f   ; apunta a el bufer de colores al cargar caracteres
 	ld a,(0e499h)		;a872
 	call L_A838		;a875
 	ld a,(0e499h)		;a878
@@ -1180,25 +1180,25 @@ L_A884:
 	ret			;a888
 L_A889:
 	ld bc,00080h		;a889
-	ld hl,0e280h		;a88c
+	ld hl,0e280h		;a88c   ; apunta a los atributos de los 32 sprites (Y, X, dibujo, color)
 	ld de,03b00h		;a88f
 	jp 0005ch		;a892   ; BIOS LDIRVM - Block transfers to VRAM from memory
 L_A895:
-	ld hl,0ed00h		;a895
+	ld hl,0ed00h		;a895   ; apunta a la pantalla en RAM: la tabla de nombres de 22 filas de 32
 	ld de,0ed01h		;a898
 	ld bc,002ffh		;a89b
 	xor a			;a89e
 	ld (hl),a			;a89f
 	ldir		;a8a0
-	ld hl,0ed00h		;a8a2
+	ld hl,0ed00h		;a8a2   ; apunta a la pantalla en RAM: la tabla de nombres de 22 filas de 32
 	ld de,0efc0h		;a8a5
 	ld bc,00040h		;a8a8
 	ldir		;a8ab
 L_A8AD:
 	ld bc,00300h		;a8ad
 	ld hl,03800h		;a8b0
-	ld de,0ed00h		;a8b3
-	jp 04a33h		;a8b6
+	ld de,0ed00h		;a8b3   ; apunta a la pantalla en RAM: la tabla de nombres de 22 filas de 32
+	jp 04a33h		;a8b6   ; copia_a_vram: copia BC bytes de DE a la VRAM HL (LDIRVM)
 
 ; ----------------------------------------------------------------------
 ; DATOS lista_A8B9: lista a la VRAM (p00:4A6B: [destino] y bytes; 0xFE otro
@@ -1681,30 +1681,30 @@ L_B64F:
 	ld (0e1d7h),a		;b651
 	xor a			;b654
 	ld (0e496h),a		;b655
-	call 04c76h		;b658
+	call 04c76h		;b658   ; esconde_sprites: los 32 sprites de 0xE280 con Y = 0xE0 (fuera de la pantalla)
 	call L_A889		;b65b
 	call L_B641		;b65e
 	ex de,hl			;b661
-	ld hl,0ed00h		;b662
+	ld hl,0ed00h		;b662   ; apunta a la pantalla en RAM: la tabla de nombres de 22 filas de 32
 	call L_A6EB		;b665
 L_B668:
 	ld hl,0b8e6h		;b668
-	ld (0f000h),hl		;b66b
+	ld (0f000h),hl		;b66b   ; guarda variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo) o un puntero y el byte siguiente (16 bits)
 	ld hl,00307h		;b66e
-	ld (0f002h),hl		;b671
+	ld (0f002h),hl		;b671   ; guarda variable de paso: el puntero del mapa y el byte siguiente (16 bits)
 	ld hl,00500h		;b674
-	ld (0f004h),hl		;b677
+	ld (0f004h),hl		;b677   ; guarda variable de paso y el byte siguiente (16 bits)
 	ld hl,0b8d7h		;b67a
 	ld (0f006h),hl		;b67d
 	ld a,003h		;b680
 	ld (0f008h),a		;b682
 L_B685:
-	ld hl,(0f000h)		;b685
+	ld hl,(0f000h)		;b685   ; lee variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo) o un puntero y el byte siguiente (16 bits)
 	call L_B700		;b688
 	call L_A73B		;b68b
 	ld a,(0e496h)		;b68e
 	ld c,a			;b691
-	ld hl,0f002h		;b692
+	ld hl,0f002h		;b692   ; apunta a variable de paso: el puntero del mapa
 	add a,(hl)			;b695
 	call L_A334		;b696
 	call L_B6F3		;b699
@@ -1721,33 +1721,33 @@ L_B685:
 	call L_A717		;b6b1
 	ld a,(0e496h)		;b6b4
 	ld c,a			;b6b7
-	ld a,(0f005h)		;b6b8
+	ld a,(0f005h)		;b6b8   ; lee variable de paso: el puntero de la ficha
 	dec a			;b6bb
 	sub c			;b6bc
 	ld c,a			;b6bd
-	ld hl,0f005h		;b6be
-	ld a,(0f002h)		;b6c1
+	ld hl,0f005h		;b6be   ; apunta a variable de paso: el puntero de la ficha
+	ld a,(0f002h)		;b6c1   ; lee variable de paso: el puntero del mapa
 	sub (hl)			;b6c4
 	add a,c			;b6c5
 	call L_A334		;b6c6
 	call L_B6F3		;b6c9
 	push de			;b6cc
 	call L_B6E5		;b6cd
-	ld de,0ed00h		;b6d0
+	ld de,0ed00h		;b6d0   ; apunta a la pantalla en RAM: la tabla de nombres de 22 filas de 32
 	add hl,de			;b6d3
 	pop de			;b6d4
 L_B6D5:
 	ex de,hl			;b6d5
 	ld b,001h		;b6d6
 	ld c,01ah		;b6d8
-	ld a,(0f004h)		;b6da
+	ld a,(0f004h)		;b6da   ; lee variable de paso
 	and a			;b6dd
 	jr z,L_B6E2		;b6de
 	ld c,010h		;b6e0
 L_B6E2:
 	jp L_A2F8		;b6e2
 L_B6E5:
-	ld a,(0f004h)		;b6e5
+	ld a,(0f004h)		;b6e5   ; lee variable de paso
 	and a			;b6e8
 	ld a,c			;b6e9
 	push af			;b6ea
@@ -1769,7 +1769,7 @@ L_B700:
 	ld c,a			;b703
 	add a,a			;b704
 	add a,c			;b705
-	call 0407ah		;b706
+	call 0407ah		;b706   ; hl_mas_a: HL = HL + A
 	ld b,(hl)			;b709
 	inc hl			;b70a
 	ld e,(hl)			;b70b
@@ -1779,14 +1779,14 @@ L_B700:
 	ret			;b70f
 L_B710:
 	push hl			;b710
-	ld a,(0f004h)		;b711
+	ld a,(0f004h)		;b711   ; lee variable de paso
 	and a			;b714
-	ld a,(0f005h)		;b715
+	ld a,(0f005h)		;b715   ; lee variable de paso: el puntero de la ficha
 	push af			;b718
 	call z,L_B727		;b719
 	pop af			;b71c
 	call nz,L_A33D		;b71d
-	ld de,0ed00h		;b720
+	ld de,0ed00h		;b720   ; apunta a la pantalla en RAM: la tabla de nombres de 22 filas de 32
 	add hl,de			;b723
 	ex de,hl			;b724
 	pop hl			;b725
@@ -1831,7 +1831,7 @@ L_B75B:
 	ld b,02ch		;b75f
 	ld hl,00080h		;b761
 	call L_A717		;b764
-	call 061c1h		;b767
+	call 061c1h		;b767   ; textos_del_titulo: KONAMI 1987, PLAY SELECT y 1PLAYER (estados 0-1), o KONAMI PRESENTS THE GRADIUS/NEMESIS SAGA CONTINUES...
 	ld hl,0e1d7h		;b76a
 	inc (hl)			;b76d
 	ret			;b76e
@@ -1844,13 +1844,13 @@ L_B76F:
 	ld (0e1d7h),a		;b778
 	ret			;b77b
 L_B77C:
-	call 04c76h		;b77c
+	call 04c76h		;b77c   ; esconde_sprites: los 32 sprites de 0xE280 con Y = 0xE0 (fuera de la pantalla)
 	call L_A889		;b77f
 	ld hl,0b8fch		;b782
 	ld de,03b00h		;b785
 	ld bc,00008h		;b788
 	call 0005ch		;b78b   ; BIOS LDIRVM - Block transfers to VRAM from memory
-	ld a,(0e1c3h)		;b78e
+	ld a,(0e1c3h)		;b78e   ; lee la cuenta de cuadros
 	bit 2,a		;b791
 	jp z,L_B636		;b793
 	ld de,038ech		;b796
@@ -1967,9 +1967,9 @@ DATA_lista_B959:
 
 
 L_B993:
-	ld a,(0e1e6h)		;b993
+	ld a,(0e1e6h)		;b993   ; lee la marca del final (estado 10)
 	dec a			;b996
-	call 04084h		;b997
+	call 04084h		;b997   ; despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_B99A: 14 destinos del despachador p00:4084 (call en p10:B997, el
@@ -1998,11 +1998,11 @@ L_B9B6:
 	ret			;b9ce
 L_B9CF:
 	ld a,(0e496h)		;b9cf
-	call 04b67h		;b9d2
+	call 04b67h		;b9d2   ; palabra_a: DE = la palabra A de la tabla HL (HL apunta a su byte alto)
 	ld a,(de)			;b9d5
 	and a			;b9d6
 	jp z,L_B9E5		;b9d7
-	call 04a6bh		;b9da
+	call 04a6bh		;b9da   ; escribe_texto: escribe a la VRAM la lista de textos de DE: [direccion][caracteres] con 0xFE = otra direccion y 0xFF = fin
 L_B9DD:
 	ld a,(0e496h)		;b9dd
 	inc a			;b9e0
@@ -2018,10 +2018,10 @@ L_B9F0:
 	ret nz			;b9f3
 L_B9F4:
 	ld a,028h		;b9f4
-	call 04ae4h		;b9f6
+	call 04ae4h		;b9f6   ; sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
 	call L_A5A4		;b9f9
 	ld de,094c4h		;b9fc
-	call 04a6bh		;b9ff
+	call 04a6bh		;b9ff   ; escribe_texto: escribe a la VRAM la lista de textos de DE: [direccion][caracteres] con 0xFE = otra direccion y 0xFF = fin
 	jp L_BB9D		;ba02
 L_BA05:
 	call L_BA7E		;ba05
@@ -2038,11 +2038,11 @@ L_BA19:
 	call L_B9CF		;ba1f
 	cp 007h		;ba22
 	ret nz			;ba24
-	call 04a10h		;ba25
-	call 05e9ah		;ba28
+	call 04a10h		;ba25   ; borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
+	call 05e9ah		;ba28   ; caracteres_a214_y_borra: p00:5EA9, p00:5D97 y p10:A435
 	call L_A07D		;ba2b
 	ld de,09317h		;ba2e
-	call 04a6bh		;ba31
+	call 04a6bh		;ba31   ; escribe_texto: escribe a la VRAM la lista de textos de DE: [direccion][caracteres] con 0xFE = otra direccion y 0xFF = fin
 	ld a,00eh		;ba34
 	ld (0e496h),a		;ba36
 	ld hl,006cch		;ba39
@@ -2052,7 +2052,7 @@ L_BA3F:
 	jr z,L_BA5E		;ba42
 	call L_A7A2		;ba44
 	call L_A488		;ba47
-	ld a,(0e1c3h)		;ba4a
+	ld a,(0e1c3h)		;ba4a   ; lee la cuenta de cuadros
 	and 007h		;ba4d
 	ret nz			;ba4f
 	call L_A4DF		;ba50
@@ -2066,7 +2066,7 @@ L_BA5E:
 	call L_A5A4		;ba5e
 	call L_A07D		;ba61
 	ld de,09361h		;ba64
-	call 04a6bh		;ba67
+	call 04a6bh		;ba67   ; escribe_texto: escribe a la VRAM la lista de textos de DE: [direccion][caracteres] con 0xFE = otra direccion y 0xFF = fin
 	ld hl,00690h		;ba6a
 	jp L_BBA4		;ba6d
 L_BA70:
@@ -2080,17 +2080,17 @@ L_BA7E:
 	ld de,094c4h		;ba7e
 	ld hl,0e49eh		;ba81
 	bit 3,(hl)		;ba84
-	jp z,04a6bh		;ba86
-	jp 04a82h		;ba89
+	jp z,04a6bh		;ba86   ; escribe_texto: escribe a la VRAM la lista de textos de DE: [direccion][caracteres] con 0xFE = otra direccion y 0xFF = fin
+	jp 04a82h		;ba89   ; borra_texto: lo mismo que escribe_texto pero con ceros: borra los textos de la lista DE
 L_BA8C:
 	ld de,094d1h		;ba8c
-	ld a,(0e1c3h)		;ba8f
+	ld a,(0e1c3h)		;ba8f   ; lee la cuenta de cuadros
 	and 07fh		;ba92
 	cp 064h		;ba94
-	jp c,04a6bh		;ba96
-	jp 04a82h		;ba99
+	jp c,04a6bh		;ba96   ; escribe_texto: escribe a la VRAM la lista de textos de DE: [direccion][caracteres] con 0xFE = otra direccion y 0xFF = fin
+	jp 04a82h		;ba99   ; borra_texto: lo mismo que escribe_texto pero con ceros: borra los textos de la lista DE
 L_BA9C:
-	ld a,(0e0a0h)		;ba9c
+	ld a,(0e0a0h)		;ba9c   ; lee la musica que suena
 	and a			;ba9f
 	jr z,L_BAAB		;baa0
 	ld hl,0e49eh		;baa2
@@ -2099,9 +2099,9 @@ L_BA9C:
 	jr L_BA8C		;baa9
 L_BAAB:
 	ld a,008h		;baab
-	ld (0e1e6h),a		;baad
+	ld (0e1e6h),a		;baad   ; guarda la marca del final (estado 10)
 L_BAB0:
-	call 04a10h		;bab0
+	call 04a10h		;bab0   ; borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
 	jp L_BBA4		;bab3
 L_BAB6:
 	ld a,048h		;bab6
@@ -2114,18 +2114,18 @@ L_BAB6:
 	ld (0e426h),a		;bac9
 	ret			;bacc
 L_BACD:
-	call 04a10h		;bacd
+	call 04a10h		;bacd   ; borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
 L_BAD0:
 	call L_BAB6		;bad0
-	call 05d80h		;bad3
+	call 05d80h		;bad3   ; aa2f_con_bancos: con los bancos 1-2-3, p03:AA2F, y el banco 10
 	call L_BAE4		;bad6
-	call 04c76h		;bad9
+	call 04c76h		;bad9   ; esconde_sprites: los 32 sprites de 0xE280 con Y = 0xE0 (fuera de la pantalla)
 	call L_A889		;badc
 	xor a			;badf
-	ld (0e1e6h),a		;bae0
+	ld (0e1e6h),a		;bae0   ; guarda la marca del final (estado 10)
 	ret			;bae3
 L_BAE4:
-	ld hl,0e500h		;bae4
+	ld hl,0e500h		;bae4   ; apunta a las fichas de 16 bytes de los objetos de caracteres
 	ld de,0e501h		;bae7
 	ld bc,00affh		;baea
 	ld (hl),000h		;baed
@@ -2180,8 +2180,8 @@ L_BB4B:
 	ld a,(0e490h)		;bb4e
 	and a			;bb51
 	ret nz			;bb52
-	call 04a10h		;bb53
-	call 05e0ch		;bb56
+	call 04a10h		;bb53   ; borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
+	call 05e0ch		;bb56   ; caracteres_5e5f: p00:5E64, p00:5E20 y p00:5D97
 	call L_A076		;bb59
 	ld a,(0002bh)		;bb5c
 	and 00fh		;bb5f
@@ -2189,22 +2189,22 @@ L_BB4B:
 	jr z,L_BB69		;bb64
 	ld de,0bd1ah		;bb66
 L_BB69:
-	call 04a6bh		;bb69
+	call 04a6bh		;bb69   ; escribe_texto: escribe a la VRAM la lista de textos de DE: [direccion][caracteres] con 0xFE = otra direccion y 0xFF = fin
 	jp L_BBA4		;bb6c
 L_BB6F:
 	ld de,01518h		;bb6f
-	call 05d89h		;bb72
+	call 05d89h		;bb72   ; cuadros_desde: C si la cuenta de interrupciones 0xF0F7 no llega a DE
 	jp c,L_A7A2		;bb75
 	jp L_BAD0		;bb78
 L_BB7B:
 	ld hl,00000h		;bb7b
-	ld (0f0f7h),hl		;bb7e
-	call 04a10h		;bb81
-	ld a,(0e1d6h)		;bb84
+	ld (0f0f7h),hl		;bb7e   ; guarda la cuenta de interrupciones (16 bits)
+	call 04a10h		;bb81   ; borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
+	ld a,(0e1d6h)		;bb84   ; lee la marca del final con textos
 	or a			;bb87
 	jr nz,L_BBAC		;bb88
 	ld a,040h		;bb8a
-	call 04ae4h		;bb8c
+	call 04ae4h		;bb8c   ; sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
 	call L_BBE0		;bb8f
 	ld a,(0002bh)		;bb92
 	and 00fh		;bb95
@@ -2216,17 +2216,17 @@ L_BB9D:
 	ld hl,00001h		;bba1
 L_BBA4:
 	ld (0e49eh),hl		;bba4
-	ld hl,0e1e6h		;bba7
+	ld hl,0e1e6h		;bba7   ; apunta a la marca del final (estado 10)
 	inc (hl)			;bbaa
 	ret			;bbab
 L_BBAC:
 	ld a,041h		;bbac
-	call 04ae4h		;bbae
+	call 04ae4h		;bbae   ; sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
 	ld a,(0002bh)		;bbb1
 	and 00fh		;bbb4
 	jr z,L_BBD6		;bbb6
 	ld a,00bh		;bbb8
-	ld (0e1e6h),a		;bbba
+	ld (0e1e6h),a		;bbba   ; guarda la marca del final (estado 10)
 L_BBBD:
 	call L_A56F		;bbbd
 	ld a,(0002bh)		;bbc0
@@ -2235,19 +2235,19 @@ L_BBBD:
 	jr z,L_BBCD		;bbc8
 	ld de,0bc23h		;bbca
 L_BBCD:
-	call 04a6bh		;bbcd
+	call 04a6bh		;bbcd   ; escribe_texto: escribe a la VRAM la lista de textos de DE: [direccion][caracteres] con 0xFE = otra direccion y 0xFF = fin
 	ld hl,00438h		;bbd0
 	jp L_BBA4		;bbd3
 L_BBD6:
 	ld a,009h		;bbd6
-	ld (0e1e6h),a		;bbd8
+	ld (0e1e6h),a		;bbd8   ; guarda la marca del final (estado 10)
 	call L_BC02		;bbdb
 	jr L_BB9D		;bbde
 L_BBE0:
-	call 04a10h		;bbe0
-	call 04c76h		;bbe3
-	call 05e0ch		;bbe6
-	call 05dcdh		;bbe9
+	call 04a10h		;bbe0   ; borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
+	call 04c76h		;bbe3   ; esconde_sprites: los 32 sprites de 0xE280 con Y = 0xE0 (fuera de la pantalla)
+	call 05e0ch		;bbe6   ; caracteres_5e5f: p00:5E64, p00:5E20 y p00:5D97
+	call 05dcdh		;bbe9   ; caracteres_a000: copia caracteres de un tercio a los otros dos y la lista p12:A000 (copias p12:A00D)
 	ld a,080h		;bbec
 	ld hl,00d00h		;bbee
 	ld bc,00158h		;bbf1
@@ -2257,10 +2257,10 @@ L_BBE0:
 	ld c,012h		;bbfd
 	jp L_A67B		;bbff
 L_BC02:
-	call 04a10h		;bc02
-	call 04c76h		;bc05
-	call 05e0ch		;bc08
-	call 05edch		;bc0b
+	call 04a10h		;bc02   ; borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
+	call 04c76h		;bc05   ; esconde_sprites: los 32 sprites de 0xE280 con Y = 0xE0 (fuera de la pantalla)
+	call 05e0ch		;bc08   ; caracteres_5e5f: p00:5E64, p00:5E20 y p00:5D97
+	call 05edch		;bc0b   ; caracteres_a143_y_borra: p00:5EE1 y p00:5D97
 	ld de,038e8h		;bc0e
 	ld hl,0b06fh		;bc11
 	ld c,010h		;bc14
@@ -2332,7 +2332,7 @@ DATA_lista_BD1A:
 L_BDFD:
 	ld a,(0e1d7h)		;bdfd
 	dec a			;be00
-	call 04084h		;be01
+	call 04084h		;be01   ; despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_BE04: 5 destinos del despachador p00:4084 (call en p10:BE01, el
@@ -2348,7 +2348,7 @@ DATA_tabla_BE04:
 
 L_BE0E:
 	call L_BE49		;be0e
-	ld a,(0e1c3h)		;be11
+	ld a,(0e1c3h)		;be11   ; lee la cuenta de cuadros
 	and 007h		;be14
 	ret nz			;be16
 	call L_BFCF		;be17
@@ -2368,7 +2368,7 @@ L_BE2E:
 	add hl,de			;be37
 	ld de,00006h		;be38
 	add hl,de			;be3b
-	ld de,0e500h		;be3c
+	ld de,0e500h		;be3c   ; apunta a las fichas de 16 bytes de los objetos de caracteres
 	ld b,c			;be3f
 	ld a,007h		;be40
 	sub b			;be42
@@ -2376,7 +2376,7 @@ L_BE2E:
 	ld c,014h		;be44
 	jp L_A2F8		;be46
 L_BE49:
-	ld a,(0e1c3h)		;be49
+	ld a,(0e1c3h)		;be49   ; lee la cuenta de cuadros
 	and 00fh		;be4c
 	ret nz			;be4e
 	ld de,0e4a3h		;be4f
@@ -2415,7 +2415,7 @@ L_BE94:
 	dec (hl)			;be97
 	jp z,L_BF16		;be98
 	call L_BE49		;be9b
-	ld a,(0e1c3h)		;be9e
+	ld a,(0e1c3h)		;be9e   ; lee la cuenta de cuadros
 	bit 1,a		;bea1
 	jp nz,L_BECA		;bea3
 	ld bc,00207h		;bea6
@@ -2423,7 +2423,7 @@ L_BEA9:
 	ld hl,07870h		;bea9
 	ld de,0b604h		;beac
 	exx			;beaf
-	ld hl,0e280h		;beb0
+	ld hl,0e280h		;beb0   ; apunta a los atributos de los 32 sprites (Y, X, dibujo, color)
 	exx			;beb3
 	push bc			;beb4
 	call L_BF42		;beb5
@@ -2436,11 +2436,11 @@ L_BEA9:
 	call L_BF42		;bec4
 	jp L_A889		;bec7
 L_BECA:
-	call 04c76h		;beca
+	call 04c76h		;beca   ; esconde_sprites: los 32 sprites de 0xE280 con Y = 0xE0 (fuera de la pantalla)
 	jp L_A889		;becd
 L_BED0:
 	call L_BE49		;bed0
-	ld a,(0e1c3h)		;bed3
+	ld a,(0e1c3h)		;bed3   ; lee la cuenta de cuadros
 	and 003h		;bed6
 	ret nz			;bed8
 	ld a,(0e496h)		;bed9
@@ -2482,7 +2482,7 @@ L_BF1E:
 	ld hl,07870h		;bf21
 	ld de,0b5ech		;bf24
 	exx			;bf27
-	ld hl,0e280h		;bf28
+	ld hl,0e280h		;bf28   ; apunta a los atributos de los 32 sprites (Y, X, dibujo, color)
 	exx			;bf2b
 	push bc			;bf2c
 	call L_BF42		;bf2d
@@ -2542,11 +2542,11 @@ L_BF78:
 	ld a,(0e49eh)		;bf82
 	bit 3,a		;bf85
 	jp nz,L_BF1E		;bf87
-	call 04c76h		;bf8a
+	call 04c76h		;bf8a   ; esconde_sprites: los 32 sprites de 0xE280 con Y = 0xE0 (fuera de la pantalla)
 	ld bc,00206h		;bf8d
 	jp L_BEA9		;bf90
 L_BF93:
-	call 04a10h		;bf93
+	call 04a10h		;bf93   ; borra_nombres: borra la tabla de nombres entera (0x3800, 768 bytes) tras p00:5AFA
 	call L_A895		;bf96
 	xor a			;bf99
 	ld (0e1d7h),a		;bf9a
@@ -2559,19 +2559,19 @@ L_BF9E:
 	ld hl,03848h		;bfa9
 	ld (0e4a3h),hl		;bfac
 	call L_BFCF		;bfaf
-	ld hl,0e500h		;bfb2
+	ld hl,0e500h		;bfb2   ; apunta a las fichas de 16 bytes de los objetos de caracteres
 	ld de,0b586h		;bfb5
 	call L_A6EB		;bfb8
 	ld a,006h		;bfbb
 	ld (0e496h),a		;bfbd
 	ret			;bfc0
 L_BFC1:
-	call 05d8eh		;bfc1
+	call 05d8eh		;bfc1   ; caracteres_b3d0: p00:5DA0 y p01:69EF
 L_BFC4:
-	call 04c76h		;bfc4
+	call 04c76h		;bfc4   ; esconde_sprites: los 32 sprites de 0xE280 con Y = 0xE0 (fuera de la pantalla)
 	jp L_A889		;bfc7
 L_BFCA:
-	call 05d94h		;bfca
+	call 05d94h		;bfca   ; caracteres_b3d0_y_borra: p00:5DA0 y p00:5D97
 	jr L_BFC4		;bfcd
 L_BFCF:
 	ld hl,0b461h		;bfcf

@@ -218,3 +218,33 @@ F 0x7255 w10
 D 0x7269 0x8000 partitura_7269  partitura (p04:699A: ordenes 0xD0-0xFF y notas) de los sonidos 0x01, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E y otros; 28 bytes los leen dos canales con distinto largo de nota (uno con el volumen en modo 0, otro en modo 2: ver 0x7E09 y 0x7E1B, sonido 0x22) (sigue en el banco 5, en 0x8000); lo leen p04:69A6 (3479 bytes)
 F 0x7269 16
 # --- fin de los bloques de bloques.py ---
+
+# --- ANOTACIONES AUTOMATICAS (seccion que reescribe tools/anota.py; no editar a mano) ---
+C 0x658D apunta a el estado del sonido (bit 0)
+C 0x6594 apunta a el estado del sonido (bit 0)
+C 0x65A1 apunta a el estado del sonido (bit 0)
+C 0x65B1 apunta a la RAM del juego (0xE000-0xEFFF, que INIT pone a cero)
+C 0x65B7 lee el estado del juego (0-10, p00:5615)
+C 0x65BD el mapper: pone en 0x8000 el banco de A
+C 0x65C6 el mapper: pone en 0x8000 el banco de A
+C 0x65DE apunta a el estado del sonido (bit 0)
+C 0x65EB apunta a la RAM del juego (0xE000-0xEFFF, que INIT pone a cero)
+C 0x65F6 el mapper: pone en 0x8000 el banco de A
+C 0x65FF el mapper: pone en 0x8000 el banco de A
+C 0x693A apunta a el estado del sonido (bit 0)
+C 0x6942 lee el estado del sonido (bit 0)
+C 0x694A apunta a la RAM del juego (0xE000-0xEFFF, que INIT pone a cero)
+C 0x6970 apunta a el estado del sonido (bit 0)
+C 0x697E apunta a la RAM del juego (0xE000-0xEFFF, que INIT pone a cero)
+C 0x6A0D lee el estado del sonido (bit 0)
+C 0x6B20 lee la musica que suena
+C 0x6B30 apunta a el estado del sonido (bit 0)
+C 0x6B3B lee la RAM del juego (0xE000-0xEFFF, que INIT pone a cero)
+C 0x6B45 apunta a la RAM del juego (0xE000-0xEFFF, que INIT pone a cero)
+C 0x6B62 apunta a la musica que suena
+C 0x6B79 lee la RAM del juego (0xE000-0xEFFF, que INIT pone a cero)
+C 0x71D7 el mapper: pone en 0x8000 el banco de A
+C 0x71DE el mapper: pone en 0x8000 el banco de A
+C 0x7238 el mapper: pone en 0x8000 el banco de A
+C 0x7251 el mapper: pone en 0x8000 el banco de A
+# --- fin de las anotaciones de anota.py ---

@@ -446,11 +446,11 @@ DATA_canal_nuevo:
 
 
 L_658D:
-	ld hl,0e190h		;658d
+	ld hl,0e190h		;658d   ; apunta a el estado del sonido (bit 0)
 	res 0,(hl)		;6590
 	jr L_6599		;6592
 L_6594:
-	ld hl,0e190h		;6594
+	ld hl,0e190h		;6594   ; apunta a el estado del sonido (bit 0)
 	set 0,(hl)		;6597
 L_6599:
 	ld hl,0e1a4h		;6599
@@ -460,7 +460,7 @@ L_6599:
 	ld (hl),a			;659f
 	ret			;65a0
 L_65A1:
-	ld hl,0e190h		;65a1
+	ld hl,0e190h		;65a1   ; apunta a el estado del sonido (bit 0)
 	res 1,(hl)		;65a4
 	bit 3,(hl)		;65a6
 	jr z,L_65AE		;65a8
@@ -468,16 +468,16 @@ L_65A1:
 	set 0,(hl)		;65ac
 L_65AE:
 	ld hl,0e140h		;65ae
-	ld de,0e000h		;65b1
+	ld de,0e000h		;65b1   ; apunta a la RAM del juego (0xE000-0xEFFF, que INIT pone a cero)
 	call L_660E		;65b4
-	ld a,(0e1c0h)		;65b7
+	ld a,(0e1c0h)		;65b7   ; lee el estado del juego (0-10, p00:5615)
 	ld e,a			;65ba
 	ld a,03fh		;65bb
-	ld (09000h),a		;65bd
+	ld (09000h),a		;65bd   ; el mapper: pone en 0x8000 el banco de A
 	ld a,e			;65c0
 	ld (0988fh),a		;65c1
 	ld a,005h		;65c4
-	ld (09000h),a		;65c6
+	ld (09000h),a		;65c6   ; el mapper: pone en 0x8000 el banco de A
 	ld a,0ffh		;65c9
 	ld hl,0e1aeh		;65cb
 	ld (hl),a			;65ce
@@ -493,22 +493,22 @@ L_65AE:
 	ld (hl),a			;65dc
 	ret			;65dd
 L_65DE:
-	ld hl,0e190h		;65de
+	ld hl,0e190h		;65de   ; apunta a el estado del sonido (bit 0)
 	set 1,(hl)		;65e1
 	bit 0,(hl)		;65e3
 	jr z,L_65EB		;65e5
 	res 0,(hl)		;65e7
 	set 3,(hl)		;65e9
 L_65EB:
-	ld hl,0e000h		;65eb
+	ld hl,0e000h		;65eb   ; apunta a la RAM del juego (0xE000-0xEFFF, que INIT pone a cero)
 	ld de,0e140h		;65ee
 	call L_660E		;65f1
 	ld a,03fh		;65f4
-	ld (09000h),a		;65f6
+	ld (09000h),a		;65f6   ; el mapper: pone en 0x8000 el banco de A
 	xor a			;65f9
 	ld (0988fh),a		;65fa
 	ld a,005h		;65fd
-	ld (09000h),a		;65ff
+	ld (09000h),a		;65ff   ; el mapper: pone en 0x8000 el banco de A
 	ld hl,0e05dh		;6602
 	ld a,(hl)			;6605
 	rlca			;6606
@@ -1084,13 +1084,13 @@ DATA_cabecera_43:
 L_6934:
 	ld a,(0e1a6h)		;6934
 	call L_702D		;6937
-	ld hl,0e190h		;693a
+	ld hl,0e190h		;693a   ; apunta a el estado del sonido (bit 0)
 	bit 1,(hl)		;693d
 	jp nz,L_6979		;693f
-	ld a,(0e190h)		;6942
+	ld a,(0e190h)		;6942   ; lee el estado del sonido (bit 0)
 	bit 0,a		;6945
 	call nz,L_6B1C		;6947
-	ld ix,0e000h		;694a
+	ld ix,0e000h		;694a   ; apunta a la RAM del juego (0xE000-0xEFFF, que INIT pone a cero)
 	exx			;694e
 	ld de,00028h		;694f
 	ld b,008h		;6952
@@ -1111,14 +1111,14 @@ L_6969:
 	ld a,(ix+000h)		;6969
 	or a			;696c
 	call nz,L_699A		;696d
-	ld hl,0e190h		;6970
+	ld hl,0e190h		;6970   ; apunta a el estado del sonido (bit 0)
 	bit 0,(hl)		;6973
 	call nz,L_6B79		;6975
 	ret			;6978
 L_6979:
 	ld a,001h		;6979
 	ld (0e1a7h),a		;697b
-	ld ix,0e000h		;697e
+	ld ix,0e000h		;697e   ; apunta a la RAM del juego (0xE000-0xEFFF, que INIT pone a cero)
 	call L_6969		;6982
 	ld a,002h		;6985
 	ld (0e1a7h),a		;6987
@@ -1190,7 +1190,7 @@ L_6A04:
 	ld (ix+010h),l		;6a04
 	ld (ix+011h),h		;6a07
 	ld e,(ix+015h)		;6a0a
-	ld a,(0e190h)		;6a0d
+	ld a,(0e190h)		;6a0d   ; lee el estado del sonido (bit 0)
 	bit 0,a		;6a10
 	call nz,L_6A20		;6a12
 	ld (ix+012h),e		;6a15
@@ -1346,7 +1346,7 @@ L_6B19:
 L_6B1C:
 	ld hl,0e1a4h		;6b1c
 	inc (hl)			;6b1f
-	ld a,(0e0a0h)		;6b20
+	ld a,(0e0a0h)		;6b20   ; lee la musica que suena
 	ld a,(hl)			;6b23
 	cp 060h		;6b24
 	ret nz			;6b26
@@ -1357,18 +1357,18 @@ L_6B1C:
 	cp 002h		;6b2c
 	ret nz			;6b2e
 	xor a			;6b2f
-	ld hl,0e190h		;6b30
+	ld hl,0e190h		;6b30   ; apunta a el estado del sonido (bit 0)
 	res 0,(hl)		;6b33
 	ld hl,0e1a4h		;6b35
 	ld (hl),a			;6b38
 	inc hl			;6b39
 	ld (hl),a			;6b3a
-	ld a,(0e000h)		;6b3b
+	ld a,(0e000h)		;6b3b   ; lee la RAM del juego (0xE000-0xEFFF, que INIT pone a cero)
 	ld e,a			;6b3e
 	ld a,(0e028h)		;6b3f
 	cp e			;6b42
 	jr nz,L_6B53		;6b43
-	ld ix,0e000h		;6b45
+	ld ix,0e000h		;6b45   ; apunta a la RAM del juego (0xE000-0xEFFF, que INIT pone a cero)
 	call L_6AE3		;6b49
 	ld ix,0e078h		;6b4c
 	call L_6AE3		;6b50
@@ -1378,7 +1378,7 @@ L_6B53:
 	call L_6AE3		;6b5a
 	add ix,de		;6b5d
 	call L_6AE3		;6b5f
-	ld ix,0e0a0h		;6b62
+	ld ix,0e0a0h		;6b62   ; apunta a la musica que suena
 	call L_6AE3		;6b66
 	add ix,de		;6b69
 	call L_6AE3		;6b6b
@@ -1388,7 +1388,7 @@ L_6B53:
 	call L_6AE3		;6b75
 	ret			;6b78
 L_6B79:
-	ld a,(0e000h)		;6b79
+	ld a,(0e000h)		;6b79   ; lee la RAM del juego (0xE000-0xEFFF, que INIT pone a cero)
 	ld e,a			;6b7c
 	ld a,(0e028h)		;6b7d
 	cp e			;6b80
@@ -2333,11 +2333,11 @@ L_71D3:
 	ld a,(hl)			;71d3
 	ld c,a			;71d4
 	ld a,03fh		;71d5
-	ld (09000h),a		;71d7
+	ld (09000h),a		;71d7   ; el mapper: pone en 0x8000 el banco de A
 	ld a,c			;71da
 	ld (de),a			;71db
 	ld a,002h		;71dc
-	ld (09000h),a		;71de
+	ld (09000h),a		;71de   ; el mapper: pone en 0x8000 el banco de A
 	ret			;71e1
 L_71E2:
 	ld hl,0e087h		;71e2
@@ -2388,7 +2388,7 @@ L_7224:
 	ld de,09860h		;7233
 L_7236:
 	ld a,03fh		;7236
-	ld (09000h),a		;7238
+	ld (09000h),a		;7238   ; el mapper: pone en 0x8000 el banco de A
 	xor a			;723b
 	ld (0988fh),a		;723c
 	ld b,020h		;723f
@@ -2403,7 +2403,7 @@ L_7241:
 	ld a,(de)			;724d
 	ld (hl),a			;724e
 	ld a,002h		;724f
-	ld (09000h),a		;7251
+	ld (09000h),a		;7251   ; el mapper: pone en 0x8000 el banco de A
 	ret			;7254
 
 ; ----------------------------------------------------------------------

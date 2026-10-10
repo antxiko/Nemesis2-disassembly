@@ -25,12 +25,12 @@ DATA_partida_A000:
 L_A001:
 	ret			;a001
 L_A002:
-	ld a,(0e1c3h)		;a002
+	ld a,(0e1c3h)		;a002   ; lee la cuenta de cuadros
 	rra			;a005
 	rra			;a006
 	and 003h		;a007
 	ld hl,0a013h		;a009
-	call 05ca6h		;a00c
+	call 05ca6h		;a00c   ; byte_a: A = el byte A de la tabla HL
 	ld (ix+031h),a		;a00f
 	ret			;a012
 
@@ -56,28 +56,28 @@ L_A017:
 	ld bc,00005h		;a027
 	ld (hl),a			;a02a
 	ldir		;a02b
-	call 04c24h		;a02d
+	call 04c24h		;a02d   ; azar: 0xE306 = 0xE306 + 3 x R: el azar del juego
 	ld (0e38bh),a		;a030
 	ld a,0d2h		;a033
 	ld (0e39fh),a		;a035
 	ld a,01eh		;a038
 	ld (0e389h),a		;a03a
 	ld hl,00258h		;a03d
-	ld a,(0e20ah)		;a040
+	ld a,(0e20ah)		;a040   ; lee la vuelta (bit 0: las fases bajan)
 	or a			;a043
 	jr z,L_A049		;a044
 	ld hl,00384h		;a046
 L_A049:
-	ld (0e349h),hl		;a049
+	ld (0e349h),hl		;a049   ; guarda la espera del suceso y el byte siguiente (16 bits)
 	ret			;a04c
 L_A04D:
 	ld a,(0e388h)		;a04d
 	or a			;a050
 	ret z			;a051
 	ld b,a			;a052
-	ld hl,(0e349h)		;a053
+	ld hl,(0e349h)		;a053   ; lee la espera del suceso y el byte siguiente (16 bits)
 	dec hl			;a056
-	ld (0e349h),hl		;a057
+	ld (0e349h),hl		;a057   ; guarda la espera del suceso y el byte siguiente (16 bits)
 	ld a,l			;a05a
 	or h			;a05b
 	jr z,L_A066		;a05c
@@ -90,7 +90,7 @@ L_A066:
 	xor a			;a066
 	ld (0e388h),a		;a067
 	inc a			;a06a
-	ld (0e348h),a		;a06b
+	ld (0e348h),a		;a06b   ; guarda la marca de fin del suceso
 	ret			;a06e
 L_A06F:
 	ld hl,0e39fh		;a06f
@@ -99,7 +99,7 @@ L_A06F:
 	ld (hl),01eh		;a075
 	ld a,002h		;a077
 	ld (0e388h),a		;a079
-	ld ix,0e500h		;a07c
+	ld ix,0e500h		;a07c   ; apunta a las fichas de 16 bytes de los objetos de caracteres
 	ld de,00010h		;a080
 	ld bc,00805h		;a083
 	ld hl,001ffh		;a086
@@ -122,7 +122,7 @@ L_A09D:
 	and 01fh		;a0a4
 	add a,020h		;a0a6
 	ld (hl),a			;a0a8
-	ld a,(0e20ah)		;a0a9
+	ld a,(0e20ah)		;a0a9   ; lee la vuelta (bit 0: las fases bajan)
 	ld b,002h		;a0ac
 	or a			;a0ae
 	jr z,L_A0B2		;a0af
@@ -136,7 +136,7 @@ L_A0B8:
 	ld (0e389h),a		;a0ba
 	ret			;a0bd
 L_A0BE:
-	call 04c24h		;a0be
+	call 04c24h		;a0be   ; azar: 0xE306 = 0xE306 + 3 x R: el azar del juego
 	and 003h		;a0c1
 	cp 003h		;a0c3
 	jr nz,L_A0C8		;a0c5
@@ -164,7 +164,7 @@ L_A0D5:
 L_A0E7:
 	ld b,a			;a0e7
 	ld hl,0a0fch		;a0e8
-	call 04b67h		;a0eb
+	call 04b67h		;a0eb   ; palabra_a: DE = la palabra A de la tabla HL (HL apunta a su byte alto)
 	ld a,007h		;a0ee
 	call 087dch		;a0f0
 	pop hl			;a0f3
@@ -222,7 +222,7 @@ L_A14C:
 	ld hl,0a22fh		;a14c
 	push hl			;a14f
 	ld a,(ix+001h)		;a150
-	call 04084h		;a153
+	call 04084h		;a153   ; despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_A156: 7 destinos del despachador p00:4084 (call en p03:A153, el
@@ -302,7 +302,7 @@ L_A1DB:
 	ret nc			;a1e2
 	ld (ix+001h),001h		;a1e3
 	ld (ix+00eh),000h		;a1e7
-	ld a,(0e20ah)		;a1eb
+	ld a,(0e20ah)		;a1eb   ; lee la vuelta (bit 0: las fases bajan)
 	or a			;a1ee
 	ld a,032h		;a1ef
 	jr z,L_A1F5		;a1f1
@@ -344,7 +344,7 @@ L_A22F:
 	jr nc,L_A241		;a236
 	ld a,(ix+007h)		;a238
 	ld hl,L_A224+2		;a23b
-	call 05ca6h		;a23e
+	call 05ca6h		;a23e   ; byte_a: A = el byte A de la tabla HL
 L_A241:
 	ld (ix+00dh),a		;a241
 	ret			;a244
@@ -362,7 +362,7 @@ DATA_tabla_A245:
 
 
 L_A255:
-	ld a,(0e1c3h)		;a255
+	ld a,(0e1c3h)		;a255   ; lee la cuenta de cuadros
 	and 007h		;a258
 	ret nz			;a25a
 	bit 0,(ix+00eh)		;a25b
@@ -394,7 +394,7 @@ L_A283:
 	ld (ix+00eh),000h		;a28f
 	ret			;a293
 L_A294:
-	ld a,(0e1c3h)		;a294
+	ld a,(0e1c3h)		;a294   ; lee la cuenta de cuadros
 	and 003h		;a297
 	ret nz			;a299
 	call L_A229		;a29a
@@ -409,7 +409,7 @@ L_A2A5:
 	ld (ix+007h),c		;a2ad
 	ret			;a2b0
 L_A2B1:
-	ld a,(0e354h)		;a2b1
+	ld a,(0e354h)		;a2b1   ; lee 0x40 al empezar la fase
 	or a			;a2b4
 	ret nz			;a2b5
 	dec (ix+00ch)		;a2b6
@@ -440,14 +440,14 @@ L_A2DB:
 	ld d,a			;a2e5
 	ld bc,00000h		;a2e6
 	ld a,025h		;a2e9
-	jp 04d16h		;a2eb
+	jp 04d16h		;a2eb   ; crea_enemigo_ix: crea_enemigo conservando IX
 L_A2EE:
 	ld de,00000h		;a2ee
-	call 04efbh		;a2f1
+	call 04efbh		;a2f1   ; pon_vy: IX+07/IX+08 = DE
 	ld de,0fe80h		;a2f4
-	jp 04f02h		;a2f7
+	jp 04f02h		;a2f7   ; pon_vx: IX+09/IX+0A = DE
 L_A2FA:
-	call 06770h		;a2fa
+	call 06770h		;a2fa   ; dispara_al_acabar: IX+15 - 1 y, al llegar a 0, p01:6774
 	ld a,(0e404h)		;a2fd
 	sub (ix+004h)		;a300
 	push af			;a303
@@ -477,10 +477,10 @@ L_A330:
 	ld a,068h		;a333
 L_A335:
 	ld (ix+030h),a		;a335
-	call 04f02h		;a338
+	call 04f02h		;a338   ; pon_vx: IX+09/IX+0A = DE
 	ld d,b			;a33b
 	ld e,c			;a33c
-	jp 04efbh		;a33d
+	jp 04efbh		;a33d   ; pon_vy: IX+07/IX+08 = DE
 L_A340:
 	ld a,(ix+019h)		;a340
 	and a			;a343
@@ -525,7 +525,7 @@ L_A385:
 	ret z			;a38a
 	ld e,(ix+004h)		;a38b
 	ld a,040h		;a38e
-	call 04ebah		;a390
+	call 04ebah		;a390   ; rumbo_desde_de: IX+07-IX+0A = la velocidad hacia la nave desde D/E (p02:93F5)
 	xor a			;a393
 	bit 7,(ix+008h)		;a394
 	jr nz,L_A39B		;a398
@@ -553,32 +553,32 @@ L_A3B7:
 	xor c			;a3c6
 	ret z			;a3c7
 	inc (ix+001h)		;a3c8
-	call 04f17h		;a3cb
+	call 04f17h		;a3cb   ; vx_cero_y_vy: IX+09/IX+0A = 0 y luego IX+07/IX+08 = DE
 	ld de,00180h		;a3ce
 	ld b,001h		;a3d1
 	ld a,(0e404h)		;a3d3
 	cp (ix+004h)		;a3d6
 	jr nc,L_A3DF		;a3d9
 	dec b			;a3db
-	call 05cadh		;a3dc
+	call 05cadh		;a3dc   ; menos_de: DE = - DE
 L_A3DF:
 	ld (ix+027h),b		;a3df
-	jp 04efbh		;a3e2
+	jp 04efbh		;a3e2   ; pon_vy: IX+07/IX+08 = DE
 L_A3E5:
 	inc (ix+001h)		;a3e5
-	call 04f17h		;a3e8
+	call 04f17h		;a3e8   ; vx_cero_y_vy: IX+09/IX+0A = 0 y luego IX+07/IX+08 = DE
 	ld de,00180h		;a3eb
 	ld b,001h		;a3ee
 	ld a,(0e406h)		;a3f0
 	cp (ix+006h)		;a3f3
 	jr nc,L_A3FC		;a3f6
 	dec b			;a3f8
-	call 05cadh		;a3f9
+	call 05cadh		;a3f9   ; menos_de: DE = - DE
 L_A3FC:
 	ld (ix+028h),b		;a3fc
-	jp 04f02h		;a3ff
+	jp 04f02h		;a3ff   ; pon_vx: IX+09/IX+0A = DE
 L_A402:
-	call 0637bh		;a402
+	call 0637bh		;a402   ; azar_rapido: A = R rotado XOR la cuenta de cuadros
 	and 003h		;a405
 	ld c,008h		;a407
 	add a,c			;a409
@@ -587,7 +587,7 @@ L_A402:
 L_A40E:
 	ld a,(ix+026h)		;a40e
 	ld hl,0a43fh		;a411
-	call 0407ah		;a414
+	call 0407ah		;a414   ; hl_mas_a: HL = HL + A
 	ld l,(hl)			;a417
 	ld a,(ix+026h)		;a418
 	inc a			;a41b
@@ -635,8 +635,8 @@ L_A44F:
 	ld a,r		;a456
 	and 007h		;a458
 	ld hl,0a48dh		;a45a
-	call 0407ah		;a45d
-	ld a,(0e228h)		;a460
+	call 0407ah		;a45d   ; hl_mas_a: HL = HL + A
+	ld a,(0e228h)		;a460   ; lee el nivel de dificultad
 	add a,a			;a463
 	add a,(hl)			;a464
 	ld b,a			;a465
@@ -656,7 +656,7 @@ L_A44F:
 	ld h,a			;a480
 L_A481:
 	ld a,b			;a481
-	jp 04ed7h		;a482
+	jp 04ed7h		;a482   ; rumbo_de_a: IX+07-IX+0A desde IX+04/IX+06 con p02:9467 y p02:93FD (A en 0xF00F, HL en 0xF000-0xF001)
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_A485: 8 bytes delante de 0xA48D que no lee nadie a la vista (las
@@ -684,12 +684,12 @@ L_A495:
 	call L_A4C9		;a49d
 	ld h,(ix+006h)		;a4a0
 	ld l,(ix+004h)		;a4a3
-	call 05c92h		;a4a6
+	call 05c92h		;a4a6   ; sitio_en_pantalla: HL = 0xED00 + el caracter de la pantalla de RAM bajo L (Y) y H (X)
 	call L_A4B0		;a4a9
-	jp c,06514h		;a4ac
+	jp c,06514h		;a4ac   ; quita_enemigo: quita el enemigo IX: uno menos (0xE352), devuelve sus sprites (0xE355), 0xE36D si es 0x2A, y descuenta su grupo (IX+16, IX+17, p02:89A8)
 	ret			;a4af
 L_A4B0:
-	ld a,(0e305h)		;a4b0
+	ld a,(0e305h)		;a4b0   ; lee dato de la fase de p01:697A
 	ld c,a			;a4b3
 	ld a,(hl)			;a4b4
 	and a			;a4b5
@@ -734,7 +734,7 @@ L_A4E0:
 L_A501:
 	ld (ix+032h),b		;a501
 	ld (ix+00dh),003h		;a504
-	jp 04f17h		;a508
+	jp 04f17h		;a508   ; vx_cero_y_vy: IX+09/IX+0A = 0 y luego IX+07/IX+08 = DE
 L_A50B:
 	ld a,(ix+001h)		;a50b
 	and a			;a50e
@@ -753,12 +753,12 @@ L_A520:
 	ret nz			;a52b
 	inc (ix+001h)		;a52c
 	set 7,(ix+00bh)		;a52f
-	call 04f17h		;a533
+	call 04f17h		;a533   ; vx_cero_y_vy: IX+09/IX+0A = 0 y luego IX+07/IX+08 = DE
 	ld de,0fd00h		;a536
 	ld a,(ix+019h)		;a539
 	and a			;a53c
-	call z,05cadh		;a53d
-	jp 04f02h		;a540
+	call z,05cadh		;a53d   ; menos_de: DE = - DE
+	jp 04f02h		;a540   ; pon_vx: IX+09/IX+0A = DE
 L_A543:
 	dec (ix+015h)		;a543
 	ret nz			;a546
@@ -779,12 +779,12 @@ L_A54A:
 	inc l			;a55e
 	ld (hl),d			;a55f
 L_A560:
-	call 04f21h		;a560
+	call 04f21h		;a560   ; vx_cero: IX+09/IX+0A = 0
 	ld d,004h		;a563
 	ld a,(0e35ah)		;a565
 	rra			;a568
-	call nc,05cadh		;a569
-	call 04efbh		;a56c
+	call nc,05cadh		;a569   ; menos_de: DE = - DE
+	call 04efbh		;a56c   ; pon_vy: IX+07/IX+08 = DE
 	or 0ffh		;a56f
 	ret			;a571
 L_A572:
@@ -830,8 +830,8 @@ L_A5B5:
 	ld de,0fd00h		;a5b5
 	ld a,(0e406h)		;a5b8
 	cp (ix+006h)		;a5bb
-	call nc,05cadh		;a5be
-	call 04f02h		;a5c1
+	call nc,05cadh		;a5be   ; menos_de: DE = - DE
+	call 04f02h		;a5c1   ; pon_vx: IX+09/IX+0A = DE
 L_A5C4:
 	inc (ix+001h)		;a5c4
 	call L_A621		;a5c7
@@ -839,18 +839,18 @@ L_A5C4:
 	ld a,(ix+027h)		;a5cd
 	and a			;a5d0
 	jr z,L_A5D9		;a5d1
-	call 05cadh		;a5d3
+	call 05cadh		;a5d3   ; menos_de: DE = - DE
 	ld bc,00080h		;a5d6
 L_A5D9:
-	call 04efbh		;a5d9
-	call 062b6h		;a5dc
+	call 04efbh		;a5d9   ; pon_vy: IX+07/IX+08 = DE
+	call 062b6h		;a5dc   ; pon_tope: IX+22/IX+23 = DE en valor absoluto
 	ld d,b			;a5df
 	ld e,c			;a5e0
-	jp 062a8h		;a5e1
+	jp 062a8h		;a5e1   ; pon_aceleracion: IX+20/IX+21 = DE
 L_A5E4:
-	call 062c2h		;a5e4
-	call 062e8h		;a5e7
-	jp z,0629fh		;a5ea
+	call 062c2h		;a5e4   ; acelera_vy: IX+07/IX+08 + IX+20/IX+21
+	call 062e8h		;a5e7   ; vy_pasa_el_tope: compara el valor absoluto de IX+07/IX+08 con IX+22/IX+23 (C: lo pasa)
+	jp z,0629fh		;a5ea   ; invierte_aceleracion: IX+20/IX+21 = - IX+20/IX+21
 	ret			;a5ed
 L_A5EE:
 	ld l,(ix+025h)		;a5ee
@@ -873,13 +873,13 @@ L_A5EE:
 	ld d,(hl)			;a605
 	dec hl			;a606
 	ld e,(hl)			;a607
-	call 04f02h		;a608
+	call 04f02h		;a608   ; pon_vx: IX+09/IX+0A = DE
 	jr L_A5C4		;a60b
 L_A60D:
 	ld (ix+027h),000h		;a60d
 	ret			;a611
 L_A612:
-	ld a,(0e1c3h)		;a612
+	ld a,(0e1c3h)		;a612   ; lee la cuenta de cuadros
 	and 007h		;a615
 	ret nz			;a617
 	ld a,(ix+030h)		;a618
@@ -888,9 +888,9 @@ L_A612:
 	ret			;a620
 L_A621:
 	ld hl,0a62ch		;a621
-	ld a,(0e228h)		;a624
+	ld a,(0e228h)		;a624   ; lee el nivel de dificultad
 	srl a		;a627
-	jp 04b67h		;a629
+	jp 04b67h		;a629   ; palabra_a: DE = la palabra A de la tabla HL (HL apunta a su byte alto)
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_A62C: 8 palabras que p03:A621 lee con 0xE228 / 2 (L_4B67); lo
@@ -905,7 +905,7 @@ DATA_tabla_A62C:
 
 
 L_A63C:
-	call 04e93h		;a63c
+	call 04e93h		;a63c   ; azar_por_nivel: A = p00:4EA4[0xE228] + un azar de 0 a 7 (R)
 	ld a,00ch		;a63f
 	ld (ix+006h),a		;a641
 	ld b,000h		;a644
@@ -918,11 +918,11 @@ L_A64E:
 	ld (ix+013h),002h		;a651
 	ld (ix+014h),002h		;a655
 L_A659:
-	call 04f17h		;a659
+	call 04f17h		;a659   ; vx_cero_y_vy: IX+09/IX+0A = 0 y luego IX+07/IX+08 = DE
 	ld de,00400h		;a65c
-	jp 04f02h		;a65f
+	jp 04f02h		;a65f   ; pon_vx: IX+09/IX+0A = DE
 L_A662:
-	ld a,(0e20ah)		;a662
+	ld a,(0e20ah)		;a662   ; lee la vuelta (bit 0: las fases bajan)
 	and a			;a665
 	call nz,L_A711		;a666
 	call L_A704		;a669
@@ -948,10 +948,10 @@ L_A684:
 	ld de,00400h		;a68c
 	ld a,(ix+025h)		;a68f
 	and a			;a692
-	call nz,05cadh		;a693
-	call 04efbh		;a696
+	call nz,05cadh		;a693   ; menos_de: DE = - DE
+	call 04efbh		;a696   ; pon_vy: IX+07/IX+08 = DE
 	ld de,0fc00h		;a699
-	jp 04f02h		;a69c
+	jp 04f02h		;a69c   ; pon_vx: IX+09/IX+0A = DE
 L_A69F:
 	ld bc,08c90h		;a69f
 	ld a,(ix+025h)		;a6a2
@@ -966,9 +966,9 @@ L_A6A9:
 	and 0f8h		;a6b1
 	ld (ix+004h),a		;a6b3
 	inc (ix+001h)		;a6b6
-	call 04f17h		;a6b9
+	call 04f17h		;a6b9   ; vx_cero_y_vy: IX+09/IX+0A = 0 y luego IX+07/IX+08 = DE
 	ld de,0fc00h		;a6bc
-	jp 04f02h		;a6bf
+	jp 04f02h		;a6bf   ; pon_vx: IX+09/IX+0A = DE
 L_A6C2:
 	ld bc,05458h		;a6c2
 	ld a,(ix+025h)		;a6c5
@@ -983,10 +983,10 @@ L_A6CC:
 	ld de,00400h		;a6d4
 	ld a,(ix+025h)		;a6d7
 	and a			;a6da
-	call nz,05cadh		;a6db
-	call 04efbh		;a6de
+	call nz,05cadh		;a6db   ; menos_de: DE = - DE
+	call 04efbh		;a6de   ; pon_vy: IX+07/IX+08 = DE
 	ld de,00400h		;a6e1
-	jp 04f02h		;a6e4
+	jp 04f02h		;a6e4   ; pon_vx: IX+09/IX+0A = DE
 L_A6E7:
 	ld bc,07478h		;a6e7
 	ld a,(ix+025h)		;a6ea
@@ -1005,7 +1005,7 @@ L_A6F1:
 L_A704:
 	ld bc,00304h		;a704
 	ld hl,0a70dh		;a707
-	jp 06361h		;a70a
+	jp 06361h		;a70a   ; anima: cada (0xE1C3 & B) = 0, IX+26 + 1 (de 0 a C - 1) y el dibujo IX+30 = IX+32 = HL[IX+26]
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_A70D: 4 bytes que p03:A704 pasa a L_6361 (BC = 0x0304); lo leen
@@ -1022,31 +1022,31 @@ DATA_tabla_A70D:
 L_A711:
 	dec (ix+015h)		;a711
 	ret nz			;a714
-	call 04e93h		;a715
+	call 04e93h		;a715   ; azar_por_nivel: A = p00:4EA4[0xE228] + un azar de 0 a 7 (R)
 	jp L_BB44		;a718
 L_A71B:
 	ld (ix+024h),001h		;a71b
-	call 04c24h		;a71f
+	call 04c24h		;a71f   ; azar: 0xE306 = 0xE306 + 3 x R: el azar del juego
 	and 006h		;a722
 	ld b,a			;a724
 	add a,a			;a725
 	add a,b			;a726
 	ld hl,0a741h		;a727
-	call 0407ah		;a72a
+	call 0407ah		;a72a   ; hl_mas_a: HL = HL + A
 	ld e,(hl)			;a72d
 	inc hl			;a72e
 	ld d,(hl)			;a72f
 	inc hl			;a730
-	call 04efbh		;a731
+	call 04efbh		;a731   ; pon_vy: IX+07/IX+08 = DE
 	ld e,(hl)			;a734
 	inc hl			;a735
 	ld d,(hl)			;a736
 	inc hl			;a737
-	call 04f02h		;a738
+	call 04f02h		;a738   ; pon_vx: IX+09/IX+0A = DE
 	ld e,(hl)			;a73b
 	inc hl			;a73c
 	ld d,(hl)			;a73d
-	jp 062a8h		;a73e
+	jp 062a8h		;a73e   ; pon_aceleracion: IX+20/IX+21 = DE
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_A741: 4 fichas de 6 bytes que p03:A71B elige con L_4C24 & 6; lo
@@ -1064,25 +1064,25 @@ DATA_tabla_A741:
 
 
 L_A759:
-	ld bc,(0e3c7h)		;a759
+	ld bc,(0e3c7h)		;a759   ; lee la velocidad de la nave al irse (16 bits) y el byte siguiente (16 bits)
 	ld de,00000h		;a75d
 	call L_A93F		;a760
 	jr L_A78C		;a763
 L_A765:
-	ld a,(0e3d0h)		;a765
+	ld a,(0e3d0h)		;a765   ; lee la velocidad del scroll (1 parado, 2 cada cuadro, si no uno de cada dos)
 	or a			;a768
 	ret nz			;a769
-	ld a,(0e400h)		;a76a
+	ld a,(0e400h)		;a76a   ; lee la forma de la nave (1 normal, 2 con escudo, 3 R.DRILL)
 	or a			;a76d
 	jp m,L_A9AC		;a76e
 	ret z			;a771
-	ld a,(0e22bh)		;a772
+	ld a,(0e22bh)		;a772   ; lee la marca de jefe vencido: al interior
 	or a			;a775
 	jr nz,L_A78C		;a776
-	ld a,(0e3bfh)		;a778
+	ld a,(0e3bfh)		;a778   ; lee la marca de la nave yendose
 	or a			;a77b
 	jr nz,L_A759		;a77c
-	ld a,(0e3c0h)		;a77e
+	ld a,(0e3c0h)		;a77e   ; lee el paso del final del interior (0 nada)
 	or a			;a781
 	ret nz			;a782
 	call L_A902		;a783
@@ -1090,12 +1090,12 @@ L_A765:
 	call L_A8C5		;a789
 L_A78C:
 	call L_A82E		;a78c
-	ld a,(0e400h)		;a78f
+	ld a,(0e400h)		;a78f   ; lee la forma de la nave (1 normal, 2 con escudo, 3 R.DRILL)
 	cp 003h		;a792
 	jp z,L_A7BE		;a794
-	ld bc,0e1c9h		;a797
+	ld bc,0e1c9h		;a797   ; apunta a los mandos: bit 0 arriba, 1 abajo, 2 izquierda, 3 derecha, 4 disparo, 5 el otro boton
 L_A79A:
-	ld a,(0f0f5h)		;a79a
+	ld a,(0f0f5h)		;a79a   ; lee lo que hay en la otra ranura (bit 3 Galious, 2 Penguin Adventure, 1 los 6 bytes de 0x7FFA, 0 Q*bert)
 	bit 2,a		;a79d
 	jr nz,L_A7F8		;a79f
 	ld a,(bc)			;a7a1
@@ -1107,10 +1107,10 @@ L_A7AA:
 	add a,a			;a7aa
 	add a,a			;a7ab
 	ld c,a			;a7ac
-	ld a,(0e400h)		;a7ad
+	ld a,(0e400h)		;a7ad   ; lee la forma de la nave (1 normal, 2 con escudo, 3 R.DRILL)
 	dec a			;a7b0
 	jr z,L_A7BE		;a7b1
-	ld a,(0e1c3h)		;a7b3
+	ld a,(0e1c3h)		;a7b3   ; lee la cuenta de cuadros
 	and 004h		;a7b6
 	jr z,L_A7BE		;a7b8
 	ld a,c			;a7ba
@@ -1125,13 +1125,13 @@ L_A7C1:
 	ldi		;a7c6
 	ldi		;a7c8
 	ldi		;a7ca
-	ld a,(0e400h)		;a7cc
+	ld a,(0e400h)		;a7cc   ; lee la forma de la nave (1 normal, 2 con escudo, 3 R.DRILL)
 	cp 002h		;a7cf
 	jr nz,L_A7E7		;a7d1
-	ld a,(0e401h)		;a7d3
+	ld a,(0e401h)		;a7d3   ; lee los golpes que le quedan al escudo
 	dec a			;a7d6
 	jr nz,L_A7E7		;a7d7
-	ld a,(0e1c3h)		;a7d9
+	ld a,(0e1c3h)		;a7d9   ; lee la cuenta de cuadros
 	bit 1,a		;a7dc
 	ld a,006h		;a7de
 	jr z,L_A7E4		;a7e0
@@ -1158,17 +1158,17 @@ L_A7F8:
 	ld a,(0e446h)		;a803
 	or a			;a806
 	jr nz,L_A7EC		;a807
-	ld a,(0e400h)		;a809
+	ld a,(0e400h)		;a809   ; lee la forma de la nave (1 normal, 2 con escudo, 3 R.DRILL)
 	ld b,00ah		;a80c
 	cp 003h		;a80e
 	jr z,L_A828		;a810
 	cp 002h		;a812
 	ret nz			;a814
-	ld a,(0e401h)		;a815
+	ld a,(0e401h)		;a815   ; lee los golpes que le quedan al escudo
 	dec a			;a818
 	ld b,002h		;a819
 	jr nz,L_A828		;a81b
-	ld a,(0e1c3h)		;a81d
+	ld a,(0e1c3h)		;a81d   ; lee la cuenta de cuadros
 	bit 1,a		;a820
 	ld b,006h		;a822
 	jr z,L_A828		;a824
@@ -1178,11 +1178,11 @@ L_A828:
 	ld (0e40ah),a		;a829
 	jr L_A7E7		;a82c
 L_A82E:
-	ld a,(0e400h)		;a82e
+	ld a,(0e400h)		;a82e   ; lee la forma de la nave (1 normal, 2 con escudo, 3 R.DRILL)
 	cp 003h		;a831
 	jr z,L_A846		;a833
 	ld b,a			;a835
-	ld a,(0f0f5h)		;a836
+	ld a,(0f0f5h)		;a836   ; lee lo que hay en la otra ranura (bit 3 Galious, 2 Penguin Adventure, 1 los 6 bytes de 0x7FFA, 0 Q*bert)
 	bit 2,a		;a839
 	jr nz,L_A862		;a83b
 	dec b			;a83d
@@ -1213,13 +1213,13 @@ L_A85E:
 	ld a,(hl)			;a85f
 	jr L_A857		;a860
 L_A862:
-	ld a,(0e1c2h)		;a862
+	ld a,(0e1c2h)		;a862   ; lee el modo: bit 6 se juega, bit 5 dos jugadores, bit 7 juega el 2
 	add a,a			;a865
 	ld hl,0a879h		;a866
 	jr nc,L_A86E		;a869
 	ld hl,0a881h		;a86b
 L_A86E:
-	ld a,(0e1c3h)		;a86e
+	ld a,(0e1c3h)		;a86e   ; lee la cuenta de cuadros
 	bit 3,a		;a871
 	ret z			;a873
 	ld de,00004h		;a874
@@ -1275,7 +1275,7 @@ L_A8D5:
 	ld a,(hl)			;a8d8
 	add a,010h		;a8d9
 	ld c,a			;a8db
-	ld a,(0e201h)		;a8dc
+	ld a,(0e201h)		;a8dc   ; lee la fase (0-11)
 	or a			;a8df
 	jr z,L_A8F7		;a8e0
 	cp 004h		;a8e2
@@ -1300,7 +1300,7 @@ L_A8F7:
 L_A8FF:
 	jp L_A8ED		;a8ff
 L_A902:
-	ld a,(0e1c9h)		;a902
+	ld a,(0e1c9h)		;a902   ; lee los mandos: bit 0 arriba, 1 abajo, 2 izquierda, 3 derecha, 4 disparo, 5 el otro boton
 	and 00fh		;a905
 	add a,a			;a907
 	add a,a			;a908
@@ -1315,28 +1315,28 @@ L_A902:
 	ld c,(hl)			;a914
 	inc hl			;a915
 	ld b,(hl)			;a916
-	ld (0f002h),bc		;a917
-	ld a,(0e402h)		;a91b
+	ld (0f002h),bc		;a917   ; guarda variable de paso: el puntero del mapa y el byte siguiente (16 bits)
+	ld a,(0e402h)		;a91b   ; lee la velocidad de la nave
 	add a,003h		;a91e
-	ld (0f000h),a		;a920
+	ld (0f000h),a		;a920   ; guarda variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo) o un puntero
 	ld b,a			;a923
 	ld l,e			;a924
 	ld h,d			;a925
 L_A926:
 	add hl,de			;a926
 	djnz L_A926		;a927
-	ld (0f004h),hl		;a929
-	ld hl,(0f002h)		;a92c
+	ld (0f004h),hl		;a929   ; guarda variable de paso y el byte siguiente (16 bits)
+	ld hl,(0f002h)		;a92c   ; lee variable de paso: el puntero del mapa y el byte siguiente (16 bits)
 	ld e,l			;a92f
 	ld d,h			;a930
-	ld a,(0f000h)		;a931
+	ld a,(0f000h)		;a931   ; lee variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo) o un puntero
 	ld b,a			;a934
 L_A935:
 	add hl,de			;a935
 	djnz L_A935		;a936
 	ld c,l			;a938
 	ld b,h			;a939
-	ld de,(0f004h)		;a93a
+	ld de,(0f004h)		;a93a   ; lee variable de paso y el byte siguiente (16 bits)
 	ret			;a93e
 L_A93F:
 	ld hl,(0e403h)		;a93f
@@ -1376,10 +1376,10 @@ DATA_tabla_A94E:
 
 L_A98E:
 	xor a			;a98e
-	ld (0e1d3h),a		;a98f
+	ld (0e1d3h),a		;a98f   ; guarda la marca de vida en marcha (0: la nave ha caido)
 	ret			;a992
 L_A993:
-	ld hl,0e400h		;a993
+	ld hl,0e400h		;a993   ; apunta a la forma de la nave (1 normal, 2 con escudo, 3 R.DRILL)
 	ld a,(hl)			;a996
 	or a			;a997
 	ret m			;a998
@@ -1391,7 +1391,7 @@ L_A993:
 	ld (0e420h),a		;a9a2
 	xor a			;a9a5
 	call L_A9B8		;a9a6
-	jp 042ddh		;a9a9
+	jp 042ddh		;a9a9   ; sprites_de_la_nave_normal: con los bancos 7-8-9, p08:9FF4 y p08:A063 a 0x1800 y 0x1960
 L_A9AC:
 	ld hl,0e44fh		;a9ac
 	dec (hl)			;a9af
@@ -1403,7 +1403,7 @@ L_A9AC:
 	jr nc,L_A98E		;a9b6
 L_A9B8:
 	ld hl,0a9f4h		;a9b8
-	call 04b67h		;a9bb
+	call 04b67h		;a9bb   ; palabra_a: DE = la palabra A de la tabla HL (HL apunta a su byte alto)
 	ex de,hl			;a9be
 	ld a,(hl)			;a9bf
 	ld (0e44fh),a		;a9c0
@@ -1475,7 +1475,7 @@ L_AA34:
 	ld (0e40eh),a		;aa3f
 	ret			;aa42
 L_AA43:
-	ld a,(0e40bh)		;aa43
+	ld a,(0e40bh)		;aa43   ; lee las opciones
 	dec a			;aa46
 	ld hl,0e410h		;aa47
 	jr z,L_AA4E		;aa4a
@@ -1484,13 +1484,13 @@ L_AA4E:
 	ld (hl),001h		;aa4e
 	jp L_AAEC		;aa50
 L_AA53:
-	ld a,(0e400h)		;aa53
+	ld a,(0e400h)		;aa53   ; lee la forma de la nave (1 normal, 2 con escudo, 3 R.DRILL)
 	dec a			;aa56
 	ret m			;aa57
-	ld a,(0e40bh)		;aa58
+	ld a,(0e40bh)		;aa58   ; lee las opciones
 	or a			;aa5b
 	ret z			;aa5c
-	ld a,(0f0f5h)		;aa5d
+	ld a,(0f0f5h)		;aa5d   ; lee lo que hay en la otra ranura (bit 3 Galious, 2 Penguin Adventure, 1 los 6 bytes de 0x7FFA, 0 Q*bert)
 	bit 2,a		;aa60
 	ld b,002h		;aa62
 	jr z,L_AA68		;aa64
@@ -1504,7 +1504,7 @@ L_AA68:
 	ld (hl),000h		;aa6f
 	inc l			;aa71
 	inc (hl)			;aa72
-	ld a,(0e40bh)		;aa73
+	ld a,(0e40bh)		;aa73   ; lee las opciones
 	dec a			;aa76
 	jr z,L_AA7F		;aa77
 	ld de,0e427h		;aa79
@@ -1516,7 +1516,7 @@ L_AA82:
 	and 003h		;aa85
 	add a,a			;aa87
 	ld hl,0aa93h		;aa88
-	call 0407ah		;aa8b
+	call 0407ah		;aa8b   ; hl_mas_a: HL = HL + A
 	ldi		;aa8e
 	ldi		;aa90
 	ret			;aa92
@@ -1537,26 +1537,26 @@ DATA_tabla_AA93:
 
 
 L_AA9B:
-	ld a,(0e400h)		;aa9b
+	ld a,(0e400h)		;aa9b   ; lee la forma de la nave (1 normal, 2 con escudo, 3 R.DRILL)
 	dec a			;aa9e
 	ret m			;aa9f
-	ld a,(0e3d0h)		;aaa0
+	ld a,(0e3d0h)		;aaa0   ; lee la velocidad del scroll (1 parado, 2 cada cuadro, si no uno de cada dos)
 	or a			;aaa3
 	ret nz			;aaa4
-	ld a,(0e22bh)		;aaa5
+	ld a,(0e22bh)		;aaa5   ; lee la marca de jefe vencido: al interior
 	or a			;aaa8
 	ret nz			;aaa9
-	ld a,(0e439h)		;aaaa
+	ld a,(0e439h)		;aaaa   ; lee la capsula especial en marcha (con cuenta atras)
 	cp 003h		;aaad
 	ret z			;aaaf
-	ld hl,0e3c2h		;aab0
-	ld a,(0e3c0h)		;aab3
+	ld hl,0e3c2h		;aab0   ; apunta a el dibujo de la nave en el final
+	ld a,(0e3c0h)		;aab3   ; lee el paso del final del interior (0 nada)
 	or a			;aab6
 	jr nz,L_AAC2		;aab7
-	ld a,(0e3bfh)		;aab9
+	ld a,(0e3bfh)		;aab9   ; lee la marca de la nave yendose
 	or a			;aabc
 	jr nz,L_AAC2		;aabd
-	ld hl,0e1c9h		;aabf
+	ld hl,0e1c9h		;aabf   ; apunta a los mandos: bit 0 arriba, 1 abajo, 2 izquierda, 3 derecha, 4 disparo, 5 el otro boton
 L_AAC2:
 	ld a,(hl)			;aac2
 	and 00fh		;aac3
@@ -1585,7 +1585,7 @@ L_AAC2:
 	ld (hl),000h		;aaea
 L_AAEC:
 	ld hl,0e40eh		;aaec
-	ld a,(0e40bh)		;aaef
+	ld a,(0e40bh)		;aaef   ; lee las opciones
 	dec a			;aaf2
 	ret m			;aaf3
 	jr z,L_AAFD		;aaf4
@@ -1612,27 +1612,27 @@ L_AB07:
 	ld (bc),a			;ab13
 	ret			;ab14
 L_AB15:
-	ld a,(0e400h)		;ab15
+	ld a,(0e400h)		;ab15   ; lee la forma de la nave (1 normal, 2 con escudo, 3 R.DRILL)
 	dec a			;ab18
 	ret m			;ab19
-	ld a,(0e439h)		;ab1a
+	ld a,(0e439h)		;ab1a   ; lee la capsula especial en marcha (con cuenta atras)
 	cp 003h		;ab1d
 	ret nz			;ab1f
-	ld a,(0e40bh)		;ab20
+	ld a,(0e40bh)		;ab20   ; lee las opciones
 	dec a			;ab23
 	ret m			;ab24
 	jr z,L_AB34		;ab25
 	exx			;ab27
 	ld hl,0e424h		;ab28
 	exx			;ab2b
-	ld a,(0e1c3h)		;ab2c
+	ld a,(0e1c3h)		;ab2c   ; lee la cuenta de cuadros
 	and 00fh		;ab2f
 	call L_AB44		;ab31
 L_AB34:
 	exx			;ab34
 	ld hl,0e414h		;ab35
 	exx			;ab38
-	ld a,(0e1c3h)		;ab39
+	ld a,(0e1c3h)		;ab39   ; lee la cuenta de cuadros
 	and 00fh		;ab3c
 	sub 008h		;ab3e
 	jr nc,L_AB44		;ab40
@@ -1641,7 +1641,7 @@ L_AB44:
 	ld hl,0e404h		;ab44
 	ld de,0ab72h		;ab47
 	add a,a			;ab4a
-	call 0407fh		;ab4b
+	call 0407fh		;ab4b   ; de_mas_a: DE = DE + A
 	ld a,(de)			;ab4e
 	add a,(hl)			;ab4f
 	inc l			;ab50
@@ -1701,7 +1701,7 @@ DATA_tabla_AB72:
 
 
 L_AB92:
-	ld iy,0e470h		;ab92
+	ld iy,0e470h		;ab92   ; apunta a las 9 fichas de 16 bytes de 0xE470
 	ld b,009h		;ab96
 L_AB98:
 	push bc			;ab98
@@ -1728,7 +1728,7 @@ L_ABA5:
 L_ABBD:
 	ld a,b			;abbd
 	dec a			;abbe
-	call 04084h		;abbf
+	call 04084h		;abbf   ; despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_ABC2: 15 destinos del despachador p00:4084 (call en p03:ABBF, el
@@ -1749,22 +1749,22 @@ L_ABE0:
 	ld (0e437h),a		;abe1
 	ret			;abe4
 L_ABE5:
-	ld a,(0e400h)		;abe5
+	ld a,(0e400h)		;abe5   ; lee la forma de la nave (1 normal, 2 con escudo, 3 R.DRILL)
 	dec a			;abe8
 	ret m			;abe9
-	ld a,(0e3d0h)		;abea
+	ld a,(0e3d0h)		;abea   ; lee la velocidad del scroll (1 parado, 2 cada cuadro, si no uno de cada dos)
 	or a			;abed
 	ret nz			;abee
-	ld a,(0e22bh)		;abef
+	ld a,(0e22bh)		;abef   ; lee la marca de jefe vencido: al interior
 	or a			;abf2
 	ret nz			;abf3
-	ld a,(0e3c0h)		;abf4
+	ld a,(0e3c0h)		;abf4   ; lee el paso del final del interior (0 nada)
 	or a			;abf7
 	ret nz			;abf8
-	ld a,(0e1c8h)		;abf9
+	ld a,(0e1c8h)		;abf9   ; lee los mandos recien pulsados
 	and 010h		;abfc
 	jr nz,L_AC0F		;abfe
-	ld a,(0e1c9h)		;ac00
+	ld a,(0e1c9h)		;ac00   ; lee los mandos: bit 0 arriba, 1 abajo, 2 izquierda, 3 derecha, 4 disparo, 5 el otro boton
 	and 010h		;ac03
 	jr z,L_ABE0		;ac05
 	ld hl,0e437h		;ac07
@@ -1774,7 +1774,7 @@ L_ABE5:
 	ret c			;ac0e
 L_AC0F:
 	call L_ABE0		;ac0f
-	ld ix,0e400h		;ac12
+	ld ix,0e400h		;ac12   ; apunta a la forma de la nave (1 normal, 2 con escudo, 3 R.DRILL)
 	exx			;ac16
 	ld de,00300h		;ac17
 L_AC1A:
@@ -1792,32 +1792,32 @@ L_AC1A:
 	jr nz,L_AC1A		;ac2d
 	ret			;ac2f
 L_AC30:
-	ld a,(0e439h)		;ac30
+	ld a,(0e439h)		;ac30   ; lee la capsula especial en marcha (con cuenta atras)
 	cp 007h		;ac33
 	push af			;ac35
 	call z,L_AF04		;ac36
 	pop af			;ac39
 	jr z,L_AC58		;ac3a
-	ld a,(0e430h)		;ac3c
+	ld a,(0e430h)		;ac3c   ; lee el disparo normal
 	or a			;ac3f
 	call nz,L_AC7D		;ac40
-	ld a,(0e431h)		;ac43
+	ld a,(0e431h)		;ac43   ; lee arma 0xE431
 	or a			;ac46
 	call nz,L_ACF6		;ac47
-	ld a,(0e432h)		;ac4a
+	ld a,(0e432h)		;ac4a   ; lee el arma elegida en el medidor
 	or a			;ac4d
 	call nz,L_AD36		;ac4e
-	ld a,(0e436h)		;ac51
+	ld a,(0e436h)		;ac51   ; lee arma 0xE436
 	or a			;ac54
 	call nz,L_AC6E		;ac55
 L_AC58:
-	ld a,(0e433h)		;ac58
+	ld a,(0e433h)		;ac58   ; lee el misil
 	or a			;ac5b
 	call nz,L_B0B4		;ac5c
-	ld a,(0e434h)		;ac5f
+	ld a,(0e434h)		;ac5f   ; lee el disparo doble
 	or a			;ac62
 	call nz,L_ADBA		;ac63
-	ld a,(0e435h)		;ac66
+	ld a,(0e435h)		;ac66   ; lee el laser
 	or a			;ac69
 	call nz,L_ADEF		;ac6a
 	ret			;ac6d
@@ -1832,7 +1832,7 @@ L_AC6E:
 L_AC7D:
 	dec a			;ac7d
 	jr z,L_AC9A		;ac7e
-	ld hl,0e470h		;ac80
+	ld hl,0e470h		;ac80   ; apunta a las 9 fichas de 16 bytes de 0xE470
 	call L_B20E		;ac83
 	jr z,L_ACB5		;ac86
 	ld hl,0e480h		;ac88
@@ -1840,15 +1840,15 @@ L_AC7D:
 	jr z,L_ACB5		;ac8e
 	ret			;ac90
 L_AC91:
-	ld hl,0e470h		;ac91
+	ld hl,0e470h		;ac91   ; apunta a las 9 fichas de 16 bytes de 0xE470
 	call L_B20E		;ac94
 	ret nz			;ac97
 	jr L_ACB5		;ac98
 L_AC9A:
-	ld a,(0e431h)		;ac9a
+	ld a,(0e431h)		;ac9a   ; lee arma 0xE431
 	or a			;ac9d
 	jr z,L_AC91		;ac9e
-	ld hl,0e470h		;aca0
+	ld hl,0e470h		;aca0   ; apunta a las 9 fichas de 16 bytes de 0xE470
 	call L_B20E		;aca3
 	jr nz,L_ACEC		;aca6
 	push hl			;aca8
@@ -1876,7 +1876,7 @@ L_ACBB:
 	inc l			;accc
 	ld (hl),002h		;accd
 	ld a,001h		;accf
-	jp 04ae4h		;acd1
+	jp 04ae4h		;acd1   ; sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
 L_ACD4:
 	ld a,(iy+005h)		;acd4
 	add a,00ch		;acd7
@@ -1919,7 +1919,7 @@ L_ACF6:
 	inc l			;ad17
 	ld (hl),002h		;ad18
 	ld a,002h		;ad1a
-	jp 04ae4h		;ad1c
+	jp 04ae4h		;ad1c   ; sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
 L_AD1F:
 	ld a,(iy+003h)		;ad1f
 	sub 006h		;ad22
@@ -1931,10 +1931,10 @@ L_AD1F:
 	ld (iy+005h),a		;ad32
 	ret			;ad35
 L_AD36:
-	ld hl,0e470h		;ad36
+	ld hl,0e470h		;ad36   ; apunta a las 9 fichas de 16 bytes de 0xE470
 	call L_B20E		;ad39
 	ret nz			;ad3c
-	ld a,(0e432h)		;ad3d
+	ld a,(0e432h)		;ad3d   ; lee el arma elegida en el medidor
 	sub 003h		;ad40
 	jr c,L_AD50		;ad42
 	jr z,L_AD85		;ad44
@@ -1964,7 +1964,7 @@ L_AD50:
 	inc l			;ad6b
 	ld (hl),000h		;ad6c
 	inc l			;ad6e
-	ld a,(0e432h)		;ad6f
+	ld a,(0e432h)		;ad6f   ; lee el arma elegida en el medidor
 	dec a			;ad72
 	ld a,00fh		;ad73
 	jr z,L_AD79		;ad75
@@ -1976,7 +1976,7 @@ L_AD79:
 	inc l			;ad7d
 	ld (hl),002h		;ad7e
 	ld a,003h		;ad80
-	jp 04ae4h		;ad82
+	jp 04ae4h		;ad82   ; sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
 L_AD85:
 	ld (hl),008h		;ad85
 	inc l			;ad87
@@ -2011,12 +2011,12 @@ L_AD85:
 	inc l			;adb2
 	ld (hl),008h		;adb3
 	ld a,01ah		;adb5
-	jp 04ae4h		;adb7
+	jp 04ae4h		;adb7   ; sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
 L_ADBA:
 	ld hl,0e480h		;adba
 	call L_B20E		;adbd
 	ret nz			;adc0
-	ld a,(0e434h)		;adc1
+	ld a,(0e434h)		;adc1   ; lee el disparo doble
 	dec a			;adc4
 	ld a,00ah		;adc5
 	jr z,L_ADCB		;adc7
@@ -2041,12 +2041,12 @@ L_ADCB:
 	inc l			;ade7
 	ld (hl),008h		;ade8
 	ld a,00eh		;adea
-	jp 04ae4h		;adec
+	jp 04ae4h		;adec   ; sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
 L_ADEF:
 	ld hl,0e480h		;adef
 	call L_B20E		;adf2
 	ret nz			;adf5
-	ld a,(0e435h)		;adf6
+	ld a,(0e435h)		;adf6   ; lee el laser
 	dec a			;adf9
 	ld a,00bh		;adfa
 	jr z,L_ADCB		;adfc
@@ -2205,7 +2205,7 @@ L_AEFE:
 	call L_AECB		;aefe
 	jp L_AEDE		;af01
 L_AF04:
-	ld hl,0e470h		;af04
+	ld hl,0e470h		;af04   ; apunta a las 9 fichas de 16 bytes de 0xE470
 	call L_B20E		;af07
 	ret nz			;af0a
 	ld (hl),009h		;af0b
@@ -2235,7 +2235,7 @@ L_AF04:
 	inc l			;af2f
 	ld (hl),010h		;af30
 	ld a,01dh		;af32
-	jp 04ae4h		;af34
+	jp 04ae4h		;af34   ; sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
 L_AF37:
 	ld a,(iy+005h)		;af37
 	add a,008h		;af3a
@@ -2269,7 +2269,7 @@ L_AF58:
 	ld (iy+00ah),a		;af73
 	ret			;af76
 L_AF77:
-	ld hl,0e470h		;af77
+	ld hl,0e470h		;af77   ; apunta a las 9 fichas de 16 bytes de 0xE470
 	call L_B20E		;af7a
 	ret nz			;af7d
 	push hl			;af7e
@@ -2296,7 +2296,7 @@ L_AF77:
 	inc l			;af9f
 	ld (hl),00ch		;afa0
 	ld a,01bh		;afa2
-	jp 04ae4h		;afa4
+	jp 04ae4h		;afa4   ; sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
 L_AFA7:
 	push iy		;afa7
 	pop hl			;afa9
@@ -2332,7 +2332,7 @@ L_AFDB:
 	ld a,0f0h		;afdf
 L_AFE1:
 	ld (hl),a			;afe1
-	ld a,(0e1c3h)		;afe2
+	ld a,(0e1c3h)		;afe2   ; lee la cuenta de cuadros
 	bit 1,a		;afe5
 	ld a,00bh		;afe7
 	jr z,L_AFED		;afe9
@@ -2348,7 +2348,7 @@ L_AFF1:
 	jp c,L_AE02		;affb
 	jr L_AFBD		;affe
 L_B000:
-	ld hl,0e470h		;b000
+	ld hl,0e470h		;b000   ; apunta a las 9 fichas de 16 bytes de 0xE470
 	call L_B20E		;b003
 	ret nz			;b006
 	push hl			;b007
@@ -2374,7 +2374,7 @@ L_B000:
 	inc l			;b021
 	ld (hl),008h		;b022
 	ld a,01ch		;b024
-	jp 04ae4h		;b026
+	jp 04ae4h		;b026   ; sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
 L_B029:
 	push iy		;b029
 	pop hl			;b02b
@@ -2409,17 +2409,17 @@ L_B060:
 	call L_B088		;b060
 	dec (iy+00bh)		;b063
 	jp z,L_AE02		;b066
-	ld a,(0e432h)		;b069
+	ld a,(0e432h)		;b069   ; lee el arma elegida en el medidor
 	cp 006h		;b06c
 	jr nz,L_B042		;b06e
-	ld a,(0e3c0h)		;b070
+	ld a,(0e3c0h)		;b070   ; lee el paso del final del interior (0 nada)
 	or a			;b073
 	jr nz,L_B042		;b074
-	ld a,(0e1c8h)		;b076
+	ld a,(0e1c8h)		;b076   ; lee los mandos recien pulsados
 	and 010h		;b079
 	jr z,L_B042		;b07b
 	ld a,01ch		;b07d
-	call 04ae4h		;b07f
+	call 04ae4h		;b07f   ; sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
 	ld (iy+001h),000h		;b082
 	jr L_B042		;b086
 L_B088:
@@ -2468,7 +2468,7 @@ L_B0B4:
 	ld a,(hl)			;b0ca
 	or a			;b0cb
 	ret nz			;b0cc
-	ld a,(0e433h)		;b0cd
+	ld a,(0e433h)		;b0cd   ; lee el misil
 	ld de,00400h		;b0d0
 	ld bc,0200ah		;b0d3
 	dec a			;b0d6
@@ -2500,7 +2500,7 @@ L_B0E1:
 L_B0FB:
 	push iy		;b0fb
 	pop hl			;b0fd
-	ld a,(0e201h)		;b0fe
+	ld a,(0e201h)		;b0fe   ; lee la fase (0-11)
 	cp 005h		;b101
 	jr z,L_B140		;b103
 	ld h,(iy+005h)		;b105
@@ -2582,13 +2582,13 @@ L_B194:
 	ld (iy+005h),a		;b1a2
 	ret			;b1a5
 L_B1A6:
-	ld a,(0e305h)		;b1a6
+	ld a,(0e305h)		;b1a6   ; lee dato de la fase de p01:697A
 	exx			;b1a9
 	ld c,a			;b1aa
 	exx			;b1ab
 	jp 08388h		;b1ac
 L_B1AF:
-	ld a,(0e320h)		;b1af
+	ld a,(0e320h)		;b1af   ; lee la marca de scroll hecho en este cuadro
 	or a			;b1b2
 	jr z,L_B1C0		;b1b3
 	ld a,(iy+005h)		;b1b5
@@ -2607,7 +2607,7 @@ L_B1C0:
 	and 003h		;b1d6
 	add a,a			;b1d8
 	ld hl,0b1f0h		;b1d9
-	call 05ca6h		;b1dc
+	call 05ca6h		;b1dc   ; byte_a: A = el byte A de la tabla HL
 	add a,(iy+003h)		;b1df
 	ld e,a			;b1e2
 	inc hl			;b1e3
@@ -2616,7 +2616,7 @@ L_B1C0:
 	ld d,a			;b1e8
 	ld c,000h		;b1e9
 	ld a,036h		;b1eb
-	jp 04d1eh		;b1ed
+	jp 04d1eh		;b1ed   ; crea_enemigo: busca ficha libre en 0xE600 y pone el enemigo de tipo A en D (X), E (Y), con B y C; A = 0 si no hay sitio o sprites (0xE355, maximo 12)
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_B1F0: 4 pares (dx, dy) que p03:B1D3 lee con IY+08 & 3; lo leen
@@ -2642,7 +2642,7 @@ L_B1F8:
 L_B201:
 	ld (iy+00ah),a		;b201
 	ld hl,09621h		;b204
-	call 04b67h		;b207
+	call 04b67h		;b207   ; palabra_a: DE = la palabra A de la tabla HL (HL apunta a su byte alto)
 	ld (iy+006h),e		;b20a
 	ret			;b20d
 L_B20E:
@@ -2848,7 +2848,7 @@ L_B3A7:
 	ld a,(ix+001h)		;b3ad
 	cp 005h		;b3b0
 	ret z			;b3b2
-	call 04084h		;b3b3
+	call 04084h		;b3b3   ; despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_B3B6: 5 destinos del despachador p00:4084 (call en p03:B3B3, el
@@ -2892,7 +2892,7 @@ L_B3EA:
 	ld (ix+001h),0ffh		;b3f1
 	ld (ix+00ch),005h		;b3f5
 	ld b,040h		;b3f9
-	ld a,(0e228h)		;b3fb
+	ld a,(0e228h)		;b3fb   ; lee el nivel de dificultad
 	add a,a			;b3fe
 	neg		;b3ff
 	add a,b			;b401
@@ -2929,7 +2929,7 @@ L_B435:
 	ld d,a			;b43d
 	ld c,000h		;b43e
 	ld a,007h		;b440
-	call 04d16h		;b442
+	call 04d16h		;b442   ; crea_enemigo_ix: crea_enemigo conservando IX
 	ret nz			;b445
 	jr L_B46C		;b446
 L_B448:
@@ -2965,7 +2965,7 @@ L_B483:
 	cp 020h		;b48a
 	call z,L_B5FF		;b48c
 	ld a,(ix+001h)		;b48f
-	call 04084h		;b492
+	call 04084h		;b492   ; despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_B495: 11 destinos del despachador p00:4084 (call en p03:B492, el
@@ -2993,19 +2993,19 @@ L_B4B9:
 	ret nz			;b4bc
 	ld (ix+002h),008h		;b4bd
 L_B4C1:
-	ld a,(0e20ah)		;b4c1
+	ld a,(0e20ah)		;b4c1   ; lee la vuelta (bit 0: las fases bajan)
 	cp 002h		;b4c4
 	ld b,006h		;b4c6
 	jr nc,L_B4E4		;b4c8
 	ld b,002h		;b4ca
-	ld a,(0e40bh)		;b4cc
+	ld a,(0e40bh)		;b4cc   ; lee las opciones
 	cp 002h		;b4cf
 	jr c,L_B4E4		;b4d1
 	ld b,001h		;b4d3
 	jr L_B4E4		;b4d5
 L_B4D7:
 	ld b,002h		;b4d7
-	ld a,(0e40bh)		;b4d9
+	ld a,(0e40bh)		;b4d9   ; lee las opciones
 	and a			;b4dc
 	jr z,L_B4E4		;b4dd
 	dec b			;b4df
@@ -3020,7 +3020,7 @@ L_B4E7:
 L_B4ED:
 	ld a,(ix+007h)		;b4ed
 	ld hl,0b4fbh		;b4f0
-	call 0407ah		;b4f3
+	call 0407ah		;b4f3   ; hl_mas_a: HL = HL + A
 	ld a,(hl)			;b4f6
 	ld (ix+00dh),a		;b4f7
 	ret			;b4fa
@@ -3038,20 +3038,20 @@ DATA_tabla_B4FB:
 
 
 L_B50B:
-	ld a,(0e40bh)		;b50b
+	ld a,(0e40bh)		;b50b   ; lee las opciones
 	cp 002h		;b50e
 	jr nc,L_B52D		;b510
 	jr L_B529		;b512
 L_B514:
-	ld a,(0e40bh)		;b514
+	ld a,(0e40bh)		;b514   ; lee las opciones
 	and a			;b517
 	jr nz,L_B52D		;b518
 	jr L_B529		;b51a
 L_B51C:
-	ld a,(0e40bh)		;b51c
+	ld a,(0e40bh)		;b51c   ; lee las opciones
 	and a			;b51f
 	jr z,L_B52D		;b520
-	ld a,(0e400h)		;b522
+	ld a,(0e400h)		;b522   ; lee la forma de la nave (1 normal, 2 con escudo, 3 R.DRILL)
 	cp 002h		;b525
 	jr nc,L_B52D		;b527
 L_B529:
@@ -3069,7 +3069,7 @@ L_B52D:
 	jr nz,L_B54F		;b546
 	ld a,01dh		;b548
 	ld c,000h		;b54a
-	call 04d16h		;b54c
+	call 04d16h		;b54c   ; crea_enemigo_ix: crea_enemigo conservando IX
 L_B54F:
 	inc (ix+00eh)		;b54f
 	ld b,001h		;b552
@@ -3077,14 +3077,14 @@ L_B54F:
 	cp 006h		;b557
 	jr c,L_B576		;b559
 	ld b,004h		;b55b
-	ld a,(0e20ah)		;b55d
+	ld a,(0e20ah)		;b55d   ; lee la vuelta (bit 0: las fases bajan)
 	and a			;b560
 	jr nz,L_B576		;b561
 	ld b,00fh		;b563
-	ld a,(0e400h)		;b565
+	ld a,(0e400h)		;b565   ; lee la forma de la nave (1 normal, 2 con escudo, 3 R.DRILL)
 	cp 002h		;b568
 	jr nz,L_B576		;b56a
-	ld a,(0e228h)		;b56c
+	ld a,(0e228h)		;b56c   ; lee el nivel de dificultad
 	srl a		;b56f
 	ld c,a			;b571
 	ld a,00ch		;b572
@@ -3094,7 +3094,7 @@ L_B576:
 	ld (ix+002h),b		;b576
 	ret			;b579
 L_B57A:
-	ld a,(0e40bh)		;b57a
+	ld a,(0e40bh)		;b57a   ; lee las opciones
 	and a			;b57d
 	jr nz,L_B584		;b57e
 	ld (ix+00fh),001h		;b580
@@ -3154,9 +3154,9 @@ L_B5E2:
 	jr z,L_B5FC		;b5f8
 	ld c,003h		;b5fa
 L_B5FC:
-	jp 05157h		;b5fc
+	jp 05157h		;b5fc   ; pon_capsula: la capsula especial C del mapa en D (X), E (Y) (0xEA60-0xEA62), si no hay otra, ni cuenta atras, ni R.DRILL
 L_B5FF:
-	ld a,(0e320h)		;b5ff
+	ld a,(0e320h)		;b5ff   ; lee la marca de scroll hecho en este cuadro
 	and a			;b602
 	ret z			;b603
 	ld a,(ix+001h)		;b604
@@ -3187,7 +3187,7 @@ L_B630:
 	dec (ix+001h)		;b63c
 	dec (ix+001h)		;b63f
 L_B642:
-	ld a,(0e228h)		;b642
+	ld a,(0e228h)		;b642   ; lee el nivel de dificultad
 	srl a		;b645
 	neg		;b647
 	add a,010h		;b649
@@ -3213,7 +3213,7 @@ L_B673:
 	ld a,(ix+00dh)		;b676
 	dec a			;b679
 	add a,a			;b67a
-	call 0407ah		;b67b
+	call 0407ah		;b67b   ; hl_mas_a: HL = HL + A
 	ld a,(hl)			;b67e
 	inc hl			;b67f
 	ld e,(ix+004h)		;b680
@@ -3227,7 +3227,7 @@ L_B673:
 L_B68C:
 	ld hl,0b6d1h		;b68c
 	ld a,(0e35ch)		;b68f
-	call 0407ah		;b692
+	call 0407ah		;b692   ; hl_mas_a: HL = HL + A
 	ld l,(hl)			;b695
 	ld a,(0e35dh)		;b696
 	and a			;b699
@@ -3249,9 +3249,9 @@ L_B6AB:
 	ld d,(ix+006h)		;b6b4
 	ld (0f00fh),a		;b6b7
 	ld a,h			;b6ba
-	ld (0f000h),a		;b6bb
+	ld (0f000h),a		;b6bb   ; guarda variable de paso: el sentido de la vuelta (0 espejo, 1 cabeza abajo) o un puntero
 	ld a,l			;b6be
-	ld (0f001h),a		;b6bf
+	ld (0f001h),a		;b6bf   ; guarda variable de paso: cuantos bytes
 	call 09467h		;b6c2
 	jp 093fbh		;b6c5
 L_B6C8:
@@ -3291,9 +3291,9 @@ L_B6E1:
 L_B6E8:
 	ld (ix+002h),00ch		;b6e8
 	ld (ix+02fh),001h		;b6ec
-	ld de,(0f014h)		;b6f0
-	ld hl,(0f012h)		;b6f4
-	jp 04f26h		;b6f7
+	ld de,(0f014h)		;b6f0   ; lee variable de paso: la VRAM de destino y el byte siguiente (16 bits)
+	ld hl,(0f012h)		;b6f4   ; lee variable de paso: la VRAM de origen y el byte siguiente (16 bits)
+	jp 04f26h		;b6f7   ; pon_vx_y_vy: IX+09/IX+0A = DE y IX+07/IX+08 = HL
 L_B6FA:
 	ld a,(ix+001h)		;b6fa
 	and a			;b6fd
@@ -3320,7 +3320,7 @@ L_B726:
 	ld (ix+007h),b		;b726
 	ld (ix+003h),c		;b729
 	ld b,007h		;b72c
-	ld a,(0e20ah)		;b72e
+	ld a,(0e20ah)		;b72e   ; lee la vuelta (bit 0: las fases bajan)
 	jr z,L_B735		;b731
 	ld b,00ah		;b733
 L_B735:
@@ -3335,7 +3335,7 @@ L_B735:
 	ret			;b74c
 L_B74D:
 	ld c,01dh		;b74d
-	ld a,(0e201h)		;b74f
+	ld a,(0e201h)		;b74f   ; lee la fase (0-11)
 	cp 007h		;b752
 	jr z,L_B758		;b754
 	ld c,038h		;b756
@@ -3378,7 +3378,7 @@ L_B7A0:
 	ld d,a			;b7a7
 	ld a,010h		;b7a8
 	ld c,000h		;b7aa
-	call 04d16h		;b7ac
+	call 04d16h		;b7ac   ; crea_enemigo_ix: crea_enemigo conservando IX
 	dec (ix+00ch)		;b7af
 	ret nz			;b7b2
 	ld (ix+002h),060h		;b7b3
@@ -3388,18 +3388,18 @@ L_B7BC:
 	ld (ix+002h),010h		;b7bc
 	ld a,(ix+006h)		;b7c0
 	ld (ix+026h),a		;b7c3
-	call 04e93h		;b7c6
+	call 04e93h		;b7c6   ; azar_por_nivel: A = p00:4EA4[0xE228] + un azar de 0 a 7 (R)
 	ld (ix+015h),a		;b7c9
 	ld a,(ix+004h)		;b7cc
 	bit 0,(ix+019h)		;b7cf
 	jr z,L_B7DE		;b7d3
 	ld hl,00480h		;b7d5
 	ld de,00300h		;b7d8
-	jp 04f26h		;b7db
+	jp 04f26h		;b7db   ; pon_vx_y_vy: IX+09/IX+0A = DE y IX+07/IX+08 = HL
 L_B7DE:
 	ld hl,0fb80h		;b7de
 	ld de,0fd00h		;b7e1
-	jp 04f26h		;b7e4
+	jp 04f26h		;b7e4   ; pon_vx_y_vy: IX+09/IX+0A = DE y IX+07/IX+08 = HL
 L_B7E7:
 	call L_B834		;b7e7
 	call L_B841		;b7ea
@@ -3423,18 +3423,18 @@ L_B80D:
 	dec (ix+002h)		;b813
 	ret nz			;b816
 	ld e,070h		;b817
-	ld a,(0e228h)		;b819
+	ld a,(0e228h)		;b819   ; lee el nivel de dificultad
 	add a,a			;b81c
 	add a,e			;b81d
 	ld e,(ix+004h)		;b81e
 	ld d,(ix+006h)		;b821
 	call 093f5h		;b824
 	inc (ix+001h)		;b827
-	ld hl,(0f012h)		;b82a
-	ld de,(0f014h)		;b82d
-	jp 04f26h		;b831
+	ld hl,(0f012h)		;b82a   ; lee variable de paso: la VRAM de origen y el byte siguiente (16 bits)
+	ld de,(0f014h)		;b82d   ; lee variable de paso: la VRAM de destino y el byte siguiente (16 bits)
+	jp 04f26h		;b831   ; pon_vx_y_vy: IX+09/IX+0A = DE y IX+07/IX+08 = HL
 L_B834:
-	ld a,(0e1c3h)		;b834
+	ld a,(0e1c3h)		;b834   ; lee la cuenta de cuadros
 	and 003h		;b837
 	add a,a			;b839
 	add a,a			;b83a
@@ -3445,7 +3445,7 @@ L_B841:
 	dec (ix+015h)		;b841
 	ret nz			;b844
 	call L_BB44		;b845
-	call 04e93h		;b848
+	call 04e93h		;b848   ; azar_por_nivel: A = p00:4EA4[0xE228] + un azar de 0 a 7 (R)
 	ld (ix+015h),a		;b84b
 	ret			;b84e
 L_B84F:
@@ -3459,8 +3459,8 @@ L_B85A:
 	add hl,hl			;b85b
 	add hl,hl			;b85c
 	ex de,hl			;b85d
-	call 062a8h		;b85e
-	call 062c2h		;b861
+	call 062a8h		;b85e   ; pon_aceleracion: IX+20/IX+21 = DE
+	call 062c2h		;b861   ; acelera_vy: IX+07/IX+08 + IX+20/IX+21
 L_B864:
 	ld h,000h		;b864
 	ld a,(ix+026h)		;b866
@@ -3472,8 +3472,8 @@ L_B86F:
 	add hl,hl			;b870
 	add hl,hl			;b871
 	ex de,hl			;b872
-	call 062afh		;b873
-	jp 062d5h		;b876
+	call 062afh		;b873   ; pon_aceleracion_b: IX+20/IX+21 = DE
+	jp 062d5h		;b876   ; acelera_vx: IX+09/IX+0A + IX+20/IX+21
 L_B879:
 	dec (ix+006h)		;b879
 	ld a,(ix+026h)		;b87c
@@ -3514,7 +3514,7 @@ L_B8B7:
 	ld a,(ix+00bh)		;b8c3
 	ld b,a			;b8c6
 	ld a,01fh		;b8c7
-	call 04d16h		;b8c9
+	call 04d16h		;b8c9   ; crea_enemigo_ix: crea_enemigo conservando IX
 	ld (ix+002h),018h		;b8cc
 	inc (ix+001h)		;b8d0
 	ret			;b8d3
@@ -3530,7 +3530,7 @@ L_B8E0:
 	ld a,r		;b8e4
 	and 007h		;b8e6
 	ld c,a			;b8e8
-	ld a,(0e228h)		;b8e9
+	ld a,(0e228h)		;b8e9   ; lee el nivel de dificultad
 	rra			;b8ec
 	and 007h		;b8ed
 	sub 018h		;b8ef
@@ -3549,7 +3549,7 @@ L_B906:
 	ld (ix+002h),000h		;b909
 	set 3,(ix+010h)		;b90d
 	ld (ix+025h),018h		;b911
-	call 04f17h		;b915
+	call 04f17h		;b915   ; vx_cero_y_vy: IX+09/IX+0A = 0 y luego IX+07/IX+08 = DE
 	jr L_B976		;b918
 L_B91A:
 	call L_B970		;b91a
@@ -3573,7 +3573,7 @@ L_B935:
 L_B944:
 	ld de,0fc00h		;b944
 L_B947:
-	call 04efbh		;b947
+	call 04efbh		;b947   ; pon_vy: IX+07/IX+08 = DE
 	ld (ix+025h),01eh		;b94a
 	ret			;b94e
 L_B94F:
@@ -3586,14 +3586,14 @@ L_B958:
 	jr z,L_B935		;b95b
 	ld de,00020h		;b95d
 	bit 0,(ix+019h)		;b960
-	call nz,05cadh		;b964
+	call nz,05cadh		;b964   ; menos_de: DE = - DE
 	ex de,hl			;b967
-	call 04f10h		;b968
+	call 04f10h		;b968   ; lee_vy: DE = IX+07/IX+08
 	add hl,de			;b96b
 	ex de,hl			;b96c
-	jp 04efbh		;b96d
+	jp 04efbh		;b96d   ; pon_vy: IX+07/IX+08 = DE
 L_B970:
-	ld a,(0e1c3h)		;b970
+	ld a,(0e1c3h)		;b970   ; lee la cuenta de cuadros
 	and 003h		;b973
 	ret nz			;b975
 L_B976:
@@ -3605,7 +3605,7 @@ L_B976:
 L_B97F:
 	ld (ix+002h),a		;b97f
 	ld hl,0b98ch		;b982
-	call 05ca6h		;b985
+	call 05ca6h		;b985   ; byte_a: A = el byte A de la tabla HL
 	ld (ix+031h),a		;b988
 	ret			;b98b
 
@@ -3672,7 +3672,7 @@ L_B9F9:
 	call L_BA06		;b9fc
 	ld a,022h		;b9ff
 	ld c,000h		;ba01
-	jp 04d16h		;ba03
+	jp 04d16h		;ba03   ; crea_enemigo_ix: crea_enemigo conservando IX
 L_BA06:
 	ld a,010h		;ba06
 	add a,(ix+004h)		;ba08
@@ -3701,9 +3701,9 @@ L_BA13:
 	ret			;ba46
 L_BA47:
 	ld hl,00000h		;ba47
-	ld (0f012h),hl		;ba4a
+	ld (0f012h),hl		;ba4a   ; guarda variable de paso: la VRAM de origen y el byte siguiente (16 bits)
 	ld hl,0fc00h		;ba4d
-	ld (0f014h),hl		;ba50
+	ld (0f014h),hl		;ba50   ; guarda variable de paso: la VRAM de destino y el byte siguiente (16 bits)
 	jp L_B6E8		;ba53
 L_BA56:
 	ld (ix+010h),01bh		;ba56
@@ -3773,7 +3773,7 @@ L_BACB:
 	ld h,004h		;bae4
 L_BAE6:
 	ld de,0fd60h		;bae6
-	jp 04f26h		;bae9
+	jp 04f26h		;bae9   ; pon_vx_y_vy: IX+09/IX+0A = DE y IX+07/IX+08 = HL
 L_BAEC:
 	call L_BB50		;baec
 	ld a,(ix+001h)		;baef
@@ -3781,7 +3781,7 @@ L_BAEC:
 	jr z,L_BB3D		;baf3
 	dec a			;baf5
 	ret z			;baf6
-	ld a,(0e228h)		;baf7
+	ld a,(0e228h)		;baf7   ; lee el nivel de dificultad
 	cp 009h		;bafa
 	call nc,L_BB33		;bafc
 	ld (ix+001h),000h		;baff
@@ -3793,7 +3793,7 @@ L_BAEC:
 	ret nc			;bb11
 	ld (ix+025h),008h		;bb12
 	inc (ix+001h)		;bb16
-	ld a,(0e228h)		;bb19
+	ld a,(0e228h)		;bb19   ; lee el nivel de dificultad
 	ld b,004h		;bb1c
 	cp 006h		;bb1e
 	jr c,L_BB24		;bb20
@@ -3801,9 +3801,9 @@ L_BAEC:
 L_BB24:
 	ld a,(ix+019h)		;bb24
 	ld hl,0bb84h		;bb27
-	call 05ca6h		;bb2a
-	call 04cb7h		;bb2d
-	jp 04f26h		;bb30
+	call 05ca6h		;bb2a   ; byte_a: A = el byte A de la tabla HL
+	call 04cb7h		;bb2d   ; velocidad_en_direccion: para la direccion A (0-15) y la rapidez B: HL = B x p00:4CF6[A] y DE = B x p00:4CD6[A]
+	jp 04f26h		;bb30   ; pon_vx_y_vy: IX+09/IX+0A = DE y IX+07/IX+08 = HL
 L_BB33:
 	ld a,(ix+025h)		;bb33
 	and a			;bb36
@@ -3821,7 +3821,7 @@ L_BB44:
 	jp 0938fh		;bb4d
 L_BB50:
 	ld hl,0bb78h		;bb50
-	ld a,(0e201h)		;bb53
+	ld a,(0e201h)		;bb53   ; lee la fase (0-11)
 	cp 005h		;bb56
 	jr z,L_BB63		;bb58
 	cp 003h		;bb5a
@@ -3832,7 +3832,7 @@ L_BB63:
 	ld hl,0bb7ch		;bb63
 L_BB66:
 	call 09b31h		;bb66
-	ld a,(0e1c3h)		;bb69
+	ld a,(0e1c3h)		;bb69   ; lee la cuenta de cuadros
 	and 003h		;bb6c
 	ret nz			;bb6e
 	ld a,(ix+031h)		;bb6f
@@ -3868,7 +3868,7 @@ L_BB90:
 	ld (ix+00ah),004h		;bb9c
 	ld (ix+00dh),000h		;bba0
 	ld (ix+002h),001h		;bba4
-	ld a,(0e228h)		;bba8
+	ld a,(0e228h)		;bba8   ; lee el nivel de dificultad
 	cp 006h		;bbab
 	ld a,001h		;bbad
 	jr c,L_BBB2		;bbaf
@@ -3900,14 +3900,14 @@ L_BBD6:
 	sub 008h		;bbe0
 	ld d,a			;bbe2
 	ld (ix+002h),012h		;bbe3
-	ld a,(0e228h)		;bbe7
+	ld a,(0e228h)		;bbe7   ; lee el nivel de dificultad
 	cp 006h		;bbea
 	jp c,0938fh		;bbec
 	ld (ix+002h),00ch		;bbef
 	jp 0938fh		;bbf3
 L_BBF6:
 	ld de,0fa00h		;bbf6
-	ld a,(0e228h)		;bbf9
+	ld a,(0e228h)		;bbf9   ; lee el nivel de dificultad
 	cp 006h		;bbfc
 	ld a,028h		;bbfe
 	jr nc,L_BC06		;bc00
@@ -3915,8 +3915,8 @@ L_BBF6:
 	ld a,018h		;bc04
 L_BC06:
 	ld (ix+027h),a		;bc06
-	call 04f02h		;bc09
-	jp 04f1ch		;bc0c
+	call 04f02h		;bc09   ; pon_vx: IX+09/IX+0A = DE
+	jp 04f1ch		;bc0c   ; vy_cero: IX+07/IX+08 = 0
 L_BC0F:
 	call L_BC9C		;bc0f
 	ld a,(ix+001h)		;bc12
@@ -3938,7 +3938,7 @@ L_BC2C:
 	ret nz			;bc32
 	inc (ix+001h)		;bc33
 	ld (ix+025h),004h		;bc36
-	call 04f21h		;bc3a
+	call 04f21h		;bc3a   ; vx_cero: IX+09/IX+0A = 0
 	ld hl,0bc5dh		;bc3d
 	ld b,003h		;bc40
 L_BC42:
@@ -3980,13 +3980,13 @@ L_BC63:
 	ret nz			;bc66
 	inc (ix+001h)		;bc67
 	ld (ix+025h),008h		;bc6a
-	ld a,(0e228h)		;bc6e
+	ld a,(0e228h)		;bc6e   ; lee el nivel de dificultad
 	cp 006h		;bc71
 	ld de,0fc00h		;bc73
 	jr c,L_BC7A		;bc76
 	ld d,0fah		;bc78
 L_BC7A:
-	jp 04f02h		;bc7a
+	jp 04f02h		;bc7a   ; pon_vx: IX+09/IX+0A = DE
 L_BC7D:
 	ld d,000h		;bc7d
 	ld e,(ix+027h)		;bc7f
@@ -3994,14 +3994,14 @@ L_BC7D:
 L_BC85:
 	dec (ix+025h)		;bc85
 	ret nz			;bc88
-	ld a,(0e228h)		;bc89
+	ld a,(0e228h)		;bc89   ; lee el nivel de dificultad
 	cp 006h		;bc8c
 	ld (ix+025h),010h		;bc8e
 	jp c,L_BB44		;bc92
 	ld (ix+025h),008h		;bc95
 	jp L_BB44		;bc99
 L_BC9C:
-	ld a,(0e1c3h)		;bc9c
+	ld a,(0e1c3h)		;bc9c   ; lee la cuenta de cuadros
 	and 003h		;bc9f
 	ret nz			;bca1
 	ld a,(ix+030h)		;bca2
@@ -4014,7 +4014,7 @@ L_BCAD:
 	ret			;bcb0
 L_BCB1:
 	xor a			;bcb1
-	ld (0f0f5h),a		;bcb2
+	ld (0f0f5h),a		;bcb2   ; guarda lo que hay en la otra ranura (bit 3 Galious, 2 Penguin Adventure, 1 los 6 bytes de 0x7FFA, 0 Q*bert)
 	ld (0e229h),a		;bcb5
 	ld bc,00400h		;bcb8
 	ld hl,0fcc1h		;bcbb
@@ -4028,7 +4028,7 @@ L_BCBE:
 L_BCC8:
 	pop hl			;bcc8
 	pop bc			;bcc9
-	ld a,(0f0f5h)		;bcca
+	ld a,(0f0f5h)		;bcca   ; lee lo que hay en la otra ranura (bit 3 Galious, 2 Penguin Adventure, 1 los 6 bytes de 0x7FFA, 0 Q*bert)
 	and a			;bccd
 	ret nz			;bcce
 	inc hl			;bccf
@@ -4047,7 +4047,7 @@ L_BCDF:
 	push bc			;bcdf
 	call L_BCF0		;bce0
 	pop bc			;bce3
-	ld a,(0f0f5h)		;bce4
+	ld a,(0f0f5h)		;bce4   ; lee lo que hay en la otra ranura (bit 3 Galious, 2 Penguin Adventure, 1 los 6 bytes de 0x7FFA, 0 Q*bert)
 	and a			;bce7
 	ret nz			;bce8
 	ld a,c			;bce9
@@ -4061,7 +4061,7 @@ L_BCF0:
 	ld b,006h		;bcf6
 	call L_BD40		;bcf8
 	jr nc,L_BD03		;bcfb
-	ld hl,0f0f5h		;bcfd
+	ld hl,0f0f5h		;bcfd   ; apunta a lo que hay en la otra ranura (bit 3 Galious, 2 Penguin Adventure, 1 los 6 bytes de 0x7FFA, 0 Q*bert)
 	set 1,(hl)		;bd00
 	ret			;bd02
 L_BD03:
@@ -4070,7 +4070,7 @@ L_BD03:
 	ld b,004h		;bd09
 	call L_BD40		;bd0b
 	jr nc,L_BD16		;bd0e
-	ld hl,0f0f5h		;bd10
+	ld hl,0f0f5h		;bd10   ; apunta a lo que hay en la otra ranura (bit 3 Galious, 2 Penguin Adventure, 1 los 6 bytes de 0x7FFA, 0 Q*bert)
 	set 3,(hl)		;bd13
 	ret			;bd15
 L_BD16:
@@ -4079,7 +4079,7 @@ L_BD16:
 	ld b,004h		;bd1c
 	call L_BD40		;bd1e
 	jr nc,L_BD29		;bd21
-	ld hl,0f0f5h		;bd23
+	ld hl,0f0f5h		;bd23   ; apunta a lo que hay en la otra ranura (bit 3 Galious, 2 Penguin Adventure, 1 los 6 bytes de 0x7FFA, 0 Q*bert)
 	set 2,(hl)		;bd26
 	ret			;bd28
 L_BD29:
@@ -4088,7 +4088,7 @@ L_BD29:
 	ld b,004h		;bd2f
 	call L_BD40		;bd31
 	ret nc			;bd34
-	ld hl,0f0f5h		;bd35
+	ld hl,0f0f5h		;bd35   ; apunta a lo que hay en la otra ranura (bit 3 Galious, 2 Penguin Adventure, 1 los 6 bytes de 0x7FFA, 0 Q*bert)
 	set 0,(hl)		;bd38
 	ld a,001h		;bd3a
 	ld (0e229h),a		;bd3c
@@ -4145,10 +4145,10 @@ L_BD74:
 	pop hl			;bd7a
 	ret			;bd7b
 L_BD7C:
-	ld a,(0e400h)		;bd7c
+	ld a,(0e400h)		;bd7c   ; lee la forma de la nave (1 normal, 2 con escudo, 3 R.DRILL)
 	and a			;bd7f
 	ret m			;bd80
-	ld a,(0f0f5h)		;bd81
+	ld a,(0f0f5h)		;bd81   ; lee lo que hay en la otra ranura (bit 3 Galious, 2 Penguin Adventure, 1 los 6 bytes de 0x7FFA, 0 Q*bert)
 	bit 0,a		;bd84
 	ret z			;bd86
 	call L_BECA		;bd87
@@ -4167,7 +4167,7 @@ L_BD7C:
 	ret nc			;bd9d
 	inc (hl)			;bd9e
 	ld hl,0e3e8h		;bd9f
-	call 0407ah		;bda2
+	call 0407ah		;bda2   ; hl_mas_a: HL = HL + A
 	ld (hl),c			;bda5
 	ret			;bda6
 L_BDA7:
@@ -4185,7 +4185,7 @@ L_BDAE:
 L_BDB9:
 	ld hl,0beaah		;bdb9
 	ld a,c			;bdbc
-	call 04b67h		;bdbd
+	call 04b67h		;bdbd   ; palabra_a: DE = la palabra A de la tabla HL (HL apunta a su byte alto)
 	ld hl,0e3e8h		;bdc0
 L_BDC3:
 	ld a,(de)			;bdc3
@@ -4199,7 +4199,7 @@ L_BDC3:
 	ret			;bdcd
 L_BDCE:
 	ld a,c			;bdce
-	call 04084h		;bdcf
+	call 04084h		;bdcf   ; despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_BDD2: 3 destinos del despachador p00:4084 (call en p03:BDCF, el
@@ -4214,26 +4214,26 @@ DATA_tabla_BDD2:
 
 
 L_BDD8:
-	ld a,(0e20fh)		;bdd8
+	ld a,(0e20fh)		;bdd8   ; lee las armas capturadas (0-7)
 	add a,a			;bddb
 	add a,a			;bddc
 	add a,a			;bddd
 	add a,a			;bdde
 	ld hl,0be07h		;bddf
-	call 0407ah		;bde2
-	ld de,0e334h		;bde5
+	call 0407ah		;bde2   ; hl_mas_a: HL = HL + A
+	ld de,0e334h		;bde5   ; apunta a las 9 casillas del medidor
 	ld bc,00009h		;bde8
 	ldir		;bdeb
-	ld de,0e430h		;bded
+	ld de,0e430h		;bded   ; apunta a el disparo normal
 	ld bc,00007h		;bdf0
 	ldir		;bdf3
 	call 08060h		;bdf5
 	call 081b5h		;bdf8
-	call 0448eh		;bdfb
-	ld a,(0e20fh)		;bdfe
+	call 0448eh		;bdfb   ; sprites_opcion: con los bancos 7-8-9, p08:93C0 a 0x18C0
+	ld a,(0e20fh)		;bdfe   ; lee las armas capturadas (0-7)
 	cp 004h		;be01
 	ret nz			;be03
-	jp 04482h		;be04
+	jp 04482h		;be04   ; sprites_escudo: con los bancos 7-8-9, p08:93EE a 0x18C0
 
 ; ----------------------------------------------------------------------
 ; DATOS inicio_por_capturas: 8 filas de 16 bytes, una por cada cuenta de armas
@@ -4256,9 +4256,9 @@ DATA_inicio_por_capturas:
 
 
 L_BE87:
-	call 04a08h		;be87
-	call 04c76h		;be8a
-	jp 07c11h		;be8d
+	call 04a08h		;be87   ; borra_nombres_2c0: borra 704 bytes de la tabla de nombres (0x3800, 22 filas) tras p00:5AFA
+	call 04c76h		;be8a   ; esconde_sprites: los 32 sprites de 0xE280 con Y = 0xE0 (fuera de la pantalla)
+	jp 07c11h		;be8d   ; a_la_siguiente: con la nave viva, 0xE1DA = 1 (estado 8)
 L_BE90:
 	ld hl,01e01h		;be90
 	ld (0e446h),hl		;be93
@@ -4268,7 +4268,7 @@ L_BE97:
 	ld a,(hl)			;be9a
 	or a			;be9b
 	ret z			;be9c
-	ld a,(0e1c3h)		;be9d
+	ld a,(0e1c3h)		;be9d   ; lee la cuenta de cuadros
 	and 01fh		;bea0
 	ret nz			;bea2
 	inc l			;bea3
@@ -4320,7 +4320,7 @@ L_BEDE:
 	add a,a			;bee1
 	add a,a			;bee2
 	ld hl,0bef2h		;bee3
-	call 0407ah		;bee6
+	call 0407ah		;bee6   ; hl_mas_a: HL = HL + A
 	ld a,b			;bee9
 L_BEEA:
 	rra			;beea
@@ -4353,19 +4353,19 @@ DATA_teclado:
 
 
 L_BF3A:
-	ld a,(0e400h)		;bf3a
+	ld a,(0e400h)		;bf3a   ; lee la forma de la nave (1 normal, 2 con escudo, 3 R.DRILL)
 	dec a			;bf3d
 	ret m			;bf3e
-	ld a,(0e3d0h)		;bf3f
+	ld a,(0e3d0h)		;bf3f   ; lee la velocidad del scroll (1 parado, 2 cada cuadro, si no uno de cada dos)
 	and a			;bf42
 	jr z,L_BF54		;bf43
 	ld hl,0e3d5h		;bf45
 	dec (hl)			;bf48
 	ret nz			;bf49
 	ld a,002h		;bf4a
-	ld (0e3d0h),a		;bf4c
+	ld (0e3d0h),a		;bf4c   ; guarda la velocidad del scroll (1 parado, 2 cada cuadro, si no uno de cada dos)
 	ld a,03ch		;bf4f
-	jp 04ae4h		;bf51
+	jp 04ae4h		;bf51   ; sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
 L_BF54:
 	call L_BF62		;bf54
 	ld a,(0e3d1h)		;bf57
@@ -4374,11 +4374,11 @@ L_BF54:
 	call L_BFB2		;bf5c
 	jp L_BFA0		;bf5f
 L_BF62:
-	ld a,(0e320h)		;bf62
+	ld a,(0e320h)		;bf62   ; lee la marca de scroll hecho en este cuadro
 	and a			;bf65
 	ret z			;bf66
-	ld a,(0e201h)		;bf67
-	ld hl,(0e203h)		;bf6a
+	ld a,(0e201h)		;bf67   ; lee la fase (0-11)
+	ld hl,(0e203h)		;bf6a   ; lee la columna del scroll (16 bits) y el byte siguiente (16 bits)
 	cp 003h		;bf6d
 	jr z,L_BF7A		;bf6f
 	cp 006h		;bf71
@@ -4413,7 +4413,7 @@ L_BF95:
 	ld (hl),0f0h		;bf9d
 	ret			;bf9f
 L_BFA0:
-	ld a,(0e320h)		;bfa0
+	ld a,(0e320h)		;bfa0   ; lee la marca de scroll hecho en este cuadro
 	and a			;bfa3
 	ret z			;bfa4
 	ld hl,0e3d3h		;bfa5
@@ -4437,7 +4437,7 @@ L_BFB2:
 	sub (hl)			;bfc2
 	cp 010h		;bfc3
 	ret nc			;bfc5
-	ld a,(0e201h)		;bfc6
+	ld a,(0e201h)		;bfc6   ; lee la fase (0-11)
 	cp 003h		;bfc9
 	jr z,L_BFDB		;bfcb
 	cp 006h		;bfcd
@@ -4450,16 +4450,16 @@ L_BFD6:
 L_BFDB:
 	ld hl,001ffh		;bfdb
 L_BFDE:
-	ld (0e325h),hl		;bfde
+	ld (0e325h),hl		;bfde   ; guarda la columna en la que acaba el scroll (16 bits) y el byte siguiente (16 bits)
 	ld a,040h		;bfe1
 	ld (0e3d5h),a		;bfe3
 	xor a			;bfe6
 	ld (0e3d1h),a		;bfe7
 	inc a			;bfea
-	ld (0e3d0h),a		;bfeb
+	ld (0e3d0h),a		;bfeb   ; guarda la velocidad del scroll (1 parado, 2 cada cuadro, si no uno de cada dos)
 	call 08fa2h		;bfee
 	ld a,043h		;bff1
-	jp 04ae4h		;bff3
+	jp 04ae4h		;bff3   ; sonido: pide el sonido A al controlador del banco 4 (p04:6480) con los bancos 4-5-6 y devuelve los de antes; conserva todos los registros
 
 ; ----------------------------------------------------------------------
 ; DATOS relleno_ff: 10 bytes a 0xFF hasta el final del banco: relleno; lo leen
