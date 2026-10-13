@@ -1,0 +1,163 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>La música — Nemesis 2 (Konami, 1987)</title>
+<style>
+:root{--tinta:#cfd0d4;--suave:#83868f;--fondo:#000;--panel:#0c0e13;--linea:#23262e;
+  --rojo:#ff897d;--cyan:#65dbef;--verde:#3eb849;--oro:#ded087}
+@media (prefers-color-scheme:light){:root{--tinta:#191a1e;--suave:#5a5d66;--fondo:#e9e7e1;
+  --panel:#f7f6f2;--linea:#d0cdc5;--rojo:#b23f34;--cyan:#1c6b7c;--verde:#2b7734;--oro:#8a7420}}
+:root[data-theme="dark"]{--tinta:#cfd0d4;--suave:#83868f;--fondo:#000;--panel:#0c0e13;
+  --linea:#23262e;--rojo:#ff897d;--cyan:#65dbef;--verde:#3eb849;--oro:#ded087}
+:root[data-theme="light"]{--tinta:#191a1e;--suave:#5a5d66;--fondo:#e9e7e1;--panel:#f7f6f2;
+  --linea:#d0cdc5;--rojo:#b23f34;--cyan:#1c6b7c;--verde:#2b7734;--oro:#8a7420}
+*{box-sizing:border-box}
+body{margin:0;background:var(--fondo);color:var(--tinta);padding:0 1.25rem 6rem;
+  font:15px/1.7 ui-monospace,"SF Mono",Menlo,Consolas,monospace}
+.w{max-width:1120px;margin:0 auto}
+.n{max-width:68ch}
+h1,h2,h3,h4{font-weight:400;text-wrap:balance}
+a{color:var(--cyan)}
+img{image-rendering:pixelated;max-width:100%;height:auto;display:block}
+header.top{display:flex;flex-direction:column;align-items:center;gap:1.5rem;
+  padding:4rem 0 2rem;text-align:center}
+header.top img{width:min(100%,642px)}
+.claim{max-width:60ch;color:var(--suave);font-size:1.05rem}
+.claim b{color:var(--tinta);font-weight:400}
+.ficha{display:flex;flex-wrap:wrap;justify-content:center;gap:0 1.5rem;width:100%;
+  font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--suave);
+  border-top:1px solid var(--linea);border-bottom:1px solid var(--linea);padding:.85rem 0}
+.ficha b{color:var(--rojo);font-weight:400}
+nav{display:flex;flex-wrap:wrap;gap:1.25rem;justify-content:center;padding:1.25rem 0;
+  font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+nav a{color:var(--suave);text-decoration:none;border-bottom:1px solid transparent}
+nav a:hover,nav a:focus{color:var(--tinta);border-bottom-color:var(--rojo)}
+nav.docs{border-top:1px solid var(--linea);border-bottom:1px solid var(--linea);
+  margin-bottom:1rem}
+section{margin-top:4.5rem;scroll-margin-top:1rem}
+section>h2{font-size:1rem;letter-spacing:.1em;text-transform:uppercase;
+  border-left:3px solid var(--rojo);padding-left:.9rem;margin:0 0 1.5rem}
+.cifras{display:grid;gap:1px;background:var(--linea);border:1px solid var(--linea);
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
+.cifra{background:var(--panel);padding:1.1rem}
+.cifra b{display:block;font-size:1.7rem;color:var(--oro);font-weight:400;
+  font-variant-numeric:tabular-nums;line-height:1.2}
+.cifra span{font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--suave)}
+.hall{border-top:1px solid var(--linea);padding-top:1.75rem;margin-top:2.5rem}
+.hall:first-of-type{border-top:0;padding-top:0;margin-top:0}
+.hall h3{margin:0 0 .75rem;font-size:1.15rem;color:var(--rojo)}
+.hall h4{color:var(--oro);margin:1.5rem 0 .5rem;font-size:.95rem}
+.hall p{margin:0 0 1rem}
+pre.asm{background:var(--panel);border-left:2px solid var(--verde);margin:1.25rem 0;
+  padding:1rem 1.1rem;overflow-x:auto;font-size:13px;line-height:1.6;color:var(--tinta)}
+.par{display:grid;gap:1.25rem;grid-template-columns:1fr}
+@media(min-width:820px){.par{grid-template-columns:1fr 1fr}}
+.par figure{margin:0}
+table{border-collapse:collapse;width:100%;margin:1.25rem 0;font-size:13px;display:block;
+  overflow-x:auto}
+th,td{text-align:left;padding:.5rem .75rem;border-bottom:1px solid var(--linea)}
+th{color:var(--suave);font-weight:400;font-size:11px;letter-spacing:.07em;text-transform:uppercase}
+td.num{font-variant-numeric:tabular-nums;color:var(--oro)}
+.nivel{margin-top:2rem}
+.nivel h3{margin:0 0 .9rem;font-size:.95rem;letter-spacing:.06em;text-transform:uppercase}
+.nivel em{color:var(--cyan);font-style:normal}
+.sep{color:var(--suave);margin:0 .6rem}
+.rejilla{display:grid;gap:.9rem;grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+.rejilla figure{margin:0;background:var(--panel);box-shadow:0 0 0 1px var(--linea)}
+.rejilla figcaption{display:flex;justify-content:space-between;padding:.45rem .65rem;
+  font-size:11px;color:var(--suave);border-top:1px solid var(--linea)}
+.dir{font-variant-numeric:tabular-nums;color:var(--verde)}
+footer{margin-top:5rem;padding-top:1.5rem;border-top:1px solid var(--linea);
+  color:var(--suave);font-size:12px}
+
+/* Aviso de trabajo en curso: tiene que verse antes que las cifras, porque un
+   100% mal leido hace mas dano que no ponerlo. */
+.aviso{background:#3a2a10;border-left:3px solid var(--oro);margin:1.5rem auto;
+  padding:1rem 1.2rem;max-width:900px;border-radius:4px}
+.aviso p{margin:0;color:var(--tinta);font-size:15px;line-height:1.65}
+.galeria{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:1.5rem;margin:1.5rem 0}
+.galeria figure{margin:0}
+.galeria img{width:100%;height:auto;image-rendering:pixelated;
+  border:1px solid var(--linea);border-radius:3px}
+.galeria figcaption{color:var(--suave);font-size:13px;margin-top:.5rem}
+audio{display:block;width:100%;max-width:640px;margin:.75rem 0 1.5rem}
+</style>
+<div class="w"><nav class="top"><a href="index.html">Portada</a><a href="EMPEZAR.html">Empezar</a><a href="EL-JUEGO.html">El juego</a><a href="EL-CARTUCHO.html">El cartucho</a><a href="EL-CODIGO.html">El código</a><a href="LA-MUSICA.html" style=color:var(--tinta)>La música</a><a href="HALLAZGOS.html">Hallazgos</a><a href="PREGUNTAS-ABIERTAS.html">Preguntas abiertas</a><a href="../THE-MUSIC.html" style="margin-left:auto;color:var(--oro)">English</a></nav>
+<h1 id="la-musica">La música</h1>
+<p>Todo lo que suena aquí sale de ejecutar el motor de sonido del cartucho (el sonido del cuadro, p04:6934, y <code>sonido</code>, p00:4AE4, que apunta la pieza; la interrupción lo llama en p00:4048 con los bancos 4, 5 y 6) en un Z80 emulado, cuadro a cuadro y a 60 por segundo, igual que lo llama el juego. Lo que el motor escribe en el PSG pasa a sonido con un AY-3-8910 (<code>tools/musica.py</code>). Cada MP3 es la pieza entera hasta donde vuelve a empezar, más 8 segundos de la vuelta apagándose; las que no se repiten acaban donde acaba el motor.</p>
+<h2 id="cotejado-con-openmsx">Cotejado con openMSX</h2>
+<p>Las escrituras al PSG se han comparado cuadro a cuadro con las de openMSX (C-BIOS MSX1 japonés). En todos los cuadros el PSG queda igual:</p>
+<ul><li>la pieza 0x3E entera, 355 cuadros, tal como el juego la pide, con PSG y SCC (144 registros del SCC);</li><li>la pieza 0x29, sus primeros 217 cuadros, y la 0x2E, sus primeros 218, con PSG y SCC (112 registros del SCC cada una).</li></ul>
+<p>El timbre no está cotejado: es el de un AY-3-8910 de manual, no una grabación del emulador. Las sondas están en <code>tools/omsx_psg.tcl</code> y <code>tools/coteja_psg.py</code>.</p>
+<h2 id="el-scc">El SCC</h2>
+<p>Este cartucho lleva el chip de sonido SCC de Konami, además del PSG: cinco canales de onda de 32 muestras que suenan por 0x9800-0x98FF cuando el banco 0x3F está en 0x8000. Aquí se ejecuta el motor, se recogen sus escrituras a las formas de onda (0x9800-0x987F), los periodos (0x9880-0x9889), los volúmenes (0x988A-0x988E) y las máscaras de canales (0x988F), y se mezclan con el PSG. El SCC se ha cotejado con openMSX igual que el PSG, registro a registro; el timbre es el de un SCC de manual, no una grabación del emulador. El quinto canal comparte la forma de onda del cuarto.</p>
+<h2 id="como-se-pide-una-pieza">Cómo se pide una pieza</h2>
+<p><code>sonido</code> (p00:4AE4) mete los bancos 4, 5 y 6 y llama a la rutina de p04:6480 con el número en A; por debajo del 0x28 son efectos y del 0x28 en adelante hay música. Antes se vuelca el estado de arranque con p04:71AE. La RAM del sonido está en 0xE000-0xE1D5. Las que suenan igual que otra se publican una vez, y las que duran más de 75 segundos sin volver a empezar se cortan a los 75.</p>
+<h2 id="las-musicas">Las músicas</h2>
+<p><b>La pieza del 0x5781</b> (0x3E)</p>
+<p>Lo pide <code>L_5781</code>; dura 5,9 s.</p>
+<audio controls preload="none" src="../audio/musica_3E.mp3?v=e8bc159b"></audio>
+<p><b>Empieza la historia</b> (0x3F)</p>
+<p>Lo pide <code>empieza_historia</code>; se corta a los 75 s (la pieza sigue).</p>
+<audio controls preload="none" src="../audio/musica_3F.mp3?v=e5f57450"></audio>
+<p><b>Empieza el final</b> (0x40)</p>
+<p>Lo pide <code>final_empieza</code>; se corta a los 75 s (la pieza sigue).</p>
+<audio controls preload="none" src="../audio/musica_40.mp3?v=57557104"></audio>
+<p><b>El final de verdad</b> (0x41)</p>
+<p>Lo pide <code>final_de_verdad</code>; se corta a los 75 s (la pieza sigue).</p>
+<audio controls preload="none" src="../audio/musica_41.mp3?v=c95db9ed"></audio>
+<p><b>Estalla el jefe</b> (0x3B)</p>
+<p>Lo pide <code>jefe_estalla</code> y <code>L_915D</code>; dura 3,2 s.</p>
+<audio controls preload="none" src="../audio/musica_3B.mp3?v=7c127c1c"></audio>
+<p><b>El aviso parpadea</b> (0x28)</p>
+<p>Lo pide <code>aviso_parpadea</code>; dura 11,3 s.</p>
+<audio controls preload="none" src="../audio/musica_28.mp3?v=69f3d1f2"></audio>
+<p><b>La pieza del 0x925C</b> (0x3A)</p>
+<p>Lo pide <code>L_925C</code>; dura 14,7 s y vuelve a empezar en el segundo 3,5.</p>
+<audio controls preload="none" src="../audio/musica_3A.mp3?v=b24e372e"></audio>
+<p><b>La pieza del 0x8ECE</b> (0x3D)</p>
+<p>Lo pide <code>L_8ECE</code>; dura 1,9 s.</p>
+<audio controls preload="none" src="../audio/musica_3D.mp3?v=6e78baf5"></audio>
+<p><b>La pieza del 0x583A</b> (0x42)</p>
+<p>Lo pide <code>L_583A</code>; dura 5,8 s.</p>
+<audio controls preload="none" src="../audio/musica_42.mp3?v=2cc4f018"></audio>
+<p><b>Pista 0x29 de la tabla</b> (0x29)</p>
+<p>Lo pide ninguna llamada directa: sale de la tabla de pistas por un número calculado; dura 48,0 s y vuelve a empezar en el segundo 16,0.</p>
+<audio controls preload="none" src="../audio/musica_29.mp3?v=1c37acc7"></audio>
+<p><b>Pista 0x2B de la tabla</b> (0x2B)</p>
+<p>Lo pide ninguna llamada directa: sale de la tabla de pistas por un número calculado; dura 66,2 s y vuelve a empezar en el segundo 32,0.</p>
+<audio controls preload="none" src="../audio/musica_2B.mp3?v=85d05302"></audio>
+<p><b>Pista 0x2C de la tabla</b> (0x2C)</p>
+<p>Lo pide ninguna llamada directa: sale de la tabla de pistas por un número calculado; dura 64,0 s y vuelve a empezar en el segundo 12,8.</p>
+<audio controls preload="none" src="../audio/musica_2C.mp3?v=a68ab776"></audio>
+<p><b>Pista 0x2D de la tabla</b> (0x2D)</p>
+<p>Lo pide ninguna llamada directa: sale de la tabla de pistas por un número calculado; dura 59,2 s y vuelve a empezar en el segundo 28,4.</p>
+<audio controls preload="none" src="../audio/musica_2D.mp3?v=f91b18f4"></audio>
+<p><b>Pista 0x2E de la tabla</b> (0x2E)</p>
+<p>Lo pide ninguna llamada directa: sale de la tabla de pistas por un número calculado; dura 19,2 s y vuelve a empezar en el segundo 0,1.</p>
+<audio controls preload="none" src="../audio/musica_2E.mp3?v=1a6ca048"></audio>
+<p><b>Pista 0x30 de la tabla</b> (0x30)</p>
+<p>Lo pide ninguna llamada directa: sale de la tabla de pistas por un número calculado; se corta a los 75 s (la pieza sigue).</p>
+<audio controls preload="none" src="../audio/musica_30.mp3?v=bafe8d8b"></audio>
+<p><b>Pista 0x31 de la tabla</b> (0x31)</p>
+<p>Lo pide ninguna llamada directa: sale de la tabla de pistas por un número calculado; dura 57,0 s y vuelve a empezar en el segundo 27,8.</p>
+<audio controls preload="none" src="../audio/musica_31.mp3?v=2a4db95e"></audio>
+<p><b>Pista 0x32 de la tabla</b> (0x32)</p>
+<p>Lo pide ninguna llamada directa: sale de la tabla de pistas por un número calculado; dura 64,0 s y vuelve a empezar en el segundo 29,9.</p>
+<audio controls preload="none" src="../audio/musica_32.mp3?v=3f027d73"></audio>
+<p><b>Pista 0x33 de la tabla</b> (0x33)</p>
+<p>Lo pide ninguna llamada directa: sale de la tabla de pistas por un número calculado; dura 42,7 s y vuelve a empezar en el segundo 8,6.</p>
+<audio controls preload="none" src="../audio/musica_33.mp3?v=a688c18d"></audio>
+<p><b>Pista 0x34 de la tabla</b> (0x34)</p>
+<p>Lo pide ninguna llamada directa: sale de la tabla de pistas por un número calculado; dura 25,6 s y vuelve a empezar en el segundo 12,8.</p>
+<audio controls preload="none" src="../audio/musica_34.mp3?v=f39a323a"></audio>
+<p><b>Pista 0x35 de la tabla</b> (0x35)</p>
+<p>Lo pide ninguna llamada directa: sale de la tabla de pistas por un número calculado; dura 13,2 s y vuelve a empezar en el segundo 0,4.</p>
+<audio controls preload="none" src="../audio/musica_35.mp3?v=808aaee8"></audio>
+<p><b>Pista 0x36 de la tabla</b> (0x36)</p>
+<p>Lo pide ninguna llamada directa: sale de la tabla de pistas por un número calculado; dura 50,8 s y vuelve a empezar en el segundo 25,2.</p>
+<audio controls preload="none" src="../audio/musica_36.mp3?v=20269543"></audio>
+<p><b>Pista 0x5B de la tabla</b> (0x5B)</p>
+<p>Lo pide ninguna llamada directa: sale de la tabla de pistas por un número calculado; dura 55,5 s y vuelve a empezar en el segundo 0,1.</p>
+<audio controls preload="none" src="../audio/musica_5B.mp3?v=06b0273d"></audio>
+<footer><p><em>Nemesis 2</em> lo public&oacute; Konami para MSX en 1987; su n&uacute;mero de cat&aacute;logo es RC-751 y son 128 KB. Todos los derechos sobre el juego siguen siendo de sus titulares. Este trabajo es de preservaci&oacute;n, estudio y documentaci&oacute;n, y la imagen del cartucho no se distribuye.</p></footer></div>
