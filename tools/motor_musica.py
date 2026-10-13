@@ -173,7 +173,8 @@ def arranca(cfg, rom, numero):
         pide_pistas(z, numero)
     else:
         z.a = numero & 0xFF
-        for k, v in cfg.get("regs_pide", {}).items():
+        for k, v in {**cfg.get("regs_pide", {}),
+                     **cfg.get("regs_pide_de", {}).get(numero, {})}.items():
             setattr(z, k, v)
         z.corre(cfg["pide"])
     z.escrituras.clear()
@@ -376,7 +377,7 @@ def main(cfg, argv):
     elif argv[0] == "emu":
         f = cfg.get("bp_frame") or (cfg["frame"] if isinstance(cfg["frame"], int)
                                     else cfg["frame"][0][0])
-        q = cfg.get("pide") or cfg["bp_frame"]
+        q = cfg.get("bp_pide") or cfg.get("pide") or cfg["bp_frame"]   # bp_pide: el cuerpo de la peticion, comun a todas sus entradas
         org = cfg["org"]
         print("export EMU_MAQUINA=%s EMU_ROM=%s EMU_TIPO='%s'" % (
             cfg.get("maquina", "C-BIOS_MSX1_JP"), cfg["rom"],
